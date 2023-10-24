@@ -1,0 +1,5 @@
+---
+# tasks file for zsh
+- name: test
+  debug:
+    msg: test zsh role

@@ -1,0 +1,10 @@
+---
+# tasks file for sway
+
+- name: check vars
+  debug:
+    msg: "{{ theme.colors }}"
+
+- name: check role
+  debug:
+    msg: "sway role!"

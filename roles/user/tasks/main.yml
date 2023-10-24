@@ -1,0 +1,6 @@
+---
+# tasks file for user
+
+- name: test
+  debug:
+    msg: test user role
