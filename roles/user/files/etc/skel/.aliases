@@ -136,7 +136,7 @@ alias pulse_list_sources="pacmd list-sources | grep -e 'index:' -e device.string
 
 alias vnc_serv="x11vnc -ncache_cr -display :0"
 
-alias changed="fd -H -t d -t f -E "*.ray-snapshots" -E "qutebrowser" -E "google-chrome" -E "*.git" -E ".cache/" -E "[Cc]ache" --changed-within 2hours | sort"
+# alias changed="fd -H -t d -t f -E "*.ray-snapshots" -E "qutebrowser" -E "google-chrome" -E "*.git" -E ".cache/" -E "[Cc]ache" --changed-within 2hours | sort"
 
 # sampler
 alias sampler="fd -e flac -e wav -e opus -e mp3 --strip-cwd-prefix .  | fzf --preview='mpv {}' --preview-window=30% --tac --reverse -m --cycle --bind 'return:execute(play {})'"

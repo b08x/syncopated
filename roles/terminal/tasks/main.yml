@@ -1,37 +1,13 @@
 ---
 # tasks file for terminal
 
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
 - name: Install terminal packages
-  shell: "{{ package_install_command }} {{ item }}"
-  with_items:
-    - alacritty
-    - atool
-    - bat
-    - calibre
-    - djvulibre
-    - elinks
-    - fontforge
-    - highlight
-    - imagemagick
-    - jupyter-nbconvert
-    - kitty
-    - lynx
-    - mediainfo
-    - mpv
-    - mupdf-tools
-    - odt2txt
-    - openscad
-    - perl-image-exiftool
-    - python-pillow
-    - python-pygments
-    - ranger
-    - rxvt-unicode
-    - tilda
-    - terminology
-    - terminator
-    - transmission-cli
-    - ueberzug
-    - w3m
+  shell: "{{ package_install_command }} {{ terminal.packages|join(' ') }}"
   become: False
   tags: ['packages']
 

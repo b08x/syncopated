@@ -37,6 +37,35 @@
     backup: True
   tags: ['profile']
 
+- name: Install user-dirs.dirs
+  copy:
+    src: etc/skel/.config/user-dirs.dirs
+    dest: /etc/skel/.config/user-dirs.dirs
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+
 - import_tasks:
     file: sudoers.yml
   tags: ['sudoers']
+
+- name: sync skel directory
+  synchronize:
+    src: /etc/skel/
+    dest: "{{ item.home }}/"
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--chown={{ item.name }}:{{ item.group }}"
+      - "--backup"
+      - "--suffix={{ suffix }}"
+  when: item.name != 'root'
+  with_items: "{{ users }}"
+  delegate_to: "{{ inventory_hostname }}"
+  tags: ['profile']

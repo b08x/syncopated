@@ -20,3 +20,4 @@ sway:
     - waybar
     - wf-recorder
     - wlsunset
+    - wofi

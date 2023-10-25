@@ -103,5 +103,4 @@
       - "--omit-dir-times"
       - "--chown=root:root"
       - "--backup"
-      - "--backup-dir=.backup"
       - "--suffix={{ suffix }}"
