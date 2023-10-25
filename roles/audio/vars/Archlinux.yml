@@ -1,0 +1,14 @@
+---
+
+audio:
+  packages:
+    codecs:
+      - gst-libav
+      - gst-plugins-bad
+      - opus
+      - opusfile
+      - vorbis-tools
+      - wavpack
+    network:
+      - jacktrip
+      - qmidinet  

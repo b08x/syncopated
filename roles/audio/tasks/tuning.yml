@@ -1,0 +1,196 @@
+---
+- name: display user name
+  debug:
+    msg: "{{ user.name }}"
+
+- name: Ensure user belongs to audio group
+  user:
+    name: "{{ user.name }}"
+    groups: "audio"
+    append: yes
+
+- name: Ensure limits.d and tuned profile directories exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - /etc/security/limits.d
+    - /etc/tuned/realtime-modified
+
+- name: Set rtprio, memlock and nice for audio group
+  copy:
+    content: |
+      @audio  - rtprio  98
+      @audio  - nice    -19
+      @audio  - memlock unlimited      
+    dest: "/etc/security/limits.d/99-realtime.conf"
+    mode: '0644'
+    backup: True
+
+# It is safe to have this file even if
+# your hardware contains neither device
+# source: https://gentoostudio.org/?page_id=420
+- name: Set timer permissions in udev rules
+  copy:
+    content: |
+      KERNEL=="rtc0", GROUP="audio"
+      KERNEL=="hpet", GROUP="audio"
+    dest: "/etc/udev/rules.d/40-timer-permissions.rules"
+    mode: '0644'
+
+- name: Set sysctl params
+  copy:
+    src: etc/sysctl.d/99-cachyos-settings.conf
+    dest: /etc/sysctl.d/99-cachyos-settings.conf
+    mode: '0644'
+  tags: ['sysctl']
+
+- block:
+
+    - block:
+        - name: install Tuned
+          aur:
+            use: paru
+            name: tuned
+            state: present
+            extra_args: "--overwrite '*'"
+          become: False
+          when: ansible_distribution == 'Archlinux'
+
+        - name: install Tuned
+          dnf:
+            name: tuned
+            state: present
+            update_cache: yes
+          when: ansible_distribution == 'AlmaLinux'
+
+      tags: ['packages']
+
+
+    - name: Enable tuned service
+      systemd:
+        name: tuned
+        enabled: no
+      ignore_errors: "{{ ansible_check_mode }}"
+
+    # - name: Set tuned profile to laptop-battery-powersave
+    #   shell: |
+    #     tuned-adm profile laptop-battery-powersave
+    #   register: tuned_profile
+    #   changed_when: tuned_profile.rc != 0
+
+    - name: Install realtime-modified profile
+      copy:
+        src: etc/tuned/realtime-modified/tuned.conf
+        dest: /etc/tuned/realtime-modified/tuned.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+  tags: ['tuned']
+
+
+- block:
+    - block:
+        - name: install rtkit
+          aur:
+            use: auto
+            name: rtkit
+            state: present
+          become: False
+          when: ansible_distribution == 'Archlinux'
+
+        - name: install rtkit
+          dnf:
+            name: rtkit
+            state: present
+            update_cache: yes
+          when: ansible_distribution == 'AlmaLinux'
+
+      tags: ['packages']
+
+    - name: Install rtirq defaults
+      copy:
+        src: etc/sysconfig/rtirq
+        dest: /etc/rtirq.conf
+        directory_mode: no
+        owner: root
+        group: root
+        mode: '0644'
+      register: rtirq_config
+
+    # rtkit package should be Installed before this happens
+    - name: Install rtkit.conf
+      copy:
+        src: etc/rtkit.conf
+        dest: /etc/rtkit.conf
+        directory_mode: no
+        owner: root
+        group: root
+        mode: '0644'
+      register: rtkit_conf
+
+    - name: Install rtkit systemd file
+      template:
+        src: usr/lib/systemd/system/rtkit-daemon.service.j2
+        dest: /usr/lib/systemd/system/rtkit-daemon.service
+        mode: '0644'
+      register: rtkit_systemd
+
+  tags: ['rtirq', 'rtkit']
+  notify:
+    - "enable rtirq service"
+    - "enable rtkit service"
+
+- block:
+
+    - block:
+        - name: install cpupower
+          aur:
+            use: auto
+            name: cpupower
+            state: present
+          become: False
+          when: ansible_distribution == 'Archlinux'
+
+        - name: install kernel-tools(cpupower)
+          dnf:
+            name: kernel-tools
+            state: present
+            update_cache: yes
+          when: ansible_distribution == 'AlmaLinux'
+
+      tags: ['packages']
+
+    - name: Install cpucpower defaults
+      template:
+        src: etc/default/cpupower.j2
+        dest: /etc/default/cpupower
+        mode: '0644'
+        backup: yes
+
+    - name: Enable cpupower service
+      service:
+        name: cpupower
+        enabled: True
+      ignore_errors: "{{ ansible_check_mode }}"
+      when: ansible_system_vendor != "QEMU"
+
+  tags: ['cpupower']
+
+# Do not use the irqbalance daemon, or do so carefully [4].
+# https://wiki.archlinux.org/title/Professional_audio#Tips_and_tricks
+- name: Disable irqbalance service
+  service:
+    name: irqbalance
+    enabled: False
+  ignore_errors: True
+
+- name: Disable ananicy-cpp and bpftune
+  service:
+    name: "{{ item }}"
+    enabled: False
+  ignore_errors: True
+  loop:
+    - ananicy-cpp
+    - bpftune
