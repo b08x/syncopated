@@ -1,2 +1,16 @@
 ---
 # tasks file for pipewire
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- name: Starting pipewire tasks
+  debug:
+    msg: "Starting pipewire tasks"
+
+- name: Install pipewire packages
+  shell: "{{ package_install_command }} {{ pipewire.packages }}"
+  become: False
+  tags: ['packages']
