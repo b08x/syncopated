@@ -1,0 +1,10 @@
+---
+
+alsa:
+  packages:
+    - a2jmidid
+    - alsa-lib
+    - alsa-plugins
+    - alsa-tools
+    - alsa-utils
+    - zita-alsa-pcmi

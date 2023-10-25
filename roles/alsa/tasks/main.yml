@@ -1,2 +1,12 @@
 ---
 # tasks file for alsa
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- name: Install alsa packages
+  shell: "{{ package_install_command }} {{ item }}"
+  become: False
+  tags: ['packages']
