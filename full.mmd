@@ -1,0 +1,117 @@
+---
+title: Ansible Playbook Grapher
+---
+%%{ init: { "flowchart": { "curve": "bumpX" } } }%%
+flowchart LR
+	%% Start of the playbook 'playbooks/full.yml'
+	playbook_06d6c730("playbooks/full.yml")
+		%% Start of the play 'Play: all (8)'
+		play_86651a0e["Play: all (8)"]
+		style play_86651a0e fill:#ba1284,color:#ffffff
+		playbook_06d6c730 --> |"1"| play_86651a0e
+		linkStyle 0 stroke:#ba1284,color:#ba1284
+			pre_task_1fe03bf1["[pre_task]  Set datetime"]
+			style pre_task_1fe03bf1 stroke:#ba1284,fill:#ffffff
+			play_86651a0e --> |"1"| pre_task_1fe03bf1
+			linkStyle 1 stroke:#ba1284,color:#ba1284
+			pre_task_7846ad51["[pre_task]  Set admin group name"]
+			style pre_task_7846ad51 stroke:#ba1284,fill:#ffffff
+			play_86651a0e --> |"2"| pre_task_7846ad51
+			linkStyle 2 stroke:#ba1284,color:#ba1284
+			pre_task_6a73950d["[pre_task]  warn about setting ANSIBLE_HOME"]
+			style pre_task_6a73950d stroke:#ba1284,fill:#ffffff
+			play_86651a0e --> |"3"| pre_task_6a73950d
+			linkStyle 3 stroke:#ba1284,color:#ba1284
+			pre_task_d8ce4ced["[pre_task]  Symlink /etc/os-release to /etc/system-release"]
+			style pre_task_d8ce4ced stroke:#ba1284,fill:#ffffff
+			play_86651a0e --> |"4 [when: ansible_distribution == 'Archlinux']"| pre_task_d8ce4ced
+			linkStyle 4 stroke:#ba1284,color:#ba1284
+			pre_task_d8334bea["[pre_task]  Symlink /etc/os-release to /etc/system-release"]
+			style pre_task_d8334bea stroke:#ba1284,fill:#ffffff
+			play_86651a0e --> |"5 [when: ansible_distribution == 'AlmaLinux']"| pre_task_d8334bea
+			linkStyle 5 stroke:#ba1284,color:#ba1284
+			%% Start of the block ''
+			block_f267b780["[block] "]
+			style block_f267b780 fill:#ba1284,color:#ffffff,stroke:#ba1284
+			play_86651a0e --> |"6"| block_f267b780
+			linkStyle 6 stroke:#ba1284,color:#ba1284
+			subgraph subgraph_block_f267b780[" "]
+				pre_task_8a5d0bdf[" Check -march support"]
+				style pre_task_8a5d0bdf stroke:#ba1284,fill:#ffffff
+				block_f267b780 --> |"1"| pre_task_8a5d0bdf
+				linkStyle 7 stroke:#ba1284,color:#ba1284
+				pre_task_6f0e53bd[" Check output from grep command"]
+				style pre_task_6f0e53bd stroke:#ba1284,fill:#ffffff
+				block_f267b780 --> |"2"| pre_task_6f0e53bd
+				linkStyle 8 stroke:#ba1284,color:#ba1284
+				pre_task_a01b36aa[" Set architecture"]
+				style pre_task_a01b36aa stroke:#ba1284,fill:#ffffff
+				block_f267b780 --> |"3 [when: supported_march.stdout_lines[0] is defined and supported_march.stdout_lines[0] == 'x86-64-v3']"| pre_task_a01b36aa
+				linkStyle 9 stroke:#ba1284,color:#ba1284
+				pre_task_380bbae1[" Set architecture"]
+				style pre_task_380bbae1 stroke:#ba1284,fill:#ffffff
+				block_f267b780 --> |"4 [when: supported_march.stdout_lines[0] is defined and supported_march.stdout_lines[0] == 'x86-64-v2']"| pre_task_380bbae1
+				linkStyle 10 stroke:#ba1284,color:#ba1284
+			end
+			%% End of the block ''
+			%% Start of the role 'archlinux'
+			play_86651a0e --> |"7"| role_97b7ea39
+			linkStyle 11 stroke:#ba1284,color:#ba1284
+			role_97b7ea39("[role] archlinux")
+			style role_97b7ea39 fill:#ba1284,color:#ffffff,stroke:#ba1284
+				task_fa2545f1[" archlinux : Set pacman.conf config"]
+				style task_fa2545f1 stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"1 [when: ansible_distribution == 'Archlinux']"| task_fa2545f1
+				linkStyle 12 stroke:#ba1284,color:#ba1284
+				task_f8238ebe[" archlinux : Import syncopated repo key"]
+				style task_f8238ebe stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"2 [when: ansible_distribution == 'Archlinux']"| task_f8238ebe
+				linkStyle 13 stroke:#ba1284,color:#ba1284
+				task_e97b9239[" archlinux : Import archaudio repo key"]
+				style task_e97b9239 stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"3 [when: ansible_distribution == 'Archlinux']"| task_e97b9239
+				linkStyle 14 stroke:#ba1284,color:#ba1284
+				task_65545cc4[" archlinux : Update cache"]
+				style task_65545cc4 stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"4 [when: ansible_distribution == 'Archlinux' and syncopated_keys.changed or archaudio_keys.changed]"| task_65545cc4
+				linkStyle 15 stroke:#ba1284,color:#ba1284
+				task_6eda1a8c[" archlinux : Install some utility packages"]
+				style task_6eda1a8c stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"5 [when: ansible_distribution == 'Archlinux']"| task_6eda1a8c
+				linkStyle 16 stroke:#ba1284,color:#ba1284
+				task_7aeb197d[" archlinux : Set makepkg to use aria2"]
+				style task_7aeb197d stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"6 [when: ansible_distribution == 'Archlinux']"| task_7aeb197d
+				linkStyle 17 stroke:#ba1284,color:#ba1284
+				task_010d2209[" archlinux : Check if paru installed"]
+				style task_010d2209 stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"7 [when: ansible_distribution == 'Archlinux']"| task_010d2209
+				linkStyle 18 stroke:#ba1284,color:#ba1284
+				task_722d0e7c[" archlinux : Install paru"]
+				style task_722d0e7c stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"8 [when: ansible_distribution == 'Archlinux' and not paru.stat.exists]"| task_722d0e7c
+				linkStyle 19 stroke:#ba1284,color:#ba1284
+				task_538868d7[" archlinux : Adjust paru config"]
+				style task_538868d7 stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"9 [when: ansible_distribution == 'Archlinux']"| task_538868d7
+				linkStyle 20 stroke:#ba1284,color:#ba1284
+				task_17fc4f87[" archlinux : Check if mirrors have been updated within the past 24h"]
+				style task_17fc4f87 stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"10 [when: ansible_distribution == 'Archlinux']"| task_17fc4f87
+				linkStyle 21 stroke:#ba1284,color:#ba1284
+				task_6c902115[" archlinux : Print mirror file status"]
+				style task_6c902115 stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"11 [when: ansible_distribution == 'Archlinux' and ( mirror_status.stdout_lines | length < 0 or update_mirrors is defined ) and debugging is defined]"| task_6c902115
+				linkStyle 22 stroke:#ba1284,color:#ba1284
+				task_5983133c[" archlinux : Update mirrors"]
+				style task_5983133c stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"12 [when: ansible_distribution == 'Archlinux' and ( mirror_status.stdout_lines | length < 0 or update_mirrors is defined )]"| task_5983133c
+				linkStyle 23 stroke:#ba1284,color:#ba1284
+				task_1b61d558[" archlinux : Update cache"]
+				style task_1b61d558 stroke:#ba1284,fill:#ffffff
+				role_97b7ea39 --> |"13 [when: ansible_distribution == 'Archlinux' and mirror_update.changed]"| task_1b61d558
+				linkStyle 24 stroke:#ba1284,color:#ba1284
+			%% End of the role 'archlinux'
+		%% End of the play 'Play: all (8)'
+	%% End of the playbook 'playbooks/full.yml'
+

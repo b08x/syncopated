@@ -7,7 +7,7 @@ sway:
     - dex
     - flashfocus
     - mako
-    - nm-applet
+    - network-manager-applet
     - nwg-wrapper
     - playerctl
     - poweralertd

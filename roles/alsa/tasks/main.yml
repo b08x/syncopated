@@ -8,5 +8,7 @@
 
 - name: Install alsa packages
   shell: "{{ package_install_command }} {{ item }}"
+  with_items:
+    - "{{ alsa.packages }}"
   become: False
   tags: ['packages']

@@ -7,6 +7,8 @@
   tags: ['always']
 
 - name: Install audio codec packages
-  shell: "{{ package_install_command }} {{ audio.packages.codecs }}"
+  shell: "{{ package_install_command }} {{ item }}"
+  with_items:
+    - "{{ audio.packages.codecs }}"
   become: False
   tags: ['packages']
