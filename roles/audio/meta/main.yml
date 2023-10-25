@@ -48,7 +48,6 @@ galaxy_info:
     #       Maximum 20 tags per role.
 
 dependencies:
-  - alsa
   - pipewire  
   - jack
   - pulseaudio

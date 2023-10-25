@@ -6,11 +6,6 @@
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
 
-- name: test
-  debug:
-    msg: "test {{ item.name }} role"
-  with_items: "{{ users }}"
-
 - name: Set shell
   user:
     name: "{{ item.name }}"

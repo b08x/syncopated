@@ -1,5 +1,26 @@
 ---
 
+- name: disable jack services
+  systemd:
+    name: jack_control
+    enabled: no
+    state: stopped
+    scope: user
+    daemon_reload: yes
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ item.uid }}"
+  when: item.name != 'root'
+  with_items: "{{ users }}"
+  become: False
+  ignore_errors: "{{ ansible_check_mode }}"
+  register: servicestat
+  failed_when: "not 'Could not find the requested service' in servicestat.msg and servicestat.rc != 0"
+
+- name: remove jack_control service file
+  file:
+    path: "/usr/lib/systemd/user/jack_control.service"
+    state: absent
+
 - name: Install jack packages
   shell: "{{ package_uninstall_command }} {{ jack.packages|join(' ') }}"
   become: False

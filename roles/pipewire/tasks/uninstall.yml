@@ -26,3 +26,8 @@
   changed_when: uninstall.rc == 0
   failed_when: "'error: failed to prepare transaction' in uninstall.stderr and uninstall.rc != 0"
   tags: ['packages']
+
+- name: Install pipewire and wireplumber libs
+  shell: "{{ package_install_command }} libpipewire libwireplumber"
+  become: False
+  tags: ['packages']

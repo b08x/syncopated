@@ -6,9 +6,9 @@
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
 
-- name: show theme var
-  debug:
-    msg: "{{ theme }}"
+# - name: show theme var
+#   debug:
+#     msg: "{{ theme }}"
 
 - block:
     - name: install gtk packages

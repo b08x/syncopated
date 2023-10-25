@@ -4,3 +4,55 @@
   shell: "{{ package_install_command }} {{ jack.packages|join(' ') }}"
   become: False
   tags: ['packages']
+
+- name: Create environment file for jack_control.service
+  copy:
+    content: |
+      DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+    dest: "/etc/default/jack_control"
+
+- name: Create systemd user directory
+  file:
+    path: "{{ item.home }}/.config/systemd/user"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.group }}"
+    mode: '0755'
+  when: item.name != 'root'
+  with_items: "{{ users }}"
+
+- name: Install jack_control service file
+  copy:
+    src: "usr/lib/systemd/user/jack_control.service"
+    dest: "/usr/lib/systemd/user/jack_control.service"
+    mode: '0644'
+
+- name: enable jack services
+  systemd:
+    name: jack_control
+    enabled: yes
+    scope: user
+    daemon_reload: yes
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ item.uid }}"
+  when: item.name != 'root'
+  with_items: "{{ users }}"
+  become: False
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Set jack driver parameters
+  shell: |
+    jack_control eps driver {{ jack_control.eps.driver }}
+    jack_control eps realtime {{ jack_control.eps.realtime }}
+    jack_control eps realtime-priority {{ jack_control.eps.realtimepriority }}
+    jack_control dps device {{ jack_control.dps.device }}
+    jack_control dps rate {{ jack_control.dps.rate }}
+    jack_control dps period {{ jack_control.dps.period }}
+    jack_control dps nperiods {{ jack_control.dps.nperiods }}
+    jack_control dps midi-driver {{ jack_control.dps.mididriver }}
+    jack_control dps monitor {{ jack_control.dps.monitor }}
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/1000/bus"
+  register: result
+  changed_when: result.rc != 0
+  become: False

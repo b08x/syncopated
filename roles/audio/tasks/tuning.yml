@@ -1,8 +1,4 @@
 ---
-- name: display user name
-  debug:
-    msg: "{{ item.name }}"
-  with_items: "{{ users }}"
 
 - name: Ensure user belongs to audio group
   user:

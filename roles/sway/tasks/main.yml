@@ -6,15 +6,15 @@
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
 
-- name: check vars
-  debug:
-    msg: "{{ colors }}"
+# - name: check vars
+#   debug:
+#     msg: "{{ colors }}"
 
-- name: check role
+- name: Starting sway role
   debug:
-    msg: "sway role!"
+    msg: "starting sway role!"
 
-- name: Istall sway packages
+- name: Install sway packages
   shell: "{{ package_install_command }} {{ sway.packages | join(' ') }}"
   become: False
   tags: ['packages']
