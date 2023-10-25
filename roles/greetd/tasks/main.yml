@@ -1,0 +1,43 @@
+---
+# tasks file for greetd
+
+- name: use shell to do stuff
+  shell: "{{ package_install_command }} greetd-tuigreet"
+  become: False
+  tags: ['packages']
+
+- name: Ensure greet configs
+  copy:
+    src: "etc/{{ item }}"
+    dest: "/etc/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+  with_items:
+    - greetd/config.toml
+    - greetd/style.css
+    - pam.d/greetd
+
+- name: Ensure greetd service
+  copy:
+    src: usr/lib/systemd/system/greetd.service
+    dest: /usr/lib/systemd/system/greetd.service
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+
+- name: Ensure greetd sysusers
+  copy:
+    src: usr/lib/sysusers.d/greetd.conf
+    dest: /usr/lib/sysusers.d/greetd.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+
+- name: enable greetd service
+  service:
+    name: greetd
+    enabled: True
