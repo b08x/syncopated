@@ -1,2 +1,10 @@
 ---
-# handlers file for networking
+
+- name: enable systemd-timesyncd service
+  systemd:
+    name: systemd-timesyncd
+    enabled: yes
+
+- name: reload firewalld
+  shell: "firewall-cmd --reload"
+  ignore_errors: True

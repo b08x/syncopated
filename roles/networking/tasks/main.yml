@@ -1,2 +1,21 @@
 ---
-# tasks file for networking
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- name: Starting network tasks
+  debug:
+    msg: "Starting network tasks"
+
+- import_tasks:
+    file: networkmanager.yml
+  tags: ['networkmanager']
+
+- import_tasks:
+    file: ntp.yml
+  tags: ['ntp']
+
+#TODO: set interface config for .36 network cards betweeen soundbot|ninjabot
+# - include_tasks: interfaces.yml
