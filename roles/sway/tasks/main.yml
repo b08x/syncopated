@@ -1,6 +1,11 @@
 ---
 # tasks file for sway
 
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
 - name: check vars
   debug:
     msg: "{{ theme.colors }}"
