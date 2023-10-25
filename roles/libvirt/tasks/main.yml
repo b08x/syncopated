@@ -5,3 +5,80 @@
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
+
+- name: Starting libvirt tasks
+  debug:
+    msg: "Starting libvirt tasks"
+
+- block:
+    # :: exfatprogs and exfat-utils are in conflict. Remove exfat-utils? [y/N]
+    - name: Remove conflicting packages
+      pacman:
+        name: exfat-utils
+        state: absent
+        force: yes
+        extra_args: --noconfirm
+
+    - name: Install libvirt packages
+      pacman:
+        name: "{{ item }}"
+        state: present
+        force: yes
+        extra_args: --noconfirm
+      loop:
+        - dmidecode
+        - dnsmasq
+        - edk2-ovmf
+        - libguestfs
+        - libvirt
+        - qemu-full
+        - virt-install
+        - virt-manager
+        - virt-viewer
+
+  when: ansible_distribution == 'Archlinux'
+  tags: ['packages']
+
+- block:
+    - name: Install Virtualization Group
+      dnf:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - '@Virtualization Host'
+        - libvirt-devel
+
+  when: ansible_distribution == 'AlmaLinux'
+  tags: ['packages']
+
+- name: Set socket group and perms to allow for remote access
+  copy:
+    src: etc/libvirt/libvirtd.conf
+    dest: /etc/libvirt/libvirtd.conf
+    mode: '0644'
+
+- name: Disable lvmetad for remote access reasons
+  lineinfile:
+    dest: /etc/lvm/lvm.conf
+    regexp: "^    use_lvmetad = 1"
+    line: "    use_lvmetad = 0"
+    backrefs: yes
+    backup: yes
+
+- name: Add user to libvirt group
+  user:
+    name: "{{ user.name }}"
+    groups: "libvirt,kvm"
+    append: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: set libvirtd service preset
+  systemd:
+    name: libvirtd
+    enabled: "{{ libvirt.service.enabled }}"
+
+- import_tasks:
+    file: vagrant.yml
+  when: use_vagrant|default(false)|bool == True
+  tags: ['vagrant']
