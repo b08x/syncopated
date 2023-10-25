@@ -44,10 +44,6 @@
   when: item.name != 'root'
   tags: ['profile']
 
-- import_tasks:
-    file: sudoers.yml
-  tags: ['sudoers']
-
 - name: sync skel directory
   synchronize:
     src: /etc/skel/

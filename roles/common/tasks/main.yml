@@ -1,0 +1,113 @@
+---
+
+- name: warn about setting ANSIBLE_HOME
+  debug:
+    msg: "besure ANSIBLE_HOME is set to this directory"
+  tags: ['debug']
+
+- name: Set datetime
+  set_fact:
+    datetime: ansible_date_time.epoch
+  tags: ['facts']
+
+- name: Set suffix
+  set_fact:
+    suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
+  tags: ['facts']
+
+- name: Set admin group name
+  set_fact:
+    admin_group: wheel
+  tags: ['facts']
+
+- name: Check -march support
+  shell: |
+    /lib/ld-linux-x86-64.so.2 --help | grep supported|xargs|awk '{print $1}'
+  register: supported_march
+  tags: ['facts']
+
+- block:
+
+    - name: Set architecture
+      set_fact:
+        architecture: "x86-64-v3"
+      when: supported_march.stdout_lines[0] == 'x86-64-v3'
+
+    - name: Set architecture
+      set_fact:
+        architecture: "x86-64"
+      when: supported_march.stdout_lines[0] == 'x86-64-v2'
+
+  when: supported_march.stdout_lines[0] is defined
+  check_mode: False
+  tags: ['facts']
+
+- import_tasks:
+    file: sudoers.yml
+  tags: ['sudoers']
+
+- import_tasks:
+    file: distro/Archlinux.yml
+  when: ansible_distribution == 'Archlinux'
+  tags: ['Archlinux', 'repos', 'packages']
+
+- import_tasks:
+    file: distro/AlmaLinux.yml
+  when: ansible_distribution == 'AlmaLinux'
+  tags: ['AlmaLinux', 'repos', 'packages']
+
+- name: set package_manager_install fact
+  set_fact:
+    package_install_command: "{{ package_manager_command }}"
+  vars:
+    package_manager_command: >-
+      {% set package_manager_command_map = {
+        'Debian': 'sudo apt install -y',
+        'AlmaLinux': 'sudo dnf -y install',
+        'Archlinux': 'paru -S --noconfirm --needed --cleanafter --batchinstall --useask'
+      } %}
+
+      {{ package_manager_command_map.get(ansible_distribution, '# Unsupported distribution') }}
+  tags: ['packages']
+
+- name: set package_manager_uninstall fact
+  set_fact:
+    package_uninstall_command: "{{ package_manager_uninstall_command }}"
+  vars:
+    package_manager_uninstall_command: >-
+      {% set package_manager_uninstall_command_map = {
+        'Debian': 'sudo apt uninstall -y',
+        'AlmaLinux': 'sudo dnf -y uninstall',
+        'Archlinux': 'paru -Rdd --noconfirm'
+      } %}
+
+      {{ package_manager_uninstall_command_map.get(ansible_distribution, '# Unsupported distribution') }}
+  tags: ['packages']
+
+- import_tasks:
+    file: dirs.yml
+  tags: ['dirs']
+
+- import_tasks:
+    file: scripts.yml
+  tags: ['scripts']
+
+- import_tasks:
+    file: sshd.yml
+  tags: ['sshd']
+
+- import_tasks:
+    file: updatedb.yml
+  tags: ['updatedb']
+
+- import_tasks:
+    file: zram.yml
+  tags: ['zram']
+
+- import_tasks:
+    file: grub.yml
+  tags: ['grub']
+
+- import_tasks:
+    file: autofs.yml
+  tags: ['autofs']

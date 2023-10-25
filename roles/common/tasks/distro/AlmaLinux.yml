@@ -1,0 +1,109 @@
+---
+
+- name: Symlink /etc/os-release to /etc/system-release
+  file:
+    src: /etc/almalinux-release
+    dest: /etc/system-release
+    state: link
+
+- name: Disable selinux
+  lineinfile:
+    path: /etc/selinux/config
+    regexp: "^SELINUX=enforcing"
+    line: "SELINUX=disabled"
+  register: result
+
+- name: Reboot host if selinux status changes
+  reboot:
+  async: 1
+  poll: 0
+  ignore_errors: True
+  when: result.changed
+
+- name: Wait for host to reboot
+  wait_for_connection:
+    connect_timeout: 20
+    sleep: 5
+    delay: 5
+    timeout: 120
+  when: result.changed
+
+- name: Import ELRepo GPG key
+  rpm_key:
+    state: present
+    key: https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+  tags: ['repo']
+
+- name: Install ELRepo repository
+  dnf:
+    name: https://www.elrepo.org/elrepo-release-9.el9.elrepo.noarch.rpm
+    state: present
+  tags: ['repo']
+
+- name: Install postgresql repository
+  dnf:
+    name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+    state: present
+  tags: ['repo']
+
+- name: Refresh DNF repositories
+  dnf:
+    update_cache: yes
+
+- name: Install yum-utils and additional repositories
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - yum-utils
+    - almalinux-release-synergy
+    - epel-next-release
+  tags: ['packages']
+
+# - name: Set priority in epel.repo
+#   lineinfile:
+#     path: /etc/yum.repos.d/epel.repo
+#     regexp: '^priority='
+#     line: 'priority=10'
+#   become: yes
+
+
+- name: Install Utility Packages
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - aria2
+    - gnome-keyring
+    - gnome-keyring-pam
+    - htop
+    - inxi
+    - neovim
+    - ranger
+    - systemd-timesyncd
+  tags: ['packages']
+
+- name: copy rpms to install
+  copy:
+    src: "files/rpm/{{ item }}"
+    dest: "/tmp/{{ item }}"
+  loop:
+    - eza-0.11.1~0-1.1.x86_64.rpm
+    - eza-zsh-completion-0.11.1~0-1.1.noarch.rpm
+    - fzf-0.42.0-1.3.x86_64.rpm
+    - fzf-zsh-completion-0.42.0-1.3.noarch.rpm
+    - zoxide-0.9.2-1.2.x86_64.rpm
+  tags: ['packages']
+
+- name: Install Utility Packages not yet in repos
+  dnf:
+    name: "{{ item }}"
+    state: present
+    disable_gpg_check: True
+  loop:
+    - /tmp/eza-0.11.1~0-1.1.x86_64.rpm
+    - /tmp/eza-zsh-completion-0.11.1~0-1.1.noarch.rpm
+    - /tmp/fzf-0.42.0-1.3.x86_64.rpm
+    - /tmp/fzf-zsh-completion-0.42.0-1.3.noarch.rpm
+    - /tmp/zoxide-0.9.2-1.2.x86_64.rpm
+  tags: ['packages']

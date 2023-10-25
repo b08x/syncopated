@@ -1,0 +1,17 @@
+---
+
+- name: sync utility scripts
+  synchronize:
+    src: usr/local/bin/
+    dest: /usr/local/bin/
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--backup"
+      - "--suffix={{ suffix }}"
+  tags: ['always']
