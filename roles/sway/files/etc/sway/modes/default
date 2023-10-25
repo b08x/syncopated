@@ -29,7 +29,7 @@ floating_modifier $mod normal
 $bindsym $mod+Shift+c reload
 
 ## Action // Toggle Waybar ##
-$bindsym $mod+Shift+b exec pkill -SIGUSR1 waybar
+$bindsym $mod+Shift+y exec pkill -SIGUSR1 waybar
 
 # --locked flags allow the buttons to be used whilst the screen is locked.
 $bindsym --locked XF86AudioRaiseVolume exec $volume_up
@@ -165,8 +165,6 @@ $bindsym $mod+Shift+n exec /usr/share/sway/scripts/first-empty-workspace.py --mo
 $bindsym $mod+Shift+m exec /usr/share/sway/scripts/first-empty-workspace.py --move --switch
 
 #
-# Layout stuff:
-#
 ## Setting // Split windows horizontally ##
 $bindsym $mod+v splith
 ## Setting // Split windows vertically ##
@@ -205,7 +203,7 @@ $bindsym $mod+a focus parent
 $bindsym $mod+question exec $help
 
 ## Launch // Open Support ##
-$bindsym $mod+Shift+s exec xdg-open https://github.com/Manjaro-Sway/manjaro-sway/blob/main/SUPPORT.md
+# $bindsym $mod+Shift+s exec xdg-open https://github.com/Manjaro-Sway/manjaro-sway/blob/main/SUPPORT.md
 
 default_border pixel 1
 hide_edge_borders smart

@@ -1,7 +1,7 @@
 ---
 # tasks file for greetd
 
-- name: use shell to do stuff
+- name: Install greetd-tuigreet
   shell: "{{ package_install_command }} greetd-tuigreet"
   become: False
   tags: ['packages']
