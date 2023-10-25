@@ -11,8 +11,6 @@
     msg: "Starting pipewire tasks"
 
 - name: Install pipewire packages
-  shell: "{{ package_install_command }} {{ item }}"
-  with_items:
-    - "{{ pipewire.packages }}"
+  shell: "{{ package_install_command }} {{ pipewire.packages|join(' ') }}"
   become: False
   tags: ['packages']

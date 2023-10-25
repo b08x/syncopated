@@ -9,3 +9,8 @@
 - name: Starting jack tasks
   debug:
     msg: "Starting jack tasks"
+
+- name: Install alsa packages
+  shell: "{{ package_install_command }} {{ jack.packages|join(' ') }}"
+  become: False
+  tags: ['packages']

@@ -43,15 +43,15 @@
 
   become: False
   when: ansible_distribution == 'Archlinux'
-  tags: ['packages']
+  tags: ['packages','theme']
 
 - import_tasks:
     file: fonts.yml
-  tags: ['fonts']
+  tags: ['fonts','theme']
 
 - import_tasks:
     file: icons.yml
-  tags: ['icons']
+  tags: ['icons','theme']
 
 - name: Ensure /usr/local/share themes exists
   file:
@@ -60,11 +60,13 @@
     owner: root
     group: root
     recurse: True
+  tags: ['theme']
 
 - name: Extract soundbot theme into /usr/local/share/themes
   unarchive:
     src: files/usr/local/share/themes/oomox-soundbot.tar.xz
     dest: "/usr/local/share/themes"
+  tags: ['theme']
 
 - name: Install gtk configurations
   template:

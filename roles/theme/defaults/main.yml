@@ -139,6 +139,25 @@ colors:
     text: '#4a4d44'
     indicator: '#33eb1c'
     child_border: '#2a2a2a'
+  sway:
+    black0: '#000000'
+    red1: '#EF2929'
+    green2: '#33eb1c'
+    yellow3: '#b1701e'
+    blue4: '#3149a7'
+    magenta5: '#96363C'
+    cyan6: '#34E2E2'
+    white7: '#ebdbb2'
+    black8: '#2a2a2a'
+    red9: '#Cd3f45'
+    green10: '#2a8e10'
+    yellow11: '#FCE94F'
+    blue12: '#475ebd'
+    magenta13: '#96363c'
+    cyan14: '#01495d'
+    white15: '#4a4d44'
+
+
 
 # colors:
 #   active_border: "#8f350a"

@@ -15,7 +15,7 @@
     msg: "sway role!"
 
 - name: Istall sway packages
-  shell: "{{ package_install_command }} {{ sway.packages | join(',') }}"
+  shell: "{{ package_install_command }} {{ sway.packages | join(' ') }}"
   become: False
   tags: ['packages']
 
@@ -63,6 +63,15 @@
   copy:
     src: usr/share/wayland-sessions/sway-unsupported.desktop
     dest: /usr/share/wayland-sessions/sway-unsupported.desktop
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+
+- name: Install sway theme template
+  template:
+    src: usr/share/sway/themes/matcha-green/definitions.j2
+    dest: /usr/share/sway/themes/matcha-green/definitions
     owner: root
     group: root
     mode: '0644'
