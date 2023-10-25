@@ -1,0 +1,12 @@
+---
+
+wayland:
+  packages:
+    - egl-wayland
+    - lib32-wayland
+    - plasma-wayland-protocols
+    - qt5-wayland
+    - qt6-wayland
+    - wayland
+    - wayland-protocols
+    - xorg-xwayland

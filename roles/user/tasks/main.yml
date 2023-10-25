@@ -35,11 +35,13 @@
 - name: Install user-dirs.dirs
   copy:
     src: etc/skel/.config/user-dirs.dirs
-    dest: /etc/skel/.config/user-dirs.dirs
-    owner: root
-    group: root
+    dest: "{{ item.home }}/.config/user-dirs.dirs"
+    owner: "{{ item.name }}"
+    group: "{{ item.group }}"
     mode: '0644'
     backup: True
+  with_items: "{{ users }}"
+  when: item.name != 'root'
   tags: ['profile']
 
 - import_tasks:
@@ -61,7 +63,7 @@
       - "--chown={{ item.name }}:{{ item.group }}"
       - "--backup"
       - "--suffix={{ suffix }}"
-  when: item.name != 'root'
   with_items: "{{ users }}"
+  when: item.name != 'root'
   delegate_to: "{{ inventory_hostname }}"
   tags: ['profile']
