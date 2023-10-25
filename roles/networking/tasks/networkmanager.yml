@@ -25,3 +25,7 @@
     name: NetworkManager
     enabled: yes
     state: started
+
+- import_tasks:
+    file: interfaces.yml
+  when: network.interfaces is defined
