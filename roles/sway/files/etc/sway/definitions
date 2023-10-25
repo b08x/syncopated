@@ -23,15 +23,15 @@ set $bindsym bindsym --to-code
 set $unbindsym unbindsym --to-code
 
 # background
-set $background /usr/share/backgrounds/manjaro-sway/gruvbox-dark-manjarosway-3840x2160.png
+set $background /usr/share/backgrounds/syncopated/str_01_01_01.png
 
 # once-script
 set $once /usr/share/sway/scripts/once.sh
 
 # Your preferred terminal emulator
-set $term /usr/share/sway/scripts/foot.sh
-set $term_cwd $term -D "$(swaycwd 2>/dev/null || echo $HOME)"
-set $term_float footclient --app-id floating_shell --window-size-chars 82x25
+set $term kitty
+set $term_cwd $term -d "$(swaycwd 2>/dev/null || echo $HOME)"
+set $term_float kitty --class floating_shell --window-size-chars 82x25
 
 # onscreen bar
 set $onscreen_bar /usr/share/sway/scripts/wob.sh "$accent-color" "$background-color"
@@ -54,7 +54,7 @@ set $volume_mute $onscreen_bar $(pactl set-sink-mute @DEFAULT_SINK@ toggle && pa
 set $mic_mute $onscreen_bar $(pactl set-source-mute @DEFAULT_SOURCE@ toggle && pactl get-source-mute @DEFAULT_SOURCE@ | sed -En "/no/ s/.*/$($source_volume)/p; /yes/ s/.*/0/p")
 
 # rofi theme
-set $rofi_theme "* {\nlightbg: $background-color;\nbackground: $background-color;\nlightfg: $accent-color;\nforeground: $text-color;\n}"
+set $rofi_theme "* {\nlightbg: ${background-color};\nbackground: ${background-color};\nlightfg: ${accent-color};\nforeground: ${text-color};\n}"
 
 # clipboard history
 set $clipboard cliphist list | rofi -dmenu -font "$gui-font" -p "Select item to copy" -lines 10 -width 35 | cliphist decode | wl-copy
@@ -123,7 +123,7 @@ set $ws8 number 8
 set $ws9 number 9
 set $ws10 number 10
 
-# screenshot 
+# screenshot
 set $grimshot /usr/share/sway/scripts/grimshot
 set $pipe_output $grimshot save output -
 set $pipe_selection $grimshot save window -
@@ -133,7 +133,7 @@ set $swappy_pipe swappy -f - -o -
 set $upload_pipe curl -s -F "file=@-;filename=.png" https://x0.at/ | tee >(wl-copy) >(xargs notify-send)
 
 set $screenshot_screen $pipe_output | $swappy && $notify_paste
-set $screenshot_screen_upload $pipe_output | $swappy_pipe | $upload_pipe 
+set $screenshot_screen_upload $pipe_output | $swappy_pipe | $upload_pipe
 
 set $screenshot_selection $pipe_selection | $swappy && $notify_paste
 set $screenshot_selection_upload $pipe_selection | $swappy_pipe | $upload_pipe
