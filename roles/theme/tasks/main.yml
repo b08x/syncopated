@@ -5,3 +5,99 @@
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
+
+- name: show theme var
+  debug:
+    msg: "{{ theme }}"
+
+- block:
+    - name: install gtk packages
+      aur:
+        use: paru
+        name: "{{ theme.packages.gtk3 }}"
+        state: present
+
+    # - name: install gtk4 packages
+    #   aur:
+    #     use: paru
+    #     name: "{{ ui.packages.gtk4 }}"
+    #     state: present
+
+    - name: install qt5 packages
+      aur:
+        use: paru
+        name: "{{ theme.packages.qt5 }}"
+        state: present
+
+    - name: install qt6 packages
+      aur:
+        use: paru
+        name: "{{ theme.packages.qt6 }}"
+        state: present
+
+    - name: install kvantum packages
+      aur:
+        use: paru
+        name: "{{ theme.packages.kvantum }}"
+        state: present
+
+  become: False
+  when: ansible_distribution == 'Archlinux'
+  tags: ['packages']
+
+- import_tasks:
+    file: fonts.yml
+  tags: ['fonts']
+
+- import_tasks:
+    file: icons.yml
+  tags: ['icons']
+
+- name: Ensure /usr/local/share themes exists
+  file:
+    path: /usr/local/share/themes
+    state: directory
+    owner: root
+    group: root
+    recurse: True
+
+- name: Extract soundbot theme into /usr/local/share/themes
+  unarchive:
+    src: files/usr/local/share/themes/oomox-soundbot.tar.xz
+    dest: "/usr/local/share/themes"
+
+- name: Install gtk configurations
+  template:
+    src: "etc/skel/{{ item[1] }}.j2"
+    dest: "{{ item[0] }}/{{ item[1] }}"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  with_nested:
+    - [ '/etc/skel', '/root' ]
+    - [ '.config/gtk-3.0/bookmarks', '.config/gtk-3.0/gtk.css', '.config/gtk-3.0/settings.ini', '.config/gtk-4.0/settings.ini', '.gtkrc-2.0' ]
+  tags: ['profile', 'gtk']
+
+- name: Install qt configurations
+  template:
+    src: "etc/skel/{{ item[1] }}.j2"
+    dest: "{{ item[0] }}/{{ item[1] }}"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  with_nested:
+    - [ '/etc/skel', '/root' ]
+    - [ '.config/Kvantum/kvantum.kvconfig', '.config/qt5ct/colors/syncopated.conf', '.config/qt5ct/qt5ct.conf', '.config/qt6ct/colors/syncopated.conf', '.config/qt6ct/qt6ct.conf' ]
+  tags: ['profile', 'qt']
+
+- name: Install backgrounds
+  synchronize:
+    src: "usr/share/backgrounds/syncopated/"
+    dest: "/usr/share/backgrounds/syncopated/"
+    recursive: yes
+    mode: push
+    delete: no
+    rsync_opts: "--update"
+  tags: ['backgrounds']

@@ -3,13 +3,13 @@
 
 
 # some global theme specific variables
-set $gtk-theme Matcha-dark-sea
-set $icon-theme Papirus-Dark-Maia
-set $cursor-theme xcursor-breeze
-set $gui-font Roboto 11
-set $term-font JetBrainsMono Nerd Font 14
+set $gtk-theme {{ gtk.theme.name }}
+set $icon-theme {{ gtk.theme.icons }}
+set $cursor-theme {{ gtk.theme.cursor }}
+set $gui-font {{ font.primary.name }}
+set $term-font {{ font.primary.name }} 14
 set $gtk-color-scheme prefer-dark
-set $kvantum-theme Matcha-Dark
+set $kvantum-theme {{ kvantum }}
 
 set $color0  #141a1b
 set $color1  #282a2b

@@ -10,3 +10,33 @@
   debug:
     msg: "test {{ item.name }} role"
   with_items: "{{ users }}"
+
+- name: Set shell
+  user:
+    name: "{{ item.name }}"
+    shell: "{{ item.shell }}"
+  with_items: "{{ users }}"
+
+- name: Install aliases
+  copy:
+    src: etc/skel/.aliases
+    dest: /etc/skel/.aliases
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+  tags: ['profile']
+
+- name: Install profile
+  copy:
+    src: etc/skel/.profile
+    dest: /etc/skel/.profile
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+  tags: ['profile']
+
+- import_tasks:
+    file: sudoers.yml
+  tags: ['sudoers']

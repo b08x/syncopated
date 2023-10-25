@@ -1,1 +1,41 @@
 ---
+
+theme:
+  packages:
+    icons:
+      - matcha-gtk-theme
+      - numix-circle-icon-theme-git
+    cursors:
+      - xcursor-breeze
+    gtk3:
+      - gtk-engines
+      - gtk-engine-murrine
+      - gtk3-nocsd
+    qt5:
+      - kvantum
+      - qscintilla-qt5
+      - qt5-base
+      - qt5-graphicaleffects
+      - qt5-quickcontrols2
+      - qt5-tools
+      - qt5ct
+    qt6:
+      - qt6-base
+      - qt6-declarative
+      - qt6-multimedia
+      - qt6-tools
+      - qt6ct
+    kvantum:
+      # - kvantum-qt5
+      - kvantum-theme-matcha
+    fonts:
+      - gnu-free-fonts
+      - noto-fonts-emoji
+      - ttf-devicons
+      - ttf-firacode-nerd
+      - ttf-font-awesome
+      - ttf-input
+      - ttf-jetbrains-mono
+      - ttf-liberation
+      - ttf-opensans
+      - ttf-ubuntu-font-family

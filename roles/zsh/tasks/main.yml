@@ -18,6 +18,7 @@
     rsync_opts:
       - "--update"
       - "--omit-dir-times"
+      - "--chown=root:root"
 
 - name: Copy zshenv and zshrc to /etc/skel
   template:
