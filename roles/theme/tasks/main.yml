@@ -101,5 +101,8 @@
     recursive: yes
     mode: push
     delete: no
-    rsync_opts: "--update"
+    rsync_opts:
+      - "--update"
+      - "--backup"
+      - "--suffix={{ suffix }}"
   tags: ['backgrounds']

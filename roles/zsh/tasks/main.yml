@@ -19,6 +19,8 @@
       - "--update"
       - "--omit-dir-times"
       - "--chown=root:root"
+      - "--backup"
+      - "--suffix={{ suffix }}"
 
 - name: Copy zshenv and zshrc to /etc/skel
   template:

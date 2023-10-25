@@ -49,6 +49,9 @@
     rsync_opts:
       - "--update"
       - "--omit-dir-times"
+      - "--chown=root:root"
+      - "--backup"
+      - "--suffix={{ suffix }}"
 
 - name: install mimeapps.list
   copy:
@@ -98,4 +101,7 @@
     rsync_opts:
       - "--update"
       - "--omit-dir-times"
+      - "--chown=root:root"
       - "--backup"
+      - "--backup-dir=.backup"
+      - "--suffix={{ suffix }}"

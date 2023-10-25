@@ -7,7 +7,9 @@ $bindsym $mod+Return exec $term_cwd
 $bindsym $mod+Shift+Return exec $term
 
 ## Action // Kill focused window ##
-$bindsym $mod+Shift+q kill
+$bindsym F1 kill
+$bindsym $mod+q kill
+$bindsym $mod+KP_Subtract kill
 
 ## Launch // Open launcher ##
 $bindsym $mod+d exec $menu
@@ -26,7 +28,7 @@ floating_modifier $mod normal
 ## Action // Reload Sway Configuration ##
 $bindsym $mod+Shift+c reload
 
-## Action // Toggle Waybar ##    
+## Action // Toggle Waybar ##
 $bindsym $mod+Shift+b exec pkill -SIGUSR1 waybar
 
 # --locked flags allow the buttons to be used whilst the screen is locked.
@@ -114,6 +116,17 @@ $bindsym $mod+8 workspace $ws8
 $bindsym $mod+9 workspace $ws9
 $bindsym $mod+0 workspace $ws10
 
+$bindcode $mod+Mod2+$KP_1 workspace $ws1
+$bindcode $mod+Mod2+$KP_2 workspace $ws2
+$bindcode $mod+Mod2+$KP_3 workspace $ws3
+$bindcode $mod+Mod2+$KP_4 workspace $ws4
+$bindcode $mod+Mod2+$KP_5 workspace $ws5
+$bindcode $mod+Mod2+$KP_6 workspace $ws6
+$bindcode $mod+Mod2+$KP_7 workspace $ws7
+$bindcode $mod+Mod2+$KP_8 workspace $ws8
+$bindcode $mod+Mod2+$KP_9 workspace $ws9
+$bindcode $mod+Mod2+$KP_0 workspace $ws10
+
 set $focus_ws [ "$focus_after_move" == 'true' ] && swaymsg workspace
 
 ## Action // Move focused window to workspace // $mod + Shift + [number] ##
@@ -127,6 +140,17 @@ $bindsym $mod+Shift+7 move container to workspace $ws7, exec $focus_ws $ws7
 $bindsym $mod+Shift+8 move container to workspace $ws8, exec $focus_ws $ws8
 $bindsym $mod+Shift+9 move container to workspace $ws9, exec $focus_ws $ws9
 $bindsym $mod+Shift+0 move container to workspace $ws10, exec $focus_ws $ws10
+
+$bindcode $mod+Shift+Mod2+$KP_1 move container to workspace $ws1
+$bindcode $mod+Shift+Mod2+$KP_2 move container to workspace $ws2
+$bindcode $mod+Shift+Mod2+$KP_3 move container to workspace $ws3
+$bindcode $mod+Shift+Mod2+$KP_4 move container to workspace $ws4
+$bindcode $mod+Shift+Mod2+$KP_5 move container to workspace $ws5
+$bindcode $mod+Shift+Mod2+$KP_6 move container to workspace $ws6
+$bindcode $mod+Shift+Mod2+$KP_7 move container to workspace $ws7
+$bindcode $mod+Shift+Mod2+$KP_8 move container to workspace $ws8
+$bindcode $mod+Shift+Mod2+$KP_9 move container to workspace $ws9
+$bindcode $mod+Shift+Mod2+$KP_0 move container to workspace $ws10
 
 ## Launch // Open launcher in a new workspace ##
 $bindsym $mod+Shift+d exec /usr/share/sway/scripts/first-empty-workspace.py --switch, exec $menu
@@ -144,19 +168,20 @@ $bindsym $mod+Shift+m exec /usr/share/sway/scripts/first-empty-workspace.py --mo
 # Layout stuff:
 #
 ## Setting // Split windows horizontally ##
-$bindsym $mod+b splith
+$bindsym $mod+v splith
 ## Setting // Split windows vertically ##
-$bindsym $mod+v splitv
+$bindsym $mod+h splitv
 
-## Action // Switch to window stacking ##
-$bindsym $mod+s layout stacking
-## Action // Switch to window tabbing ##
-$bindsym $mod+w layout tabbed
 ## Action // Toggle window splitting ##
-$bindsym $mod+e layout toggle split
+$bindsym $mod+t layout toggle split
+
+$bindsym $mod+Shift+t layout tabbed
+$bindsym $mod+Shift+s layout stacking
+$bindsym $mod+Shift+h layout splitv
+$bindsym $mod+Shift+v layout splith
 
 ## Action // Toggle fullscreen ##
-$bindsym $mod+f fullscreen
+$bindsym F11 fullscreen
 
 ## Action // Toggle global fullscreen ##
 $bindsym $mod+Shift+f fullscreen global
