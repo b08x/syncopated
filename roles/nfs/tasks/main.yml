@@ -1,0 +1,7 @@
+---
+# tasks file for nfs
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
