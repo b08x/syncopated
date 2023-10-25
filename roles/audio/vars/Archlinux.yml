@@ -2,6 +2,10 @@
 
 audio:
   packages:
+    bluetooth:
+      - bluetooth-autoconnect
+      - bluez
+      - bluez-utils
     codecs:
       - gst-libav
       - gst-plugins-bad
@@ -11,4 +15,4 @@ audio:
       - wavpack
     network:
       - jacktrip
-      - qmidinet  
+      - qmidinet

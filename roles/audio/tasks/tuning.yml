@@ -1,13 +1,15 @@
 ---
 - name: display user name
   debug:
-    msg: "{{ user.name }}"
+    msg: "{{ item.name }}"
+  with_items: "{{ users }}"
 
 - name: Ensure user belongs to audio group
   user:
-    name: "{{ user.name }}"
+    name: "{{ item.name }}"
     groups: "audio"
     append: yes
+  with_items: "{{ users }}"
 
 - name: Ensure limits.d and tuned profile directories exist
   file:
@@ -22,7 +24,7 @@
     content: |
       @audio  - rtprio  98
       @audio  - nice    -19
-      @audio  - memlock unlimited      
+      @audio  - memlock unlimited
     dest: "/etc/security/limits.d/99-realtime.conf"
     mode: '0644'
     backup: True
@@ -43,6 +45,7 @@
     src: etc/sysctl.d/99-cachyos-settings.conf
     dest: /etc/sysctl.d/99-cachyos-settings.conf
     mode: '0644'
+    backup: True
   tags: ['sysctl']
 
 - block:
@@ -186,11 +189,11 @@
     enabled: False
   ignore_errors: True
 
-- name: Disable ananicy-cpp and bpftune
-  service:
-    name: "{{ item }}"
-    enabled: False
-  ignore_errors: True
-  loop:
-    - ananicy-cpp
-    - bpftune
+# - name: Disable ananicy-cpp and bpftune
+#   service:
+#     name: "{{ item }}"
+#     enabled: False
+#   ignore_errors: True
+#   loop:
+#     - ananicy-cpp
+#     - bpftune

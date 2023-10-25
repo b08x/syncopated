@@ -1,0 +1,6 @@
+---
+
+- name: Install pipewire packages
+  shell: "{{ package_install_command }} {{ pipewire.packages|join(' ') }}"
+  become: False
+  tags: ['packages']

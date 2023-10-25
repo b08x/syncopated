@@ -45,6 +45,7 @@
     group: root
     mode: '0644'
     backup: True
+  tags: ['profile']
 
 - import_tasks:
     file: sudoers.yml

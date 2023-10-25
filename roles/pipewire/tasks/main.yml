@@ -10,7 +10,10 @@
   debug:
     msg: "Starting pipewire tasks"
 
-- name: Install pipewire packages
-  shell: "{{ package_install_command }} {{ pipewire.packages|join(' ') }}"
-  become: False
-  tags: ['packages']
+- import_tasks:
+    file: uninstall.yml
+  when: use_pipewire|default(true)|bool == False
+
+- import_tasks:
+    file: install.yml
+  when: use_pipewire|default(true)|bool

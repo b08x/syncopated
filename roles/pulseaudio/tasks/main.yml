@@ -9,3 +9,13 @@
 - name: Starting pulseaudio tasks
   debug:
     msg: "Starting pulseaudio tasks"
+
+- import_tasks:
+    file: uninstall.yml
+  when: use_pipewire|default(true)|bool == True
+  tags: ['pulseaudio']
+
+- import_tasks:
+    file: install.yml
+  when: use_pipewire|default(true)|bool == False
+  tags: ['pulseaudio']

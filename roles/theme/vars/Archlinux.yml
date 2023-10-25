@@ -26,6 +26,7 @@ theme:
       - qt6-tools
       - qt6ct
     kvantum:
+      - kvantum-theme-nordic-git
       # - kvantum-qt5
       - kvantum-theme-matcha
     fonts:

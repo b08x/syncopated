@@ -3,8 +3,12 @@
 alsa:
   packages:
     - a2jmidid
+    - alsa-card-profiles
+    - alsa-firmware
     - alsa-lib
     - alsa-plugins
     - alsa-tools
+    - alsa-topology-conf
+    - alsa-ucm-conf
     - alsa-utils
     - zita-alsa-pcmi

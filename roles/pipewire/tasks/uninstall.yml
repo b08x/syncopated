@@ -1,0 +1,26 @@
+---
+
+- name: stop pipewire service
+  systemd:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+    scope: user
+  with_items:
+    - wireplumber.service
+    - pipewire-pulse.service
+    - pipewire-pulse.socket
+    - pipewire.service
+    - pipewire-session-manager.service
+    - pipewire.socket
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/1000"
+  become: False
+
+- name: UnInstall pipewire packages
+  shell: "{{ package_uninstall_command }} {{ pipewire.packages|join(' ') }}"
+  become: False
+  register: uninstall
+  changed_when: uninstall.rc == 0
+  failed_when: "'error: failed to prepare transaction' in uninstall.stderr and uninstall.rc != 0"
+  tags: ['packages']

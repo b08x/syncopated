@@ -10,3 +10,7 @@
   shell: "{{ package_install_command }} {{ audio.packages.codecs|join(' ') }}"
   become: False
   tags: ['packages']
+
+- import_tasks:
+    file: tuning.yml
+  tags: ['tuning', 'realtime']

@@ -1,0 +1,9 @@
+---
+
+- name: Uninstall pulseaudio packages
+  shell: "{{ package_uninstall_command }} {{ pulseaudio.packages|join(' ') }}"
+  become: False
+  register: uninstall
+  changed_when: uninstall.rc == 0
+  failed_when: "'error: failed to prepare transaction' in uninstall.stderr and uninstall.rc != 0"
+  tags: ['packages']
