@@ -1,6 +1,12 @@
 ---
 # tasks file for user
 
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
 - name: test
   debug:
-    msg: test user role
+    msg: "test {{ item.name }} role"
+  with_items: "{{ users }}"
