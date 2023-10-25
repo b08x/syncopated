@@ -1,2 +1,11 @@
 ---
 # tasks file for jack
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- name: Starting jack tasks
+  debug:
+    msg: "Starting jack tasks"
