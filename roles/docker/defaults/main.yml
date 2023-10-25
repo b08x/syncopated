@@ -1,2 +1,8 @@
 ---
 # defaults file for docker
+
+docker:
+  storage: /var/lib/docker
+  service:
+    enabled: True
+  nvidia: False
