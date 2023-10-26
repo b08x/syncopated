@@ -32,18 +32,6 @@
     backup: True
   tags: ['profile']
 
-- name: Install user-dirs.dirs
-  copy:
-    src: etc/skel/.config/user-dirs.dirs
-    dest: "{{ item.home }}/.config/user-dirs.dirs"
-    owner: "{{ item.name }}"
-    group: "{{ item.group }}"
-    mode: '0644'
-    backup: True
-  with_items: "{{ users }}"
-  when: item.name != 'root'
-  tags: ['profile']
-
 - name: sync skel directory
   synchronize:
     src: /etc/skel/
