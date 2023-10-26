@@ -1,8 +1,18 @@
 ---
 
-- name: Install jack packages
+- name: Remove jack1
+  pacman:
+    name: jack
+    state: absent
+    force: yes
+    extra_args: --noconfirm
+  ignore_errors: True
+  tags: ['packages']
+
+- name: Install jack2 packages
   shell: "{{ package_install_command }} {{ jack.packages|join(' ') }}"
   become: False
+  ignore_errors: "{{ ansible_check_mode }}"
   tags: ['packages']
 
 - name: Create environment file for jack_control.service

@@ -12,16 +12,17 @@
   when: item.name != 'root'
   with_items: "{{ users }}"
   become: False
-  ignore_errors: "{{ ansible_check_mode }}"
   register: servicestat
   failed_when: "not 'Could not find the requested service' in servicestat.msg and servicestat.rc != 0"
+  # failed_when: servicestat.state != 'stopped'
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: remove jack_control service file
   file:
     path: "/usr/lib/systemd/user/jack_control.service"
     state: absent
 
-- name: Install jack packages
+- name: UnInstall jack packages
   shell: "{{ package_uninstall_command }} {{ jack.packages|join(' ') }}"
   become: False
   register: uninstall

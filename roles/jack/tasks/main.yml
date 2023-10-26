@@ -1,4 +1,3 @@
----
 # tasks file for jack
 
 - name: Include distro vars
@@ -10,12 +9,15 @@
   debug:
     msg: "Starting jack tasks"
 
-- import_tasks:
-    file: uninstall.yml
-  when: use_pipewire|default(true)|bool
-  tags: ['jack']
+- block:
 
-- import_tasks:
-    file: install.yml
-  when: use_pipewire|default(true)|bool == False
-  tags: ['jack']
+    - import_tasks:
+        file: uninstall.yml
+      when: use_pipewire|default(false)|bool == True
+
+    - import_tasks:
+        file: install.yml
+      when: use_pipewire|default(false)|bool == False
+
+  check_mode: no
+  tags: ['packages']

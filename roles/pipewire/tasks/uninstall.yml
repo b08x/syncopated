@@ -17,7 +17,13 @@
     XDG_RUNTIME_DIR: "/run/user/1000"
   become: False
   register: servicestat
-  failed_when: "not 'Could not find the requested service' in servicestat.msg and servicestat.rc != 0"
+  #failed_when: "not 'Could not find the requested service' in servicestat.msg and servicestat.rc != 0"
+  failed_when: (servicestat.state is defined and servicestat.state != 'stopped') or (not 'Could not find the requested service' in servicestat.msg and servicestat.rc != 0)
+  ignore_errors: "{{ ansible_check_mode }}"
+
+# - name: debug
+#   debug:
+#     msg: "{{ servicestat.results[0] }}"
 
 - name: UnInstall pipewire packages
   shell: "{{ package_uninstall_command }} {{ pipewire.packages|join(' ') }}"
@@ -25,9 +31,8 @@
   register: uninstall
   changed_when: uninstall.rc == 0
   failed_when: "'error: failed to prepare transaction' in uninstall.stderr and uninstall.rc != 0"
-  tags: ['packages']
 
 - name: Install pipewire and wireplumber libs
   shell: "{{ package_install_command }} libpipewire libwireplumber"
   become: False
-  tags: ['packages']
+  ignore_errors: "{{ ansible_check_mode }}"

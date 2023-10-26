@@ -10,12 +10,15 @@
   debug:
     msg: "Starting pulseaudio tasks"
 
-- import_tasks:
-    file: uninstall.yml
-  when: use_pipewire|default(true)|bool == True
-  tags: ['pulseaudio']
+- block:
 
-- import_tasks:
-    file: install.yml
-  when: use_pipewire|default(true)|bool == False
-  tags: ['pulseaudio']
+    - import_tasks:
+        file: uninstall.yml
+      when: use_pipewire|default(false)|bool == True
+
+    - import_tasks:
+        file: install.yml
+      when: use_pipewire|default(false)|bool == False
+
+  check_mode: no
+  tags: ['packages']
