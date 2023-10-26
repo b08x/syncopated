@@ -120,8 +120,8 @@
     dest: /etc/paru.conf
     mode: '0644'
     backup: True
-  tags: ['repo']
   ignore_errors: "{{ ansible_check_mode }}"
+  tags: ['repo']
 
 - name: Check if mirrors have been updated within the past 24h
   shell: "fd --changed-within 24hours --search-path=/etc/pacman.d"

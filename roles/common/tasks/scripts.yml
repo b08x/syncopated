@@ -14,4 +14,5 @@
       - "--omit-dir-times"
       - "--backup"
       - "--suffix={{ suffix }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   tags: ['always']

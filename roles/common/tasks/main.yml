@@ -1,60 +1,22 @@
 ---
 
-- name: warn about setting ANSIBLE_HOME
-  debug:
-    msg: "besure ANSIBLE_HOME is set to this directory"
-  tags: ['debug']
-
-- name: Set datetime
-  set_fact:
-    datetime: ansible_date_time.epoch
-  tags: ['facts']
-
-- name: Set suffix
-  set_fact:
-    suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
-  tags: ['facts']
-
-- name: Set admin group name
-  set_fact:
-    admin_group: wheel
-  tags: ['facts']
-
-- name: Check -march support
-  shell: |
-    /lib/ld-linux-x86-64.so.2 --help | grep supported|xargs|awk '{print $1}'
-  register: supported_march
-  tags: ['facts']
-
-- block:
-
-    - name: Set architecture
-      set_fact:
-        architecture: "x86-64-v3"
-      when: supported_march.stdout_lines[0] == 'x86-64-v3'
-
-    - name: Set architecture
-      set_fact:
-        architecture: "x86-64"
-      when: supported_march.stdout_lines[0] == 'x86-64-v2'
-
-  when: supported_march.stdout_lines[0] is defined
-  check_mode: False
-  tags: ['facts']
+- import_tasks:
+    file: sshd.yml
+  tags: ['common', 'sshd']
 
 - import_tasks:
     file: sudoers.yml
-  tags: ['sudoers']
+  tags: ['user', 'sudoers']
 
 - import_tasks:
     file: distro/Archlinux.yml
   when: ansible_distribution == 'Archlinux'
-  tags: ['Archlinux', 'repos', 'packages']
+  tags: ['always']
 
 - import_tasks:
     file: distro/AlmaLinux.yml
   when: ansible_distribution == 'AlmaLinux'
-  tags: ['AlmaLinux', 'repos', 'packages']
+  tags: ['always']
 
 - name: set package_manager_install fact
   set_fact:
@@ -68,7 +30,7 @@
       } %}
 
       {{ package_manager_command_map.get(ansible_distribution, '# Unsupported distribution') }}
-  tags: ['packages']
+  tags: ['always']
 
 - name: set package_manager_uninstall fact
   set_fact:
@@ -82,32 +44,28 @@
       } %}
 
       {{ package_manager_uninstall_command_map.get(ansible_distribution, '# Unsupported distribution') }}
-  tags: ['packages']
+  tags: ['always']
 
 - import_tasks:
     file: dirs.yml
-  tags: ['dirs']
+  tags: ['common', 'dirs']
 
 - import_tasks:
     file: scripts.yml
-  tags: ['scripts']
-
-- import_tasks:
-    file: sshd.yml
-  tags: ['sshd']
+  tags: ['common', 'scripts']
 
 - import_tasks:
     file: updatedb.yml
-  tags: ['updatedb']
+  tags: ['common', 'updatedb']
 
 - import_tasks:
     file: zram.yml
-  tags: ['zram']
+  tags: ['common', 'zram']
 
 - import_tasks:
     file: grub.yml
-  tags: ['grub']
+  tags: ['common', 'grub']
 
 - import_tasks:
     file: autofs.yml
-  tags: ['autofs']
+  tags: ['common', 'autofs']
