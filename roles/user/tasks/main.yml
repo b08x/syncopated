@@ -6,33 +6,27 @@
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
 
-- name: Set shell
+- name: Set user shell
   user:
     name: "{{ item.name }}"
     shell: "{{ item.shell }}"
   with_items: "{{ users }}"
+  tags: ['profile']
 
-- name: Install aliases
+- name: Install .aliases and .profile
   copy:
-    src: etc/skel/.aliases
-    dest: /etc/skel/.aliases
+    src: "etc/skel/{{ item }}"
+    dest: "/etc/skel/{{ item }}"
     owner: root
     group: root
     mode: '0644'
     backup: True
+  with_items:
+    - .aliases
+    - .profile
   tags: ['profile']
 
-- name: Install profile
-  copy:
-    src: etc/skel/.profile
-    dest: /etc/skel/.profile
-    owner: root
-    group: root
-    mode: '0644'
-    backup: True
-  tags: ['profile']
-
-- name: sync skel directory
+- name: Sync /etc/skel with users home
   synchronize:
     src: /etc/skel/
     dest: "{{ item.home }}/"
@@ -43,6 +37,7 @@
     perms: no
     rsync_opts:
       - "--update"
+      - "--exclude='*.*~'"
       - "--omit-dir-times"
       - "--chown={{ item.name }}:{{ item.group }}"
       - "--backup"

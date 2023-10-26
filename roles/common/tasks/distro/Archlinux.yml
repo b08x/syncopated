@@ -56,6 +56,7 @@
         - inxi
         - jc
         - lnav
+        - most
         - neovim
         - net-tools
         - nodejs
@@ -153,16 +154,6 @@
   when: mirror_update.changed
   tags: ['repo', 'mirrors']
 
-
-# - name: Remove pipewire
-#   pacman:
-#     name: "pipewire-alsa,pipewire-audio,pipewire-jack,pipewire-pulse,wireplumber"
-#     state: absent
-#     force: yes
-#     extra_args: --noconfirm
-#   when: use_jack|default(true)|bool == True
-#   ignore_errors: True
-#   tags: ['packages']
 
 # - name: Current packages installed
 #   shell: |

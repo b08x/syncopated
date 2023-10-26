@@ -6,3 +6,4 @@ jack:
     - jack-example-tools
     - jack_capture
     - jack_utils
+    - njconnect
