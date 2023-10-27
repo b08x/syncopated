@@ -19,10 +19,10 @@ min_freq="800Hz"
 max_freq="2700MHz"
 {% endif %}
 
-{% if ansible_hostname == "tinybot" %}
-min_freq="400Hz"
-max_freq="4900MHz"
-{% endif %}
+# {% if ansible_hostname == "tinybot" %}
+# min_freq="400Hz"
+# max_freq="4900MHz"
+# {% endif %}
 
 # Specific frequency to be set.
 # Requires userspace governor to be available.
