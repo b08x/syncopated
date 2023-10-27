@@ -1,0 +1,23 @@
+---
+
+sway:
+  packages:
+    - autotiling-rs
+    - calcurse
+    - dex
+    - flashfocus
+    - mako
+    - network-manager-applet
+    - nwg-wrapper
+    - playerctl
+    - poweralertd
+    - swappy
+    - sway
+    - swaybg
+    - swaycwd
+    - swayr
+    - sworkstyle
+    - waybar
+    - wf-recorder
+    - wlsunset
+    - wofi

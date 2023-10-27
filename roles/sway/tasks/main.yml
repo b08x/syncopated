@@ -1,0 +1,101 @@
+---
+# tasks file for sway
+- name: Starting sway tasks
+  debug:
+    msg: "Starting sway tasks"
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- name: Install sway packages
+  shell: "{{ package_install_command }} {{ sway.packages | join(' ') }}"
+  become: False
+  tags: ['packages']
+
+- name: fonts config
+  copy:
+    src: etc/fonts/conf.d/51-monospace.conf
+    dest: /etc/fonts/conf.d/51-monospace.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+
+- name: Copy clipboard script
+  copy:
+    src: usr/bin/clipboard
+    dest: /usr/bin/clipboard
+    owner: root
+    group: root
+    mode: '0755'
+    backup: True
+
+- name: Sync sway scripts and waybar folder
+  synchronize:
+    src: usr/share/sway/
+    dest: /usr/share/sway/
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--chown=root:root"
+      - "--backup"
+      - "--suffix={{ suffix }}"
+
+- name: Install mimeapps.list
+  copy:
+    src: usr/share/applications/mimeapps.list
+    dest: /usr/share/applications/mimeapps.list
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+
+- name: Install sway wayland-sessions desktop file
+  copy:
+    src: usr/share/wayland-sessions/sway-unsupported.desktop
+    dest: /usr/share/wayland-sessions/sway-unsupported.desktop
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+
+- name: Install sway theme template
+  template:
+    src: usr/share/sway/themes/matcha-green/definitions.j2
+    dest: /usr/share/sway/themes/matcha-green/definitions
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+
+- name: Install sway user config
+  template:
+    src: etc/skel/.config/sway/config.j2
+    dest: /etc/skel/.config/sway/config
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+
+- name: Sync sway default config folder
+  synchronize:
+    src: etc/sway/
+    dest: /etc/sway/
+    recursive: yes
+    mode: push
+    delete: yes
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--chown=root:root"
+      - "--backup"
+      - "--suffix={{ suffix }}"

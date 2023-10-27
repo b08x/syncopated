@@ -1,0 +1,21 @@
+---
+
+pkgs__utility:
+  - aria2
+  - barrier
+  - fd
+  - firewalld
+  - gnome-keyring
+  - htop
+  - inetutils
+  - inxi
+  - jc
+  - lnav
+  - most
+  - neovim
+  - net-tools
+  - nodejs
+  - npm
+  - ranger
+  - ripgrep-all
+  - zoxide

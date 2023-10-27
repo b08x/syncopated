@@ -1,0 +1,54 @@
+---
+# tasks file for terminal
+
+- name: Starting terminal tasks
+  debug:
+    msg: "Starting terminal tasks"
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- name: Install terminal packages
+  shell: "{{ package_install_command }} {{ terminal.packages|join(' ') }}"
+  become: False
+  tags: ['packages']
+
+- name: Ensure folders exist
+  file:
+    path: "/etc/skel/.config/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+  with_items:
+    - alacritty
+    - kitty
+    - ranger
+    - terminator
+  tags: ['alacritty', 'kitty', 'ranger', 'terminator']
+
+- name: Install alacritty template
+  template:
+    src: etc/skel/.config/alacritty/alacritty.yml.j2
+    dest: /etc/skel/.config/alacritty/alacritty.yml
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+  tags: ['alacritty']
+
+- name: Install kitty templates
+  template:
+    src: "etc/skel/.config/kitty/{{ item }}.j2"
+    dest: "/etc/skel/.config/kitty/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+  with_items:
+    - kitty.conf
+    - current-theme.conf
+    - open-actions.conf
+    - start.conf
+  tags: ['kitty']

@@ -1,0 +1,44 @@
+---
+
+- block:
+
+    - name: Add Hasicorp repository
+      shell: yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+
+    - name: install vagrant requirements
+      dnf:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - '@Development Tools'
+        - cmake
+        - libguestfs-tools-c
+        - libvirt-devel
+        - libxml2-devel
+        - libxslt-devel
+        - rsync
+        - ruby
+        - ruby-devel
+        - zlib-devel
+
+    - name: install vagrant
+      dnf:
+        name: vagrant
+        state: present
+        update_cache: yes
+
+  when: ansible_distribution == 'AlmaLinux'
+  tags: ['packages']
+
+- block:
+
+    - name: install vagrant
+      pacman:
+        name: vagrant
+        state: present
+        force: yes
+        extra_args: --noconfirm
+
+  when: ansible_distribution == 'Archlinux'
+  tags: ['packages']

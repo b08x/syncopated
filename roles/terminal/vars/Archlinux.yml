@@ -1,0 +1,32 @@
+---
+
+terminal:
+  packages:
+    - alacritty
+    - atool
+    - bat
+    - calibre
+    - djvulibre
+    - elinks
+    - fontforge
+    - highlight
+    - imagemagick
+    - jupyter-nbconvert
+    - kitty
+    - lynx
+    - mediainfo
+    - mpv
+    - mupdf-tools
+    - odt2txt
+    - openscad
+    - perl-image-exiftool
+    - python-pillow
+    - python-pygments
+    - ranger
+    - rxvt-unicode
+    - tilda
+    - terminology
+    - terminator
+    - transmission-cli
+    - ueberzug
+    - w3m

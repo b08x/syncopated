@@ -1,0 +1,90 @@
+---
+# tasks file for theme
+
+- name: Starting theme tasks
+  debug:
+    msg: "Starting theme tasks!"
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- name: pkgs_theme
+  set_fact:
+    pkgs__theme: "{{ pkgs__icons + pkgs__cursors + pkgs__gtk3 + pkgs__qt5 + pkgs__qt6 + pkgs__kvantum + pkgs__fonts }}"
+
+- name: install theme packages
+  aur:
+    use: paru
+    name: "{{ pkgs__theme | flatten(1) }}"
+    state: present
+  become: False
+  when: ansible_distribution == 'Archlinux'
+  tags: ['packages','theme']
+
+- import_tasks:
+    file: fonts.yml
+  tags: ['fonts','theme']
+
+- import_tasks:
+    file: icons.yml
+  tags: ['icons','theme']
+
+- name: Ensure /usr/local/share themes exists
+  file:
+    path: /usr/local/share/themes
+    state: directory
+    owner: root
+    group: root
+    recurse: True
+  tags: ['theme']
+
+- name: Extract themes into /usr/local/share/themes
+  unarchive:
+    src: "usr/local/share/themes/{{ item }}"
+    dest: "/usr/local/share/themes"
+  with_items:
+   - oomox-soundbot.tar.xz
+   - ArchLabs-Dark.tar.gz
+   - ArchLabs-Light.tar.gz
+  tags: ['theme']
+
+- name: Install gtk configurations
+  template:
+    src: "etc/skel/{{ item[1] }}.j2"
+    dest: "{{ item[0] }}/{{ item[1] }}"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  with_nested:
+    - [ '/etc/skel', '/root' ]
+    - [ '.config/gtk-3.0/bookmarks', '.config/gtk-3.0/gtk.css', '.config/gtk-3.0/settings.ini', '.config/gtk-4.0/settings.ini', '.gtkrc-2.0' ]
+  tags: ['profile', 'gtk']
+
+- name: Install qt configurations
+  template:
+    src: "etc/skel/{{ item[1] }}.j2"
+    dest: "{{ item[0] }}/{{ item[1] }}"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  with_nested:
+    - [ '/etc/skel', '/root' ]
+    - [ '.config/Kvantum/kvantum.kvconfig', '.config/qt5ct/colors/syncopated.conf', '.config/qt5ct/qt5ct.conf', '.config/qt6ct/colors/syncopated.conf', '.config/qt6ct/qt6ct.conf' ]
+  tags: ['profile', 'qt']
+
+- name: Install backgrounds
+  synchronize:
+    src: "usr/share/backgrounds/syncopated/"
+    dest: "/usr/share/backgrounds/syncopated/"
+    recursive: yes
+    mode: push
+    delete: no
+    rsync_opts:
+      - "--update"
+      - "--backup"
+      - "--suffix={{ suffix }}"
+  tags: ['backgrounds']

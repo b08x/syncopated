@@ -1,0 +1,63 @@
+---
+
+# to allow for ansible pipelining functionality
+# https://docs.ansible.com/ansible/2.4/intro_configuration.html#pipelining
+# while this requirement was removed in RHEL, many other distros leave this option enabled
+- name: Disable requiretty for user so automation can run without interruption
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: "^Defaults    requiretty"
+    line: "Defaults:{{ item.name }}    !requiretty"
+    backrefs: yes
+    backup: yes
+    validate: 'visudo -cf %s'
+  when: item.name != 'root'
+  with_items: "{{ users }}"
+
+- block:
+
+    - name: Ensure /etc/sudoers.d exists
+      file:
+        path: /etc/sudoers.d/
+        state: directory
+        owner: root
+        group: root
+        recurse: True
+
+    - name: Set NOPASSWD for user in sudoers
+      lineinfile:
+        path: /etc/sudoers.d/99-user
+        line: '{{ item.name }} ALL=(ALL:ALL) NOPASSWD: ALL'
+        validate: '/usr/sbin/visudo -cf %s'
+        create: yes
+        backup: yes
+      when:
+        - item.name != 'root'
+        - item.sudoers|default(false)|bool == True
+      with_items: "{{ users }}"
+
+    - name: Set NOPASSWD for user in polkit
+      copy:
+        content: |
+          /* Allow members of the wheel group to execute any actions
+          * without password authentication, similar to "sudo NOPASSWD:"
+          */
+          polkit.addRule(function(action, subject) {
+            if (subject.isInGroup("{{ admin_group }}")) {
+              return polkit.Result.YES;
+            }
+          });
+        dest: "/etc/polkit-1/rules.d/49-nopasswd_global.rules"
+        mode: '0644'
+      when: ansible_os_family == 'Archlinux' or ansible_distribution == 'Fedora'
+
+    - name: Set NOPASSWD for user in polkit
+      copy:
+        content: |
+          [set admin_group privs]
+          Identity=unix-group:{{ admin_group }}
+          Action=*
+          ResultActive=yes
+        dest: "/etc/polkit-1/localauthority/50-local.d/admin_group.pkla"
+        mode: '0644'
+      when: ansible_os_family == 'MX' or ansible_os_family == 'Debian'

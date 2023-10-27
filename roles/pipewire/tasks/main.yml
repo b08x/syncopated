@@ -1,0 +1,23 @@
+---
+# tasks file for pipewire
+
+- name: Starting pipewire tasks
+  debug:
+    msg: "Starting pipewire tasks"
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- block:
+    - import_tasks:
+        file: uninstall.yml
+      when: use_pipewire|default(false)|bool == False
+
+    - import_tasks:
+        file: install.yml
+      when: use_pipewire|default(false)|bool == True
+
+  check_mode: no
+  tags: ['packages']

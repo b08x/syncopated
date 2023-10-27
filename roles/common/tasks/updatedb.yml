@@ -1,0 +1,22 @@
+---
+
+- name: Install mlocate
+  package:
+    name: mlocate
+    state: present
+  tags: ['packages']
+
+- name: Set directories to not be indexed
+  template:
+    src: etc/updatedb.conf.j2
+    dest: /etc/updatedb.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  register: updatedb_conf
+
+- name: Run updatedb
+  command: "updatedb"
+  when: updatedb_conf.changed
+  ignore_errors: True

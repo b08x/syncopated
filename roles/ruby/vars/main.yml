@@ -1,0 +1,55 @@
+---
+# vars file for ruby
+
+gems:
+  - activesupport
+  - awesome_print
+  - bcrypt_pbkdf
+  - childprocess
+  - clipboard
+  - colorize
+  - coltrane
+  - dotenv
+  - drydock
+  - ed25519
+  - eventmachine
+  - ffi
+  - fractional
+  - geo_coord
+  - highline
+  - i3ipc
+  - i18n
+  - json
+  - jsonl
+  - kramdown
+  - langchainrb
+  - logging
+  - minitest
+  - mocha
+  - multi_json
+  - neovim
+  - net-ssh
+  - open3
+  - open4
+  - parallel
+  - pastel
+  - pry
+  - pry-doc
+  - rake
+  - rdoc
+  - rexml
+  - rouge
+  - ruby-lsp
+  - ruby-openai
+  - rugged
+  - ruport
+  - solargraph
+  - sync
+  - sys-proctable
+  - treetop
+  - tty-box
+  - tty-command
+  - tty-config
+  - tty-prompt
+  - tty-screen
+  - yaml

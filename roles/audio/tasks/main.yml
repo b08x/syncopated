@@ -1,0 +1,20 @@
+---
+# tasks file for audio
+
+- name: Starting audio tasks
+  debug:
+    msg: "Starting audio tasks"
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- name: Install audio codec packages
+  shell: "{{ package_install_command }} {{ audio.packages.codecs|join(' ') }}"
+  become: False
+  tags: ['packages']
+
+- import_tasks:
+    file: tuning.yml
+  tags: ['tuning', 'realtime']

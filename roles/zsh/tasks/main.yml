@@ -1,0 +1,40 @@
+---
+# tasks file for zsh
+
+- name: Starting zsh tasks
+  debug:
+    msg: "Starting zsh tasks"
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- name: sync folder
+  synchronize:
+    src: etc/skel/.zsh/
+    dest: /etc/skel/.zsh/
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--chown=root:root"
+      - "--backup"
+      - "--suffix={{ suffix }}"
+
+- name: Copy zshenv and zshrc to /etc/skel
+  template:
+    src: "etc/skel/{{ item }}.j2"
+    dest: "/etc/skel/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+  with_items:
+    - .zshenv
+    - .zshrc
+  tags: ['profile']

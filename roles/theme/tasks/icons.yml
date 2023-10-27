@@ -1,0 +1,31 @@
+---
+
+- name: Install pixmaps
+  copy:
+    src: "usr/local/share/pixmaps/"
+    dest: "/usr/local/share/pixmaps/"
+    directory_mode: yes
+    mode: '644'
+
+- name: Ensure /usr/local/share icons exists
+  file:
+    path: /usr/local/share/icons
+    state: directory
+    owner: root
+    group: root
+    recurse: True
+
+- name: Extract soundbot theme icons into /usr/local/share/icons
+  unarchive:
+    src: "usr/local/share/icons/{{ item }}"
+    dest: "/usr/local/share/icons"
+  with_items:
+    - oomox-soundbot_icons.tar.xz
+    - ArchLabs-Dark.tar.gz
+    - ArchLabs-Light.tar.gz
+
+- name: Update the icon cache
+  command: bash -lc "gtk-update-icon-cache"
+  register: icon_cache
+  changed_when: icon_cache.rc !=0
+  tags: ['icons']

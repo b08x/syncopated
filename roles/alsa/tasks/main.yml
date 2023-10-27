@@ -1,0 +1,15 @@
+---
+# tasks file for alsa
+- name: Starting alsa tasks
+  debug:
+    msg: "Starting alsa tasks"
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- name: Install alsa packages
+  shell: "{{ package_install_command }} {{ alsa.packages|join(' ') }}"
+  become: False
+  tags: ['packages']

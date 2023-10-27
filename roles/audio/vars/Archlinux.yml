@@ -1,0 +1,18 @@
+---
+
+audio:
+  packages:
+    bluetooth:
+      - bluetooth-autoconnect
+      - bluez
+      - bluez-utils
+    codecs:
+      - gst-libav
+      - gst-plugins-bad
+      - opus
+      - opusfile
+      - vorbis-tools
+      - wavpack
+    network:
+      - jacktrip
+      - qmidinet

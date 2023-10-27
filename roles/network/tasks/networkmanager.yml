@@ -1,0 +1,31 @@
+---
+
+# - name: populate /etc/resolv with local dns info
+#   template:
+#       src: etc/resolv.conf.j2
+#       dest: /etc/resolv.conf
+
+- name: Disable systemd-networkd service
+  systemd:
+    name: systemd-networkd
+    enabled: no
+    state: stopped
+  ignore_errors: True
+
+- name: Ensure networkmanager connection check is enabled
+  copy:
+    content: |
+      [connectivity]
+      enabled=true
+    dest: "/etc/NetworkManager/conf.d/20-connectivity.conf"
+    owner: root
+
+- name: Enable and start networkmanager
+  systemd:
+    name: NetworkManager
+    enabled: yes
+    state: started
+
+- import_tasks:
+    file: interfaces.yml
+  when: network.interfaces is defined

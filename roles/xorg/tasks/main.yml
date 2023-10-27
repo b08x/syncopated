@@ -1,0 +1,10 @@
+---
+# tasks file for xorg
+- name: Starting xorg tasks
+  debug:
+    msg: "Starting xorg tasks"
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']

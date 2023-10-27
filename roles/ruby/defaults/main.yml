@@ -1,0 +1,4 @@
+---
+# defaults file for ruby
+
+ruby__version: 3.0.0

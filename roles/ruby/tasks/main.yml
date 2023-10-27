@@ -1,0 +1,81 @@
+---
+# tasks file for ruby
+- name: Starting ruby tasks
+  debug:
+    msg: "Starting ruby tasks"
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- block:
+    - name: install system ruby packages
+      dnf:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - cmake
+        - g++
+        - git
+        - libgit2-devel
+        - openssl-devel
+        - postgresql-devel
+        - ruby-devel
+        - rubygem-psych
+        - rubygems
+      when: ansible_distribution == 'AlmaLinux'
+
+    - name: install system ruby packages
+      pacman:
+        name: "{{ item }}"
+        state: present
+        force: yes
+        extra_args: --noconfirm
+      loop:
+        - openssl
+        - postgresql-libs
+        - ruby-psych
+      when: ansible_distribution == 'Archlinux'
+
+  tags: ['packages']
+
+# by default /etc/gemrc is set to --user-install
+# set --no-user-install in /root/.gemrc
+# to install gems system wide using sudo
+- name: set --no-user-install in /root/.gemrc
+  copy:
+    content: |
+      gem: --no-user-install --no-document
+    dest: "/root/.gemrc"
+    owner: root
+
+- name: Install ruby profile.d script
+  template:
+    src: etc/profile.d/ruby.sh.j2
+    dest: /etc/profile.d/ruby.sh
+    owner: root
+    group: root
+    mode: '0755'
+    backup: True
+
+- name: update system bundler
+  shell: gem update --system 3.4.21
+
+- name: gather list of installed gems
+  shell: "gem list | awk '{ print $1 }'"
+  become: False
+  register: gemlist
+  changed_when: gemlist.rc != 0
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: set list of gems to install
+  set_fact:
+    ruby__gems: "{{ gems|difference(gemlist.stdout) }}"
+
+- name: install ruby gems
+  shell: "gem install {{ item }}"
+  with_items:
+    - "{{ ruby__gems }}"
+  when: ruby__gems | length > 0

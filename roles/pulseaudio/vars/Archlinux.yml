@@ -1,0 +1,9 @@
+---
+
+pulseaudio:
+  packages:
+    - pavucontrol
+    - pulseaudio-alsa
+    - pulseaudio-bluetooth
+    - pulseaudio-jack
+    - pulsemixer

@@ -1,0 +1,28 @@
+---
+
+- name: Include dirs vars
+  include_vars:
+    file: vars/dirs.yml
+  tags: ['always']
+
+- name: Ensure root directories are created
+  file:
+    dest: "{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(root_directory_default_owner) }}"
+    group: "{{ item.group | default(root_directory_default_group) }}"
+    mode: "{{ item.mode | default(root_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(root_directory_default_recurse) }}"
+  with_items: "{{ root_directory_definitions }}"
+
+- name: Ensure home directories are created
+  file:
+    dest: "{{ home_directory_default_location }}/{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(home_directory_default_owner) }}"
+    group: "{{ item.group | default(home_directory_default_group) }}"
+    mode: "{{ item.mode | default(home_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(home_directory_default_recurse) }}"
+  with_items: "{{ home_directory_definitions }}"
+  check_mode: no
+  tags: ['profile']

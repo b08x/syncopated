@@ -1,0 +1,109 @@
+---
+
+- name: Starting docker tasks
+  debug:
+    msg: "Starting docker tasks"
+
+- block:
+
+    - block:
+        - name: Add Docker repository
+          shell: |
+            yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+          register: result
+
+        - name: Install Docker packages
+          dnf:
+            name: "{{ item }}"
+            state: present
+          loop:
+            - docker-ce
+            - docker-ce-cli
+            - containerd.io
+            - docker-compose-plugin
+          when: result is success
+
+        - name: Add docker cli-plugins to path
+          copy:
+            src: etc/profile.d/compose.sh
+            dest: /etc/profile.d/compose.sh
+            mode: '0644'
+
+      when: ansible_distribution == 'AlmaLinux'
+
+    - name: Install docker packages
+      aur:
+        use: auto
+        name: "{{ item }}"
+        state: present
+      loop:
+        - docker
+        - docker-compose
+        - lazydocker-bin
+      become: False
+      when: ansible_distribution == 'Archlinux'
+
+    - name: Install docker packages
+      aur:
+        use: paru
+        name: "{{ item }}"
+        state: present
+        extra_args: "--overwrite '*'"
+      loop:
+        - nvidia-docker
+        - nvidia-docker-compose
+      become: False
+      when:
+        - ansible_distribution == 'Archlinux'
+        - docker.nvidia|bool
+
+  tags: ['packages']
+
+#TODO: add failed_when logic
+- name: Add user to docker group
+  user:
+    name: "{{ item  }}"
+    groups: docker
+    append: yes
+  with_items:
+    - "{{ docker.users }}"
+  check_mode: no
+  tags: ['groups']
+
+- name: Set docker storage location
+  lineinfile:
+    path: "/usr/lib/systemd/system/docker.service"
+    regexp: "^ExecStart=/usr/bin/dockerd"
+    line: "ExecStart=/usr/bin/dockerd --data-root {{ docker.storage }} -H fd:// --containerd=/run/containerd/containerd.sock"
+    insertafter: "[Service]"
+    firstmatch: True
+  notify: reload systemd daemon
+
+- name: Create docker config directory
+  file:
+    path: /etc/docker
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Set docker daemon options
+  template:
+    src: etc/docker/daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    mode: '0644'
+    backup: True
+
+- name: Disable overlay redirect
+  copy:
+    content: |
+      options overlay metacopy=off redirect_dir=off
+
+    dest: "/etc/modprobe.d/disable-overlay-redirect-dir.conf"
+    owner: root
+
+- name: set docker service preset
+  systemd:
+    name: docker
+    enabled: "{{ docker.service.enabled }}"

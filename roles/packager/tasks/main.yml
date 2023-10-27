@@ -1,0 +1,60 @@
+---
+- name: create devops group
+  group:
+    name: devops
+    state: present
+    gid: 1041
+
+- name: add packager to the devops group
+  user:
+    name: "{{ packager.name }}"
+    groups: devops
+    append: True
+
+- name: Create packager workspace folder
+  file:
+    path: "{{ packager.workspace }}/{{ item }}"
+    state: directory
+    owner: "{{ packager.name }}"
+    group: devops
+    mode: "2775"
+    recurse: True
+  with_items:
+    - archlinux/pkgbuids
+    - almalinux/specs
+
+
+
+- name: Create distro repo folder tree
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ packager.name }}"
+    group: devops
+    mode: "2775"
+    recurse: True
+  with_items:
+    - "{{ repos.archlinux.packages }}"
+    - "{{ repos.archlinux.src_packages }}"
+    - "{{ repos.archlinux.x86_64 }}"
+    - "{{ repos.archlinux.x86_64_v3 }}"
+
+- name: Create distro repo folder tree
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ packager.name }}"
+    group: devops
+    mode: "2775"
+    recurse: True
+  with_items:
+    - "{{ repos.almalinux.packages }}"
+    - "{{ repos.almalinux.src_packages }}"
+    - "{{ repos.almalinux.x86_64 }}"
+    - "{{ repos.almalinux.x86_64_v3 }}"
+
+
+- name: Load distro tasks
+  import_tasks:
+    file: Archlinux.yml
+  when: ansible_distribution == 'Archlinux'

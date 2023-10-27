@@ -1,0 +1,10 @@
+---
+# defaults file for alsa
+
+# set audio hardware info as facts
+# configure asoundrc, etc
+
+# jack will use alsa facts to configure jack_control
+
+# pulseaudio will use to configure sinks/sources
+# pipewire ...
