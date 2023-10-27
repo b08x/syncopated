@@ -1,5 +1,8 @@
 ---
 # tasks file for ruby
+- name: Starting ruby tasks
+  debug:
+    msg: "Starting ruby tasks"
 
 - name: Include distro vars
   include_vars:

@@ -1,13 +1,12 @@
 ---
+- name: Starting networking tasks
+  debug:
+    msg: "Starting networking tasks"
 
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
-
-- name: Starting network tasks
-  debug:
-    msg: "Starting network tasks"
 
 - import_tasks:
     file: networkmanager.yml

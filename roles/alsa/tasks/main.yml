@@ -1,5 +1,8 @@
 ---
 # tasks file for alsa
+- name: Starting alsa tasks
+  debug:
+    msg: "Starting alsa tasks"
 
 - name: Include distro vars
   include_vars:

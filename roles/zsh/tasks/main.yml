@@ -1,6 +1,10 @@
 ---
 # tasks file for zsh
 
+- name: Starting zsh tasks
+  debug:
+    msg: "Starting zsh tasks"
+
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml

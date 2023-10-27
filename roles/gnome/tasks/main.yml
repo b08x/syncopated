@@ -1,6 +1,10 @@
 ---
 # tasks file for gnome
 
+- name: Starting gnome tasks
+  debug:
+    msg: "Starting gnome tasks"
+
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml

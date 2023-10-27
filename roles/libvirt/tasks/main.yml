@@ -1,14 +1,14 @@
 ---
 # tasks file for libvirt
 
+- name: Starting libvirt tasks
+  debug:
+    msg: "Starting libvirt tasks"
+
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
-
-- name: Starting libvirt tasks
-  debug:
-    msg: "Starting libvirt tasks"
 
 - block:
     # :: exfatprogs and exfat-utils are in conflict. Remove exfat-utils? [y/N]

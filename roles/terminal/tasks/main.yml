@@ -1,6 +1,10 @@
 ---
 # tasks file for terminal
 
+- name: Starting terminal tasks
+  debug:
+    msg: "Starting terminal tasks"
+
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml

@@ -17,7 +17,7 @@
     XDG_RUNTIME_DIR: "/run/user/1000"
   become: False
   register: servicestat
-  failed_when: (servicestat.state is defined and servicestat.state != 'stopped') or (not 'Could not find the requested service' in servicestat.msg and servicestat.rc != 0)
+  failed_when: (servicestat.state is defined and servicestat.state != 'stopped') or (servicestat.msg is defined and not 'Could not find the requested service' in servicestat.msg and servicestat.rc != 0)
   ignore_errors: "{{ ansible_check_mode }}"
 
 # - name: debug

@@ -1,6 +1,10 @@
 ---
 # tasks file for audio
 
+- name: Starting audio tasks
+  debug:
+    msg: "Starting audio tasks"
+
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml

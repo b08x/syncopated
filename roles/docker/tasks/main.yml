@@ -1,6 +1,10 @@
 ---
 # tasks file for docker
 
+- name: Starting docker tasks
+  debug:
+    msg: "Starting docker tasks"
+
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml

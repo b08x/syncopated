@@ -1,6 +1,10 @@
 ---
 # tasks file for greetd
 
+- name: Starting greetd tasks
+  debug:
+    msg: "Starting greetd tasks"
+
 - name: Install greetd-tuigreet
   shell: "{{ package_install_command }} greetd-tuigreet"
   become: False

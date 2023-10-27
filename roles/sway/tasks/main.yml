@@ -1,18 +1,13 @@
 ---
 # tasks file for sway
+- name: Starting sway tasks
+  debug:
+    msg: "Starting sway tasks"
 
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
-
-# - name: check vars
-#   debug:
-#     msg: "{{ colors }}"
-
-- name: Starting sway role
-  debug:
-    msg: "starting sway role!"
 
 - name: Install sway packages
   shell: "{{ package_install_command }} {{ sway.packages | join(' ') }}"

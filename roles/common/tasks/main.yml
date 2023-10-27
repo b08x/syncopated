@@ -1,5 +1,9 @@
 ---
 
+- name: Starting common tasks
+  debug:
+    msg: "Starting common tasks"
+
 - import_tasks:
     file: sshd.yml
   tags: ['common', 'sshd']

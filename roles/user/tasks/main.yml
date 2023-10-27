@@ -1,6 +1,10 @@
 ---
 # tasks file for user
 
+- name: Starting user tasks
+  debug:
+    msg: "Starting user tasks"
+
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
