@@ -37,33 +37,12 @@
   when: syncopated_keys.changed or archaudio_keys.changed
   tags: ['repo']
 
-- name: Install some utility packages
+- name: Install utility packages
   pacman:
-    name: "{{ utility.packages }}"
+    name: "{{ pkgs__utility }}"
     state: present
     extra_args: --noconfirm
   tags: ['packages']
-  vars:
-    utility:
-      packages:
-        - aria2
-        - barrier
-        - fd
-        - firewalld
-        - gnome-keyring
-        - htop
-        - inetutils
-        - inxi
-        - jc
-        - lnav
-        - most
-        - neovim
-        - net-tools
-        - nodejs
-        - npm
-        - ranger
-        - ripgrep-all
-        - zoxide
 
 - name: Set makepkg to use aria2
   template:

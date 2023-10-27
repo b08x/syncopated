@@ -27,8 +27,7 @@ galaxy_info:
   galaxy_tags:
     - linux-audio
 
-dependencies:
-  []
+dependencies:  []
   # - common
   # - ruby
   # - terminal

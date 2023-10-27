@@ -1,0 +1,39 @@
+---
+
+- import_tasks:
+    file: distro/Archlinux.yml
+  when: ansible_distribution == 'Archlinux'
+  tags: ['always']
+
+- import_tasks:
+    file: distro/AlmaLinux.yml
+  when: ansible_distribution == 'AlmaLinux'
+  tags: ['always']
+
+- name: set package_manager_install fact
+  set_fact:
+    package_install_command: "{{ package_manager_command }}"
+  vars:
+    package_manager_command: >-
+      {% set package_manager_command_map = {
+        'Debian': 'sudo apt install -y',
+        'AlmaLinux': 'sudo dnf -y install',
+        'Archlinux': 'paru -S --noconfirm --needed --cleanafter --batchinstall --useask'
+      } %}
+
+      {{ package_manager_command_map.get(ansible_distribution, '# Unsupported distribution') }}
+  tags: ['always']
+
+- name: set package_manager_uninstall fact
+  set_fact:
+    package_uninstall_command: "{{ package_manager_uninstall_command }}"
+  vars:
+    package_manager_uninstall_command: >-
+      {% set package_manager_uninstall_command_map = {
+        'Debian': 'sudo apt uninstall -y',
+        'AlmaLinux': 'sudo dnf -y uninstall',
+        'Archlinux': 'paru -Rdd --noconfirm'
+      } %}
+
+      {{ package_manager_uninstall_command_map.get(ansible_distribution, '# Unsupported distribution') }}
+  tags: ['always']
