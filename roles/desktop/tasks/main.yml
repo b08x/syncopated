@@ -1,2 +1,11 @@
 ---
 # tasks file for desktop
+
+- import_role: i3
+  when: desktop.wm == 'i3'
+
+- import_role: sway
+  when: desktop.wm == 'sway'
+
+- import_role: gnome
+  when: desktop.wm == 'gnome'

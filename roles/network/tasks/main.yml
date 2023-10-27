@@ -1,7 +1,7 @@
 ---
-- name: Starting networking tasks
+- name: Starting network tasks
   debug:
-    msg: "Starting networking tasks"
+    msg: "Starting network tasks"
 
 - name: Include distro vars
   include_vars:

@@ -28,8 +28,9 @@ galaxy_info:
     - linux-audio
 
 dependencies:
-  - common
-  - ruby
-  - terminal
-  - audio
-  - networking
+  []
+  # - common
+  # - ruby
+  # - terminal
+  # - audio
+  # - network

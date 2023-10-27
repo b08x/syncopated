@@ -1,7 +1,0 @@
----
-# tasks file for ide
-
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
