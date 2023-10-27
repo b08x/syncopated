@@ -1,46 +1,24 @@
 ---
 # tasks file for theme
 
+- name: Starting theme tasks
+  debug:
+    msg: "Starting theme tasks!"
+
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
 
-# - name: show theme var
-#   debug:
-#     msg: "{{ theme }}"
+- name: pkgs_theme
+  set_fact:
+    pkgs__theme: "{{ pkgs__icons + pkgs__cursors + pkgs__gtk3 + pkgs__qt5 + pkgs__qt6 + pkgs__kvantum + pkgs__fonts }}"
 
-- block:
-    - name: install gtk packages
-      aur:
-        use: paru
-        name: "{{ theme.packages.gtk3 }}"
-        state: present
-
-    # - name: install gtk4 packages
-    #   aur:
-    #     use: paru
-    #     name: "{{ ui.packages.gtk4 }}"
-    #     state: present
-
-    - name: install qt5 packages
-      aur:
-        use: paru
-        name: "{{ theme.packages.qt5 }}"
-        state: present
-
-    - name: install qt6 packages
-      aur:
-        use: paru
-        name: "{{ theme.packages.qt6 }}"
-        state: present
-
-    - name: install kvantum packages
-      aur:
-        use: paru
-        name: "{{ theme.packages.kvantum }}"
-        state: present
-
+- name: install theme packages
+  aur:
+    use: paru
+    name: "{{ pkgs__theme | flatten(1) }}"
+    state: present
   become: False
   when: ansible_distribution == 'Archlinux'
   tags: ['packages','theme']
@@ -62,10 +40,14 @@
     recurse: True
   tags: ['theme']
 
-- name: Extract soundbot theme into /usr/local/share/themes
+- name: Extract themes into /usr/local/share/themes
   unarchive:
-    src: files/usr/local/share/themes/oomox-soundbot.tar.xz
+    src: "usr/local/share/themes/{{ item }}"
     dest: "/usr/local/share/themes"
+  with_items:
+   - oomox-soundbot.tar.xz
+   - ArchLabs-Dark.tar.gz
+   - ArchLabs-Light.tar.gz
   tags: ['theme']
 
 - name: Install gtk configurations

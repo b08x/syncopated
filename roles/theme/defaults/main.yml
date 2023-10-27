@@ -5,7 +5,7 @@
 gtk:
   theme:
     name: oomox-soundbot
-    icons: Numix Circle
+    icons: ArchLabs-Dark
     cursor: xcursor-breeze
 kvantum: KvGnomeDark
 qtstyle: Fusion

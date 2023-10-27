@@ -1,17 +1,5 @@
 ---
 
-- block:
-
-    - name: Install font packages
-      aur:
-        use: paru
-        name: "{{ theme.packages.fonts }}"
-        state: present
-      become: False
-      when: ansible_distribution == 'Archlinux'
-
-  tags: ['packages']
-
 - name: Ensure /usr/local/share fonts exists
   file:
     path: /usr/local/share/fonts
@@ -22,7 +10,7 @@
 
 - name: Extract fonts to /usr/local/share/fonts
   unarchive:
-    src: usr/local/share/fonts.tar.xz
+    src: usr/local/share/fonts.tar.gz
     dest: "/usr/local/share/fonts"
 
 # - name: Install fonts.conf
