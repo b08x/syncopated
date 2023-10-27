@@ -1,7 +1,6 @@
 ---
 # defaults file for theme
 
-# theme options
 gtk:
   theme:
     name: oomox-soundbot
