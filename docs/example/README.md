@@ -4,12 +4,12 @@
 
 * installs ansible & galaxy collection
 
-var files for each role are displayed for user to edit/change, 
+Feature: var files for each role are displayed for user to edit/change, 
 those variable are stored in ~/.config/syncopated/vars.yml
 
 ```bash
 
-docker container of target distro with additional repos is started 
+docker container of target distro with additional repos is started
 
 
 ***select packages to install using gum or fzf***
