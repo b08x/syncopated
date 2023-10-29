@@ -9,3 +9,63 @@
 
 - import_role: gnome
   when: desktop.wm == 'gnome'
+
+- import_tasks:
+    file: swhkd.yml
+  tags: ['swhkd', 'keybindings']
+
+- import_tasks:
+    file: inputRemapper.yml
+  tags: ['inputRemapper', 'keybindings']
+
+#TODO: Add dunst and picom xdg autostart desktop entries
+- name: Set dunst config
+  template:
+    src: "etc/skel/.config/dunst/dunstrc.j2"
+    dest: "/etc/skel/.config/dunst/dunstrc"
+    owner: root
+    group: root
+    mode: "0644"
+    backup: yes
+  tags: ["profile", "dunst"]
+
+- name: Set picom config
+  template:
+    src: "etc/skel/.config/picom/picom.conf.j2"
+    dest: "/etc/skel/.config/picom/picom.conf"
+    owner: root
+    group: root
+    mode: "0644"
+    backup: yes
+  tags: ["profile", "picom"]
+
+- name: Set xdg autostart applications
+  synchronize:
+    src: etc/xdg/autostart
+    dest: /etc/xdg/autostart
+    recursive: yes
+    mode: push
+    delete: yes
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+
+# - name: Remove xdg autostart entry
+#   file:
+#     path: "/etc/xdg/autostart/{{ item }}"
+#     state: absent
+#   with_items:
+#     - picom.desktop
+#     - autorandr-kde.desktop
+#     - autorandr.desktop
+#     - firewall-applet.desktop
+#     - gnome-keyring-pkcs11.desktop
+#     - gnome-keyring-secrets.desktop
+#     - gnome-keyring-ssh.desktop
+#     - polkit-kde-authentication-agent-1.desktop
+#     - pamac-tray-budgie.desktop
+#     - pamac-tray.desktop
+#     - pulseaudio.desktop
+#   tags: ["profile", "picom", "xdg"]
