@@ -1,2 +1,5 @@
 *.pyc
 tmp/
+*.mp4
+*.ppm
+*.mmd

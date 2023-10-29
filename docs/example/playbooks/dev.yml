@@ -1,0 +1,141 @@
+---
+
+- hosts: all
+  become: True
+  gather_subset:
+    - hardware
+    - network
+  vars:
+    cleanup: True
+    path:
+      - "{{ lookup('env','HOME') }}/.local/bin"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+    PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
+    ZSH: "/usr/share/oh-my-zsh"
+    DISPLAY: ":0"
+
+  pre_tasks:
+
+    - name: Include distro vars
+      include_vars:
+        file: vars/{{ ansible_distribution }}.yml
+      tags: ['always']
+
+    - name: test var file load
+      debug:
+        msg: "{{ something }}"
+      tags: ['always']
+
+    - import_tasks:
+        file: tasks/common.yml
+      tags: ['common']
+
+    - import_tasks:
+        file: tasks/dirs.yml
+      tags: ['dirs']
+
+    - import_tasks:
+        file: tasks/scripts.yml
+      tags: ['scripts']
+
+    - name: test datatime
+      debug:
+        msg: '{{ ansible_date_time }}'
+      tags: ['testing']
+
+  roles:
+
+    - role: sway
+      tags: ['sway']
+
+    # - role: theme
+    #   tags: ['theme']
+
+    #
+    # - role: networking
+    # tags: ['networking']
+    #
+    # - role: audio
+    #   tags: ['audio']
+    #
+    # - role: docker
+    #   tags: ['docker']
+    #
+    # - role: libvirt
+    #   tags: ['libvirt']
+    #
+    # - role: python
+    #   tags: ['python']
+    #
+    # - role: ruby
+    #   tags: ['ruby']
+    #
+    # - role: desktop
+    #   tags: ['desktop']
+    #
+    # - role: theme
+    #   tags: ['theme']
+    #
+    # - role: applications
+    #   tags: ['applications']
+  tasks:
+
+    - name: test task
+      debug:
+        msg: "{{ package_install_command }}"
+
+    # - import_tasks:
+    #     file: tasks/sshd.yml
+    #   tags: ['sshd']
+    #
+    # - import_tasks:
+    #     file: tasks/updatedb.yml
+    #   tags: ['updatedb']
+    #
+    # - import_tasks:
+    #     file: tasks/zram.yml
+    #   tags: ['zram']
+    #
+    # - import_tasks:
+    #     file: tasks/grub.yml
+    #   tags: ['grub']
+    #
+    # - import_tasks:
+    #     file: tasks/autofs.yml
+    #   tags: ['autofs']
+
+  post_tasks:
+
+    - import_tasks:
+        file: tasks/firewall.yml
+      tags: ['firewall']
+  #
+    - name: Cleanup old backup files
+      script: "/usr/local/bin/cleanup.sh"
+      when: cleanup is defined
+      tags: ['cleanup']
+  #
+  #     # Reset is not implemented local connection
+  #     - name: Reboot host
+  #       reboot:
+  #       async: 1
+  #       poll: 0
+  #       ignore_errors: True
+  #       when: reboot is defined
+  #       tags: ['reboot']
+  #
+  #     - name: Wait for host to reboot
+  #       wait_for_connection:
+  #         connect_timeout: 20
+  #         sleep: 5
+  #         delay: 5
+  #         timeout: 120
+  #       when: reboot is defined
+  #       tags: ['reboot']
+  #
+  #     - name: Ensure reboot was successful
+  #       debug:
+  #         msg: "Reboot success!"
+  #       when: reboot is defined
+  #       tags: ['reboot']
