@@ -1,2 +1,24 @@
 ---
 # defaults file for i3
+
+i3:
+  tray_output: default
+  workspaces: default
+  assignments: default
+  autostart: default
+
+# keybindings_extra: []
+# #  - keybinding:
+# #    name: example
+# #    key: $mod+Shift+F10
+# #    exec: --no-startup-id touch /tmp/example.txt
+#
+# monitors: []
+# # see: xrandr
+# #  - monitor:
+# #    id: 1
+# #    output: "VGA-1"
+# #    mode: "1920x1080"
+# #    pos: "0x0"
+# #    rotate: "normal"
+# #    workspaces: [1,2,3,4,5,6,7,8,9,0] # bind workspace to a specific monitor

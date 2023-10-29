@@ -9,3 +9,70 @@
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
+
+- name: Install i3 packages
+  shell: "{{ package_install_command }} {{ i3.packages | join(' ') }}"
+  become: False
+  tags: ['packages']
+
+- name: Install i3ipc module
+  pip:
+    name: i3ipc
+    executable: pip3
+    state: present
+    extra_args: --break-system-packages
+  tags: ['packages', 'python']
+
+- name: Install i3autolayout.py
+  copy:
+    src: usr/local/bin/i3autolayout.py
+    dest: "/usr/local/bin/i3autolayout.py"
+    mode: '0755'
+  tags: ['packages']
+
+- block:
+    - name: Set i3 configuration
+      template:
+        src: "home/{{ item }}.j2"
+        dest: "{{ user.home }}/{{ item }}"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
+        mode: '0644'
+        backup: yes
+      register: wmconfig
+      with_items:
+        - .config/i3/config
+        - .config/i3/definitions
+        - .config/i3/window_behavior
+        - .config/i3/modes/resize
+        - .config/i3/keybindings
+        - .config/i3/appearance
+        - .config/i3/window_assignments
+        - .config/i3/autostart
+      notify: Reload i3
+
+    - name: Set i3status-rs configuration
+      template:
+        src: "home/{{ item }}.j2"
+        dest: "{{ user.home }}/{{ item }}"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
+        mode: '0644'
+        backup: yes
+      register: wmconfig
+      with_items:
+        - .config/i3status-rust/config.toml
+        - .config/i3status-rust/themes/syncopated.toml
+      notify: Reload i3
+
+    # if this file does not exist, lightdm will fail to start
+    - name: Set dmrc to i3
+      copy:
+        content: |
+          [Desktop]
+          Session=i3
+        dest: "{{ user.home }}/.dmrc"
+        owner: "{{ user.name }}"
+        mode: '0644'
+
+  tags: ['profile', 'i3status']

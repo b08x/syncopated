@@ -1,0 +1,36 @@
+## Here is a language switcher by pressing capslock button,
+## and the capslock functionality available by using shift+capslock.
+## Uncomment to enable 'us' to/from 'ru' switch. change to language(s) you prefer more.
+
+#exec_always setxkbmap -option grp:caps_toggle "us,ru" -option "grp:caps_toggle,grp_led:caps"
+
+# $exec xrandr --output HDMI-1 --mode 1920x1080 --rate 60 --scale 1x1
+#exec xrandr --auto --output HDMI-1 --mode 1920x1080 --above HDMI-2
+
+#$exec feh --recursive --bg-fill --randomize /usr/share/backgrounds/syncopated/*
+
+$exec "dunst"
+
+$exec_always "pkill picom; sleep 1; DISPLAY=':0' picom -b; sleep 1"
+
+$exec "/usr/share/i3/scripts/i3autolayout.py"
+
+$exec "nm-applet"
+#$exec "redshift"
+
+$exec "dex -a -s /etc/xdg/autostart/:~/.config/autostart/"
+
+$exec "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+$exec systemctl --user import-environment GPG_TTY SSH_AUTH_SOCK
+$exec dbus-update-activation-environment --all
+
+$exec_always "reload-sxhkd.sh"
+
+{% if i3.autostart != 'default' %}
+{% for a in i3.autostart %}
+$exec {{ a }}
+{% endfor %}
+{% endif %}
+
+# $exec_always "mkfifo /tmp/xobpipe && tail -f /tmp/xobpipe | xob -t 2170 & disown"
+# exec ~/.i3/launch.sh
