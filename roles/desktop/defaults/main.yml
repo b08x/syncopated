@@ -1,2 +1,10 @@
 ---
 # defaults file for desktop
+
+#TODO: some sort of dict array to populate xdg autostart desktop entries
+# xdg:
+#   autostart:
+#     - name:
+#       comment:
+#       exec:
+#       terminal: no
