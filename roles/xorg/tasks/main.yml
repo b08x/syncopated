@@ -8,3 +8,36 @@
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
+
+- block:
+    - name: install xorg packages
+      aur:
+        use: paru
+        name: "{{ xorg.packages }}"
+        state: present
+      become: False
+      when: ansible_distribution == 'Archlinux'
+
+  tags: ['packages']
+
+- name: Install xorg configs
+  template:
+    src: "home/{{ item }}.j2"
+    dest: "{{ user.home }}/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: yes
+  with_items:
+    - .xinitrc
+    - .xprofile
+    - .xserverrc
+  register: xconfig
+  tags: ['profile']
+
+- name: Ensure .xinitrc is executable
+  file:
+    path: "{{ user.home }}/.xinitrc"
+    mode: '0755'
+  ignore_errors: '{{ ansible_check_mode }}'
+  tags: ['profile']
