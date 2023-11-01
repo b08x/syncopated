@@ -1,0 +1,106 @@
+---
+
+- block:
+    - name: Ensure group nobody exists
+      group:
+        name: nobody
+        gid: 65534
+        non_unique: True
+        system: True
+
+    - name: Ensure user nobody exists
+      user:
+        name: nobody
+        system: True
+        state: present
+        shell: /sbin/nologin
+        uid: 65534
+        group: nobody
+
+    - name: Install nfs configs
+      template:
+        src: "etc/{{ item }}.j2"
+        dest: "/etc/{{ item }}"
+        mode: '0644'
+        backup: yes
+      with_items:
+        - idmapd.conf
+        - nfs.conf
+
+    - name: Ensure nfs/rpc services are enabled and started
+      service:
+        name: "{{ item }}"
+        state: restarted
+        enabled: yes
+      with_items:
+        - nfs-server
+        - nfs-mountd
+        - nfs-idmapd
+        - rpcbind
+
+    - name: Permit traffic to rpcbind
+      ansible.posix.firewalld:
+        port: "{{ item }}"
+        permanent: yes
+        state: enabled
+      with_items:
+        - 111/tcp
+        - 111/udp
+        - 662/tcp
+        - 662/udp
+        - 892/tcp
+        - 892/udp
+        - 2049/tcp
+        - 32769/udp
+        - 32803/tcp
+        - 40418/udp
+      register: fw_nfs
+
+  ignore_errors: "{{ ansible_check_mode }}"
+
+
+#TODO:
+# - name: check if shares are mounted, if so skip these tasks
+   # check mounts
+
+- name: Create exports folder
+  file:
+    path: /srv/exports/{{ item.folder }}
+    state: directory
+    owner: root
+    group: root
+    recurse: True
+  with_items:
+    - "{{ nfs }}"
+
+- name: Ensure required entries are made to hosts file. # Notes 1232
+  lineinfile:
+    path: /etc/fstab
+    state: present
+    line: "{{ item.parent }}/{{ item.folder }} /srv/exports/{{ item.folder }} none bind 0 0"
+  with_items:
+    - "{{ nfs }}"
+
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Mounted the binded folders
+  shell: |
+    mount /srv/exports/{{ item.folder }}
+  with_items:
+    - "{{ nfs }}"
+
+- name: Set the exports
+  template:
+    src: etc/exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  register: etcexports
+
+- name:  Reload exports
+  shell: exportfs -rv
+  when: etcexports.changed

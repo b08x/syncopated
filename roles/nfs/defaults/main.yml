@@ -1,2 +1,12 @@
 ---
 # defaults file for nfs
+
+firewall:
+  nfs:
+    ports:
+      lockd:
+        tcp: 32803
+        udp: 32769
+      mountd: 892
+      statd: 662
+      rpc: 40418
