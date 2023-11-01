@@ -71,19 +71,19 @@ LocalFileSigLevel = Optional
 {% if architecture == 'x86-64-v3' %}
 [syncopated-v3]
 SigLevel = Optional TrustAll
-Server = http://bender.syncopated.net/repo/archlabs/packages/x86_64_v3/
-Server = http://syncopated.hopto.org/repo/archlabs/packages/x86_64_v3/
+Server = http://bender.syncopated.net/repo/archlinux/packages/x86_64_v3/
+Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64_v3/
 {% else %}
 #<disabled_v3 >[syncopated-v3]
 #<disabled_v3 >SigLevel = Optional TrustAll
-#<disabled_v3 >Server = http://bender.syncopated.net/repo/archlabs/packages/x86_64_v3/
-#<disabled_v3 >Server = http://syncopated.hopto.org/repo/archlabs/packages/x86_64_v3/
+#<disabled_v3 >Server = http://bender.syncopated.net/repo/archlinux/packages/x86_64_v3/
+#<disabled_v3 >Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64_v3/
 {% endif %}
 
 [syncopated]
 SigLevel = Optional TrustAll
-Server = http://bender.syncopated.net/repo/archlabs/packages/x86_64/
-Server = http://syncopated.hopto.org/repo/archlabs/packages/x86_64/
+Server = http://bender.syncopated.net/repo/archlinux/packages/x86_64/
+Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64/
 
 [proaudio]
 Server = https://arch.osamc.de/$repo/$arch
@@ -135,6 +135,18 @@ Include = /etc/pacman.d/mirrorlist
 
 [multilib]
 Include = /etc/pacman.d/mirrorlist
+
+# [archlabs-testing]
+# Server =  https://pub-7d84e047b852442a86fd6d7feb1ff2cd.r2.dev/$repo/$arch
+# Server =  https://github.com/ArchLabs/$repo/raw/master/$arch
+# Server =  https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
+
+[archlabs]
+Server = https://pub-7d84e047b852442a86fd6d7feb1ff2cd.r2.dev/$repo/$arch
+Server = https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
+Server = https://github.com/ArchLabs/$repo/raw/master/$arch
+Server = https://sourceforge.net/projects/archlabs-repo/files/$repo/$arch
+
 
 # An example of a custom package repository.  See the pacman manpage for
 # tips on creating your own repositories.

@@ -1,0 +1,36 @@
+---
+
+- hosts: all
+  become: True
+  gather_subset:
+    - hardware
+    - network
+  vars:
+    ports:
+      lockd:
+        tcp: 32803
+        udp: 32769
+      mountd: 892
+      statd: 662
+      rpc: 40418
+    path:
+      - "{{ lookup('env','HOME') }}/.local/bin"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+    PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
+    ZSH: "/usr/share/oh-my-zsh"
+    DISPLAY: ":0"
+
+  roles:
+
+    - role: network
+
+    - role: nfs
+      tags: ['nfs']
+
+  post_tasks:
+
+    - name: Reload firewalld
+      shell: "firewall-cmd --reload"
+      when: fw_nfs.changed
+      ignore_errors: True

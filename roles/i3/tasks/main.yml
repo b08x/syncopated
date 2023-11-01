@@ -23,20 +23,27 @@
     extra_args: --break-system-packages
   tags: ['packages', 'python']
 
+- name: Create i3 scripts folder
+  file:
+    path: /usr/share/i3/scripts
+    state: directory
+    owner: root
+    group: root
+
 - name: Install i3autolayout.py
   copy:
-    src: usr/local/bin/i3autolayout.py
-    dest: "/usr/local/bin/i3autolayout.py"
+    src: usr/share/i3/scripts/i3autolayout.py
+    dest: "/usr/share/i3/scripts/i3autolayout.py"
     mode: '0755'
   tags: ['packages']
 
 - block:
     - name: Set i3 configuration
       template:
-        src: "home/{{ item }}.j2"
-        dest: "{{ user.home }}/{{ item }}"
-        owner: "{{ user.name }}"
-        group: "{{ user.group }}"
+        src: "etc/skel/{{ item }}.j2"
+        dest: "/etc/skel/{{ item }}"
+        owner: root
+        group: root
         mode: '0644'
         backup: yes
       register: wmconfig
@@ -49,30 +56,18 @@
         - .config/i3/appearance
         - .config/i3/window_assignments
         - .config/i3/autostart
-      notify: Reload i3
 
     - name: Set i3status-rs configuration
       template:
-        src: "home/{{ item }}.j2"
-        dest: "{{ user.home }}/{{ item }}"
-        owner: "{{ user.name }}"
-        group: "{{ user.group }}"
+        src: "etc/skel/{{ item }}.j2"
+        dest: "/etc/skel/{{ item }}"
+        owner: root
+        group: root
         mode: '0644'
         backup: yes
       register: wmconfig
       with_items:
         - .config/i3status-rust/config.toml
         - .config/i3status-rust/themes/syncopated.toml
-      notify: Reload i3
 
-    # if this file does not exist, lightdm will fail to start
-    - name: Set dmrc to i3
-      copy:
-        content: |
-          [Desktop]
-          Session=i3
-        dest: "{{ user.home }}/.dmrc"
-        owner: "{{ user.name }}"
-        mode: '0644'
-
-  tags: ['profile', 'i3status']
+  tags: ['profile']

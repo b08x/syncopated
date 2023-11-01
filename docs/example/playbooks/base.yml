@@ -67,8 +67,8 @@
     - role: user
       tags: ['user']
 
-    - role: networking
-      tags: ['networking']
+    - role: network
+      tags: ['network']
     #
     # - role: docker
     #   tags: ['docker']

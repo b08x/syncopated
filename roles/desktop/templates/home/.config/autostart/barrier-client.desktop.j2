@@ -2,7 +2,7 @@
 Type=Application
 Name=Barrier
 Comment=Keyboard and mouse sharing solution
-Exec={{ barrier.command }}
+Exec="/usr/bin/barrierc -f --debug INFO --name {{ desktop.barrier.client.name }} --disable-crypto {{ desktop.barrier.server }}"
 Icon=barrier
 Terminal=false
 Categories=Utility;RemoteAccess;

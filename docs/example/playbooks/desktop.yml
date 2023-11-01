@@ -1,5 +1,4 @@
 ---
-
 - hosts: all
   become: True
   gather_subset:
@@ -14,38 +13,36 @@
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
     ZSH: "/usr/share/oh-my-zsh"
     DISPLAY: ":0"
-    
-  pre_tasks:
 
+  pre_tasks:
     - name: warn about setting ANSIBLE_HOME
       debug:
         msg: "besure ANSIBLE_HOME is set to this directory"
-      tags: ['always']
+      tags: ["always"]
 
     - name: Set datetime
       set_fact:
         datetime: ansible_date_time.epoch
-      tags: ['always']
+      tags: ["always"]
 
     - name: Set suffix
       set_fact:
         suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
-      tags: ['always']
+      tags: ["always"]
 
     - name: Set admin group name
       set_fact:
         admin_group: wheel
-      tags: ['always']
+      tags: ["always"]
 
     - name: Check -march support
       shell: |
         /lib/ld-linux-x86-64.so.2 --help | grep supported|xargs|awk '{print $1}'
       register: supported_march
-      tags: ['always']
+      tags: ["always"]
       check_mode: False
 
     - block:
-
         - name: Set architecture
           set_fact:
             architecture: "x86-64-v3"
@@ -57,42 +54,36 @@
           when: supported_march.stdout_lines[0] == 'x86-64-v2'
 
       when: supported_march.stdout_lines[0] is defined
-      tags: ['always']
+      tags: ["always"]
       check_mode: False
 
   roles:
-
     - role: common
 
     - role: user
-      tags: ['user']
+      tags: ["user"]
 
     - role: network
-      tags: ['network']
+      tags: ["network"]
 
     - role: ruby
-      tags: ['ruby']
+      tags: ["ruby"]
 
     - role: alsa
-      tags: ['audio']
+      tags: ["audio"]
 
     - role: jack
-      tags: ['audio']
+      tags: ["audio"]
 
     - role: pulseaudio
-      tags: ['audio']
+      tags: ["audio"]
 
     - role: pipewire
-      when: desktop__audio == 'pipewire'
-      tags: ['audio']
-
-    - role: greetd
-      when:  desktop__dm == 'greetd'
-
-    - role: lightdm
-      when: desktop__dm == 'lightdm'
+      when: desktop.audio.pipewire is defined
+      tags: ["audio"]
 
     - role: desktop
+      tags: ['desktop']
 
     # - role: docker
     #   tags: ['docker']
@@ -112,13 +103,11 @@
   #     debug:
   #       msg: "{{ package_install_command }}"
 
-
   post_tasks:
-
     - name: Cleanup old backup files
       script: "/usr/local/bin/cleanup.sh"
       when: cleanup is defined
-      tags: ['cleanup']
+      tags: ["cleanup"]
 
   #     # Reset is not implemented local connection
   #     - name: Reboot host

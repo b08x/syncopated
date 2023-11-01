@@ -7,17 +7,15 @@
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
+  tags: ["always"]
 
 - block:
-
     - import_tasks:
         file: uninstall.yml
-      when: use_pipewire|default(false)|bool == True
-
+      when: desktop.audio != 'jack'
     - import_tasks:
         file: install.yml
-      when: use_pipewire|default(false)|bool == False
+      when: desktop.audio == 'jack'
 
   check_mode: no
-  tags: ['packages']
+  tags: ["packages"]

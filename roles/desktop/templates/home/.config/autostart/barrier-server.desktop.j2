@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Barrier
+Comment=Keyboard and mouse sharing solution
+Exec="/usr/bin/barriers -f --no-tray --debug INFO --name {{ desktop.barrier.server.name }} --disable-crypto --disable-client-cert-checking -c {{ desktop.barrier.server.config }} --address {{ desktop.barrier.server.address }}"
+Icon=barrier
+Terminal=false
+Categories=Utility;RemoteAccess;
+Keywords=keyboard;mouse;sharing;network;share;

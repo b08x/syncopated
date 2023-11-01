@@ -41,6 +41,8 @@
     perms: no
     rsync_opts:
       - "--update"
+      - "--progress"
+      - "--itemize-changes"
       - "--exclude='*.*~'"
       - "--omit-dir-times"
       - "--chown={{ item.name }}:{{ item.group }}"

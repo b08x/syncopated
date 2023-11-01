@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-export XDG_DESKTOP_SESSION="{{ xdg_desktop_session }}"
-export XDG_CURRENT_DESKTOP="{{ xdg_current_desktop }}"
+export XDG_DESKTOP_SESSION="{{ desktop.wm }}"
+export XDG_CURRENT_DESKTOP="{{ desktop.wm }}"
 export XDG_CONFIG_HOME="$HOME/.config"
 
 if [ -d /usr/share/fonts/75dpi ]; then

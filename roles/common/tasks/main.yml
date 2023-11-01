@@ -4,6 +4,11 @@
   debug:
     msg: "Starting common tasks"
 
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
 - import_tasks:
     file: sshd.yml
   tags: ['common', 'sshd']

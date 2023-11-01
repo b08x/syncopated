@@ -7,7 +7,7 @@
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
+  tags: ["always"]
 
 - block:
     - name: install xorg packages
@@ -18,26 +18,26 @@
       become: False
       when: ansible_distribution == 'Archlinux'
 
-  tags: ['packages']
+  tags: ["packages"]
 
 - name: Install xorg configs
   template:
-    src: "home/{{ item }}.j2"
-    dest: "{{ user.home }}/{{ item }}"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
+    src: "etc/skel/{{ item }}.j2"
+    dest: "/etc/skel/{{ item }}"
+    owner: root
+    group: root
+    mode: "0644"
     backup: yes
   with_items:
     - .xinitrc
     - .xprofile
     - .xserverrc
   register: xconfig
-  tags: ['profile']
+  tags: ["profile"]
 
 - name: Ensure .xinitrc is executable
   file:
-    path: "{{ user.home }}/.xinitrc"
-    mode: '0755'
-  ignore_errors: '{{ ansible_check_mode }}'
-  tags: ['profile']
+    path: "/etc/skel/.xinitrc"
+    mode: "0755"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: ["profile"]
