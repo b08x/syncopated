@@ -6,10 +6,10 @@
 
 - name: Synchronize templates - rofi
   template:
-    src: "home/{{ item }}.j2"
-    dest: "{{ user.home }}/{{ item }}"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
+    src: "etc/skel/{{ item }}.j2"
+    dest: "/etc/skel/{{ item }}"
+    owner: root
+    group: root
     mode: preserve
     backup: yes
   with_items:

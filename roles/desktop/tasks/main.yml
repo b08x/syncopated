@@ -1,13 +1,14 @@
 ---
 # tasks file for desktop
 
-- name: Install setuptools module
-  pip:
-    name: setuptools
-    executable: pip
-    state: present
-    extra_args: --break-system-packages
-  tags: ['packages', 'python']
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+
+- name: Install desktop packages
+  shell: "{{ package_install_command }} {{ desktop__pkgs|join(' ') }}"
+  become: False
+  tags: ['packages']
 
 - import_tasks:
     file: autologin.yml
@@ -59,6 +60,10 @@
 # - import_tasks:
 #     file: inputRemapper.yml
 #   tags: ['inputRemapper', 'keybindings']
+
+- import_tasks:
+    file: menu.yml
+  tags: ['menu']
 
 #TODO: Add dunst and picom xdg autostart desktop entries
 - name: Set dunst config

@@ -235,7 +235,6 @@ host:
       - rofi
       - seahorse
       - slop
-      - swhkd
       - sxiv
       - teiler-git
       - thunar

@@ -3,30 +3,58 @@
 terminal:
   packages:
     - alacritty
+    - aria2
+    - asciiquarium
     - atool
+    - bash-completion
     - bat
+    - bottom
+    - btop
     - calibre
     - djvulibre
     - elinks
+    - eza
+    - fd
+    - figlet
     - fontforge
+    - github-cli
+    - gitui
+    - guake
+    - gum
     - highlight
+    - htop
     - imagemagick
     - jupyter-nbconvert
     - kitty
+    - kitty-shell-integration
+    - kitty-terminfo
+    - lnav
     - lynx
     - mediainfo
+    - most
     - mpv
     - mupdf-tools
+    - ncdu
+    - neofetch
+    - nvtop
     - odt2txt
     - openscad
     - perl-image-exiftool
     - python-pillow
     - python-pygments
     - ranger
+    - ripgrep
+    - ripgrep-all
+    - rsync
     - rxvt-unicode
-    - tilda
-    - terminology
+    - smartmontools
+    - termdown
     - terminator
+    - terminology
+    - tilda
     - transmission-cli
+    - tree
     - ueberzug
     - w3m
+    - wget
+    - yadm

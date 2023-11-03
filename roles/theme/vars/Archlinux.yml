@@ -6,9 +6,13 @@ pkgs__icons:
 pkgs__cursors:
   - xcursor-breeze
 pkgs__gtk3:
-  - gtk-engines
-  - gtk-engine-murrine
   - gtk3-nocsd
+  - gtk-doc
+  - gtk-engine-murrine
+  - gtk-engines
+  - gtk-update-icon-cache
+  - gtksourceview3
+  - gtkspell3
 pkgs__qt5:
   - kvantum
   - qscintilla-qt5
@@ -16,6 +20,9 @@ pkgs__qt5:
   - qt5-graphicaleffects
   - qt5-quickcontrols2
   - qt5-tools
+  - qt5-x11extras
+  - qt5-declarative
+  - qt5-location  
   - qt5ct
 pkgs__qt6:
   - qt6-base
@@ -28,13 +35,29 @@ pkgs__kvantum:
   # - kvantum-qt5
   - kvantum-theme-matcha
 pkgs__fonts:
+  - adobe-source-han-sans-cn-fonts
+  - adobe-source-han-sans-jp-fonts
+  - adobe-source-han-sans-kr-fonts
+  - arc-icon-theme
+  - awesome-terminal-fonts
+  - cachyos-nord-gtk-theme-git
+  - cantarell-fonts
   - gnu-free-fonts
+  - noto-color-emoji-fontconfig
+  - noto-fonts
+  - noto-fonts-cjk
   - noto-fonts-emoji
+  - numix-circle-icon-theme-git
+  - numix-icon-theme-git
+  - opendesktop-fonts
+  - ttf-bitstream-vera
+  - ttf-dejavu
   - ttf-devicons
   - ttf-firacode-nerd
   - ttf-font-awesome
   - ttf-input
   - ttf-jetbrains-mono
   - ttf-liberation
+  - ttf-meslo-nerd
   - ttf-opensans
   - ttf-ubuntu-font-family
