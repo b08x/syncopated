@@ -1,0 +1,72 @@
+---
+
+- name: Starting applications role tasks
+  debug:
+    msg: "Starting applications role tasks"
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- block:
+
+    - name: install audio applications
+      aur:
+        use: paru
+        name: "{{ packages.audio }}"
+        state: present
+        extra_args: "--overwrite '*'"
+      become: False
+      when: ansible_distribution == 'Archlinux'
+
+  tags: ['packages']
+
+- import_tasks:
+    file: media/deadbeef.yml
+  tags: ['media', 'deadbeef']
+
+- import_tasks:
+    file: media/mixxx.yml
+  when: app.install.mixxx|bool
+  tags: ['mixxx']
+
+- import_tasks:
+    file: ide/pulsar.yml
+  when: app.install.pulsar|bool
+  tags: ['pulsar']
+
+- import_tasks:
+    file: ide/vscode.yml
+  when: app.install.vscode|bool
+  tags: ['vscode']
+
+- import_tasks:
+    file: analysis/vamp.yml
+  when: app.install.vamp|bool
+  tags: ['vamp']
+
+- import_tasks:
+    file: analysis/sonicannotator.yml
+  when: app.install.annotator|bool
+  tags: ['sonicannotator']
+
+- import_tasks:
+    file: analysis/soniclineup.yml
+  when: app.install.soniclineup|bool
+  tags: ['soniclineup']
+
+- import_tasks:
+    file: analysis/tony.yml
+  when: app.install.tony|bool
+  tags: ['tony']
+
+- import_tasks:
+    file: touchosc/main.yml
+  when: app.install.touchosc|bool
+  tags: ['touchosc']
+
+- import_tasks:
+    file: daw/reaper.yml
+  when: app.install.reaper|bool
+  tags: ['reaper']

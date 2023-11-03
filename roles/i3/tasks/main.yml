@@ -8,8 +8,9 @@
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
 
-- name: Show desktop variables
+- name: Show i3 variables
   debug:
     msg: "{{ i3 }}"
 

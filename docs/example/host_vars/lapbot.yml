@@ -2,6 +2,18 @@
 
 autologin: True
 
+app:
+  install:
+    reaper: True
+    pulsar: True
+    vscode: True
+    vamp: True
+    mixxx: True
+    annotator: True
+    soniclineup: True
+    touchosc: True
+    tony: True
+
 use_bluetooth: True
 
 nfs:

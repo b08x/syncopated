@@ -247,6 +247,7 @@ host:
       - wmfocus
       - yt-dlp
     development:
+      - asp
       - bmake
       - cmake
       - cython
@@ -256,7 +257,6 @@ host:
       - docker
       - docker-compose
       - electron25
-      - git
       - git-meld
       - gitflow-zshcompletion-avh
       - lazydocker-bin

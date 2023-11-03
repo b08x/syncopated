@@ -104,12 +104,9 @@
     #
     # - role: libvirt
     #   tags: ['libvirt']
-    #
-    # - role: desktop
-    #   tags: ['desktop']
-    #
-    # - role: applications
-    #   tags: ['applications']
+
+    - role: applications
+      tags: ['applications']
 
   # tasks:
   #

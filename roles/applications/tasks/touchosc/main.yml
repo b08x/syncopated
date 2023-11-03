@@ -1,0 +1,11 @@
+---
+
+- import_tasks:
+    file: touchosc.yml
+  when: install_touchosc|default(true)|bool == True
+  tags: ['touchosc']
+
+- import_tasks:
+    file: osc2midi.yml
+  when: install_osc2midi|default(true)|bool == True
+  tags: ['osc2midi']

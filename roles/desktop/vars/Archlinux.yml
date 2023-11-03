@@ -1,15 +1,26 @@
 ---
 
 desktop__pkgs:
+  - ascii-image-converter
+  - asciiquarium-transparent-git
   - aspell-en
   - barrier
+  - beautysh
   - cachy-browser
   - cachyos-hello
   - cachyos-packageinstaller
   - cachyos-rate-mirrors
   - cachyos-settings
+  - cbonsai
+  - code-marketplace
+  - cpod-appimage
+  - darktable
   - dconf
+  - devdocs-desktop
   - dunst
+  - elinks
+  - epson-inkjet-printer-escpr2
+  - feh
   - ffmpeg4.4
   - ffmpegthumbnailer
   - firewalld
@@ -18,7 +29,11 @@ desktop__pkgs:
   - fuse-common
   - gconf
   - geoclue
+  - gimp
   - git
+  - gitflow-avh
+  - gitflow-zshcompletion-avh
+  - github-cli
   - gnome-common
   - gnome-keyring
   - gnuplot
@@ -26,38 +41,94 @@ desktop__pkgs:
   - gpick
   - graphicsmagick
   - grsync
+  - gtksourceview3
+  - gtksourceview4
+  - gtkspell3
+  - haskell-connection
+  - haskell-x509-store
+  - haskell-x509-system
+  - haskell-x509-validation
   - hexchat
+  - highlight
+  - html2md
+  - imagemagick
   - imv
   - inxi
   - jc
   - keepassxc
+  - libaudec
+  - libcaca
+  - libcyaml
+  - lsp-dsp-lib
+  - lsparu
+  - lynx
   - maim
+  - mediainfo
   - meld
   - micro
   - mpv
+  - mpv-plugin-excerpt-git
   - nano-syntax-highlighting
   - neovim
   - neovim-symlinks
   - network-manager-applet
+  - nitrogen-git
   - nodejs
   - npm
-  - numlockx
+  - nyan-lang-git
+  - obs-rtspserver
+  - obs-studio
+  - obsidian
   - octopi
+  - odt2txt
+  - open-chinese-fonts
+  - paruz
+  - patat-bin
+  - pdf2htmlex-appimage
+  - pdfjs
+  - perl-image-exiftool
+  - pgmodeler
+  - pgvector
+  - pod2man
+  - poppler
+  - python-adblock
+  - python-chardet
+  - python-conda-package-handling
+  - python-pagelabels
+  - python-pillow
+  - python-pympler
   - python-setuptools
+  - python-sphinx-intl
+  - python-sphinxcontrib-svg2pdfconverter
+  - python-ueberzug-git
   - qpdf
   - qutebrowser
   - redshift
   - rofi
+  - sampler
   - sd
   - seahorse
+  - stunnel
+  - sudo
   - sxiv
   - teiler-git
+  - termpdf.py-git
+  - texlive-coffee-stains
   - thunar
   - thunar-archive-plugin
   - thunar-volman
+  - timeshift
+  - transmission-cli
+  - ttf-tw
+  - ueberzug
   - unrar
   - unzip
   - vlc
   - wmctrl
   - wmfocus
+  - wordnet-cli
+  - wordnet-common
+  - wordnet-tk
+  - xarchiver
+  - xdot
   - yt-dlp

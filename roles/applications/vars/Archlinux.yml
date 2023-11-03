@@ -1,0 +1,60 @@
+---
+
+packages:
+  audio:
+    # - Catch2
+    # - ambix-o3
+    # - ambix-o5
+    # - antimicrox
+    # - crossguid
+    # - drumrox
+    # - kissfft
+    # - linuxsampler-svn
+    # - lnav-git
+    # - mcfx-o1
+    # - mcfx-o3
+    # - mcfx-o5
+    # - platformfolders
+    # - raul
+    # - sonic-visualiser-git
+    # - syncopated-theme
+    # - vital-synth-git
+    # - vst2sdk
+    # - wkhtmltopdf-static
+    - ambdec
+    - ambix-o1
+    - baudline-bin
+    - bipscript
+    - bipscript-ide
+    - bluetooth-autoconnect
+    - caps-lv2-git
+    - fmit
+    - hydrogen-git
+    - iempluginsuite-git
+    - ingen-git
+    - intersect.lv2-git
+    - jack-keyboard
+    - jack_link
+    - jack_snapshot
+    - jalv-select-git
+    - lv2-c++-tools
+    - midieditor
+    - mixxx
+    - njconnect
+    - non-mixer-lv2-git
+    - ocenaudio-bin
+    - radiotray-ng
+    - raysession-git
+    - scala-music
+    - scala-music-scales
+    - sendmidi
+    - sonic-pi-git
+    # - sononym
+    - sooperlooper-git
+    - sparta-plugins
+    - swh-lv2-git
+    - tap-plugins-lv2-git
+    - tonespace
+    - ttf-devicons
+    - tuned
+    - vmpk

@@ -1,0 +1,37 @@
+---
+
+- name: check if tony is already installed
+  stat:
+    path: /usr/local/bin/tony
+  register: result
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- block:
+    - name: fetch tony
+      get_url:
+        url: "{{ tony.url }}/Tony-2.1.1-x86_64.AppImage"
+        dest: "/tmp"
+        validate_certs: no
+
+    - name: link tony to bin
+      shell: |
+        chmod +x Tony-2.1.1-x86_64.AppImage
+        mv Tony-2.1.1-x86_64.AppImage /usr/local/bin/
+      args:
+        chdir: "/tmp"
+
+    - name: create symlink
+      file:
+        src: "/usr/local/bin/Tony-2.1.1-x86_64.AppImage"
+        dest: "/usr/local/bin/tony"
+        state: link
+        force: yes
+
+  when: not result.stat.exists and not uninstall_tony|default(false)|bool
+
+- name: uninstall tony
+  file:
+    path: "/usr/local/bin/tony"
+    state: absent
+    follow: yes
+  when: result.stat.exists and uninstall_tony|default(false)|bool
