@@ -1,6 +1,8 @@
 ---
 
 desktop__pkgs:
+  # - obs-rtspserver
+  # - pgmodeler
   - ascii-image-converter
   - asciiquarium-transparent-git
   - aspell-en
@@ -44,10 +46,7 @@ desktop__pkgs:
   - gtksourceview3
   - gtksourceview4
   - gtkspell3
-  - haskell-connection
-  - haskell-x509-store
-  - haskell-x509-system
-  - haskell-x509-validation
+  - gummi
   - hexchat
   - highlight
   - html2md
@@ -76,7 +75,6 @@ desktop__pkgs:
   - nodejs
   - npm
   - nyan-lang-git
-  - obs-rtspserver
   - obs-studio
   - obsidian
   - octopi
@@ -87,7 +85,6 @@ desktop__pkgs:
   - pdf2htmlex-appimage
   - pdfjs
   - perl-image-exiftool
-  - pgmodeler
   - pgvector
   - pod2man
   - poppler
@@ -100,7 +97,6 @@ desktop__pkgs:
   - python-setuptools
   - python-sphinx-intl
   - python-sphinxcontrib-svg2pdfconverter
-  - python-ueberzug-git
   - qpdf
   - qutebrowser
   - redshift
@@ -108,11 +104,16 @@ desktop__pkgs:
   - sampler
   - sd
   - seahorse
+  - shotcut
+  - sshpass
   - stunnel
   - sudo
   - sxiv
+  - sysstat
+  - taglib
   - teiler-git
   - termpdf.py-git
+  - texlive-bin
   - texlive-coffee-stains
   - thunar
   - thunar-archive-plugin
@@ -123,6 +124,7 @@ desktop__pkgs:
   - ueberzug
   - unrar
   - unzip
+  - vidcutter
   - vlc
   - wmctrl
   - wmfocus
@@ -130,5 +132,7 @@ desktop__pkgs:
   - wordnet-common
   - wordnet-tk
   - xarchiver
+  - xclip
   - xdot
   - yt-dlp
+  - zenity

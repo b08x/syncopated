@@ -17,44 +17,104 @@ packages:
     # - platformfolders
     # - raul
     # - sonic-visualiser-git
+    # - sononym
     # - syncopated-theme
     # - vital-synth-git
     # - vst2sdk
     # - wkhtmltopdf-static
     - ambdec
     - ambix-o1
+    - aubio
+    - audacity
+    - audiofile
     - baudline-bin
     - bipscript
     - bipscript-ide
     - bluetooth-autoconnect
+    - calf
     - caps-lv2-git
+    - chromaprint
+    - distrho-ports
+    - distrho-ports-lv2
+    - distrho-ports-vst
+    - distrho-ports-vst3
+    - dragonfly-reverb
+    - dragonfly-reverb-clap
+    - dragonfly-reverb-lv2
+    - dragonfly-reverb-standalone
+    - dragonfly-reverb-vst
+    - dragonfly-reverb-vst3
+    - ecasound
+    - fluidsynth
     - fmit
+    - geonkick
+    - geonkick-common
+    - geonkick-lv2
+    - geonkick-standalone
+    - helm-synth
+    - helm-synth-common
+    - helm-synth-lv2
+    - helm-synth-standalone
+    - helm-synth-vst
     - hydrogen-git
     - iempluginsuite-git
     - ingen-git
     - intersect.lv2-git
+    - jaaa
+    - jack-example-tools
     - jack-keyboard
     - jack_link
+    - jack_mixer
     - jack_snapshot
+    - jalv
     - jalv-select-git
+    - japa
+    - jconvolver
+    - jnoisemeter
+    - ladspa
+    - linuxsampler
     - lv2-c++-tools
     - midieditor
     - mixxx
     - njconnect
+    - noise-repellent
     - non-mixer-lv2-git
+    - non-sequencer
     - ocenaudio-bin
+    - patchage
+    - polyphone
+    - qmidinet
+    - qsampler
     - radiotray-ng
     - raysession-git
+    - rnnoise
+    - rtaudio
+    - rtmidi
+    - sc3-plugins
     - scala-music
     - scala-music-scales
     - sendmidi
     - sonic-pi-git
-    # - sononym
     - sooperlooper-git
+    - sound-gambit
+    - sox
     - sparta-plugins
+    - supercollider
     - swh-lv2-git
     - tap-plugins-lv2-git
     - tonespace
     - ttf-devicons
     - tuned
+    - vamp-plugin-sdk
     - vmpk
+    - x42-plugins
+    - x42-plugins-lv2
+    - x42-plugins-standalone
+    - zita-ajbridge
+    - zita-alsa-pcmi
+    - zita-convolver
+    - zita-dpl1
+    - zita-lrx
+    - zita-mu1
+    - zita-resampler
+    - zita-rev1

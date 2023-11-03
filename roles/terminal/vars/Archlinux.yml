@@ -4,7 +4,7 @@ terminal:
   packages:
     - alacritty
     - aria2
-    - asciiquarium
+    - asciiquarium-transparent-git
     - atool
     - bash-completion
     - bat
@@ -17,13 +17,16 @@ terminal:
     - fd
     - figlet
     - fontforge
+    - git-lfs
     - github-cli
     - gitui
+    - gource
     - guake
     - gum
     - highlight
     - htop
     - imagemagick
+    - jq
     - jupyter-nbconvert
     - kitty
     - kitty-shell-integration
@@ -55,6 +58,8 @@ terminal:
     - transmission-cli
     - tree
     - ueberzug
+    - v4l-utils
     - w3m
     - wget
+    - xterm
     - yadm

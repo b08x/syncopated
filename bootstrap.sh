@@ -101,15 +101,14 @@ echo "You entered: $userid"
 
 # clean cache
 sudo pacman -Scc --noconfirm > /dev/null
-sudo pacman -Syu rsync openssh python-pip rustup rubygems yadm jack2 jack2-dbus pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop --overwrite '*'
+sudo pacman -Syu rsync openssh python-pip python-setuptools rustup rubygems yadm jack2 jack2-dbus pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger nodejs npm --overwrite '*'
 
 say "-----------------------------------------------" $BLUE
 say "enabling ssh" $BLUE
 say "-----------------------------------------------\n" $BLUE
 
 sudo systemctl enable sshd
-
-sudo pip install setuptools --break-system-packages
+sudo systemctl start sshd
 
 sleep 0.5
 

@@ -1,31 +1,36 @@
 ---
 
+autologin: True
+
+app:
+  install:
+    reaper: True
+    pulsar: True
+    vscode: True
+    vamp: True
+    mixxx: True
+    annotator: True
+    soniclineup: True
+    touchosc: True
+    tony: True
 
 use_bluetooth: True
 
 desktop:
-  wm: sway
+  wm: i3
   terminal: "kitty"
   terminal_alt: "alacritty"
   browser: "google-chrome-stable"
+  audio: "jack"
 
-sway:
-  autostart:
-    - "jacktrip -c tinybot.soundbot.net -n 4 -q auto -b 24 -D --udprt &"
-    - "ray-daemon --session-root ~/NetworkSessions -p 7777"
-  tray_output: "primary"
+i3:
+  autostart: 'default'
+    # - "jacktrip -c tinybot.soundbot.net -n 4 -q auto -b 24 -D --udprt &"
+    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+  tray_output: 'primary'
   assignments: 'default'
   workspaces: 'default'
-    # - "$ws1 output HDMI-1"
-    # - "$ws2 output HDMI-1"
-    # - "$ws3 output HDMI-1"
-    # - "$ws4 output HDMI-1"
-    # - "$ws5 output HDMI-1"
-    # - "$ws6 output HDMI-1"
-    # - "$ws7 output HDMI-1"
-    # - "$ws8 output HDMI-1"
-    # - "$ws9 output HDMI-1"
-    # - "$ws10 output HDMI-1"
+  keybindings: 'default'
 
 # monitors:
 #   - id: 1

@@ -30,6 +30,19 @@
     - .profile
   tags: ['profile']
 
+- name: Install htop and lnav configs
+  template:
+    src: "etc/skel/.config/{{ item[1] }}.j2"
+    dest: "{{ item[0] }}/{{ item[1] }}"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  with_nested:
+    - [ '/root/.config', '/etc/skel/.config' ]
+    - [ 'htop/htoprc', 'lnav/checklog.lnav' ]
+  tags: ['profile']
+
 - name: Sync /etc/skel with users home
   synchronize:
     src: /etc/skel/

@@ -116,7 +116,7 @@ host:
     terminal:
       - alacritty
       - aria2
-      - asciiquarium
+      - asciiquarium-transparent-git
       - bash-completion
       - bat
       - bottom

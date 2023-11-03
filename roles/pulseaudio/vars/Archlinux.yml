@@ -2,6 +2,7 @@
 
 pulseaudio:
   packages:
+    - pamixer
     - pavucontrol
     - pulseaudio-alsa
     - pulseaudio-bluetooth

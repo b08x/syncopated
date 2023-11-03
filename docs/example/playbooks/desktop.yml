@@ -76,11 +76,11 @@
     - role: ruby
       tags: ["ruby"]
 
-    - role: pipewire
-      tags: ["pipewire"]
-
     - role: alsa
       tags: ["audio"]
+
+    - role: pipewire
+      tags: ["pipewire"]
 
     - role: jack
       tags: ["audio"]
