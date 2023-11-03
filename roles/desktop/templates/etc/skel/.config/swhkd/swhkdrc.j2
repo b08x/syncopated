@@ -1,108 +1,95 @@
 # Import another configuration file.
 # NOTE: the path provided must be absolute and not relative such as `~`.
-# include /home/YourUserName/.config/swhkd/swhkdrc
+# include /home/{{ user.name }}/.config/swhkd/swhkd-{{ desktop.wm }}
+# include /home/{{ user.name }}/.config/swhkd/swhkd-user
 
-# ignore alt + print # globally ignore a key binding
-Menu
-  ~/.config/rofi/scripts/launcher_t1.sh
+{% if desktop.wm == 'i3' %}
+Super + x
+  xkill
 
-super + d
+Shift + Print
+  maim -s | xclip -selection clipboard -t image/png
+
+{% elif desktop.wm == 'sway' %}
+
+{% endif %}
+
+Alt + Shift + kp1
+  tilda -g ~/.config/tilda/config_0
+
+Alt + Shift + kp2
+  tilda -g ~/.config/tilda/config_1
+
+Super + d
   ~/.config/rofi/scripts/launcher_t4.sh
 
-super + F5
+Super + f5
   {{ desktop.terminal }} --class "htop" -e htop
 
-F12
+f12
   search_web.sh
 
-shift + F12
+Shift + f12
   search_devdocs.sh
 
-XF86Search ; {d,w}
-  {search_devdocs.sh,search_web.sh}
-
-alt + Tab
+Alt + tab
   rofi -no-lazy-grab -show window -modi run,drun,window
 
-super + Home
+Super + home
   {{ desktop.browser }}
 
-super + shift + Home
+super + shift + home
 {% if desktop.browser == 'google-chrome-stable' %}
   {{ desktop.browser }} --new-window %U
-{% elseif desktop.browser == 'firefox' %}
+{% elif desktop.browser == 'firefox' %}
   {{ desktop.browser }} --private-window
 {% endif %}
 
-super + KP_Enter
+Super + kpenter
   {{ desktop.terminal }} -e ranger
 
-super + shift + KP_Enter
+Super + Shift + kpenter
   thunar
 
-XF86MonBrightnessDown
+xf86monbrightnessdown
   brightnessctl -d intel_backlight s 10%-
 
-XF86MonBrightnessUp
+xf86monbrightnessup
   brightnessctl -d intel_backlight s +10%
 
-XF86AudioRecord
-  {{ wm.terminal }} --class "notepad" -e /usr/local/bin/scriber.rb
-
-super + XF86AudioRecord
-  {{ desktop.terminal }} --class "notepad" -e /usr/local/bin/scriber.rb --new-file
-
-super + o ; {g,a,k,v}
+Super + Control + {g,a,k,v}
 	{terminator,alacritty,jack-keyboard,vmpk}
 
-# terminal
-super + ReTuRn # case insensitive
+Super + ReTuRn # case insensitive
 	alacritty
 
-super + shift + enter # enter = return
+Super + Shift + enter # enter = return
 	kitty
 
-# file manager
-super + shift + f
-	pcmanfm
-
-# web-browser
-super + w
-	firefox
-
-// # bspwm
-// super + {_,shift + }{h,j,k,l}
-// 	bspc node -{f,s} {west,south,north,east}
-//
-// super + ctrl + alt + {Left\
-// ,Down\
-// ,Up\
-// ,Right}
-//   n=10; \
-//   { d1=left;   d2=right;  dx=-$n; dy=0;   \
-//   , d1=bottom; d2=top;    dx=0;   dy=$n;  \
-//   , d1=top;    d2=bottom; dx=0;   dy=-$n; \
-//   , d1=right;  d2=left;   dx=$n;  dy=0;   \
-//   } \
-//   bspc node --resize $d1 $dx $dy || bspc node --resize $d2 $dx $dy
-//
-// super + {\,, .}
-//   bspc node -f {next.local,prev.local}
+# # bspwm
+# super + {_,shift + }{h,j,k,l}
+# 	bspc node -{f,s} {west,south,north,east}#
+# super + ctrl + alt + {Left\
+# ,Down\
+# ,Up\
+# ,Right}
+#   n=10; \
+#   { d1=left;   d2=right;  dx=-$n; dy=0;   \
+#   , d1=bottom; d2=top;    dx=0;   dy=$n;  \
+#   , d1=top;    d2=bottom; dx=0;   dy=-$n; \
+#   , d1=right;  d2=left;   dx=$n;  dy=0;   \
+#   } \
+#   bspc node --resize $d1 $dx $dy || bspc node --resize $d2 $dx $dy#
+# super + {\,, .}
+#   bspc node -f {next.local,prev.local}
 
 # screenshot
-print
-	scrot
+# print
+#	scrot
 
-any + print # any represent at least one of the valid modifiers
-	scrot -s
+#any + print # any represent at least one of the valid modifiers
+#	scrot -s
 
-# Append with @ to run on key-release.
-@super + shift + f
-	pcmanfm
-
-# Append with ~ to emit the hotkey after the command is triggered. Aka, don't swallow the hotkey.
-~super + shift + f
-	pcmanfm
 
 #TDOD: create 'midi mode'
 # Print
