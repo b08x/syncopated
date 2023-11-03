@@ -22,6 +22,8 @@
     rsync_opts:
       - "--update"
       - "--omit-dir-times"
+      - "--progress"
+      - "--itemize-changes"
       - "--chown=root:root"
       - "--backup"
       - "--suffix={{ suffix }}"
@@ -35,6 +37,7 @@
     mode: '0644'
     backup: True
   with_items:
+    - .zprofile
     - .zshenv
     - .zshrc
   tags: ['profile']

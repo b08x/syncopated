@@ -1,19 +1,41 @@
 ---
 # tasks file for desktop
 
+- name: Install setuptools module
+  pip:
+    name: setuptools
+    executable: pip
+    state: present
+    extra_args: --break-system-packages
+  tags: ['packages', 'python']
+
+- import_tasks:
+    file: autologin.yml
+  tags: ['autologin']
+  when: autologin|default(false)|bool == True
+
+- name: Import xorg role
+  import_role:
+    name: xorg
+  tags: ['xorg']
+  when: desktop.wm == 'i3'
+
 - name: Import i3 role
   import_role:
     name: i3
+  tags: ['i3']
   when: desktop.wm == 'i3'
 
 - name: Import sway role
   import_role:
     name: sway
+  tags: ['sway']
   when: desktop.wm == 'sway'
 
 - name: Import gnome role
   import_role:
     name: gnome
+  tags: ['gnome']
   when: desktop.wm == 'gnome'
 
 # if this file does not exist, lightdm will fail to start
@@ -26,9 +48,13 @@
     owner: "{{ user.name }}"
     mode: '0644'
 
+# - import_tasks:
+#     file: swhkd.yml
+#   tags: ['swhkd', 'keybindings']
+
 - import_tasks:
-    file: swhkd.yml
-  tags: ['swhkd', 'keybindings']
+    file: sxhkd.yml
+  tags: ['sxhkd', 'keybindings']
 
 # - import_tasks:
 #     file: inputRemapper.yml
@@ -87,8 +113,8 @@
 
 - name: Set xdg autostart applications
   synchronize:
-    src: etc/xdg/autostart
-    dest: /etc/xdg/autostart
+    src: etc/xdg/autostart/
+    dest: /etc/xdg/autostart/
     recursive: yes
     mode: push
     delete: yes
