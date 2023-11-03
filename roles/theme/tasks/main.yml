@@ -13,6 +13,7 @@
 - name: pkgs_theme
   set_fact:
     pkgs__theme: "{{ pkgs__icons + pkgs__cursors + pkgs__gtk3 + pkgs__qt5 + pkgs__qt6 + pkgs__kvantum + pkgs__fonts }}"
+  tags: ['packages','theme']
 
 - name: install theme packages
   aur:
@@ -75,6 +76,12 @@
     - [ '/etc/skel', '/root' ]
     - [ '.config/Kvantum/kvantum.kvconfig', '.config/qt5ct/colors/syncopated.conf', '.config/qt5ct/qt5ct.conf', '.config/qt6ct/colors/syncopated.conf', '.config/qt6ct/qt6ct.conf' ]
   tags: ['profile', 'qt']
+
+- name: Create syncopated backgrounds folder
+  file:
+    path: /usr/share/backgrounds/syncopated
+    state: directory
+    mode: '0644'
 
 - name: Install backgrounds
   synchronize:

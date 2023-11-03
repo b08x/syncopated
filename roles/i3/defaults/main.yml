@@ -1,11 +1,11 @@
 ---
 # defaults file for i3
 
-i3:
-  tray_output: 'primary'
-  workspaces: default
-  assignments: default
-  autostart: default
+# i3:
+#   tray_output: 'primary'
+#   workspaces: default
+#   assignments: default
+#   autostart: default
 
 # keybindings_extra: []
 # #  - keybinding:

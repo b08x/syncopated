@@ -5,7 +5,56 @@
 
 ##------------ {Global Variables} ---------------------------##
 
-include $HOME/.config/i3/definitions
+set $mod Mod4
+set $alt Mod1
+set $ctrl_l 37
+set $ctrl_r 105
+
+set $KP_1 87
+set $KP_2 88
+set $KP_3 89
+set $KP_4 83
+set $KP_5 84
+set $KP_6 85
+set $KP_7 79
+set $KP_8 80
+set $KP_9 81
+set $KP_0 90
+set $KP_Enter 104
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+set $exec exec --no-startup-id
+set $exec_always exec_always --no-startup-id
+
+###############################################################
+##-------------------- Set Colors ---------------------------##
+###############################################################
+
+set $border-color {{ colors.focused.border }}
+set $inactive-border-color {{ colors.inactive.border }}
+
+set $child-border {{ colors.focused.child_border }}
+set $inactive-child-border {{ colors.inactive.child_border }}
+
+set $bg-color {{ colors.focused.background }}
+set $inactive-bg-color {{ colors.inactive.background }}
+
+set $text-color {{ colors.focused.text }}
+set $inactive-text-color {{ colors.inactive.text }}
+
+set $urgent-bg-color {{ colors.urgent.background }}
+
+set $indicator {{ colors.focused.indicator }}
 
 ##------------ {Window Behavior} ----------------------##
 

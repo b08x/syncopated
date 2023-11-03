@@ -34,6 +34,8 @@
         force: yes
         extra_args: --noconfirm
       loop:
+        - cmake
+        - libgit2
         - openssl
         - postgresql-libs
         - ruby-psych

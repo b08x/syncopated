@@ -14,5 +14,6 @@
       - "--omit-dir-times"
       - "--backup"
       - "--suffix={{ suffix }}"
+      - "--chmod=0755"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['always']

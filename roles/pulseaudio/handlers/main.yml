@@ -9,6 +9,6 @@
     - pulseaudio.service
     - pulseaudio.socket
   environment:
-    XDG_RUNTIME_DIR: "/run/user/1000"
+    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
   become: False
   ignore_errors: "{{ ansible_check_mode }}"

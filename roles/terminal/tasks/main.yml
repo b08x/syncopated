@@ -10,6 +10,14 @@
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
 
+- name: Import bash role
+  import_role:
+    name: bash
+
+- name: Import zsh role
+  import_role:
+    name: zsh
+
 - name: Install terminal packages
   shell: "{{ package_install_command }} {{ terminal.packages|join(' ') }}"
   become: False

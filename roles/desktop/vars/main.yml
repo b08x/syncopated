@@ -1,7 +1,7 @@
 ---
 # vars file for desktop
 
-desktop:
+workstation:
   packages:
     # - libvdpau-va-gl-i965
     # - midieditor

@@ -139,7 +139,7 @@ host:
       - nvtop
       - ranger
       - ripgrep
-      - ripgrep
+      - ripgrep-all
       - rsync
       - smartmontools
       - termdown

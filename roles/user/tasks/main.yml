@@ -33,7 +33,7 @@
 - name: Sync /etc/skel with users home
   synchronize:
     src: /etc/skel/
-    dest: "{{ item.home }}/"
+    dest: "{{ user.home }}/"
     recursive: yes
     mode: push
     delete: no
@@ -45,10 +45,8 @@
       - "--itemize-changes"
       - "--exclude='*.*~'"
       - "--omit-dir-times"
-      - "--chown={{ item.name }}:{{ item.group }}"
+      - "--chown={{ user.name }}:{{ user.group }}"
       - "--backup"
       - "--suffix={{ suffix }}"
-  with_items: "{{ users }}"
-  when: item.name != 'root'
   delegate_to: "{{ inventory_hostname }}"
   tags: ['profile']

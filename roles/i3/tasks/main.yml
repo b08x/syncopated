@@ -8,17 +8,20 @@
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
+
+- name: Show desktop variables
+  debug:
+    msg: "{{ i3 }}"
 
 - name: Install i3 packages
-  shell: "{{ package_install_command }} {{ i3.packages | join(' ') }}"
+  shell: "{{ package_install_command }} {{ i3__pkgs | join(' ') }}"
   become: False
   tags: ['packages']
 
 - name: Install i3ipc module
   pip:
     name: i3ipc
-    executable: pip3
+    executable: pip
     state: present
     extra_args: --break-system-packages
   tags: ['packages', 'python']
@@ -49,7 +52,6 @@
       register: wmconfig
       with_items:
         - .config/i3/config
-        - .config/i3/definitions
         - .config/i3/window_behavior
         - .config/i3/modes/resize
         - .config/i3/keybindings
