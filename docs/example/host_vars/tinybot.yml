@@ -27,7 +27,7 @@ i3:
   autostart: 'default'
     # - "jacktrip -c tinybot.soundbot.net -n 4 -q auto -b 24 -D --udprt &"
     # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
-  tray_output: 'primary'
+  tray_output: 'HDMI-1'
   assignments: 'default'
   workspaces: 'default'
   keybindings: 'default'
