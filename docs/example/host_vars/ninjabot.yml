@@ -12,7 +12,7 @@ desktop:
   terminal: "kitty"
   terminal_alt: "alacritty"
   browser: "google-chrome-stable"
-  audio: jack
+  audio: "jack"
   barrier:
     client:
       name: ninjabot
@@ -22,12 +22,23 @@ desktop:
 #   autostart:
 #     - "jacktrip -c tinybot.soundbot.net -n 4 -q auto -b 24 -D --udprt &"
 
-# i3:
-#   autostart:
-#     - "ray-daemon --session-root ~/NetworkSessions -p 7777"
-#   tray_output: 'primary'
-#   assignments: 'default'
-#   workspaces: 'default'
+i3:
+  autostart: 'default'
+    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+  tray_output: 'primary'
+  assignments: 'default'
+  workspaces:
+    - "$ws1 output DVI-I-1"
+    - "$ws2 output DVI-I-1"
+    - "$ws3 output DVI-I-1"
+    - "$ws4 output DVI-D-0"
+    - "$ws5 output DVI-D-0"
+    - "$ws6 output DVI-D-0"
+    - "$ws7 output DVI-D-0"
+    - "$ws8 output DVI-D-0"
+    - "$ws9 output DVI-D-0"
+    - "$ws10 output DVI-D-0"
+  keybindings: 'default'
 
 
 host:

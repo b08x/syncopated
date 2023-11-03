@@ -4,6 +4,8 @@
   gather_subset:
     - hardware
     - network
+  vars_files:
+    - vars/theme.yml
   vars:
     cleanup: True
     path:
@@ -57,17 +59,25 @@
       tags: ["always"]
       check_mode: False
 
+    - name: Show desktop variables
+      debug:
+        msg: "{{ i3 }}"
+      tags: ['always']
+
   roles:
     - role: common
 
-    - role: user
-      tags: ["user"]
+    - role: terminal
+      tags: ["terminal"]
 
     - role: network
       tags: ["network"]
 
     - role: ruby
       tags: ["ruby"]
+
+    - role: pipewire
+      tags: ["pipewire"]
 
     - role: alsa
       tags: ["audio"]
@@ -78,13 +88,17 @@
     - role: pulseaudio
       tags: ["audio"]
 
-    - role: pipewire
-      when: desktop.audio.pipewire is defined
+    - role: audio
       tags: ["audio"]
+
+    - role: theme
+      tags: ["theme"]
 
     - role: desktop
       tags: ['desktop']
 
+    - role: user
+      tags: ["user"]
     # - role: docker
     #   tags: ['docker']
     #

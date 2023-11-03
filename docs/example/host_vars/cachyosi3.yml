@@ -16,11 +16,11 @@ desktop:
   terminal_alt: "alacritty"
   browser: "google-chrome-stable"
   audio: "jack"
-  barrier:
-    server:
-      name: soundbot.syncopated.net
-      address: '[soundbot.syncopated.net]:24800'
-      config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
+  # barrier:
+  #   server:
+  #     name: soundbot.syncopated.net
+  #     address: '[soundbot.syncopated.net]:24800'
+  #     config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
 #
 # x:
 #   autostart:
@@ -31,15 +31,15 @@ i3:
     # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
   tray_output: 'primary'
   assignments: 'default'
-  workspaces:
-    - "$ws1 output DP1-2"
-    - "$ws2 output DP1-2"
-    - "$ws3 output DP1-2"
-    - "$ws4 output DP1-1"
-    - "$ws5 output DP1-1"
-    - "$ws6 output DP1-1"
-    - "$ws7 output DP1-1"
-    - "$ws8 output eDP1"
-    - "$ws9 output eDP1"
-    - "$ws10 output eDP1"
+  workspaces: 'default'
+    # - "$ws1 output DP1-2"
+    # - "$ws2 output DP1-2"
+    # - "$ws3 output DP1-2"
+    # - "$ws4 output DP1-1"
+    # - "$ws5 output DP1-1"
+    # - "$ws6 output DP1-1"
+    # - "$ws7 output DP1-1"
+    # - "$ws8 output eDP1"
+    # - "$ws9 output eDP1"
+    # - "$ws10 output eDP1"
   keybindings: 'default'
