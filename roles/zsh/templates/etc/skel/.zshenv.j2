@@ -1,3 +1,5 @@
+export UU_ORDER="$UU_ORDER:~/.zshenv"
+
 unset _old_path
 
 useditor() {
@@ -15,9 +17,9 @@ export VAMP_PATH="/usr/local/share/vamp"
 
 if [[ ! -n $EDITOR ]]; then useditor nvim; fi
 
-if [ -x "$(command -v google-chrome-stable)" ]; then
-export BROWSER="google-chrome-stable"
-fi
+#if [ -x "$(command -v google-chrome-stable)" ]; then
+#export BROWSER="google-chrome-stable"
+#fi
 
 if [ -x "$(command -v most)" ]; then
 export PAGER=most
@@ -47,12 +49,13 @@ export GUM_CONFIRM_SELECTED_FOREGROUND=064
 export GUM_CONFIRM_UNSELECTED_FOREGROUND=010
 
 # fzf options
+export FZF_BASE=/usr/share/fzf
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color='bg:#141414,bg+:#3F3F3F,info:#BDBB72,border:#6B6B6B,spinner:#98BC99' --color='hl:#719872,fg:#bbb12a,header:#719872,fg+:#D9D9D9' --color='pointer:#E12672,marker:#E17899,prompt:#98BEDE,hl+:#98BC99''
 
-if [[ -d "${HOME}/.rvm/bin" ]]; then
-  export PATH="$PATH:$HOME/.rvm/bin"
-fi
-
-if [[ -s "${HOME}/.rvm/scripts/rvm" ]] ; then
-  source "$HOME/.rvm/scripts/rvm"
-fi
+# if [[ -d "${HOME}/.rvm/bin" ]]; then
+#   export PATH="$PATH:$HOME/.rvm/bin"
+# fi
+#
+# if [[ -s "${HOME}/.rvm/scripts/rvm" ]] ; then
+#   source "$HOME/.rvm/scripts/rvm"
+# fi

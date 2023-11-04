@@ -14,6 +14,12 @@ app:
     touchosc: True
     tony: True
 
+docker:
+  service:
+    enabled: True
+  storage: /var/lib/docker
+  nvidia: False
+
 use_bluetooth: True
 
 desktop:

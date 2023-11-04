@@ -91,6 +91,12 @@
     - role: audio
       tags: ["audio"]
 
+    - role: docker
+      tags: ['docker']
+
+    - role: libvirt
+      tags: ['libvirt']
+
     - role: theme
       tags: ["theme"]
 
@@ -99,11 +105,6 @@
 
     - role: user
       tags: ["user"]
-    # - role: docker
-    #   tags: ['docker']
-    #
-    # - role: libvirt
-    #   tags: ['libvirt']
 
     - role: applications
       tags: ['applications']

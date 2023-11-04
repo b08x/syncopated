@@ -27,6 +27,7 @@
       - "--chown=root:root"
       - "--backup"
       - "--suffix={{ suffix }}"
+  tags: ['env', 'profile']
 
 - name: Copy zshenv and zshrc to /etc/skel
   template:
@@ -40,4 +41,4 @@
     - .zprofile
     - .zshenv
     - .zshrc
-  tags: ['profile']
+  tags: ['env', 'profile']

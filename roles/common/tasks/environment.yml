@@ -1,0 +1,19 @@
+---
+
+- name: Placeholder for /etc/environment
+  copy:
+    src: etc/environment
+    dest: /etc/environment
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: Adjust /etc/profile to load ~/.profile
+  copy:
+    src: "etc/profile"
+    dest: "/etc/profile"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
