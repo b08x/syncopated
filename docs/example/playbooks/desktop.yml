@@ -7,7 +7,6 @@
   vars_files:
     - vars/theme.yml
   vars:
-    cleanup: True
     path:
       - "{{ lookup('env','HOME') }}/.local/bin"
   environment:
@@ -66,6 +65,7 @@
 
   roles:
     - role: common
+      tags: ["common"]
 
     - role: terminal
       tags: ["terminal"]

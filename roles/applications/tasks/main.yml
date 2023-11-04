@@ -22,6 +22,18 @@
 
   tags: ['packages']
 
+- name: Ensure application directories are created
+  file:
+    dest: "{{ application_directory_default_location }}/{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(application_directory_default_owner) }}"
+    group: "{{ item.group | default(application_directory_default_group) }}"
+    mode: "{{ item.mode | default(application_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(application_directory_default_recurse) }}"
+  with_items: "{{ application_directory_definitions }}"
+  check_mode: no
+  tags: ['profile']
+
 - import_tasks:
     file: media/deadbeef.yml
   tags: ['media', 'deadbeef']

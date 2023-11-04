@@ -15,6 +15,18 @@
   become: False
   tags: ['packages']
 
+- name: Ensure pulseaudio directories are created
+  file:
+    dest: "{{ pulse_directory_default_location }}/{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(pulse_directory_default_owner) }}"
+    group: "{{ item.group | default(pulse_directory_default_group) }}"
+    mode: "{{ item.mode | default(pulse_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(pulse_directory_default_recurse) }}"
+  with_items: "{{ pulse_directory_definitions }}"
+  check_mode: no
+  tags: ['profile']
+
 - name: Update pulseaudio configs
   copy:
     src: "etc/pulse/{{ item }}"

@@ -17,3 +17,16 @@
     group: root
     mode: '0644'
     backup: yes
+
+- name:  Install .aliases and .profile
+  template:
+    src: "etc/skel/{{ item }}.j2"
+    dest: "/etc/skel/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+  with_items:
+    - .aliases
+    - .profile
+  tags: ['env', 'profile']

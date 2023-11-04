@@ -19,6 +19,18 @@
   become: False
   tags: ['packages']
 
+- name: Ensure i3 directories are created
+  file:
+    dest: "{{ i3_directory_default_location }}/{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(i3_directory_default_owner) }}"
+    group: "{{ item.group | default(i3_directory_default_group) }}"
+    mode: "{{ item.mode | default(i3_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(i3_directory_default_recurse) }}"
+  with_items: "{{ i3_directory_definitions }}"
+  check_mode: no
+  tags: ['profile']
+
 - name: Install i3ipc module
   pip:
     name: i3ipc

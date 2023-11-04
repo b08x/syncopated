@@ -17,35 +17,10 @@
   with_items: "{{ users }}"
   tags: ['profile']
 
-- name:  Install .aliases and .profile
-  template:
-    src: "etc/skel/{{ item }}.j2"
-    dest: "/etc/skel/{{ item }}"
-    owner: root
-    group: root
-    mode: '0644'
-    backup: True
-  with_items:
-    - .aliases
-    - .profile
-  tags: ['env', 'profile']
-
-- name: Install htop and lnav configs
-  template:
-    src: "etc/skel/.config/{{ item[1] }}.j2"
-    dest: "{{ item[0] }}/{{ item[1] }}"
-    owner: root
-    group: root
-    mode: '0644'
-    backup: yes
-  with_nested:
-    - [ '/root/.config', '/etc/skel/.config' ]
-    - [ 'htop/htoprc', 'lnav/checklog.lnav' ]
-
 - name: Sync /etc/skel with users home
   synchronize:
     src: /etc/skel/
-    dest: "{{ user.home }}/"
+    dest: "{{ item.home }}/"
     recursive: yes
     mode: push
     delete: no
@@ -57,8 +32,9 @@
       - "--itemize-changes"
       - "--exclude='*.*~'"
       - "--omit-dir-times"
-      - "--chown={{ user.name }}:{{ user.group }}"
+      - "--chown={{ item.name }}:{{ item.group }}"
       - "--backup"
       - "--suffix={{ suffix }}"
+  with_items: "{{ users }}"
   delegate_to: "{{ inventory_hostname }}"
   tags: ['env', 'profile']

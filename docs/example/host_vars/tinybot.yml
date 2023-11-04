@@ -90,7 +90,7 @@ host:
       - intel-ucode
       - libva-intel-driver
       - libva-mesa-driver
-      - libvdpau-va-gl-i965
+      # - libvdpau-va-gl-i965
       - vulkan-headers
       - vulkan-icd-loader
       - vulkan-intel

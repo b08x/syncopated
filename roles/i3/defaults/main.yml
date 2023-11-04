@@ -22,3 +22,20 @@
 # #    pos: "0x0"
 # #    rotate: "normal"
 # #    workspaces: [1,2,3,4,5,6,7,8,9,0] # bind workspace to a specific monitor
+# The default directory permission mode when creating directories using `i3_directory_definitions`
+i3_directory_default_mode: "0755"
+
+# The default directory owner when creating directories using `i3_directory_definitions`
+i3_directory_default_owner: root
+
+# The default directory group when creating directories using `i3_directory_definitions`
+i3_directory_default_group: root
+
+i3_directory_default_location: "/etc/skel"
+
+i3_directory_default_recurse: False
+
+i3_directory_definitions:
+  - dest: ".config/i3"
+  - dest: ".config/i3/modes"
+  - dest: ".config/i3status-rust/themes"

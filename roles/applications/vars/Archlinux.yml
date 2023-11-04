@@ -85,7 +85,6 @@ packages:
     - polyphone
     - qmidinet
     - qsampler
-    - radiotray-ng
     - raysession-git
     - rnnoise
     - rtaudio

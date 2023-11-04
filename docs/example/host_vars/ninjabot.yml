@@ -1,6 +1,9 @@
+---
 
+autologin: True
 
 use_bluetooth: False
+
 nfs_host: True
 nfs:
 - export: True
@@ -25,7 +28,7 @@ desktop:
 i3:
   autostart: 'default'
     # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
-  tray_output: 'primary'
+  tray_output: 'DVI-I-1'
   assignments: 'default'
   workspaces:
     - "$ws1 output DVI-I-1"

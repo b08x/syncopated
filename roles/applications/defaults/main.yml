@@ -1,5 +1,22 @@
 ---
 
+# The default directory permission mode when creating directories using `application_directory_definitions`
+application_directory_default_mode: "0755"
+
+# The default directory owner when creating directories using `application_directory_definitions`
+application_directory_default_owner: root
+
+# The default directory group when creating directories using `application_directory_definitions`
+application_directory_default_group: root
+
+application_directory_default_location: "/etc/skel"
+
+application_directory_default_recurse: False
+
+application_directory_definitions:
+  - dest: ".sonic-pi/config"
+  - dest: ".config/RaySession/session_templates/sound/XXX_SESSION_NAME_XXX.hydrogen"
+
 app:
   install:
     reaper: False

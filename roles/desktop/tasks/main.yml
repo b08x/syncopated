@@ -11,6 +11,18 @@
   become: False
   tags: ['packages']
 
+- name: Ensure desktop directories are created
+  file:
+    dest: "{{ desktop_directory_default_location }}/{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(desktop_directory_default_owner) }}"
+    group: "{{ item.group | default(desktop_directory_default_group) }}"
+    mode: "{{ item.mode | default(desktop_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(desktop_directory_default_recurse) }}"
+  with_items: "{{ desktop_directory_definitions }}"
+  check_mode: no
+  tags: ['always']
+
 - import_tasks:
     file: autologin.yml
   tags: ['autologin']

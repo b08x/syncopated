@@ -15,6 +15,17 @@
   become: False
   tags: ['packages']
 
+- name: Ensure root directories are created
+  file:
+    dest: "{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(audio_directory_default_owner) }}"
+    group: "{{ item.group | default(audio_directory_default_group) }}"
+    mode: "{{ item.mode | default(audio_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(audio_directory_default_recurse) }}"
+  with_items: "{{ audio_directory_definitions }}"
+  tags: ['always']
+
 - import_tasks:
     file: tuning.yml
   tags: ['tuning', 'realtime']

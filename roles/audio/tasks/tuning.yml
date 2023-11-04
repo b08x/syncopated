@@ -7,14 +7,6 @@
     append: yes
   with_items: "{{ users }}"
 
-- name: Ensure limits.d and tuned profile directories exist
-  file:
-    path: "{{ item }}"
-    state: directory
-  loop:
-    - /etc/security/limits.d
-    - /etc/tuned/realtime-modified
-
 - name: Set rtprio, memlock and nice for audio group
   copy:
     content: |

@@ -99,6 +99,7 @@ desktop__pkgs:
   - python-sphinxcontrib-svg2pdfconverter
   - qpdf
   - qutebrowser
+  - radiotray-ng  
   - redshift
   - rofi
   - sampler

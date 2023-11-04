@@ -1,0 +1,8 @@
+---
+
+desktop:
+  wm: shell
+  terminal: "xterm-256color"
+  terminal_alt: "xterm-256color"
+  browser: "w3m"
+  audio: "jack"

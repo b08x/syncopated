@@ -1,7 +1,5 @@
 #!/bin/sh
 export UU_ORDER="$UU_ORDER:~/.profile"
-# make default editor Neovim
-export EDITOR=nvim
 
 # Enable Wayland support for different applications
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
@@ -33,6 +31,31 @@ if systemd-detect-virt -q; then
 	# if the system is running inside a virtual machine, disable hardware cursors
 	export WLR_NO_HARDWARE_CURSORS=1
 fi
+
+useditor() {
+  export EDITOR="$@"
+  export GIT_EDITOR="$@"
+  export SVN_EDITOR="$@"
+}
+
+if [[ ! -n $EDITOR ]]; then useditor nvim; fi
+
+if [ -x "$(command -v most)" ]; then
+export PAGER=most
+fi
+
+if [ -x $(command -v hostname) ]; then
+export HOSTNAME=$(hostname)
+fi
+
+export TERM="{{ desktop.terminal }}"
+export TERMINAL="{{ desktop.terminal }}"
+export TERMCMD="$TERMINAL"
+
+export BROWSER="{{ desktop.browser }}"
+
+export RAY_PARENT_SCRIPT_DIR="$HOME/Sessions/ray-scripts"
+
 
 set -a
 . "$HOME/.config/user-dirs.dirs"
