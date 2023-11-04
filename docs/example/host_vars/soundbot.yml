@@ -22,9 +22,10 @@ desktop:
       address: '[soundbot.syncopated.net]:24800'
       config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
 #
-# x:
-#   autostart:
-#     - "jacktrip -s -n 4 -q auto -b 24 -D --udprt &"
+x:
+  autostart:
+    - ~/.screenlayout/soundbot.sh
+    # - "jacktrip -s -n 4 -q auto -b 24 -D --udprt &"
 
 i3:
   autostart: 'default'

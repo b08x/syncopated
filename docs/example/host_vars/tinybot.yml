@@ -33,6 +33,10 @@ desktop:
       name: tinybot.syncopated.net
       server: '[soundbot.syncopated.net]:24800'
 
+x:
+  autostart:
+    - xrandr --output HDMI-1 --auto
+
 i3:
   autostart: 'default'
     # - "jacktrip -c tinybot.soundbot.net -n 4 -q auto -b 24 -D --udprt &"

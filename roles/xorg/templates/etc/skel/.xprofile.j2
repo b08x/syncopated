@@ -27,17 +27,11 @@ if [ ! -d /tmp/reaper ]; then
 	mkdir -pv /tmp/reaper
 fi
 
-if [ -x "$(command -v autorandr)" ]; then
-	autorandr -l "$(autorandr --detected)"
-	sleep 0.5
-else
-	echo "autorandr not found"
-fi
-
 pactl -- set-sink-volume 0 55%
 
 {% if x.autostart != 'default' %}
 {% for program in x.autostart %}
 {{ program }}
+
 {% endfor %}
 {% endif %}
