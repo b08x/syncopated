@@ -54,3 +54,5 @@ xorg:
     - xorg-xwd
     - xorg-xwininfo
     - xorg-xwud
+    - xf86-video-fbdev
+    - xf86-video-vesa

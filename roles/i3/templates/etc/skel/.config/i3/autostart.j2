@@ -20,11 +20,9 @@ $exec "/usr/share/i3/scripts/i3autolayout.py"
 $exec "nm-applet"
 #$exec "redshift"
 
-$exec "dex -a -s /etc/xdg/autostart/:~/.config/autostart/"
-
 $exec "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
-$exec systemctl --user import-environment GPG_TTY SSH_AUTH_SOCK
-$exec dbus-update-activation-environment --all
+
+$exec "dex -a -s /etc/xdg/autostart/:~/.config/autostart/"
 
 $exec_always "reload-sxhkd.sh"
 

@@ -28,6 +28,10 @@ desktop:
   terminal_alt: "alacritty"
   browser: "google-chrome-stable"
   audio: "jack"
+  barrier:
+    client:
+      name: tinybot.syncopated.net
+      server: '[soundbot.syncopated.net]:24800'
 
 i3:
   autostart: 'default'
@@ -77,3 +81,28 @@ i3:
 #       autoconnect: False
 #       state: present
 #       method4: disabled
+host:
+  xorg:
+    video:
+    # intel:
+      - intel-gpu-tools
+      - intel-media-driver
+      - intel-ucode
+      - libva-intel-driver
+      - libva-mesa-driver
+      - libvdpau-va-gl-i965
+      - vulkan-headers
+      - vulkan-icd-loader
+      - vulkan-intel
+      - xf86-video-intel
+    # opengl:
+      - libva-utils
+      - libvdpau-va-gl
+      - libva-mesa-driver
+      - mesa
+      - mesa-utils
+      - mesa-vdpau
+      - vdpauinfo
+    # opencl:
+      - opencl-clover-mesa
+      - opencl-rusticl-mesa

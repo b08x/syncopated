@@ -28,7 +28,7 @@
   with_items:
     - .aliases
     - .profile
-  tags: ['profile']
+  tags: ['env', 'profile']
 
 - name: Install htop and lnav configs
   template:
@@ -41,7 +41,6 @@
   with_nested:
     - [ '/root/.config', '/etc/skel/.config' ]
     - [ 'htop/htoprc', 'lnav/checklog.lnav' ]
-  tags: ['profile']
 
 - name: Sync /etc/skel with users home
   synchronize:
@@ -62,4 +61,4 @@
       - "--backup"
       - "--suffix={{ suffix }}"
   delegate_to: "{{ inventory_hostname }}"
-  tags: ['profile']
+  tags: ['env', 'profile']
