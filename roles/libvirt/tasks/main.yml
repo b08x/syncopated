@@ -31,9 +31,7 @@
         - edk2-ovmf
         - libguestfs
         - libvirt
-        - qemu-base
-        - qemu-desktop
-        - qemu-emulators-full
+        - qemu-full
         - virt-install
         - virt-manager
         - virt-viewer

@@ -1,0 +1,84 @@
+---
+
+- name: set docker-compose location
+  set_fact:
+    docker_files: "{{ data.home }}/chromadb"
+
+- block:
+    - name: clone chromadb repository
+      git:
+        repo: https://github.com/chroma-core/chroma.git
+        dest: "{{ data.home }}/chromadb"
+        recursive: yes
+        accept_hostkey: yes
+        update: no
+        force: no
+        version: 0.4.14
+      check_mode: no
+
+    - name: install chroma Dockerfile
+      copy:
+        src: chroma/Dockerfile
+        dest: "{{ docker_files }}/Dockerfile"
+        mode: '0644'
+        backup: True
+
+    - name: install chroma docker-compose template
+      template:
+        src: docker/chroma/{{ item }}.j2
+        dest: "{{ docker_files }}/{{ item }}"
+        mode: '0644'
+        backup: True
+      loop:
+        - docker-compose.yml
+
+    - name: Stop all services
+      community.docker.docker_compose:
+        project_src: "{{ docker_files }}"
+        build: false
+        stopped: true
+      register: output
+
+    - name: Show results
+      ansible.builtin.debug:
+        var: output
+
+    - name: Verify that chromadb services are not running
+      ansible.builtin.assert:
+        that:
+          - "not output.services.chromadb.chromadb_chromadb_1.state.running"
+
+    - name: Tear down existing services
+      community.docker.docker_compose:
+        project_src: "{{ docker_files }}"
+        state: absent
+
+    - name: Create and start services
+      community.docker.docker_compose:
+        project_src: "{{ docker_files }}"
+      register: output
+
+    - name: Show results
+      ansible.builtin.debug:
+        var: output
+
+    - name: Run `docker-compose up` again
+      community.docker.docker_compose:
+        project_src: "{{ docker_files }}"
+        build: false
+      register: output
+
+    - name: Show results
+      ansible.builtin.debug:
+        var: output
+
+    - ansible.builtin.assert:
+        that: not output.changed
+
+  become: False
+
+
+- name: chromadb_tasks
+  set_fact:
+    chromadb_tasks: "complete"
+  when: output.services.chromadb.chromadb_chromadb_1.state.running
