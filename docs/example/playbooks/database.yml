@@ -1,6 +1,6 @@
 ---
-- hosts: all
-  become: False
+- hosts: database
+  become: True
   gather_subset:
     - hardware
     - network
@@ -8,6 +8,9 @@
     data: /srv/data
     path:
       - "{{ lookup('env','HOME') }}/.local/bin"
+    redis: False
+    pgvector: False
+    chromadb: False
   environment:
     PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
@@ -35,36 +38,20 @@
         owner: root
         group: devops
         mode: g+s
-      become: True
-
-    - name: Ensure redis data directory exists
-      file:
-        path: "{{ item }}"
-        state: directory
-        group: devops
-        mode: g+s
-      with_items:
-        - "{{ data }}/redis/local-data"
-      become: True
 
   tasks:
-    - name: "pull redis/redis-stack:latest"
-      docker_image:
-        name: redis/redis-stack
-        tag: latest
-        source: pull
-      tags: ['image']
 
-    - name: Start Redis Stack server
-      docker_container:
-        name: redis-stack
-        image: redis/redis-stack:latest
-        ports:
-          - "6379:6379"
-          - "8001:8001"
-        # env:
-          # REDIS_ARGS: "--requirepass mypassword"
-        volumes:
-          - "{{ data }}/redis/local-data:/data"
-        detach: yes
-      tags: ['container']
+    - import_tasks:
+        file: tasks/redis.yml
+      when: redis|bool
+      tags: ['redis']
+
+    - import_tasks:
+        file: tasks/pgvector.yml
+      when: pgvector|bool
+      tags: ['pgvector']
+
+    - import_tasks:
+        file: tasks/chromadb.yml
+      when: chromadb|bool
+      tags: ['chromadb']      

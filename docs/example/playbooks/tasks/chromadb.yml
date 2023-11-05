@@ -1,32 +1,43 @@
 ---
 
-- name: set docker-compose location
-  set_fact:
-    docker_files: "{{ data.home }}/chromadb"
+# - name: set docker-compose location
+#   set_fact:
+#     docker_files: "{{ data }}/chromadb"
+
+- name: Ensure chromadb data directory exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    group: devops
+    mode: g+s
+  with_items:
+    - "{{ data }}/chromadb"
+    - "{{ data }}/chromadb/index_data"
+    - "{{ data }}/chromadb/chroma"
 
 - block:
-    - name: clone chromadb repository
-      git:
-        repo: https://github.com/chroma-core/chroma.git
-        dest: "{{ data.home }}/chromadb"
-        recursive: yes
-        accept_hostkey: yes
-        update: no
-        force: no
-        version: 0.4.14
-      check_mode: no
+    # - name: clone chromadb repository
+    #   git:
+    #     repo: https://github.com/chroma-core/chroma.git
+    #     dest: "{{ data }}/chromadb"
+    #     recursive: yes
+    #     accept_hostkey: yes
+    #     update: no
+    #     force: no
+    #     version: 0.4.14
+    #   check_mode: no
 
-    - name: install chroma Dockerfile
+    - name: install chromadb log config
       copy:
-        src: chroma/Dockerfile
-        dest: "{{ docker_files }}/Dockerfile"
+        src: files/chromadb/log_config.yml
+        dest: "{{ data }}/chromadb/log_config.yml"
         mode: '0644'
         backup: True
 
     - name: install chroma docker-compose template
       template:
-        src: docker/chroma/{{ item }}.j2
-        dest: "{{ docker_files }}/{{ item }}"
+        src: templates/docker/chromadb/{{ item }}.j2
+        dest: "{{ data }}/chromadb/{{ item }}"
         mode: '0644'
         backup: True
       loop:
@@ -34,7 +45,7 @@
 
     - name: Stop all services
       community.docker.docker_compose:
-        project_src: "{{ docker_files }}"
+        project_src: "{{ data }}/chromadb"
         build: false
         stopped: true
       register: output
@@ -50,12 +61,12 @@
 
     - name: Tear down existing services
       community.docker.docker_compose:
-        project_src: "{{ docker_files }}"
+        project_src: "{{ data }}/chromadb"
         state: absent
 
     - name: Create and start services
       community.docker.docker_compose:
-        project_src: "{{ docker_files }}"
+        project_src: "{{ data }}/chromadb"
       register: output
 
     - name: Show results
@@ -64,7 +75,7 @@
 
     - name: Run `docker-compose up` again
       community.docker.docker_compose:
-        project_src: "{{ docker_files }}"
+        project_src: "{{ data }}/chromadb"
         build: false
       register: output
 
@@ -75,7 +86,7 @@
     - ansible.builtin.assert:
         that: not output.changed
 
-  become: False
+  become: True
 
 
 - name: chromadb_tasks

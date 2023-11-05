@@ -1,0 +1,79 @@
+---
+
+- block:
+    - name: Install psycopg2 module
+      pip:
+        name: "{{ item }}"
+        executable: pip3
+        state: present
+        extra_args: --break-system-packages
+      with_items:
+        - psycopg2
+      when: ansible_distribution == 'Archlinux'
+
+    - name: Install psycopg2 module
+      pip:
+        name: "{{ item }}"
+        executable: pip3
+        state: present
+      with_items:
+        - psycopg2
+      when: ansible_distribution == 'AlmaLinux'
+
+  tags: ["packages"]
+
+- name: install postgresql-server-devel
+  dnf:
+    name: postgresql-server-devel
+    state: present
+    update_cache: yes
+  when: ansible_distribution == 'AlmaLinux'
+  tags: ["packages"]
+
+- name: Ensure pgvector data directory exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    group: devops
+    mode: g+s
+  with_items:
+    - "{{ data }}/pgvector/local-data"
+    - "{{ data }}/pgvector/pgdata"
+
+- name: "pull ankane/pgvector"
+  docker_image:
+    name: ankane/pgvector
+    tag: latest
+    source: pull
+  tags: ["image"]
+
+- name: Start pgvector server
+  docker_container:
+    name: pgvector
+    image: ankane/pgvector
+    ports:
+      - "5432:5432"
+    env:
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+      POSTGRES_DB: laudllm
+      POSTGRES_USER: postgres
+    volumes:
+      - "{{ data }}/pgvector/local-data:/data"
+      - "{{ data }}/pgvector/pgdata:/var/lib/postgresql/data"
+    detach: yes
+  register: output
+  tags: ["container"]
+
+- name: Show results
+  debug:
+    var: output
+  tags: ["container"]
+
+- name: Create a new database
+  postgresql_db:
+    name: laudllm
+    login_host: localhost
+    login_password: postgres
+    owner: postgres
+    state: present
+  tags: ["database"]
