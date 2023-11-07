@@ -72,3 +72,22 @@
     - 'htop/htoprc'
     - 'lnav/checklog.lnav'
   tags: ['htop', 'lnav']
+
+- name: Install ranger configs
+  synchronize:
+    src: etc/skel/.config/ranger/
+    dest: /etc/skel/.config/ranger/
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--progress"
+      - "--itemize-changes"
+      - "--chown=root:root"
+      - "--backup"
+      - "--suffix={{ suffix }}"
+    tags: ['ranger']
