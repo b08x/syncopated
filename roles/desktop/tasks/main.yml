@@ -7,7 +7,7 @@
   tags: ['always']
 
 - name: Install desktop packages
-  shell: "{{ package_install_command }} {{ desktop__pkgs|join(' ') }}"
+  shell: "{{ package_install_command }} {{ pkgs__desktop|join(' ') }}"
   become: False
   tags: ['packages']
 

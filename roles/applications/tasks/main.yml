@@ -14,7 +14,7 @@
     - name: install audio applications
       aur:
         use: paru
-        name: "{{ packages.audio }}"
+        name: "{{ pkgs__audio }}"
         state: present
         extra_args: "--overwrite '*'"
       become: False

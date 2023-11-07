@@ -31,7 +31,7 @@
     name: zsh
 
 - name: Install terminal packages
-  shell: "{{ package_install_command }} {{ terminal.packages|join(' ') }}"
+  shell: "{{ package_install_command }} {{ pkgs__terminal|join(' ') }}"
   become: False
   tags: ['packages']
 
@@ -90,4 +90,5 @@
       - "--chown=root:root"
       - "--backup"
       - "--suffix={{ suffix }}"
-    tags: ['ranger']
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: ['ranger']

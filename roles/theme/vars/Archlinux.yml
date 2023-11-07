@@ -22,7 +22,7 @@ pkgs__qt5:
   - qt5-tools
   - qt5-x11extras
   - qt5-declarative
-  - qt5-location  
+  - qt5-location
   - qt5ct
 pkgs__qt6:
   - qt6-base
@@ -40,7 +40,6 @@ pkgs__fonts:
   - adobe-source-han-sans-kr-fonts
   - arc-icon-theme
   - awesome-terminal-fonts
-  - cachyos-nord-gtk-theme-git
   - cantarell-fonts
   - gnu-free-fonts
   - noto-color-emoji-fontconfig

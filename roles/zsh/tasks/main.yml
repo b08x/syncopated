@@ -27,6 +27,7 @@
       - "--chown=root:root"
       - "--backup"
       - "--suffix={{ suffix }}"
+  ignore_errors: "{{ ansible_check_mode }}"      
   tags: ['env', 'profile']
 
 - name: Copy zshenv and zshrc to /etc/skel

@@ -1,6 +1,6 @@
 ---
 
-desktop__pkgs:
+pkgs__desktop:
   # - obs-rtspserver
   # - pgmodeler
   - ascii-image-converter
@@ -8,11 +8,6 @@ desktop__pkgs:
   - aspell-en
   - barrier
   - beautysh
-  - cachy-browser
-  - cachyos-hello
-  - cachyos-packageinstaller
-  - cachyos-rate-mirrors
-  - cachyos-settings
   - cbonsai
   - code-marketplace
   - cpod-appimage
@@ -99,7 +94,7 @@ desktop__pkgs:
   - python-sphinxcontrib-svg2pdfconverter
   - qpdf
   - qutebrowser
-  - radiotray-ng  
+  - radiotray-ng
   - redshift
   - rofi
   - sampler
