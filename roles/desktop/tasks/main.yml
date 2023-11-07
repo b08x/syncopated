@@ -6,8 +6,37 @@
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
 
-- name: Install desktop packages
-  shell: "{{ package_install_command }} {{ pkgs__desktop|join(' ') }}"
+- block:
+    - name: Install desktop packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__desktop|join(' ') }}"
+
+    - name: Install browser packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__browser|join(' ') }}"
+
+    - name: Install development packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__development|join(' ') }}"
+
+    - name: Install doc packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__docs|join(' ') }}"
+
+    - name: Install python packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__python|join(' ') }}"
+
+    - name: Install utility packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__utils|join(' ') }}"
+
   become: False
   tags: ['packages']
 
@@ -150,21 +179,3 @@
       - "--chown=root:root"
       - "--backup"
       - "--suffix={{ suffix }}"
-
-# - name: Remove xdg autostart entry
-#   file:
-#     path: "/etc/xdg/autostart/{{ item }}"
-#     state: absent
-#   with_items:
-#     - picom.desktop
-#     - autorandr-kde.desktop
-#     - autorandr.desktop
-#     - firewall-applet.desktop
-#     - gnome-keyring-pkcs11.desktop
-#     - gnome-keyring-secrets.desktop
-#     - gnome-keyring-ssh.desktop
-#     - polkit-kde-authentication-agent-1.desktop
-#     - pamac-tray-budgie.desktop
-#     - pamac-tray.desktop
-#     - pulseaudio.desktop
-#   tags: ["profile", "picom", "xdg"]

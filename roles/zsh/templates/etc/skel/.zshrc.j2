@@ -1,6 +1,6 @@
 export UU_ORDER="$UU_ORDER:~/.zshrc"
 # Path to your oh-my-zsh installation.
-export ZSH="/usr/share/oh-my-zsh"
+export ZSH="/usr/local/share/oh-my-zsh"
 
 ZSH_THEME="kphoen"
 
@@ -124,16 +124,6 @@ PATH="$HOME/bin:$PATH"
 if [ -d $HOME/.cargo/bin ]; then
   PATH="$PATH:$HOME/.cargo/bin"
 fi
-
-# Fish-like syntax highlighting and autosuggestions
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Use history substring search
-source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-
-# pkgfile "command not found" handler
-source /usr/share/doc/pkgfile/command-not-found.zsh
 
 export -U PATH
 

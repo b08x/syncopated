@@ -21,15 +21,41 @@ pkgs__audio:
   # - vital-synth-git
   # - vst2sdk
   # - wkhtmltopdf-static
+pkgs__ambisonics:
   - ambdec
   - ambix-o1
-  - aubio
-  - audacity
-  - audiofile
+  - iempluginsuite-git
+  - sparta-plugins
+pkgs__analysis:
   - baudline-bin
+  - jaaa
+  - japa
+  - jnoisemeter
+  - vamp-plugin-sdk
+pkgs__dev:
   - bipscript
   - bipscript-ide
   - bluetooth-autoconnect
+  - rtaudio
+  - sc3-plugins
+  - sonic-pi-git
+  - supercollider
+pkgs__editors:
+  - aubio
+  - audacity
+  - audiofile
+  - midieditor
+  - ocenaudio-bin
+  - polyphone
+pkgs__loopers:
+  - sooperlooper-git
+pkgs__midi:
+  - jack-keyboard
+  - qmidinet
+  - rtmidi
+  - sendmidi
+  - vmpk
+pkgs__plugins:
   - calf
   - caps-lv2-git
   - chromaprint
@@ -45,66 +71,14 @@ pkgs__audio:
   - dragonfly-reverb-vst3
   - ecasound
   - fluidsynth
-  - fmit
-  - geonkick
-  - geonkick-common
-  - geonkick-lv2
-  - geonkick-standalone
-  - helm-synth
-  - helm-synth-common
-  - helm-synth-lv2
-  - helm-synth-standalone
-  - helm-synth-vst
-  - hydrogen-git
-  - iempluginsuite-git
   - ingen-git
   - intersect.lv2-git
-  - jaaa
-  - jack-example-tools
-  - jack-keyboard
-  - jack_link
-  - jack_mixer
-  - jack_snapshot
   - jalv
   - jalv-select-git
-  - japa
-  - jconvolver
-  - jnoisemeter
-  - ladspa
-  - linuxsampler
-  - lv2-c++-tools
-  - midieditor
-  - mixxx
-  - njconnect
   - noise-repellent
-  - non-mixer-lv2-git
-  - non-sequencer
-  - ocenaudio-bin
-  - patchage
-  - polyphone
-  - qmidinet
-  - qsampler
-  - raysession-git
-  - rnnoise
-  - rtaudio
-  - rtmidi
-  - sc3-plugins
-  - scala-music
-  - scala-music-scales
-  - sendmidi
-  - sonic-pi-git
-  - sooperlooper-git
-  - sound-gambit
-  - sox
-  - sparta-plugins
-  - supercollider
   - swh-lv2-git
   - tap-plugins-lv2-git
   - tonespace
-  - ttf-devicons
-  - tuned
-  - vamp-plugin-sdk
-  - vmpk
   - x42-plugins
   - x42-plugins-lv2
   - x42-plugins-standalone
@@ -116,3 +90,39 @@ pkgs__audio:
   - zita-mu1
   - zita-resampler
   - zita-rev1
+pkgs__samplers:
+  - linuxsampler
+  - mixxx
+  - qsampler
+pkgs__sequencers:
+  - hydrogen-git
+  - non-sequencer
+pkgs__synths:
+  - geonkick
+  - geonkick-common
+  - geonkick-lv2
+  - geonkick-standalone
+  - helm-synth
+  - helm-synth-common
+  - helm-synth-lv2
+  - helm-synth-standalone
+  - helm-synth-vst
+pkgs__tools:
+  - fmit
+  - jack-example-tools
+  - jack_link
+  - jack_mixer
+  - jack_snapshot
+  - jconvolver
+  - ladspa
+  - lv2-c++-tools
+  - njconnect
+  - non-mixer-lv2-git
+  - patchage
+  - raysession-git
+  - rnnoise
+  - scala-music
+  - scala-music-scales
+  - sound-gambit
+  - sox
+  - tuned

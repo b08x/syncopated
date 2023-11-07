@@ -10,16 +10,62 @@
   tags: ['always']
 
 - block:
+    - name: Install ambisonics packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__ambisonics|join(' ') }}"
 
-    - name: install audio applications
-      aur:
-        use: paru
-        name: "{{ pkgs__audio }}"
-        state: present
-        extra_args: "--overwrite '*'"
-      become: False
-      when: ansible_distribution == 'Archlinux'
+    - name: Install analysis packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__analysis|join(' ') }}"
 
+    - name: Install dev packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__dev|join(' ') }}"
+
+    - name: Install editors packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__editors|join(' ') }}"
+
+    - name: Install loopers packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__loopers|join(' ') }}"
+
+    - name: Install midi packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__midi|join(' ') }}"
+
+    - name: Install plugin packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__plugins|join(' ') }}"
+
+    - name: Install sampler packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__sampler|join(' ') }}"
+
+    - name: Install sequencer packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__sequencers|join(' ') }}"
+
+    - name: Install synth packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__synths|join(' ') }}"
+
+    - name: Install tool packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__tools|join(' ') }}"
+
+  become: False
   tags: ['packages']
 
 - name: Ensure application directories are created

@@ -27,6 +27,22 @@ if [ ! -d /tmp/reaper ]; then
 	mkdir -pv /tmp/reaper
 fi
 
+picom -b &
+
+nm-applet &
+#redshift &
+
+if [ -x "$(command -v autorandr)" ]; then
+	autorandr -l "$(autorandr --detected)"
+	sleep 0.5
+else
+	echo "autorandr not found"
+fi
+
+nitrogen --restore &
+
+dunst &
+
 pactl -- set-sink-volume 0 55%
 
 {% if x.autostart != 'default' %}
@@ -35,3 +51,5 @@ pactl -- set-sink-volume 0 55%
 
 {% endfor %}
 {% endif %}
+
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &

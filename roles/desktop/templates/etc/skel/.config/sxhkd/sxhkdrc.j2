@@ -102,11 +102,11 @@ super + XF86AudioMute
 Print
   sendmidi dev 'Midi Through Port-0' panic
 
-XF86MonBrightnessDown
-  brightnessctl -d intel_backlight s 10%-
+#XF86MonBrightnessDown
+#  brightnessctl -d intel_backlight s 10%-
 
-XF86MonBrightnessUp
-  brightnessctl -d intel_backlight s +10%
+#XF86MonBrightnessUp
+#  brightnessctl -d intel_backlight s +10%
 
 control + alt + End
   uxterm -class 'backup' -e sudo shutdown -h now
