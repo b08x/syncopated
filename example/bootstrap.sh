@@ -1,54 +1,6 @@
 #!/bin/bash
 set -e
 
-export PATH="/usr/local/bin:${HOME}/.local/share/gem/ruby/3.0.0/bin:${PATH}"
-
-PKGS=(
-  'alacritty'
-  'aria2'
-  'autorandr'
-  'barrier'
-  'bat'
-  'bc'
-  'bind'
-  'eza'
-  'fd'
-  'fzf'
-  'github-cli'
-  'gitui'
-  'graphicsmagick'
-  'gum'
-  'help2man'
-  'htop'
-  'i3status-rust'
-  'imlib2'
-  'inxi'
-  'keepassxc'
-  'kitty'
-  'libxcrypt-compat'
-  'libxml2'
-  'lnav'
-  'most'
-  'ncurses'
-  'neovim-symlinks'
-  'net-tools'
-  'nodejs'
-  'npm'
-  'openssl'
-  'openssl-1.1'
-  'ranger'
-  'sxhkd'
-  'tilda'
-  'ueberzug'
-  'zoxide'
-  'zsh-autosuggestions'
-  'zsh-syntax-highlighting'
-)
-
-function mkcd() {
-  mkdir -p "$1" && cd "$1";
-}
-
 # set a trap to exit with CTRL+C
 ctrl_c() {
         echo "** End."
@@ -58,8 +10,8 @@ ctrl_c() {
 trap ctrl_c INT SIGINT SIGTERM ERR EXIT
 
 # Check if the user is root
-if [[ $(id -u) -eq 0 ]]; then
-   echo "It is advised to not run this as root. Run this as the user you wish to configure"
+if [[ $(id -u) -ne 0 ]]; then
+   echo "This script must be run with sudo"
    exit 1
 fi
 
@@ -99,16 +51,56 @@ function prompt_for_userid() {
 userid=$(prompt_for_userid)
 echo "You entered: $userid"
 
-# clean cache
-sudo pacman -Scc --noconfirm > /dev/null
-sudo pacman -Syu rsync openssh python-pip python-setuptools rustup rubygems yadm jack2 jack2-dbus pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger nodejs npm --overwrite '*'
+group_name="${userid}"
+group_id=1000
+
+if getent group "$group_name" > /dev/null; then
+  echo "Group '$group_name' already exists."
+else
+  groupadd -g "$group_id" "$group_name"
+  usermod -a -G "$group_id" "$userid"
+  echo "Group '$group_name' created and user '$userid' added to it."
+fi
+
+distro=""
+
+# Determine distribution
+if [ -f /etc/lsb-release ]; then
+	. /etc/lsb-release
+	distro=$DISTRIB_ID
+elif [ -f /etc/debian_version ]; then
+	distro="debian"
+elif [ -f /etc/redhat-release ]; then
+	distro="redhat"
+fi
+
+
+# and so it begins...
+wipe && say "hello!\n" $GREEN && sleep 0.5
 
 say "-----------------------------------------------" $BLUE
-say "enabling ssh" $BLUE
+say "installing ssh, fd, ruby along with" $BLUE
+say "gcc, g++, make, and other essential build tools" $BLUE
+say "ssh will also be enabled and started." $BLUE
 say "-----------------------------------------------\n" $BLUE
 
-sudo systemctl enable sshd
-sudo systemctl start sshd
+case $distro in
+	Arch|Manjaro)
+		pacman -Syu --noconfirm --downloadonly --quiet
+    pacman -S --noconfirm openssh base-devel rsync openssh python-pip python-setuptools rustup fd rubygems yadm jack2 jack2-dbus pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger nodejs npm --overwrite '*'
+		systemctl enable sshd
+		systemctl start sshd
+		;;
+	Debian|Raspbian|MX)
+		apt-get update --quiet
+		apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev
+		systemctl enable ssh
+		systemctl start ssh
+		;;
+	*)
+		echo "Unsupported distribution."
+		exit 1
+esac
 
 sleep 0.5
 
@@ -125,41 +117,153 @@ else
   say "ssh keys present"
 fi
 
-# if [[ $wipe == 'true' ]]; then wipe && sleep 1; fi
-# say "\n-----------------------------------------------" $BLUE
-# say "installing packages" $BLUE
-# say "-----------------------------------------------\n" $BLUE
+say "-----------------------------------------------\n" $BLUE
 
-# ansible-pull -U git@github.com:SyncopatedLinux/cfgmgmt.git \
-#              -C development \
-#              -i inventory \
-#              -e "newInstall=true"
+if [[ $wipe == 'true' ]]; then wipe && sleep 1; fi
+say "\n-----------------------------------------------" $BLUE
+say "enable and start firewall service" $BLUE
+say "set defaults to deny inbound and allow outbound" $BLUE
+say "add rule to allow ssh traffic" $BLUE
+say "-----------------------------------------------\n" $BLUE
 
-# rustup default stable
+# Set firewall rules
+case $distro in
+	Debian|Raspbian|MX)
+		apt-get install -y ufw
+		ufw default deny incoming
+		ufw default allow outgoing
+		ufw allow ssh
+		ufw enable
+		;;
+	Arch|Manjaro)
+		pacman -S --noconfirm firewalld
+		systemctl enable firewalld
+		systemctl start firewalld
+		firewall-cmd --zone=public --add-service=ssh --permanent
+		firewall-cmd --reload
+		;;
+	*)
+		echo "Unsupported distribution: $distro"
+		exit 1
+		;;
+esac
 
-# install packages
-# paru -S --noconfirm --needed --cleanafter --useask --upgrademenu "${PKGS[@]}"
-#
-# if [ $? = 0 ]; then
-#   cd $HOME && yadm clone git@github.com:b08x/dots.git -f
-# fi
+sleep 0.5
 
-# sudo echo "gem: --user-install" > /etc/gemrc
-# echo "gem: --user-install" > $HOME/.gemrc
+if [[ $wipe == 'true' ]]; then wipe && sleep 1; fi
+say "\n-----------------------------------------------" $BLUE
+say "check for ansible installations..." $BLUE
+say "if installed with a system package," $BLUE
+say "remove the system package and install with pip" $BLUE
+say "as of date, pip will install ansible 2.14.5" $BLUE
+say "-----------------------------------------------\n" $BLUE
 
-# gem install neovim solargraph yard
+case $distro in
+	Debian|Raspbian|MX)
+		if [ -x $(apt list --installed | grep ansible) ]; then
+			apt-get remove -y ansible --quiet
+		fi
+		;;
+	Arch|Manjaro)
+		if [ -x $(pacman -Q | grep ansible) ]; then
+      echo "ansible package not found"
+    else
+      echo "ansible package found...removing"
+			pacman -Rdd ansible --noconfirm
+		fi
+		;;
+	*)
+		echo "Unsupported distribution: $distro"
+		exit 1
+		;;
+esac
 
-# # install vim plug
-# sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-# https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-#
-# # install vim plugins
-# if [ -x "$(command -v nvim)" ]; then
-#   echo "Bootstraping NeoVim"
-#   /usr/bin/nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+CocInstall coc-solargraph' '+qall'
-# fi
-#
-# jack_control eps driver alsa
-# jack_control dps monitor true
-# jack_control dps midi-driver seq
-# jack_control eps realtime-priority 80
+if [[ $wipe == 'true' ]]; then wipe && sleep 1; fi
+say "\n-----------------------------------------------" $BLUE
+say "installing pip" $BLUE && sleep 0.5
+say "-----------------------------------------------\n" $BLUE
+
+case $distro in
+	Debian|Raspbian|MX)
+		apt-get update --quiet
+		apt-get install -y python3-pip && \
+    pip install ansible
+		;;
+	Arch|Manjaro)
+    if [ -x $(pacman -Q | grep python-pip) ]; then
+      echo "pip not installed"
+  		pacman -S --noconfirm python-pip
+    else
+      echo "pip installed"
+    fi
+		;;
+	*)
+		echo "Unsupported distribution: $distro"
+		exit 1
+		;;
+esac
+
+say "\n-----------------------------------------------" $BLUE
+say "installing ansible via pip" $BLUE
+say "-----------------------------------------------\n" $BLUE
+
+case $distro in
+	Debian|Raspbian|MX)
+    pip install ansible
+		;;
+	Arch|Manjaro)
+    pip install ansible --break-system-packages
+		;;
+	*)
+		echo "Unsupported distribution: $distro"
+		exit 1
+		;;
+esac
+
+if [[ $wipe == 'true' ]]; then wipe && sleep 1; fi
+
+say "\n-----------------------------------------------" $BLUE
+say "installing additional support packages" $BLUE
+say "-----------------------------------------------\n" $BLUE
+
+
+BOOTSTRAP_PKGS=(
+  'aria2'
+  'bat'
+  'bc'
+  'cargo'
+  'ccache'
+  'cmake'
+  'dialog'
+  'git'
+  'git-lfs'
+  'htop'
+  'lnav'
+  'neovim'
+  'net-tools'
+  'unzip'
+  'wget'
+  'zsh'
+)
+
+case $distro in
+	Debian|Raspbian|MX)
+		apt-get update --quiet
+		apt-get install -y "${BOOTSTRAP_PKGS[@]}"
+		;;
+	Arch|Manjaro)
+		pacman -S --noconfirm --needed "${BOOTSTRAP_PKGS[@]}"
+		;;
+	*)
+		echo "Unsupported distribution: $distro"
+		exit 1
+		;;
+esac
+
+wipe && sleep 1
+
+say "\n-----------------------------------------------" $BLUE
+say "bootstrap complete. run ansible playbook...." $BLUE
+say "-----------------------------------------------\n" $BLUE
+
+sleep 10

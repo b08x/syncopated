@@ -24,7 +24,7 @@ desktop:
 #
 x:
   autostart:
-    - ~/.screenlayout/soundbot.sh
+    - . ~/.screenlayout/soundbot.sh
     # - "jacktrip -s -n 4 -q auto -b 24 -D --udprt &"
 
 i3:

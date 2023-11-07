@@ -11,6 +11,6 @@
 #
 # Use `exportfs -arv` to reload.
 /srv/exports 192.168.41.0/24(rw,fsid=0,no_subtree_check,sync) 192.168.36.0/24(rw,fsid=0,no_subtree_check,sync)
-{% for item in nfs %}
-/srv/exports/{{ item.folder }} 192.168.41.0/24(rw,nohide,insecure,no_subtree_check,sync) 192.168.36.0/24(rw,nohide,insecure,no_subtree_check,sync)
+{% for item in nfs.exports %}
+/srv/exports/{{ item }} 192.168.41.0/24(rw,nohide,insecure,no_subtree_check,sync) 192.168.36.0/24(rw,nohide,insecure,no_subtree_check,sync)
 {% endfor %}

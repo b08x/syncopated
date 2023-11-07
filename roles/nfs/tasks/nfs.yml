@@ -1,5 +1,4 @@
 ---
-
 - block:
     - name: Ensure group nobody exists
       group:
@@ -21,7 +20,7 @@
       template:
         src: "etc/{{ item }}.j2"
         dest: "/etc/{{ item }}"
-        mode: '0644'
+        mode: "0644"
         backup: yes
       with_items:
         - idmapd.conf
@@ -39,7 +38,7 @@
         - rpcbind
 
     - name: Permit traffic to rpcbind
-      ansible.posix.firewalld:
+      firewalld:
         port: "{{ item }}"
         permanent: yes
         state: enabled
@@ -58,38 +57,39 @@
 
   ignore_errors: "{{ ansible_check_mode }}"
 
-
 #TODO:
 # - name: check if shares are mounted, if so skip these tasks
-   # check mounts
+# check mounts
 
 - name: Create exports folder
   file:
-    path: /srv/exports/{{ item.folder }}
+    path: /srv/exports/{{ item }}
     state: directory
-    owner: root
-    group: root
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
     recurse: True
   with_items:
-    - "{{ nfs }}"
+    - "{{ nfs.exports }}"
 
 - name: Ensure required entries are made to hosts file. # Notes 1232
   lineinfile:
     path: /etc/fstab
     state: present
-    line: "{{ item.parent }}/{{ item.folder }} /srv/exports/{{ item.folder }} none bind 0 0"
+    line: "{{ nfs.parent }}/{{ item }} /srv/exports/{{ item }} none bind 0 0"
   with_items:
-    - "{{ nfs }}"
+    - "{{ nfs.exports }}"
+  register: fstab
 
 - name: reload systemd
   systemd:
     daemon_reload: yes
+  when: fstab.changed
 
 - name: Mounted the binded folders
   shell: |
-    mount /srv/exports/{{ item.folder }}
+    mount /srv/exports/{{ item }}
   with_items:
-    - "{{ nfs }}"
+    - "{{ nfs.exports }}"
 
 - name: Set the exports
   template:
@@ -97,10 +97,10 @@
     dest: /etc/exports
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
     backup: yes
-  register: etcexports
+  register: exportsra
 
-- name:  Reload exports
+- name: Reload exports
   shell: exportfs -rv
-  when: etcexports.changed
+  when: exportsra.changed

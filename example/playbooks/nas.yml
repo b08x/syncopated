@@ -23,8 +23,6 @@
 
   roles:
 
-    - role: network
-
     - role: nfs
       tags: ['nfs']
 

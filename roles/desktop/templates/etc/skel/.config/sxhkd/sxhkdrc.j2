@@ -8,10 +8,10 @@ control + Menu
   wmfocus
 
 XF86AudioRecord
-  {{ desktop.terminal }} --class "notepad" -e ~/RobotStuff/bin/scriber.rb
+  {{ desktop.terminal }} --class "scriber" -e ~/RobotStuff/bin/scriber.rb
 
 super + XF86AudioRecord
-  {{ desktop.terminal }} --class "notepad" -e ~/RobotStuff/bin/scriber.rb --new-file
+  {{ desktop.terminal }} --class "scriber" -e ~/RobotStuff/bin/scriber.rb --new-file
 
 Menu
   ~/.config/rofi/scripts/launcher_t1.sh
