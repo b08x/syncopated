@@ -190,7 +190,7 @@ case $distro in
     pip install ansible
 		;;
 	Arch|Manjaro)
-    if [ -x $(pacman -Q | grep python-pip) ]; then
+    if [[ -x $(pacman -Q | grep python-pip) ]]; then
       echo "pip not installed"
   		pacman -S --noconfirm python-pip
     else

@@ -3,9 +3,9 @@
 
 gtk:
   theme:
-    name: oomox-soundbot
-    icons: Enlightenment-X
-    cursor: xcursor-breeze
+    name: ArchLabs-Dark
+    icons: ArchLabs-Dark
+    cursor: ArchLabs-Dark
 kvantum: KvGnomeDark
 qtstyle: Fusion
 

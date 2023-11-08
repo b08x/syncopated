@@ -31,8 +31,6 @@ if test -d /etc/profile.d/; then
 	unset profile
 fi
 
-[ -r ~/.profile ] && . ~/.profile
-
 # Unload our profile API functions
 unset -f append_path
 

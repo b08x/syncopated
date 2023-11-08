@@ -21,6 +21,7 @@ theme_directory_definitions:
   - dest: ".config/qt6ct"
   - dest: ".config/qt5ct/colors"
   - dest: ".config/qt6ct/colors"
+  - dest: ".config/Kvantum"
   - dest: ".local/share/fonts"
   - dest: ".themes"
   - dest: ".icons"

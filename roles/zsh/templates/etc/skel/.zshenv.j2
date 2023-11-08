@@ -2,6 +2,42 @@ export UU_ORDER="$UU_ORDER:~/.zshenv"
 
 unset _old_path
 
+export NO_AT_BRIDGE=1
+export QT_SCALE_FACTOR=1.0
+export QT_FONT_DPI=96
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+
+if systemd-detect-virt -q; then
+	# if the system is running inside a virtual machine, disable hardware cursors
+	export WLR_NO_HARDWARE_CURSORS=1
+fi
+
+useditor() {
+  export EDITOR="$@"
+  export GIT_EDITOR="$@"
+  export SVN_EDITOR="$@"
+}
+
+if [[ ! -n $EDITOR ]]; then useditor nvim; fi
+
+if [ -x "$(command -v most)" ]; then
+export PAGER=most
+fi
+
+if [ -x $(command -v hostname) ]; then
+export HOSTNAME=$(hostname)
+fi
+
+export TERM="{{ desktop.terminal }}"
+export TERMINAL="{{ desktop.terminal }}"
+export TERMCMD="$TERMINAL"
+
+export BROWSER="{{ desktop.browser }}"
+
+export RAY_PARENT_SCRIPT_DIR="$HOME/Sessions/ray-scripts"
+
 # gum options
 export GUM_SPIN_SPINNER="pulse"
 export GUM_SPIN_ALIGN="right"

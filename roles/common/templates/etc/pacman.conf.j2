@@ -84,7 +84,7 @@ Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64/
 
 [proaudio]
 Server = https://arch.osamc.de/$repo/$arch
-{% if ansible_facts['hostname'] != 'archlabs' %}
+{% if ansible_facts['hostname'] != 'tinybot' %}
 # cachyos repos
 {% if architecture == 'x86-64-v3' %}
 [cachyos-v3]
