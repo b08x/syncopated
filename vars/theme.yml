@@ -4,7 +4,7 @@
 gtk:
   theme:
     name: ArchLabs-Dark
-    icons: ArchLabs-Dark
+    icons: oomox-soundbot
     cursor: ArchLabs-Dark
 kvantum: KvGnomeDark
 qtstyle: Fusion

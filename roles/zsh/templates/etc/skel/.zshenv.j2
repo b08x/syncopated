@@ -23,18 +23,18 @@ useditor() {
 if [[ ! -n $EDITOR ]]; then useditor nvim; fi
 
 if [ -x "$(command -v most)" ]; then
-export PAGER=most
+PAGER=most
 fi
 
 if [ -x $(command -v hostname) ]; then
-export HOSTNAME=$(hostname)
+HOSTNAME=$(hostname)
 fi
 
-export TERM="{{ desktop.terminal }}"
-export TERMINAL="{{ desktop.terminal }}"
-export TERMCMD="$TERMINAL"
+TERM="{{ desktop.terminal }}"
+TERMINAL="{{ desktop.terminal }}"
+TERMCMD="$TERMINAL"
 
-export BROWSER="{{ desktop.browser }}"
+BROWSER="{{ desktop.browser }}"
 
 export RAY_PARENT_SCRIPT_DIR="$HOME/Sessions/ray-scripts"
 

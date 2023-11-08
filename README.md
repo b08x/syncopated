@@ -14,3 +14,9 @@ pulseaudio module - Configures pulseaudio for low latency performance.
 
 The collection aims to automate and simplify setting up the Linux infrastructure for professional audio production environments. It handles mundane system configuration to allow engineers to focus on their creative work. The consistent configurations aid collaboration between sound engineers when working across different
 studios and facilities.
+
+
+
+https://github.com/aplatform64/aplatform64
+
+https://github.com/vvo/ansible-archee/blob/master/roles/base/vars/main.yml

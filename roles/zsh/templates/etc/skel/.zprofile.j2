@@ -11,7 +11,7 @@ systemctl --user import-environment GPG_TTY SSH_AUTH_SOCK
 dbus-update-activation-environment --all
 
 if ! pgrep -a "keyring" >/dev/null; then
-	echo "starting gnome-keyring from .xprofile???"
+	echo "starting gnome-keyring from .zprofile???"
 	eval "$(/usr/bin/gnome-keyring-daemon --replace --daemonize --components=pkcs11,secrets,ssh,gpg)"
 fi
 

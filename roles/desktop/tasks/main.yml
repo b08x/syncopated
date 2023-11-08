@@ -124,6 +124,17 @@
     backup: yes
   tags: ["profile", "picom"]
 
+- name: Ensure folders for barrier configs exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+  with_items:
+    - "{{ user.home }}/.config/Debauchee"
+    - "{{ user.home }}/.config/autostart"
+  tags: ['barrier']
+
 - name: Set barrier server config
   copy:
     src: home/.config/Debauchee/soundbot.conf

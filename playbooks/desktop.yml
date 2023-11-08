@@ -5,7 +5,7 @@
     - hardware
     - network
   vars_files:
-    - vars/theme.yml
+    - ../vars/theme.yml
   vars:
     path:
       - "{{ lookup('env','HOME') }}/.local/bin"
@@ -127,7 +127,7 @@
 
     - role: docker
       tags: ['docker']
-    
+
     - role: libvirt
       tags: ['libvirt']
 

@@ -7,7 +7,7 @@
     - hardware
     - network
   vars_files:
-    - "vars/packager/user.yml"
+    - ../vars/packager/user.yml
   vars:
 
     repository_urls:
