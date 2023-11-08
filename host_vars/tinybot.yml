@@ -1,5 +1,4 @@
 ---
-
 autologin: True
 
 bluetooth: True
@@ -9,6 +8,7 @@ nfs:
   exports:
     - Archive
     - Workspace
+    - Public
 
 app:
   install:
@@ -23,7 +23,7 @@ app:
     tony: True
 
 docker:
-  service: 'enabled'
+  service: "enabled"
   storage: /srv/lib/docker
   nvidia: False
 
@@ -36,7 +36,7 @@ desktop:
   barrier:
     client:
       name: tinybot.syncopated.net
-      server: '[soundbot.syncopated.net]:24800'
+      server: "[soundbot.syncopated.net]:24800"
 
 x:
   autostart:
@@ -45,34 +45,35 @@ x:
 i3:
   autostart:
     - "ray-daemon --session-root ~/NetworkSessions -p 7777"
-  tray_output: 'HDMI-1'
-  assignments: 'default'
-  workspaces: 'default'
-  keybindings: 'default'
+  tray_output: "HDMI-1"
+  assignments: "default"
+  workspaces: "default"
+  keybindings: "default"
 
 network:
   interfaces:
     eth0:
       type: ethernet
       ifname: eth0
-      conn_name: audio
-      mac: 68:1d:ef:2a:ac:47
-      ip4: 192.168.36.2
+      conn_name: eth0
+      mac: 68:1d:ef:2a:b4:03
+      ip4: 192.168.41.26
+      gw4: 192.168.41.1
+      dns4: 192.168.41.41, 192.168.41.1
+      dns4_search: syncopated.net
       autoconnect: True
       state: present
       method4: manual
     eth1:
       type: ethernet
       ifname: eth1
-      conn_name: eth1
-      mac: 68:1d:ef:2a:b4:03
-      ip4: 192.168.41.26
-      gw4: 192.168.41.1
-      dns4: 192.168.41.41
-      dns4_search: syncopated.net
+      conn_name: audio
+      mac: 68:1d:ef:2a:ac:47
+      ip4: 192.168.36.2
       autoconnect: True
       state: present
       method4: manual
+
 #     wlan0:
 #       type: wifi
 #       ifname: wlan0
@@ -84,7 +85,7 @@ network:
 host:
   xorg:
     video:
-    # intel:
+      # intel:
       - intel-gpu-tools
       - intel-media-driver
       - intel-ucode
@@ -95,7 +96,7 @@ host:
       - vulkan-icd-loader
       - vulkan-intel
       - xf86-video-intel
-    # opengl:
+      # opengl:
       - libva-utils
       - libvdpau-va-gl
       - libva-mesa-driver
@@ -103,6 +104,6 @@ host:
       - mesa-utils
       - mesa-vdpau
       - vdpauinfo
-    # opencl:
+      # opencl:
       - opencl-clover-mesa
       - opencl-rusticl-mesa

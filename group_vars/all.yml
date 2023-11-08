@@ -1,21 +1,20 @@
 ---
-
 keyserver: bender.syncopated.net
 
 user:
-   name: b08x
-   group: b08x
-   uid: 1000
-   gid: 1000
-   home: /home/b08x
-   shell: /usr/bin/zsh
-   secondary_groups: "input,video,audio"
-   realname: Robert Pannick
-   sudoers: True
-   workspace: /home/b08x/Workspace
-   email: rwpannick@gmail.com
-   gpg: 36A6ECD355DB42B296C0CEE2157CA2FC56ECC96A
-   dots: git@github.com:b08x/dots.git
+  name: b08x
+  group: b08x
+  uid: 1000
+  gid: 1000
+  home: /home/b08x
+  shell: /usr/bin/zsh
+  secondary_groups: "input,video,audio"
+  realname: Robert Pannick
+  sudoers: True
+  workspace: /home/b08x/Workspace
+  email: rwpannick@gmail.com
+  gpg: 36A6ECD355DB42B296C0CEE2157CA2FC56ECC96A
+  dots: git@github.com:b08x/dots.git
 
 users:
   - name: root
@@ -40,13 +39,13 @@ autofs_client:
 
 docker:
   storage: /var/lib/docker
-  service: 'enabled'
+  service: "enabled"
   nvidia: False
   users:
     - b08x
 
 libvirt:
-  service: 'disabled'
+  service: "disabled"
   users:
     - b08x
 
@@ -54,6 +53,7 @@ lan:
   gateway: 192.168.41.1
   nameserver01: 192.168.41.41
   nameserver02: 192.168.41.1
-  search: syncopated.net
+  dns:
+    search: syncopated.net
   wireless:
     ssid: invisiblemagic

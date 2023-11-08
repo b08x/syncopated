@@ -61,6 +61,16 @@
 # - name: check if shares are mounted, if so skip these tasks
 # check mounts
 
+- name: Ensure the exported folder already exists
+  file:
+    path: "{{ nfs.parent }}/{{ item }}"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: g+s
+  with_items:
+    - "{{ nfs.exports }}"
+
 - name: Create exports folder
   file:
     path: /srv/exports/{{ item }}

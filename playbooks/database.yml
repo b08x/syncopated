@@ -42,16 +42,13 @@
   tasks:
 
     - import_tasks:
-        file: tasks/redis.yml
-      when: redis|bool
+        file: ../tasks/redis.yml
       tags: ['redis']
 
     - import_tasks:
-        file: tasks/pgvector.yml
-      when: pgvector|bool
+        file: ../tasks/pgvector.yml
       tags: ['pgvector']
 
     - import_tasks:
-        file: tasks/chromadb.yml
-      when: chromadb|bool
+        file: ../tasks/chromadb.yml
       tags: ['chromadb']      

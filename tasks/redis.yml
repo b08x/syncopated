@@ -17,6 +17,11 @@
     source: pull
   tags: ['image']
 
+# - name: Verify that chromadb services are not running
+#   ansible.builtin.assert:
+#     that:
+#       - "not output.services.chromadb.chromadb_chromadb_1.state.running"
+
 - name: Start Redis Stack server
   docker_container:
     name: redis-stack
