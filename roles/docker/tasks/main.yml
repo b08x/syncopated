@@ -46,6 +46,12 @@
 
   tags: ['packages', 'always']
 
+- name: Ensure docker data directory exists
+  file:
+    path: "{{ docker.storage }}"
+    state: directory
+    owner: root
+    group: root
 
 - import_tasks:
     file: setup.yml

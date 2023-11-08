@@ -76,7 +76,8 @@
 - name: set libvirtd service preset
   systemd:
     name: libvirtd
-    enabled: "{{ libvirt.service.enabled }}"
+    enabled: True
+  when: libvirt.service == 'enabled'
 
 - import_tasks:
     file: vagrant.yml

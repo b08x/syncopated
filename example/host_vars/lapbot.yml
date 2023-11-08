@@ -16,15 +16,6 @@ app:
 
 use_bluetooth: True
 
-nfs:
-  server:
-    exports:
-      parent: "{{ user.home }}"
-      folder: Recordings
-    # - "/srv/export 192.168.41.0/24(rw,fsid=0,no_subtree_check,sync) 192.168.36.0/24(rw,fsid=0,no_subtree_check,sync)"
-    # - "/srv/export/Recordings 192.168.41.0/24(rw,nohide,insecure,no_subtree_check,sync) 192.168.36.0/24(rw,nohide,insecure,no_subtree_check,sync)"
-
-
 desktop:
   wm: i3
   terminal: "kitty"

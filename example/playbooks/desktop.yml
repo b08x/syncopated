@@ -126,11 +126,11 @@
     - role: audio
       tags: ["audio"]
 
-    # - role: docker
-    #   tags: ['docker']
-    #
-    # - role: libvirt
-    #   tags: ['libvirt']
+    - role: docker
+      tags: ['docker']
+    
+    - role: libvirt
+      tags: ['libvirt']
 
     - role: theme
       tags: ["theme"]

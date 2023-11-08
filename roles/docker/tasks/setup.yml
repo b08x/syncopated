@@ -107,4 +107,5 @@
 - name: set docker service preset
   systemd:
     name: docker
-    enabled: "{{ docker.service.enabled }}"
+    enabled: True
+  when: docker.service == 'enabled'

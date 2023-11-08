@@ -1,14 +1,30 @@
 ---
+
+autologin: True
+
 use_bluetooth: True
 
 nfs:
-  server:
-    exports:
-      parent: "{{ user.home }}"
-      folder: Recordings
-    # - "/srv/export 192.168.41.0/24(rw,fsid=0,no_subtree_check,sync) 192.168.36.0/24(rw,fsid=0,no_subtree_check,sync)"
-    # - "/srv/export/Recordings 192.168.41.0/24(rw,nohide,insecure,no_subtree_check,sync) 192.168.36.0/24(rw,nohide,insecure,no_subtree_check,sync)"
+  parent: "{{ user.home }}"
+  exports:
+    - Recordings
 
+app:
+  install:
+    reaper: True
+    pulsar: True
+    vscode: True
+    vamp: True
+    mixxx: True
+    annotator: True
+    soniclineup: True
+    touchosc: True
+    tony: True
+
+docker:
+  service: 'enabled'
+  storage: /var/lib/docker
+  nvidia: False
 
 desktop:
   wm: i3
@@ -21,11 +37,14 @@ desktop:
       name: soundbot.syncopated.net
       address: '[soundbot.syncopated.net]:24800'
       config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
-#
+
 x:
   autostart:
-    - . ~/.screenlayout/soundbot.sh
-    # - "jacktrip -s -n 4 -q auto -b 24 -D --udprt &"
+    - xrandr --output eDP1 --primary --mode 1600x900 --pos 1440x220 --rotate normal \
+      --output DP1 --off --output DP1-1 --mode 2560x1440 --pos 1440x1120 --rotate normal \
+      --output DP1-2 --mode 2560x1440 --pos 0x0 --rotate right \
+      --output DP1-3 --off --output DP2 --off --output HDMI1 --off --output HDMI2 --off \
+      --output VIRTUAL1 --off
 
 i3:
   autostart: 'default'
@@ -44,3 +63,53 @@ i3:
     - "$ws9 output eDP1"
     - "$ws10 output eDP1"
   keybindings: 'default'
+
+network:
+  interfaces:
+    enp0s20f0u2u4:
+      type: ethernet
+      ifname: enp0s20f0u2u4
+      conn_name: audio
+      mac: 00:e0:4d:78:b7:7c
+      ip4: 192.168.36.1
+      autoconnect: True
+      state: present
+      method4: manual
+    enp13s0u1:
+      type: ethernet
+      ifname: enp13s0u1
+      conn_name: enp13s0u1
+      mac: 00:50:b6:91:fc:4d
+      ip4: 192.168.41.32
+      gw4: 192.168.41.1
+      dns4: 192.168.41.41
+      dns4_search: syncopated.net
+      autoconnect: True
+      state: present
+      method4: manual
+
+  host:
+    xorg:
+      video:
+      # intel:
+        - intel-gpu-tools
+        - intel-media-driver
+        - intel-ucode
+        - libva-intel-driver
+        - libva-mesa-driver
+        # - libvdpau-va-gl-i965
+        - vulkan-headers
+        - vulkan-icd-loader
+        - vulkan-intel
+        - xf86-video-intel
+      # opengl:
+        - libva-utils
+        - libvdpau-va-gl
+        - libva-mesa-driver
+        - mesa
+        - mesa-utils
+        - mesa-vdpau
+        - vdpauinfo
+      # opencl:
+        - opencl-clover-mesa
+        - opencl-rusticl-mesa

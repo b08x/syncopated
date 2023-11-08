@@ -91,10 +91,6 @@
     owner: "{{ user.name }}"
     mode: '0644'
 
-# - import_tasks:
-#     file: swhkd.yml
-#   tags: ['swhkd', 'keybindings']
-
 - import_tasks:
     file: sxhkd.yml
   tags: ['sxhkd', 'keybindings']

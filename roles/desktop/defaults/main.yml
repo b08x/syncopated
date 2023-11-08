@@ -23,6 +23,7 @@ desktop_directory_default_location: "/etc/skel"
 desktop_directory_default_recurse: False
 
 desktop_directory_definitions:
+  - dest: ".config/autostart"
   - dest: ".config/Debauchee"
   - dest: ".config/Kvantum"
   - dest: ".config/Thunar"

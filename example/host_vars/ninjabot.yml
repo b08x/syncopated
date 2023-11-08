@@ -4,11 +4,27 @@ autologin: True
 
 use_bluetooth: False
 
-nfs_host: True
 nfs:
-- export: True
   parent: "{{ user.home }}"
-  folder: Videos
+  exports:
+    - Videos
+
+app:
+  install:
+    reaper: True
+    pulsar: True
+    vscode: True
+    vamp: True
+    mixxx: True
+    annotator: True
+    soniclineup: True
+    touchosc: True
+    tony: True
+
+docker:
+  service: 'enabled'
+  storage: /var/lib/docker
+  nvidia: False
 
 desktop:
   wm: i3
@@ -26,8 +42,8 @@ desktop:
 #     - "jacktrip -c tinybot.soundbot.net -n 4 -q auto -b 24 -D --udprt &"
 
 i3:
-  autostart: 'default'
-    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+  autostart: 
+    - "ray-daemon --session-root ~/NetworkSessions -p 7777"
   tray_output: 'DVI-I-1'
   assignments: 'default'
   workspaces:
