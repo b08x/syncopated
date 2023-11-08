@@ -2,6 +2,12 @@
 
 autologin: True
 
+bluetooth: True
+
+nfs:
+  parent: ""
+  exports: []
+
 app:
   install:
     reaper: True
@@ -14,7 +20,11 @@ app:
     touchosc: True
     tony: True
 
-use_bluetooth: True
+
+docker:
+  service: 'enabled'
+  storage: /var/lib/docker
+  nvidia: False
 
 desktop:
   wm: i3
@@ -38,53 +48,53 @@ i3:
   tray_output: 'primary'
   assignments: 'default'
   workspaces: 'default'
-    # - "$ws1 output DP1-2"
-    # - "$ws2 output DP1-2"
-    # - "$ws3 output DP1-2"
-    # - "$ws4 output DP1-1"
-    # - "$ws5 output DP1-1"
-    # - "$ws6 output DP1-1"
-    # - "$ws7 output DP1-1"
-    # - "$ws8 output eDP1"
-    # - "$ws9 output eDP1"
-    # - "$ws10 output eDP1"
   keybindings: 'default'
 
-# network:
-#   interfaces:
-#     enp2s0:
-#       type: ethernet
-#       ifname: enp2s0
-#       conn_name: enp2s0
-#       mac: 58:8a:5a:38:fb:22
-#       autoconnect: False
-#       state: present
-#       method4: disabled
-#     wlan0:
-#       type: wifi
-#       ifname: wlan0
-#       conn_name: invisiblemagic
-#       mac: C0:25:E9:74:CD:96
-#       ssid: invisiblemagic
-#       wifi_sec:
-#         key_mgmt: wpa-psk
-#         psk: b269a69b3a6d38effeb314eb9c95d58782a09c67e54e07865ed45d69a3d96242
-#       ip4: 192.168.41.4
-#       gw4: 192.168.41.1
-#       dns4: 192.168.41.1
-#       dns4_search: syncopated.net
-#       autoconnect: True
-#       state: present
-#       method4: manual
-#     wlan1:
-#       type: wifi
-#       ifname: wlan1
-#       conn_name: wlan1
-#       mac: 9c:30:5b:d8:0c:1f
-#       ssid: invisiblemagic
-#       autoconnect: False
-#       state: present
-#       method4: disabled
+network:
+  interfaces:
+    enp2s0:
+      type: ethernet
+      ifname: enp2s0
+      conn_name: enp2s0
+      mac: 58:8a:5a:38:fb:22
+      autoconnect: False
+      state: present
+      method4: disabled
+    enp0s20f0u1:
+      type: ethernet
+      ifname: enp0s20f0u1
+      conn_name: audio
+      mac: f0:1d:bc:f2:63:99
+      ip4: 192.168.36.5
+      autoconnect: True
+      state: present
+      method4: manual      
+    wlan0:
+      type: wifi
+      ifname: wlan0
+      conn_name: wlan0
+      mac: 66:a1:53:c9:7b:e5
+      ssid: invisiblemagic
+      autoconnect: False
+      state: present
+      method4: disabled
+    wlan1:
+      type: wifi
+      ifname: wlan1
+      conn_name: invisiblemagic
+      mac: c0:25:e9:74:cd:96
+      ssid: invisiblemagic
+      wifi_sec:
+        key_mgmt: wpa-psk
+        psk: "{{ wifi_key }}"
+      ip4: 192.168.41.4
+      gw4: 192.168.41.1
+      dns4: 192.168.41.1
+      dns4_search: syncopated.net
+      autoconnect: True
+      state: present
+      method4: manual
+
 
 # host:
 #   packages:

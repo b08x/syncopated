@@ -1,6 +1,6 @@
 ---
 
-use_bluetooth: True
+bluetooth: True
 
 desktop:
   wm: i3

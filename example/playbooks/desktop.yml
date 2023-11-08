@@ -7,7 +7,6 @@
   vars_files:
     - vars/theme.yml
   vars:
-    keyserver: bender.syncopated.net
     path:
       - "{{ lookup('env','HOME') }}/.local/bin"
   environment:

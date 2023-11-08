@@ -62,6 +62,8 @@ else
   echo "Group '$group_name' created and user '$userid' added to it."
 fi
 
+keyserver="bender.syncopated.net"
+
 distro=""
 
 # Determine distribution
@@ -108,11 +110,14 @@ if [[ $wipe == 'true' ]]; then wipe && sleep 1; fi
 say "\n-----------------------------------------------" $BLUE
 
 if [[ ! -f "/home/${userid}/.ssh/id_ed25519.pub" ]]; then
-  # read -p "Enter the username and hostname of the remote host (e.g. user@example.com): " REMOTE_HOST
-  REMOTE_HOST="${userid}@bender.syncopated.net"
-  cd /home/$userid && rsync -avP --delete $REMOTE_HOST:~/.ssh .
-  chown -R $userid:$userid /home/$userid/
-  scp $REMOTE_HOST:~/.gitconfig .
+  # set remote host
+	REMOTE_HOST="${userid}@${keyserver}"
+	# sync ssh keys
+	cd /home/$userid && rsync -avP --delete $REMOTE_HOST:~/.ssh .
+	# pull gitconfig
+	rsync -avP --chown=$userid:$userid $REMOTE_HOST:~/.gitconfig .
+	# ensure perms
+	chown -R $userid:$userid /home/$userid/
 else
   say "ssh keys present"
 fi

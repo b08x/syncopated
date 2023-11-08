@@ -2,7 +2,7 @@
 
 autologin: True
 
-use_bluetooth: False
+bluetooth: False
 
 nfs:
   parent: "{{ user.home }}"
@@ -58,6 +58,30 @@ i3:
     - "$ws9 output DVI-D-0"
     - "$ws10 output DVI-D-0"
   keybindings: 'default'
+
+network:
+  interfaces:
+    enp12s0:
+      type: ethernet
+      ifname: enp12s0
+      conn_name: enp12s0
+      mac: bc:5f:f4:0e:bb:b5
+      ip4: 192.168.41.30
+      gw4: 192.168.41.1
+      dns4: 192.168.41.41
+      dns4_search: syncopated.net
+      autoconnect: True
+      state: present
+      method4: manual    
+    enp14s0:
+      type: ethernet
+      ifname: enp14s0
+      conn_name: audio
+      mac: bc:5f:f4:0e:bb:b3
+      ip4: 192.168.36.3
+      autoconnect: True
+      state: present
+      method4: manual
 
 host:
   xorg:

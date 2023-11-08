@@ -1,8 +1,50 @@
 ---
 
+autologin: True
+
+bluetooth: False
+
+nfs:
+  parent: /
+  exports:
+    - backup
+    - storage
+
+app:
+  install:
+    reaper: False
+    pulsar: False
+    vscode: False
+    vamp: False
+    mixxx: False
+    annotator: False
+    soniclineup: False
+    touchosc: False
+    tony: False
+
+docker:
+  service: 'enabled'
+  storage: /var/lib/docker
+  nvidia: False
+
 desktop:
   wm: shell
   terminal: "xterm-256color"
   terminal_alt: "xterm-256color"
   browser: "w3m"
   audio: "jack"
+
+network:
+  interfaces:
+    enp2s0:
+      type: ethernet
+      ifname: enp2s0
+      conn_name: enp2s0
+      mac: d8:d3:85:b2:dd:c5
+      ip4: 192.168.41.20
+      gw4: 192.168.41.1
+      dns4: 192.168.41.41
+      dns4_search: syncopated.net
+      autoconnect: True
+      state: present
+      method4: manual

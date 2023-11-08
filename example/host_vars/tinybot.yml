@@ -2,7 +2,7 @@
 
 autologin: True
 
-use_bluetooth: True
+bluetooth: True
 
 nfs:
   parent: "{{ user.home }}"
