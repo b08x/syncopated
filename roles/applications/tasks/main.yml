@@ -48,7 +48,7 @@
     - name: Install sampler packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__sampler|join(' ') }}"
+        - "{{ pkgs__samplers|join(' ') }}"
 
     - name: Install sequencer packages
       shell: "{{ package_install_command }} {{ item }}"
