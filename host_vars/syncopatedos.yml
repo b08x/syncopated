@@ -1,0 +1,62 @@
+---
+
+autologin: True
+
+bluetooth: False
+
+nfs:
+  parent: ""
+  exports: []
+
+app:
+  install:
+    reaper: False
+    pulsar: False
+    vscode: False
+    vamp: False
+    mixxx: False
+    annotator: False
+    soniclineup: False
+    touchosc: False
+    tony: False
+
+docker:
+  service: "disabled"
+  storage: /var/lib/docker
+  nvidia: False
+
+desktop:
+  wm: i3
+  terminal: "kitty"
+  terminal_alt: "alacritty"
+  browser: "qutebrowser"
+  audio: "jack"
+  # barrier:
+  #   client:
+  #     name: tinybot.syncopated.net
+  #     server: "[soundbot.syncopated.net]:24800"
+
+x:
+  autostart: 'default'
+
+i3:
+  autostart: 'default'
+  tray_output: 'default'
+  assignments: 'default'
+  workspaces: 'default'
+  keybindings: 'default'
+
+network:
+  interfaces:
+    eth0:
+      type: ethernet
+      ifname: eth0
+      conn_name: eth0
+      mac: 52:54:00:a0:d7:10
+      ip4: 192.168.122.139
+      gw4: 192.168.122.1
+      dns4: 192.168.122.1
+      dns4_search: syncopated.net
+      autoconnect: True
+      state: present
+      method4: manual
