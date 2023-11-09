@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
+export UU_ORDER="$UU_ORDER:~/.xprofile"
 
-export XDG_DESKTOP_SESSION="i3"
-export XDG_CURRENT_DESKTOP="i3"
+export XDG_DESKTOP_SESSION="{{ desktop.wm }}"
+export XDG_CURRENT_DESKTOP="{{ desktop.wm }}"
 export XDG_CONFIG_HOME="$HOME/.config"
 
 if [ -d /usr/share/fonts/75dpi ]; then
@@ -26,6 +27,11 @@ if [ ! -d /tmp/reaper ]; then
 	mkdir -pv /tmp/reaper
 fi
 
+picom -b &
+
+nm-applet &
+#redshift &
+
 if [ -x "$(command -v autorandr)" ]; then
 	autorandr -l "$(autorandr --detected)"
 	sleep 0.5
@@ -33,45 +39,17 @@ else
 	echo "autorandr not found"
 fi
 
-#note: "~"" does not expand in quotes
-#if [ -f ~/.fehbg ]; then
-#  ~/.fehbg
-#else
-#  feh --recursive --bg-fill --randomize $BACKGROUNDS/*
-#fi
-
-{% if ansible_hostname == 'ninjabot' %}
-feh --bg-fill ~/.config/i3/wallpaper.png
-{% else %}
 nitrogen --restore &
-{% endif %}
+
+dunst &
 
 pactl -- set-sink-volume 0 55%
 
 {% if x.autostart != 'default' %}
 {% for program in x.autostart %}
 {{ program }}
+
 {% endfor %}
 {% endif %}
 
-export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
-
-export GPG_TTY="$TTY"
-
-systemctl --user import-environment GPG_TTY SSH_AUTH_SOCK
-
-dbus-update-activation-environment --all
-
-if ! pgrep -a "keyring" >/dev/null; then
-	echo "starting gnome-keyring from .xprofile???"
-	eval "$(/usr/bin/gnome-keyring-daemon --replace --daemonize --components=pkcs11,secrets,ssh,gpg)"
-fi
-
-export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
-
-#if ! pgrep -a "keyring" >/dev/null; then
-#  echo "starting gnome-keyring from .xprofile???"
-#	eval "$(/usr/bin/gnome-keyring-daemon --replace --daemonize --components=pkcs11,secrets,ssh,gpg)"
-#fi
-
-# echo "finished with .xprofile"
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &

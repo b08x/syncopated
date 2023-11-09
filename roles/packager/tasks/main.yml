@@ -11,6 +11,17 @@
     groups: devops
     append: True
 
+- name: clone the Packages repository
+  git:
+    repo: git@github.com:b08x/packages.git
+    dest: /tmp/syncopated/Packages
+    recursive: yes
+    accept_hostkey: yes
+    update: no
+    force: no
+  check_mode: no
+
+
 - name: Create packager workspace folder
   file:
     path: "{{ packager.workspace }}/{{ item }}"

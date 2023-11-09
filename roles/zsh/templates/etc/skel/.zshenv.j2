@@ -1,31 +1,42 @@
+export UU_ORDER="$UU_ORDER:~/.zshenv"
+
 unset _old_path
+
+export NO_AT_BRIDGE=1
+export QT_SCALE_FACTOR=1.0
+export QT_FONT_DPI=96
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+
+if systemd-detect-virt -q; then
+	# if the system is running inside a virtual machine, disable hardware cursors
+	export WLR_NO_HARDWARE_CURSORS=1
+fi
 
 useditor() {
   export EDITOR="$@"
   export GIT_EDITOR="$@"
   export SVN_EDITOR="$@"
-  export GIT_EDITOR="$@"
 }
-
-export ECASOUND=ecasound
-export LADSPA_PATH="/usr/lib/ladspa"
-export LADSPA_RDF_PATH="/usr/share/ladspa/rdf"
-export RAY_PARENT_SCRIPT_DIR="$HOME/Sessions/ray-scripts"
-export VAMP_PATH="/usr/local/share/vamp"
 
 if [[ ! -n $EDITOR ]]; then useditor nvim; fi
 
-if [ -x "$(command -v google-chrome-stable)" ]; then
-export BROWSER="google-chrome-stable"
-fi
-
 if [ -x "$(command -v most)" ]; then
-export PAGER=most
+PAGER=most
 fi
 
 if [ -x $(command -v hostname) ]; then
-export HOSTNAME=$(hostname)
+HOSTNAME=$(hostname)
 fi
+
+TERM="{{ desktop.terminal }}"
+TERMINAL="{{ desktop.terminal }}"
+TERMCMD="$TERMINAL"
+
+BROWSER="{{ desktop.browser }}"
+
+export RAY_PARENT_SCRIPT_DIR="$HOME/Sessions/ray-scripts"
 
 # gum options
 export GUM_SPIN_SPINNER="pulse"
@@ -47,12 +58,13 @@ export GUM_CONFIRM_SELECTED_FOREGROUND=064
 export GUM_CONFIRM_UNSELECTED_FOREGROUND=010
 
 # fzf options
+export FZF_BASE=/usr/share/fzf
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color='bg:#141414,bg+:#3F3F3F,info:#BDBB72,border:#6B6B6B,spinner:#98BC99' --color='hl:#719872,fg:#bbb12a,header:#719872,fg+:#D9D9D9' --color='pointer:#E12672,marker:#E17899,prompt:#98BEDE,hl+:#98BC99''
 
-if [[ -d "${HOME}/.rvm/bin" ]]; then
-  export PATH="$PATH:$HOME/.rvm/bin"
-fi
-
-if [[ -s "${HOME}/.rvm/scripts/rvm" ]] ; then
-  source "$HOME/.rvm/scripts/rvm"
-fi
+# if [[ -d "${HOME}/.rvm/bin" ]]; then
+#   export PATH="$PATH:$HOME/.rvm/bin"
+# fi
+#
+# if [[ -s "${HOME}/.rvm/scripts/rvm" ]] ; then
+#   source "$HOME/.rvm/scripts/rvm"
+# fi

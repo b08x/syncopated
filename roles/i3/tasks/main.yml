@@ -9,3 +9,80 @@
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
+
+- name: Show i3 variables
+  debug:
+    msg: "{{ i3 }}"
+
+- name: Install i3 packages
+  shell: "{{ package_install_command }} {{ i3__pkgs | join(' ') }}"
+  become: False
+  tags: ['packages']
+
+- name: Ensure i3 directories are created
+  file:
+    dest: "{{ i3_directory_default_location }}/{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(i3_directory_default_owner) }}"
+    group: "{{ item.group | default(i3_directory_default_group) }}"
+    mode: "{{ item.mode | default(i3_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(i3_directory_default_recurse) }}"
+  with_items: "{{ i3_directory_definitions }}"
+  check_mode: no
+  tags: ['profile']
+
+- name: Install i3ipc module
+  pip:
+    name: i3ipc
+    executable: pip
+    state: present
+    extra_args: --break-system-packages
+  tags: ['packages', 'python']
+
+- name: Create i3 scripts folder
+  file:
+    path: /usr/share/i3/scripts
+    state: directory
+    owner: root
+    group: root
+
+- name: Install i3autolayout.py
+  copy:
+    src: usr/share/i3/scripts/i3autolayout.py
+    dest: "/usr/share/i3/scripts/i3autolayout.py"
+    mode: '0755'
+  tags: ['packages']
+
+- block:
+    - name: Set i3 configuration
+      template:
+        src: "etc/skel/{{ item }}.j2"
+        dest: "/etc/skel/{{ item }}"
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+      register: wmconfig
+      with_items:
+        - .config/i3/config
+        - .config/i3/window_behavior
+        - .config/i3/modes/resize
+        - .config/i3/keybindings
+        - .config/i3/appearance
+        - .config/i3/window_assignments
+        - .config/i3/autostart
+
+    - name: Set i3status-rs configuration
+      template:
+        src: "etc/skel/{{ item }}.j2"
+        dest: "/etc/skel/{{ item }}"
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+      register: wmconfig
+      with_items:
+        - .config/i3status-rust/config.toml
+        - .config/i3status-rust/themes/syncopated.toml
+
+  tags: ['profile']

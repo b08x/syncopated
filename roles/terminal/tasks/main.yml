@@ -10,23 +10,30 @@
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
 
+- name: Ensure terminal directories are created
+  file:
+    dest: "{{ terminal_directory_default_location }}/{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(terminal_directory_default_owner) }}"
+    group: "{{ item.group | default(terminal_directory_default_group) }}"
+    mode: "{{ item.mode | default(terminal_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(terminal_directory_default_recurse) }}"
+  with_items: "{{ terminal_directory_definitions }}"
+  check_mode: no
+  tags: ['always']
+
+- name: Import bash role
+  import_role:
+    name: bash
+
+- name: Import zsh role
+  import_role:
+    name: zsh
+
 - name: Install terminal packages
-  shell: "{{ package_install_command }} {{ terminal.packages|join(' ') }}"
+  shell: "{{ package_install_command }} {{ pkgs__terminal|join(' ') }}"
   become: False
   tags: ['packages']
-
-- name: Ensure folders exist
-  file:
-    path: "/etc/skel/.config/{{ item }}"
-    state: directory
-    owner: root
-    group: root
-  with_items:
-    - alacritty
-    - kitty
-    - ranger
-    - terminator
-  tags: ['alacritty', 'kitty', 'ranger', 'terminator']
 
 - name: Install alacritty template
   template:
@@ -52,3 +59,36 @@
     - open-actions.conf
     - start.conf
   tags: ['kitty']
+
+- name: Install htop and lnav configs
+  template:
+    src: "etc/skel/.config/{{ item }}.j2"
+    dest: "/etc/skel/.config/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  with_items:
+    - 'htop/htoprc'
+    - 'lnav/checklog.lnav'
+  tags: ['htop', 'lnav']
+
+- name: Install ranger configs
+  synchronize:
+    src: etc/skel/.config/ranger/
+    dest: /etc/skel/.config/ranger/
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--progress"
+      - "--itemize-changes"
+      - "--chown=root:root"
+      - "--backup"
+      - "--suffix={{ suffix }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: ['ranger']

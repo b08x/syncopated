@@ -1,18 +1,12 @@
-[[ -f ~/.aliases ]] && source ~/.profile
-
+export UU_ORDER="$UU_ORDER:~/.zshrc"
 # Path to your oh-my-zsh installation.
-export ZSH="/usr/share/oh-my-zsh"
+export ZSH="/usr/local/share/oh-my-zsh"
 
 ZSH_THEME="kphoen"
 
-# Uncomment the following line if pasting URLs and other text is messed up.
-DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+CASE_SENSITIVE="true"
+ENABLE_CORRECTION="false"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 ZSH_CUSTOM="$HOME/.zsh"
 
@@ -33,10 +27,10 @@ for function in $ZSH_CUSTOM/functions/*; do
 done
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+autoload -U colors
+colors
 
-# Ignore commands that start with spaces and duplicates.
-
-export HISTCONTROL=ignoreboth
+export CLICOLOR=1
 
 setopt hist_ignore_all_dups inc_append_history
 setopt share_history
@@ -47,27 +41,29 @@ SAVEHIST=10000
 
 export ERL_AFLAGS="-kernel shell_history enabled"
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+stty -ixon
 
-# Don't add certain commands to the history file.
+bindkey -v
+bindkey "^F" vi-cmd-mode
 
-export HISTIGNORE="&:[bf]g:c:clear:history:exit:q:pwd:* --help"
+bindkey "^A" beginning-of-line
+bindkey '^[[3~' delete-char
+bindkey "^K" kill-line
+bindkey "^R" history-incremental-search-backward
+bindkey "^P" history-search-backward
+bindkey "^Y" accept-and-hold
+bindkey "^N" insert-last-word
+bindkey "^Q" push-line-or-edit
+bindkey -s "^T" "^[Isudo ^[A" # "t" for "toughguy"
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+setopt autocd autopushd pushdminus pushdsilent pushdtohome cdablevars
+DIRSTACKSIZE=5
 
-# Use custom `less` colors for `man` pages.
+setopt extendedglob
+unsetopt nomatch
 
-export LESS_TERMCAP_md="$(tput bold 2> /dev/null; tput setaf 2 2> /dev/null)"
-export LESS_TERMCAP_me="$(tput sgr0 2> /dev/null)"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-# Make new shells get the history lines from all previous
-# shells instead of the default "last window closed" history.
-
-export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# load custom completion functions
+# fpath=(/usr/local/share/zsh/completion /usr/local/share/zsh/site-functions $fpath)
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -99,21 +95,36 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
 
-# Fish-like syntax highlighting and autosuggestions
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Use history substring search
-source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-
-# pkgfile "command not found" handler
-source /usr/share/doc/pkgfile/command-not-found.zsh
+# completion; use cache if updated within 24h
+autoload -Uz compinit
+if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
+ compinit -d $HOME/.zcompdump;
+else
+ compinit -C;
+fi;
 
 setopt nobeep
 
 # automatically find new executables in path
 zstyle ':completion:*' rehash true
 
-eval "$(zoxide init zsh)"
+# Color man pages
+export LESS_TERMCAP_mb=$'\E[01;32m'
+export LESS_TERMCAP_md=$'\E[01;32m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;47;34m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;36m'
+export LESS=-R
 
-export FZF_BASE=/usr/share/fzf
+# set home bin directory to load first
+PATH="$HOME/bin:$PATH"
+
+if [ -d $HOME/.cargo/bin ]; then
+  PATH="$PATH:$HOME/.cargo/bin"
+fi
+
+export -U PATH
+
+eval "$(zoxide init zsh)"

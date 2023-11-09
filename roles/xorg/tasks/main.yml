@@ -8,3 +8,67 @@
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
+
+- block:
+    - name: install xorg packages
+      aur:
+        use: paru
+        name: "{{ xorg.packages }}"
+        state: present
+      become: False
+      when: ansible_distribution == 'Archlinux'
+
+    - name: install host specific xorg packages
+      aur:
+        use: paru
+        name: "{{ host.xorg.video }}"
+        state: present
+      become: False
+      when:
+        - ansible_distribution == 'Archlinux'
+        - host.xorg.video is defined
+
+  tags: ["packages"]
+
+- name: Set xorg.conf
+  template:
+    src: etc/X11/xorg.conf.j2
+    dest: /etc/X11/xorg.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  tags: ["video"]
+
+- name: Disable vblank
+  copy:
+    src: etc/skel/.drirc
+    dest: /etc/skel/.drirc
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  tags: ["video"]
+
+- name: Install xorg configs
+  template:
+    src: "etc/skel/{{ item }}.j2"
+    dest: "/etc/skel/{{ item }}"
+    owner: root
+    group: root
+    mode: "0644"
+    backup: yes
+  with_items:
+    - .xinitrc
+    - .xprofile
+    - .xserverrc
+    - .Xresources
+  register: xconfig
+  tags: ['env', 'profile']
+
+- name: Ensure .xinitrc is executable
+  file:
+    path: "/etc/skel/.xinitrc"
+    mode: "0755"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: ['env', 'profile']

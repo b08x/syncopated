@@ -9,7 +9,6 @@ gems:
   - clipboard
   - colorize
   - coltrane
-  - dotenv
   - drydock
   - ed25519
   - eventmachine

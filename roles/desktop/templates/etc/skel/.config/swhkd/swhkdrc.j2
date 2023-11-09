@@ -1,115 +1,122 @@
-super + Menu
-	cat ~/.config/jgmenu/apps.csv | jgmenu --simple
+# Import another configuration file.
+# NOTE: the path provided must be absolute and not relative such as `~`.
+# include /home/{{ user.name }}/.config/swhkd/swhkd-{{ desktop.wm }}
+# include /home/{{ user.name }}/.config/swhkd/swhkd-user
 
-super + o ; {g,a,k,v}
-	{terminator,alacritty,jack-keyboard,vmpk}
-
-control + Menu
-  wmfocus
-
-XF86AudioRecord
-  {{ wm.terminal }} --class "notepad" -e ~/RobotStuff/bin/scriber.rb
-
-super + XF86AudioRecord
-  {{ wm.terminal }} --class "notepad" -e ~/RobotStuff/bin/scriber.rb --new-file
-
-Menu
-  ~/.config/rofi/scripts/launcher_t1.sh
-
-#super + d
-#  rofi -no-lazy-grab -show drun -modi run,drun,window
-super + d
-  ~/.config/rofi/scripts/launcher_t4.sh
-
-super + F5
-  {{ wm.terminal }} --class "htop" -e htop
-
-super + alt + n
-  {{ wm.terminal }} --class "notepad" -e /usr/local/bin/notepad.sh
-
-F12
-  search_web.sh
-
-shift + F12
-  search_devdocs.sh
-
-XF86Search ; {d,w}
-  {search_devdocs.sh,search_web.sh}
-
-alt + Tab
-  rofi -no-lazy-grab -show window -modi run,drun,window
-
-alt + shift + Return
-  ~/.config/rofi/scripts/launcher_t4.sh
-
-XF86Paste
-  xclip -o
-
-alt + shift + KP_1
-  tilda -g ~/.config/tilda/config_0
-
-alt + shift + KP_2
-  tilda -g ~/.config/tilda/config_1
-
-XF86AudioLowerVolume
-  amixer -c 0 set Master 3db-
-
-XF86AudioRaiseVolume
-  amixer -c 0 set Master 3db+
-
-super + XF86AudioRaiseVolume
-  amixer -c 0 set Master toggle
-
-shift + XF86AudioLowerVolume
-  pactl -- set-sink-volume 0 -5%
-
-shift + XF86AudioRaiseVolume
-  pactl -- set-sink-volume 0 +5%
-
-super + XF86AudioLowerVolume
-  pactl -- set-sink-mute 0 toggle
-
-super + x
+{% if desktop.wm == 'i3' %}
+Super + x
   xkill
 
-#super + End
-#	terminator
-
-super + Home
-  {{ wm.browser }} %U
-
-super + shift + Home
-  {{ wm.browser }} --new-window %U
-
-super + KP_Enter
-  {{ wm.terminal }} -e ranger
-
-super + shift + KP_Enter
-  thunar
-
-shift + Print
+Shift + Print
   maim -s | xclip -selection clipboard -t image/png
 
-super + Print
-  simplescreenrecorder --start-hidden
+{% elif desktop.wm == 'sway' %}
 
-XF86AudioMute
-  ~/.local/bin/mic_mute.sh mute
+{% endif %}
 
-super + XF86AudioMute
-  ~/.local/bin/mic_mute.sh unmute
+Alt + Shift + kp1
+  tilda -g ~/.config/tilda/config_0
 
-Print
-  sendmidi dev 'Midi Through Port-0' panic
+Alt + Shift + kp2
+  tilda -g ~/.config/tilda/config_1
 
-XF86MonBrightnessDown
+Super + d
+  ~/.config/rofi/scripts/launcher_t4.sh
+
+Super + f5
+  {{ desktop.terminal }} --class "htop" -e htop
+
+f12
+  search_web.sh
+
+Shift + f12
+  search_devdocs.sh
+
+Alt + tab
+  rofi -no-lazy-grab -show window -modi run,drun,window
+
+Super + home
+  {{ desktop.browser }}
+
+super + shift + home
+{% if desktop.browser == 'google-chrome-stable' %}
+  {{ desktop.browser }} --new-window %U
+{% elif desktop.browser == 'firefox' %}
+  {{ desktop.browser }} --private-window
+{% endif %}
+
+Super + kpenter
+  {{ desktop.terminal }} -e ranger
+
+Super + Shift + kpenter
+  thunar
+
+xf86monbrightnessdown
   brightnessctl -d intel_backlight s 10%-
 
-XF86MonBrightnessUp
+xf86monbrightnessup
   brightnessctl -d intel_backlight s +10%
 
-control + alt + End
-  uxterm -class 'backup' -e sudo shutdown -h now
+Super + Control + {g,a,k,v}
+	{terminator,alacritty,jack-keyboard,vmpk}
 
-control + alt + Home
-  uxterm -class 'backup' -e sudo shutdown -r now
+Super + ReTuRn # case insensitive
+	alacritty
+
+Super + Shift + enter # enter = return
+	kitty
+
+# # bspwm
+# super + {_,shift + }{h,j,k,l}
+# 	bspc node -{f,s} {west,south,north,east}#
+# super + ctrl + alt + {Left\
+# ,Down\
+# ,Up\
+# ,Right}
+#   n=10; \
+#   { d1=left;   d2=right;  dx=-$n; dy=0;   \
+#   , d1=bottom; d2=top;    dx=0;   dy=$n;  \
+#   , d1=top;    d2=bottom; dx=0;   dy=-$n; \
+#   , d1=right;  d2=left;   dx=$n;  dy=0;   \
+#   } \
+#   bspc node --resize $d1 $dx $dy || bspc node --resize $d2 $dx $dy#
+# super + {\,, .}
+#   bspc node -f {next.local,prev.local}
+
+# screenshot
+# print
+#	scrot
+
+#any + print # any represent at least one of the valid modifiers
+#	scrot -s
+
+
+#TDOD: create 'midi mode'
+# Print
+#   sendmidi dev 'Midi Through Port-0' panic
+# super + m
+# 	# commands starting with @ are internal commands.
+# 	# internal commands can be combined with normal commands with '&&'.
+# 	# '@enter' pushes a mode into the mode stack and starts listening only the
+# 	# key bindings defined in that mode
+# 	@enter music && echo "music" > ~/.config/waybar/swhkd-mode
+#
+# mode music # use the mode statement to define a mode
+# q
+# 	# '@escape' pops the current mode out of the mode stack
+# 	# the default mode is 'normal mode', which is always on the bottom of the mode
+# 	# stack and can never be escaped
+# 	@escape && echo "normal" > ~/.config/waybar/swhkd-mode
+# {n, p, space, r, z, y}
+# 	mpc {next, prev, toggle, repeat, random, single}
+# endmode # use endmode if you want to set more key bindings for normal mode
+#
+# # mode options are declared after the mode name
+# # swallow: don't emit any event through uinput
+# # oneoff: automatically escape a mode when a keybinding defined in it is evoked
+# mode option_demo swallow oneoff
+# a
+# 	echo 0
+# b
+# 	@escape # escaping in a 'oneoff' mode pops two modes out of the mode stack.
+# endmode

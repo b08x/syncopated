@@ -24,7 +24,7 @@
         name: "{{ item }}"
         state: present
         force: yes
-        extra_args: --noconfirm
+        extra_args: --noconfirm --overwrite '*'
       loop:
         - dmidecode
         - dnsmasq
@@ -76,7 +76,8 @@
 - name: set libvirtd service preset
   systemd:
     name: libvirtd
-    enabled: "{{ libvirt.service.enabled }}"
+    enabled: True
+  when: libvirt.service == 'enabled'
 
 - import_tasks:
     file: vagrant.yml

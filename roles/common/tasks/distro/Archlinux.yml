@@ -41,7 +41,7 @@
   pacman:
     name: "{{ pkgs__utility }}"
     state: present
-    extra_args: --noconfirm
+    extra_args: --noconfirm --overwrite '*'
   tags: ['packages']
 
 - name: Set makepkg to use aria2

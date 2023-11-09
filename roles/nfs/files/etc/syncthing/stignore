@@ -1,0 +1,65 @@
+// .stignore
+// https://cinaq.com/blog/2022/10/05/the-ultimate-distributed-workstation-setup/
+//
+// Incomplete Downloads
+// At least for now, these prevent Syncthing from transferring data that's
+// going to be thrown out anyway once the download is finished and the
+// file is renamed. Things may change when Syncthing gets smarter.
+//
+// Firefox downloads and other things
+*.part
+// Chrom(ium|e) downloads
+*.crdownload
+
+// Temporary / Backup Files
+(?d)*~
+(?d).*.swp
+(?d)*.tmp
+(?d)*.pyc
+(?d)*.temp
+(?d)*.sync-conflict-*
+
+// OS-generated files (OS X)
+(?d).DS_Store
+(?d).Spotlight-V100
+(?d).Trashes
+(?d)._*
+*.git
+// OS-generated files (Windows)
+(?d)desktop.ini
+(?d)ehthumbs.db
+(?d)Thumbs.db
+
+// BTSync files
+(?d).sync
+(?d)*.bts
+(?d)*.!Sync
+(?d).SyncID
+(?d).SyncIgnore
+(?d).SyncArchive
+(?d)*.SyncPart
+(?d)*.SyncTemp
+(?d)*.SyncOld
+
+// Synology files
+(?d)@eaDir
+
+
+// Blacklisted dirs
+/Moments
+/Backup
+(?d).tox
+(?d).cache
+(?d).mypy_cache
+(?d)node_modules
+(?d)/git/*/data
+(?d).terragrunt-cache
+(?d).tmp.drivedownload
+(?d).tmp.driveupload
+**/docker/volumes
+(?i)**/cache
+(?i)**/logs
+(?i)**/Gemfile.lock
+**/gpt_clients/**
+*.log
+*.tmp

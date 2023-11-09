@@ -1,2 +1,12 @@
 *.pyc
 tmp/
+*.mp4
+*.ppm
+*.mmd
+documentation/
+roles/desktop/files/etc/xdg/menus/
+roles/desktop/files/usr/local/share/applications/
+roles/desktop/files/usr/local/share/desktop-directories/
+docs/example/playbooks/vars/Archlinux-i3.yml
+*.cast
+*.bz2

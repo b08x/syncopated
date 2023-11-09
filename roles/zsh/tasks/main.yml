@@ -10,6 +10,13 @@
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
 
+- name: Install oh-my-zsh
+  shell: |
+    if [ ! -d "/usr/local/share/oh-my-zsh" ]; then
+      export ZSH="/usr/local/share/oh-my-zsh"
+      sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    fi
+
 - name: sync folder
   synchronize:
     src: etc/skel/.zsh/
@@ -22,9 +29,13 @@
     rsync_opts:
       - "--update"
       - "--omit-dir-times"
+      - "--progress"
+      - "--itemize-changes"
       - "--chown=root:root"
       - "--backup"
       - "--suffix={{ suffix }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: ['env', 'profile']
 
 - name: Copy zshenv and zshrc to /etc/skel
   template:
@@ -35,6 +46,7 @@
     mode: '0644'
     backup: True
   with_items:
+    - .zprofile
     - .zshenv
     - .zshrc
-  tags: ['profile']
+  tags: ['env', 'profile']

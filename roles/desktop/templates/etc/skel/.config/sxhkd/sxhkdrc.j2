@@ -1,0 +1,115 @@
+super + Menu
+	cat ~/.config/jgmenu/apps.csv | jgmenu --simple
+
+super + o ; {g,a,k,v}
+	{terminator,alacritty,jack-keyboard,vmpk}
+
+control + Menu
+  wmfocus
+
+XF86AudioRecord
+  {{ desktop.terminal }} --class "scriber" -e ~/RobotStuff/bin/scriber.rb
+
+super + XF86AudioRecord
+  {{ desktop.terminal }} --class "scriber" -e ~/RobotStuff/bin/scriber.rb --new-file
+
+Menu
+  ~/.config/rofi/scripts/launcher_t1.sh
+
+#super + d
+#  rofi -no-lazy-grab -show drun -modi run,drun,window
+super + d
+  ~/.config/rofi/scripts/launcher_t4.sh
+
+super + F5
+  {{ desktop.terminal }} --class "htop" -e htop
+
+super + alt + n
+  {{ desktop.terminal }} --class "notepad" -e /usr/local/bin/notepad.sh
+
+F12
+  search_web.sh
+
+shift + F12
+  search_devdocs.sh
+
+XF86Search ; {d,w}
+  {search_devdocs.sh,search_web.sh}
+
+alt + Tab
+  rofi -no-lazy-grab -show window -modi run,drun,window
+
+alt + shift + Return
+  ~/.config/rofi/scripts/launcher_t4.sh
+
+XF86Paste
+  xclip -o
+
+alt + shift + KP_1
+  tilda -g ~/.config/tilda/config_0
+
+alt + shift + KP_2
+  tilda -g ~/.config/tilda/config_1
+
+XF86AudioLowerVolume
+  amixer -c 0 set Master 3db-
+
+XF86AudioRaiseVolume
+  amixer -c 0 set Master 3db+
+
+super + XF86AudioRaiseVolume
+  amixer -c 0 set Master toggle
+
+shift + XF86AudioLowerVolume
+  pactl -- set-sink-volume 0 -5%
+
+shift + XF86AudioRaiseVolume
+  pactl -- set-sink-volume 0 +5%
+
+super + XF86AudioLowerVolume
+  pactl -- set-sink-mute 0 toggle
+
+super + x
+  xkill
+
+#super + End
+#	terminator
+
+super + Home
+  {{ desktop.browser }} %U
+
+super + shift + Home
+  {{ desktop.browser }} --new-window %U
+
+super + KP_Enter
+  {{ desktop.terminal }} -e ranger
+
+super + shift + KP_Enter
+  thunar
+
+shift + Print
+  maim -s | xclip -selection clipboard -t image/png
+
+super + Print
+  simplescreenrecorder --start-hidden
+
+XF86AudioMute
+  ~/.local/bin/mic_mute.sh mute
+
+super + XF86AudioMute
+  ~/.local/bin/mic_mute.sh unmute
+
+Print
+  sendmidi dev 'Midi Through Port-0' panic
+
+#XF86MonBrightnessDown
+#  brightnessctl -d intel_backlight s 10%-
+
+#XF86MonBrightnessUp
+#  brightnessctl -d intel_backlight s +10%
+
+control + alt + End
+  uxterm -class 'backup' -e sudo shutdown -h now
+
+control + alt + Home
+  uxterm -class 'backup' -e sudo shutdown -r now

@@ -32,8 +32,10 @@
         name: "{{ item }}"
         state: present
         force: yes
-        extra_args: --noconfirm
+        extra_args: --noconfirm --overwrite '*'
       loop:
+        - cmake
+        - libgit2
         - openssl
         - postgresql-libs
         - ruby-psych

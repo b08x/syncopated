@@ -1,0 +1,21 @@
+---
+
+bluetooth: True
+
+desktop:
+  wm: i3
+  terminal: "kitty"
+  terminal_alt: "alacritty"
+  browser: "google-chrome-stable"
+  audio: "jack"
+
+# x:
+#   autostart:
+#     - "jacktrip -s -n 4 -q auto -b 24 -D --udprt &"
+
+i3:
+  autostart: 'default'
+  tray_output: 'primary'
+  assignments: 'default'
+  workspaces: 'default'
+  keybindings: 'default'

@@ -4,17 +4,33 @@
   debug:
     msg: "Starting common tasks"
 
-- import_tasks:
-    file: sshd.yml
-  tags: ['common', 'sshd']
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- name: Ensure root directories are created
+  file:
+    dest: "{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(root_directory_default_owner) }}"
+    group: "{{ item.group | default(root_directory_default_group) }}"
+    mode: "{{ item.mode | default(root_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(root_directory_default_recurse) }}"
+  with_items: "{{ root_directory_definitions }}"
+  tags: ['always']
 
 - import_tasks:
-    file: dirs.yml
-  tags: ['common', 'dirs']
+    file: environment.yml
+  tags: ['env', 'profile']
+
+- import_tasks:
+    file: sshd.yml
+  tags: ['sshd']
 
 - import_tasks:
     file: sudoers.yml
-  tags: ['user', 'sudoers']
+  tags: ['sudoers']
 
 - import_tasks:
     file: repos.yml
@@ -22,20 +38,20 @@
 
 - import_tasks:
     file: updatedb.yml
-  tags: ['common', 'updatedb']
+  tags: ['updatedb']
 
 - import_tasks:
     file: zram.yml
-  tags: ['common', 'zram']
+  tags: ['zram']
 
 - import_tasks:
     file: grub.yml
-  tags: ['common', 'grub']
+  tags: ['grub']
 
 - import_tasks:
     file: autofs.yml
-  tags: ['common', 'autofs']
+  tags: ['autofs']
 
 - import_tasks:
     file: scripts.yml
-  tags: ['common', 'scripts']
+  tags: ['scripts']

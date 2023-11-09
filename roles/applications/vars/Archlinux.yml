@@ -1,0 +1,128 @@
+---
+
+pkgs__audio:
+  # - Catch2
+  # - ambix-o3
+  # - ambix-o5
+  # - antimicrox
+  # - crossguid
+  # - drumrox
+  # - kissfft
+  # - linuxsampler-svn
+  # - lnav-git
+  # - mcfx-o1
+  # - mcfx-o3
+  # - mcfx-o5
+  # - platformfolders
+  # - raul
+  # - sonic-visualiser-git
+  # - sononym
+  # - syncopated-theme
+  # - vital-synth-git
+  # - vst2sdk
+  # - wkhtmltopdf-static
+pkgs__ambisonics:
+  - ambdec
+  - ambix-o1
+  - iempluginsuite-git
+  - sparta-plugins
+pkgs__analysis:
+  - baudline-bin
+  - jaaa
+  - japa
+  - jnoisemeter
+  - vamp-plugin-sdk
+pkgs__dev:
+  - bipscript
+  - bipscript-ide
+  - bluetooth-autoconnect
+  - rtaudio
+  - sc3-plugins
+  - sonic-pi-git
+  - supercollider
+pkgs__editors:
+  - aubio
+  - audacity
+  - audiofile
+  - midieditor
+  - ocenaudio-bin
+  - polyphone
+pkgs__loopers:
+  - sooperlooper-git
+pkgs__midi:
+  - jack-keyboard
+  - qmidinet
+  - rtmidi
+  - sendmidi
+  - vmpk
+pkgs__plugins:
+  - calf
+  - caps-lv2-git
+  - chromaprint
+  - distrho-ports
+  - distrho-ports-lv2
+  - distrho-ports-vst
+  - distrho-ports-vst3
+  - dragonfly-reverb
+  - dragonfly-reverb-clap
+  - dragonfly-reverb-lv2
+  - dragonfly-reverb-standalone
+  - dragonfly-reverb-vst
+  - dragonfly-reverb-vst3
+  - ecasound
+  - fluidsynth
+  - ingen-git
+  - intersect.lv2-git
+  - jalv
+  - jalv-select-git
+  - noise-repellent
+  - swh-lv2-git
+  - tap-plugins-lv2-git
+  - tonespace
+  - x42-plugins
+  - x42-plugins-lv2
+  - x42-plugins-standalone
+  - zita-ajbridge
+  - zita-alsa-pcmi
+  - zita-convolver
+  - zita-dpl1
+  - zita-lrx
+  - zita-mu1
+  - zita-resampler
+  - zita-rev1
+pkgs__samplers:
+  - linuxsampler
+  - mixxx
+  - qsampler
+pkgs__sequencers:
+  - hydrogen-git
+  - non-sequencer
+pkgs__synths:
+  - geonkick
+  - geonkick-common
+  - geonkick-lv2
+  - geonkick-standalone
+  - helm-synth
+  - helm-synth-common
+  - helm-synth-lv2
+  - helm-synth-standalone
+  - helm-synth-vst
+pkgs__tools:
+  - fmit
+  - jack-example-tools
+  - jack_link
+  - jack_mixer
+  - jack_snapshot
+  - jconvolver
+  - ladspa
+  - lv2-c++-tools
+  - njconnect
+  - non-mixer-lv2-git
+  - patchage
+  - raysession-git
+  - rnnoise
+  - scala-music
+  - scala-music-scales
+  - sound-gambit
+  - sox
+  - tuned

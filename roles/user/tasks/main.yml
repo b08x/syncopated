@@ -17,19 +17,6 @@
   with_items: "{{ users }}"
   tags: ['profile']
 
-- name: Install .aliases and .profile
-  copy:
-    src: "etc/skel/{{ item }}"
-    dest: "/etc/skel/{{ item }}"
-    owner: root
-    group: root
-    mode: '0644'
-    backup: True
-  with_items:
-    - .aliases
-    - .profile
-  tags: ['profile']
-
 - name: Sync /etc/skel with users home
   synchronize:
     src: /etc/skel/
@@ -41,12 +28,13 @@
     perms: no
     rsync_opts:
       - "--update"
+      - "--progress"
+      - "--itemize-changes"
       - "--exclude='*.*~'"
       - "--omit-dir-times"
       - "--chown={{ item.name }}:{{ item.group }}"
       - "--backup"
       - "--suffix={{ suffix }}"
   with_items: "{{ users }}"
-  when: item.name != 'root'
   delegate_to: "{{ inventory_hostname }}"
-  tags: ['profile']
+  tags: ['env', 'profile']

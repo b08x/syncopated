@@ -24,7 +24,7 @@
     - pacman-x86_64.conf
     - pacman-x86_64_v3.conf
 
-- name: copy build scripts
+- name: Install build scripts
   copy:
     src: "usr/local/bin/{{ item }}"
     dest: "/usr/local/bin/{{ item }}"
