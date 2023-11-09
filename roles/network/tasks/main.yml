@@ -9,6 +9,10 @@
   tags: ['always']
 
 - import_tasks:
+    file: firewall.yml
+  tags: ['firewall']
+
+- import_tasks:
     file: networkmanager.yml
   tags: ['networkmanager']
 

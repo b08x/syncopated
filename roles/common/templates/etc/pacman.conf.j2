@@ -14,14 +14,16 @@
 #CacheDir    = /var/cache/pacman/pkg/
 #LogFile     = /var/log/pacman.log
 #GPGDir      = /etc/pacman.d/gnupg/
-#HookDir     = /etc/pacman.d/hooks/
 HoldPkg     = pacman glibc
-#XferCommand = /usr/bin/curl -L -C - -f -o %o %u
+#XferCommand = /usr/bin/curl -C - -f %u > %o
 #XferCommand = /usr/bin/wget --passive-ftp -c -O %o %u
 #CleanMethod = KeepInstalled
 #UseDelta    = 0.7
+{% if architecture == 'x86-64-v3' %}
+Architecture = x86_64 x86_64_v3
+{% else %}
 Architecture = auto
-
+{% endif %}
 # Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
 #IgnorePkg   =
 #IgnoreGroup =
@@ -33,11 +35,10 @@ Architecture = auto
 #UseSyslog
 Color
 ILoveCandy
-#NoProgressBar
-#CheckSpace
-VerbosePkgLists
-DisableDownloadTimeout
-ParallelDownloads = 10
+#TotalDownload
+CheckSpace
+#VerbosePkgLists
+ParallelDownloads = 5
 
 # By default, pacman accepts packages signed by keys that its local keyring
 # trusts (see pacman-key and its man page), as well as unsigned packages.
@@ -67,26 +68,26 @@ LocalFileSigLevel = Optional
 # The header [repo-name] is crucial - it must be present and
 # uncommented to enable the repo.
 #
-
 {% if architecture == 'x86-64-v3' %}
 [syncopated-v3]
 SigLevel = Optional TrustAll
-Server = http://bender.syncopated.net/repo/archlabs/packages/x86_64_v3/
-Server = http://syncopated.hopto.org/repo/archlabs/packages/x86_64_v3/
+Server = http://bender.syncopated.net/repo/archlinux/packages/x86_64_v3/
+Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64_v3/
 {% else %}
 #<disabled_v3 >[syncopated-v3]
 #<disabled_v3 >SigLevel = Optional TrustAll
-#<disabled_v3 >Server = http://bender.syncopated.net/repo/archlabs/packages/x86_64_v3/
-#<disabled_v3 >Server = http://syncopated.hopto.org/repo/archlabs/packages/x86_64_v3/
+#<disabled_v3 >Server = http://bender.syncopated.net/repo/archlinux/packages/x86_64_v3/
+#<disabled_v3 >Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64_v3/
 {% endif %}
 
 [syncopated]
 SigLevel = Optional TrustAll
-Server = http://bender.syncopated.net/repo/archlabs/packages/x86_64/
-Server = http://syncopated.hopto.org/repo/archlabs/packages/x86_64/
+Server = http://bender.syncopated.net/repo/archlinux/packages/x86_64/
+Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64/
 
 [proaudio]
 Server = https://arch.osamc.de/$repo/$arch
+{% if inventory_hostname in groups.get('workstation', []) %}
 # cachyos repos
 {% if architecture == 'x86-64-v3' %}
 [cachyos-v3]
@@ -110,25 +111,28 @@ Include = /etc/pacman.d/cachyos-v3-mirrorlist
 
 [cachyos]
 Include = /etc/pacman.d/cachyos-mirrorlist
-
+{% endif %}
 # The testing repositories are disabled by default. To enable, uncomment the
 # repo name header and Include lines. You can add preferred servers immediately
 # after the header, and they will be used before the default mirrors.
 
-#[core-testing]
+#[testing]
 #Include = /etc/pacman.d/mirrorlist
 
 [core]
 Include = /etc/pacman.d/mirrorlist
 
-#[extra-testing]
-#Include = /etc/pacman.d/mirrorlist
-
 [extra]
 Include = /etc/pacman.d/mirrorlist
 
-# If you want to run 32 bit applications on your x86_64 system,
-# enable the multilib repositories as required here.
+#[community-testing]
+#Include = /etc/pacman.d/mirrorlist
+
+[community]
+Include = /etc/pacman.d/mirrorlist
+
+# The multilib repositories are enabled by default in ArchLabs.
+# If you don't run 32 bit applications you may comment them out
 
 #[multilib-testing]
 #Include = /etc/pacman.d/mirrorlist
@@ -136,8 +140,15 @@ Include = /etc/pacman.d/mirrorlist
 [multilib]
 Include = /etc/pacman.d/mirrorlist
 
-# An example of a custom package repository.  See the pacman manpage for
-# tips on creating your own repositories.
-#[custom]
-#SigLevel = Optional TrustAll
-#Server = file:///home/custompkgs
+# [archlabs-testing]
+# Server =  https://pub-7d84e047b852442a86fd6d7feb1ff2cd.r2.dev/$repo/$arch
+# Server =  https://github.com/ArchLabs/$repo/raw/master/$arch
+# Server =  https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
+
+[archlabs]
+Server = https://pub-7d84e047b852442a86fd6d7feb1ff2cd.r2.dev/$repo/$arch
+Server = https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
+Server = https://github.com/ArchLabs/$repo/raw/master/$arch
+Server = https://sourceforge.net/projects/archlabs-repo/files/$repo/$arch
+
+# vim:ft=config

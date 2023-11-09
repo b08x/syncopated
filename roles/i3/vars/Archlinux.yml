@@ -1,1 +1,19 @@
 ---
+
+i3__pkgs:
+  - arandr
+  - dex
+  - dunst
+  - i3-wm
+  - i3status-rust
+  - network-manager-applet
+  - nitrogen-git
+  - perl-anyevent-i3
+  - picom
+  - polybar
+  - rofi
+  - sxhkd
+  - wmctrl
+  - wmfocus
+  - wthrr-git
+  - xob

@@ -1,0 +1,115 @@
+---
+
+- name: check if TouchOSC is already installed
+  stat:
+    path: "{{ item }}"
+  register: existing_file
+  loop:
+    - "/usr/local/bin/TouchOSC"
+    - "/usr/local/bin/TouchOSC_{{ touchosc.version }}"
+  any_errors_fatal: true
+  changed_when: false
+
+- block:
+    - name: fetch TouchOSC
+      get_url:
+        url: "{{ touchosc.url }}/{{ touchosc.file }}"
+        dest: "/tmp"
+
+    - name: remove existing symlink and binary file
+      file:
+        path: "{{ item.item }}"
+        state: absent
+        follow: yes
+      when: existing_file.results | selectattr('stat.exists', 'defined') | selectattr('stat.islnk', 'defined') | list | length > 0
+      changed_when: existing_file.results | selectattr('item.stat.exists', 'defined') | list | length > 0
+      loop: "{{ existing_file.results }}"
+
+    - name: extract and install TouchOSC
+      shell:
+        cmd: |
+          unzip -q -o "/tmp/{{ touchosc.file }}" -d "/tmp"
+          mv "/tmp/TouchOSC" "/usr/local/bin/"
+          chmod +x /usr/local/bin/TouchOSC
+      args:
+        creates: "/usr/local/bin/TouchOSC"
+        executable: /bin/bash
+
+    # - name: create new symlink
+    #   file:
+    #     src: "/usr/local/bin/TouchOSC"
+    #     dest: "/usr/local/bin/TouchOSC_{{ touchosc.version }}"
+    #     state: link
+    #     force: yes
+
+  when: not (existing_file.results | selectattr('stat.exists', 'defined') | selectattr('stat.islnk', 'defined') | list | length > 0)
+  # see comments below explaining this conditional.
+  tags: ['touchosc']
+
+
+- name: check if Protokol is already installed
+  stat:
+    path: "{{ item }}"
+  register: existing_file
+  loop:
+    - "/usr/local/bin/Protokol"
+    - "/usr/local/bin/Protokol_{{ protokol.version }}"
+  any_errors_fatal: true
+  changed_when: false
+
+
+- block:
+    - name: fetch Protokol
+      get_url:
+        url: "{{ protokol.url }}/{{ protokol.file }}"
+        dest: "/tmp"
+
+    - name: remove existing symlink and binary file
+      file:
+        path: "{{ item.item }}"
+        state: absent
+        follow: yes
+      when: existing_file.results | selectattr('stat.exists', 'defined') | selectattr('stat.islnk', 'defined') | list | length > 0
+      changed_when: existing_file.results | selectattr('item.stat.exists', 'defined') | list | length > 0
+      loop: "{{ existing_file.results }}"
+
+    - name: extract and install Protokol
+      shell:
+        cmd: |
+          unzip -q -o "/tmp/{{ protokol.file }}" -d "/tmp"
+          mv "/tmp/Protokol" "/usr/local/bin/Protokol"
+          chmod +x /usr/local/bin/Protokol
+      args:
+        creates: "/usr/local/bin/Protokol"
+        executable: /bin/bash
+
+    # - name: create new symlink
+    #   file:
+    #     src: "/usr/local/bin/Protokol"
+    #     dest: "/usr/local/bin/Protokol_{{ protokol.version }}"
+    #     state: link
+    #     force: yes
+
+  when: not (existing_file.results | selectattr('stat.exists', 'defined') | selectattr('stat.islnk', 'defined') | list | length > 0)
+  tags: ['protokol']
+
+- name: enable avahi service
+  systemd:
+    name: avahi-daemon
+    enabled: yes
+
+
+# existing_file.results: This refers to the result of the stat task,
+# which gathers information about the existence of files/directories specified in the loop parameter.
+
+# selectattr('stat.exists', 'defined'): This filter selects the items from existing_file.results
+# where the stat.exists attribute is defined. In other words, it filters out any results that don't have the stat.exists attribute.
+
+# selectattr('stat.islnk', 'defined'): This filter further narrows down the selected items from the previous step
+# by filtering only those results where the stat.islnk attribute is defined.
+# This ensures that only symlink entries are considered.
+
+# list: This filter converts the filtered results into a list format.
+
+# length > 0: This checks if the length of the resulting list is greater than zero,
+# indicating that there are existing symlink entries for the specified paths.

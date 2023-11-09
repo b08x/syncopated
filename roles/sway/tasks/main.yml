@@ -14,6 +14,16 @@
   become: False
   tags: ['packages']
 
+- name: Ensure sway directories are created
+  file:
+    dest: "{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(sway_directory_default_owner) }}"
+    group: "{{ item.group | default(sway_directory_default_group) }}"
+    mode: "{{ item.mode | default(sway_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(sway_directory_default_recurse) }}"
+  with_items: "{{ sway_directory_definitions }}"
+
 - name: fonts config
   copy:
     src: etc/fonts/conf.d/51-monospace.conf

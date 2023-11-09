@@ -1,7 +1,7 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+https://www.baeldung.com/linux/sound-equalizers
 
 Requirements
 ------------

@@ -33,9 +33,10 @@
 
     - name: Install docker packages
       aur:
-        use: auto
+        use: paru
         name: "{{ item }}"
         state: present
+        extra_args: "--overwrite '*'"
       loop:
         - docker
         - docker-compose
@@ -62,11 +63,11 @@
 #TODO: add failed_when logic
 - name: Add user to docker group
   user:
-    name: "{{ item  }}"
+    name: "{{ item.name  }}"
     groups: docker
     append: yes
   with_items:
-    - "{{ docker.users }}"
+    - "{{ users }}"
   check_mode: no
   tags: ['groups']
 
@@ -106,4 +107,5 @@
 - name: set docker service preset
   systemd:
     name: docker
-    enabled: "{{ docker.service.enabled }}"
+    enabled: True
+  when: docker.service == 'enabled'

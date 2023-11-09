@@ -1,2 +1,35 @@
 ---
 # defaults file for sway
+
+# The default directory permission mode when creating directories using `sway_directory_definitions`
+sway_directory_default_mode: '0755'
+
+# The default directory owner when creating directories using `sway_directory_definitions`
+sway_directory_default_owner: root
+
+# The default directory group when creating directories using `sway_directory_definitions`
+sway_directory_default_group: root
+
+sway_directory_default_recurse: False
+
+sway_directory_definitions:
+  - dest: /etc/sway
+  - dest: /etc/sway/config.d
+  - dest: /etc/sway/inputs
+  - dest: /etc/sway/outputs
+  - dest: /etc/sway/modes
+  - dest: /usr/share/sway
+  - dest: /usr/share/sway/scripts
+  - dest: /usr/share/sway/templates
+  - dest: /usr/share/sway/waybar
+  - dest: /usr/share/sway/themes
+  - dest: /usr/share/sway/themes/matcha-green
+  - dest: "{{ user.home }}/.config/sway"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+  - dest: "{{ user.home }}/.config/sway/config.d"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+  - dest: "{{ user.home }}/.config/sway/definitions.d"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"

@@ -1,58 +1,6 @@
-# Ansible Collection - b08x.syncopated
+# Ansible Collection: Syncopated
 
-Documentation for the collection.
+The "Syncopated" Ansible collection contains roles, playbooks, and modules to help configure and manage Linux hosts that are part of an audio production workflow. This includes digital signal processing (DSP) servers as well as digital audio workstation (DAW) client machines.
 
-```yaml
-
-- hosts: localhost
-  become: True
-  gather_subset:
-    - hardware
-    - network
-
-  vars:
-    desktop:
-      wm: 'i3'
-      shell: 'zsh'
-      dm: greetd
-      terminal: 'terminator'
-      audio: 'jack'
-      ruby_version: 3.0.0
-      python_version: 3.11.1
-      applications:
-        ide:
-          - 'sonic-pi'
-          - 'pulsar'
-          - 'bipscript'
-        audio:
-          daw:
-            - 'reaper'
-            - 'bitwig'
-          plugins:
-            - 'swh-lv2'
-            - 'x42'
-            - 'zita'
-            - 'ambix'
-    path:
-      - "{{ lookup('env','HOME') }}/.local/bin"
-      # - /another/path/bin
-    cleanup: True
-
-  environment:
-    PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
-    PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
-    ZSH: "/usr/share/oh-my-zsh"
-    DISPLAY: ":0"
-
-
-
-pre_tasks:
-
-roles:
-
-  - role: desktop
-    tags: ['desktop']
-
-
-
-```
+The collection aims to automate and simplify setting up the Linux infrastructure for professional audio production environments. It handles mundane system configuration to allow engineers to focus on their creative work. The consistent configurations aid collaboration between sound engineers when working across different
+studios and facilities.

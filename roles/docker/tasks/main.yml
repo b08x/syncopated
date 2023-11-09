@@ -14,6 +14,45 @@
   debug:
     msg: "Starting docker tasks"
 
+# https://discuss.python.org/t/getting-requirements-to-build-wheel-did-not-run-successfully-exit-code-1/30365/2
+- block:
+    - name: Echo the pip constraint variable into a file
+      shell: echo "Cython<3" > cython_constraint.txt
+      args:
+        chdir: /tmp/
+
+    - name: Install python docker modules
+      pip:
+        name: "{{ item }}"
+        executable: pip3
+        state: present
+        extra_args: --break-system-packages
+      with_items:
+        - docker
+        - docker-compose
+      environment:
+        PIP_CONSTRAINT: "/tmp/cython_constraint.txt"
+      when: ansible_distribution == 'Archlinux'
+
+    - name: Install python docker modules
+      pip:
+        name: "{{ item }}"
+        executable: pip3
+        state: present
+      with_items:
+        - docker
+        - docker-compose
+      when: ansible_distribution == 'AlmaLinux'
+
+  tags: ['packages', 'always']
+
+- name: Ensure docker data directory exists
+  file:
+    path: "{{ docker.storage }}"
+    state: directory
+    owner: root
+    group: root
+
 - import_tasks:
     file: setup.yml
   tags: ['setup']

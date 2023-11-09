@@ -1,0 +1,130 @@
+---
+
+- name: Starting applications role tasks
+  debug:
+    msg: "Starting applications role tasks"
+
+- name: Include distro vars
+  include_vars:
+    file: vars/{{ ansible_distribution }}.yml
+  tags: ['always']
+
+- block:
+    - name: Install ambisonics packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__ambisonics|join(' ') }}"
+
+    - name: Install analysis packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__analysis|join(' ') }}"
+
+    - name: Install dev packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__dev|join(' ') }}"
+
+    - name: Install editors packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__editors|join(' ') }}"
+
+    - name: Install loopers packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__loopers|join(' ') }}"
+
+    - name: Install midi packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__midi|join(' ') }}"
+
+    - name: Install plugin packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__plugins|join(' ') }}"
+
+    - name: Install sampler packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__samplers|join(' ') }}"
+
+    - name: Install sequencer packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__sequencers|join(' ') }}"
+
+    - name: Install synth packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__synths|join(' ') }}"
+
+    - name: Install tool packages
+      shell: "{{ package_install_command }} {{ item }}"
+      with_items:
+        - "{{ pkgs__tools|join(' ') }}"
+
+  become: False
+  tags: ['packages']
+
+- name: Ensure application directories are created
+  file:
+    dest: "{{ application_directory_default_location }}/{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(application_directory_default_owner) }}"
+    group: "{{ item.group | default(application_directory_default_group) }}"
+    mode: "{{ item.mode | default(application_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(application_directory_default_recurse) }}"
+  with_items: "{{ application_directory_definitions }}"
+  check_mode: no
+  tags: ['profile']
+
+- import_tasks:
+    file: media/deadbeef.yml
+  tags: ['media', 'deadbeef']
+
+- import_tasks:
+    file: media/mixxx.yml
+  when: app.install.mixxx|bool
+  tags: ['mixxx']
+
+- import_tasks:
+    file: ide/pulsar.yml
+  when: app.install.pulsar|bool
+  tags: ['pulsar']
+
+- import_tasks:
+    file: ide/vscode.yml
+  when: app.install.vscode|bool
+  tags: ['vscode']
+
+- import_tasks:
+    file: analysis/vamp.yml
+  when: app.install.vamp|bool
+  tags: ['vamp']
+
+- import_tasks:
+    file: analysis/sonicannotator.yml
+  when: app.install.annotator|bool
+  tags: ['sonicannotator']
+
+- import_tasks:
+    file: analysis/soniclineup.yml
+  when: app.install.soniclineup|bool
+  tags: ['soniclineup']
+
+- import_tasks:
+    file: analysis/tony.yml
+  when: app.install.tony|bool
+  tags: ['tony']
+
+- import_tasks:
+    file: touchosc/main.yml
+  when: app.install.touchosc|bool
+  tags: ['touchosc']
+
+- import_tasks:
+    file: daw/reaper.yml
+  when: app.install.reaper|bool
+  tags: ['reaper']

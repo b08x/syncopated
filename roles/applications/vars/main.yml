@@ -1,0 +1,54 @@
+---
+
+vscode:
+  extensions:
+      - "BeardedBear.beardedicons"
+      - "BeardedBear.beardedtheme"
+      - "Gruntfuggly.todo-tree"
+      - "HuggingFace.huggingface-vscode"
+      - "James-Yu.latex-workshop"
+      - "bradlc.vscode-tailwindcss"
+      - "castwide.solargraph"
+      - "darkriszty.markdown-table-prettify"
+      - "heybourn.headwind"
+      - "ms-azuretools.vscode-docker"
+      - "ms-python.python"
+      - "redhat.vscode-yaml"
+      - "tomoki1207.pdf"
+      - "wingrunr21.vscode-ruby"
+      - "yzane.markdown-pdf"
+      - "zjffun.snippetsmanager"
+
+pulsar:
+  packages:
+      - atom-beautify
+      - atom-jinja2
+      - atom-material-syntax
+      - blocky
+      - color-picker
+      - file-type-icons
+      - file-types
+      - fix-indent-on-paste
+      - highlight-colors
+      - indent-sort
+      - language-ansible
+      - language-diff
+      - language-docker
+      - language-dotfiles
+      - language-generic-config
+      - language-ini
+      - language-markdown
+      - markdown-pdf
+      - markdown-writer
+      - open-terminal-here
+      - permanent-delete
+      - project-icons
+      - project-manager
+      - project-plus
+      - project-runner
+      - project-sidebar
+      - ruby-solargraph
+      - sb-atom-sonic-pi
+      - spacegray-atom-dark-syntax
+      - tool-bar
+      - vibrant-ink-ruby

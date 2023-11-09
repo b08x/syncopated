@@ -1,7 +1,15 @@
 ---
-# tasks file for nfs
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
+- import_tasks:
+    file: nfs.yml
+  tags: ['nfs']
+
+# - import_tasks:
+#     file: rsyncd.yml
+#   when: rsyncd_host|bool
+#   tags: ['rsyncd']
+#
+# - import_tasks:
+#     file: musikcube.yml
+#   when: musikcube_host|bool
+#   tags: ['musikcube']

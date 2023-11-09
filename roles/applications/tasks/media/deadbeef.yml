@@ -1,0 +1,69 @@
+---
+
+- name: check if deadbeef is already installed
+  stat:
+    path: /usr/bin/deadbeef
+  register: result
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: install deadbeef
+  aur:
+    use: auto
+    name: deadbeef-git
+    state: present
+  become: False
+  when: ansible_distribution == 'Archlinux'
+  tags: ['packages']
+
+- name: install deadbeef
+  dnf:
+    name: deadbeef-static
+    state: present
+    update_cache: yes
+  when: ansible_distribution == 'AlmaLinux'
+  tags: ['packages']
+
+- name: Create deadbeef config and plugin folders
+  file:
+    path: "{{ user.home }}/{{ item }}"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+  loop:
+    - ".config/deadbeef"
+    - ".local/lib/deadbeef"
+
+- name: sync deadbeef plugins
+  synchronize:
+    src: home/.local/lib/deadbeef/
+    dest: "{{ user.home }}/.local/lib/deadbeef/"
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+
+- name: sync deadbeef config folder
+  synchronize:
+    src: home/.config/deadbeef/
+    dest: "{{ user.home }}/.config/deadbeef/"
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+
+# deadbeef shellexec commands
+#
+# shellexec_config_wip [{"command": "audacity %F", "flags": ["local", "single"], "title": "Edit/Audacity", "name": "new_cmd"},
+# {"command": "mkdir -pv %D/converted && sox %F -r 48k %D/converted/%f", "flags": ["local", "single", "multiple"], "title": "Edit/Sox/Resample", "name": "sox_resample"}, {"command": "normalize-audio -m %F", "flags": ["local", "single", "multiple"], "title": "Edit/Normalize", "name": "norm_audos"}, {"command": "puddletag %D", "flags": ["local", "single"], "title": "Edit/Puddletag", "name": "puddle_tag"},
+#
+# {"command": "mkdir -pv %D/converted && sox %F -r 48k %D/converted/%f channels 1", "flags": ["local", "single", "multiple"], "title": "Edit/Sox/To Mono and Resample", "name": "sox_mixres"}]
+#
+# xterm -bg black -hold -title MakeSFZ -font 9x15 -e "mkdir -pv %D/converted && sox %F -r 48k %d/converted/%N"

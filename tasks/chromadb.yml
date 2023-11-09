@@ -1,0 +1,95 @@
+---
+
+# - name: set docker-compose location
+#   set_fact:
+#     docker_files: "{{ data }}/chromadb"
+
+- name: Ensure chromadb data directory exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    group: devops
+    mode: g+s
+  with_items:
+    - "{{ data }}/chromadb"
+    - "{{ data }}/chromadb/index_data"
+    - "{{ data }}/chromadb/chroma"
+
+- block:
+    # - name: clone chromadb repository
+    #   git:
+    #     repo: https://github.com/chroma-core/chroma.git
+    #     dest: "{{ data }}/chromadb"
+    #     recursive: yes
+    #     accept_hostkey: yes
+    #     update: no
+    #     force: no
+    #     version: 0.4.14
+    #   check_mode: no
+
+    - name: install chromadb log config
+      copy:
+        src: files/chromadb/log_config.yml
+        dest: "{{ data }}/chromadb/log_config.yml"
+        mode: '0644'
+        backup: True
+
+    - name: install chroma docker-compose template
+      template:
+        src: templates/docker/chromadb/{{ item }}.j2
+        dest: "{{ data }}/chromadb/{{ item }}"
+        mode: '0644'
+        backup: True
+      loop:
+        - docker-compose.yml
+
+    - name: Stop all services
+      community.docker.docker_compose:
+        project_src: "{{ data }}/chromadb"
+        build: false
+        stopped: true
+      register: output
+
+    - name: Show results
+      ansible.builtin.debug:
+        var: output
+
+    - name: Verify that chromadb services are not running
+      ansible.builtin.assert:
+        that:
+          - "not output.services.chromadb.chromadb_chromadb_1.state.running"
+
+    - name: Tear down existing services
+      community.docker.docker_compose:
+        project_src: "{{ data }}/chromadb"
+        state: absent
+
+    - name: Create and start services
+      community.docker.docker_compose:
+        project_src: "{{ data }}/chromadb"
+      register: output
+
+    - name: Show results
+      ansible.builtin.debug:
+        var: output
+
+    - name: Run `docker-compose up` again
+      community.docker.docker_compose:
+        project_src: "{{ data }}/chromadb"
+        build: false
+      register: output
+
+    - name: Show results
+      ansible.builtin.debug:
+        var: output
+
+    - ansible.builtin.assert:
+        that: not output.changed
+
+  become: True
+
+
+- name: chromadb_tasks
+  set_fact:
+    chromadb_tasks: "complete"
+  when: output.services.chromadb.chromadb_chromadb_1.state.running

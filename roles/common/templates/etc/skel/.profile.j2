@@ -1,0 +1,75 @@
+#!/bin/sh
+export UU_ORDER="$UU_ORDER:~/.profile"
+
+# Enable Wayland support for different applications
+# if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+# 	export WAYLAND=1
+# 	export QT_QPA_PLATFORM='wayland;xcb'
+# 	export GDK_BACKEND='wayland,x11'
+# 	export MOZ_DBUS_REMOTE=1
+# 	export MOZ_ENABLE_WAYLAND=1
+# 	export _JAVA_AWT_WM_NONREPARENTING=1
+# 	export BEMENU_BACKEND=wayland
+# 	export CLUTTER_BACKEND=wayland
+# 	export ECORE_EVAS_ENGINE=wayland_egl
+# 	export ELM_ENGINE=wayland_egl
+# else
+# 	export NO_AT_BRIDGE=1
+# 	export QT_SCALE_FACTOR=1.0
+# 	export QT_FONT_DPI=96
+# 	export QT_QPA_PLATFORMTHEME=qt5ct
+# fi
+#
+# export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+
+# # add default location for zeit.db
+# export ZEIT_DB="$HOME/config/zeit.db"
+
+# Disable hardware cursors. This might fix issues with
+# disappearing cursors
+# if systemd-detect-virt -q; then
+# 	# if the system is running inside a virtual machine, disable hardware cursors
+# 	export WLR_NO_HARDWARE_CURSORS=1
+# fi
+#
+# useditor() {
+#   export EDITOR="$@"
+#   export GIT_EDITOR="$@"
+#   export SVN_EDITOR="$@"
+# }
+#
+# if [[ ! -n $EDITOR ]]; then useditor nvim; fi
+#
+# if [ -x "$(command -v most)" ]; then
+# export PAGER=most
+# fi
+#
+# if [ -x $(command -v hostname) ]; then
+# export HOSTNAME=$(hostname)
+# fi
+#
+# export TERM="{{ desktop.terminal }}"
+# export TERMINAL="{{ desktop.terminal }}"
+# export TERMCMD="$TERMINAL"
+#
+# export BROWSER="{{ desktop.browser }}"
+#
+# export RAY_PARENT_SCRIPT_DIR="$HOME/Sessions/ray-scripts"
+
+set -a
+. "$HOME/.config/user-dirs.dirs"
+set +a
+
+if [ -n "$(ls "$HOME"/.config/profile.d 2>/dev/null)" ]; then
+	for f in "$HOME"/.config/profile.d/*; do
+		# shellcheck source=/dev/null
+		. "$f"
+	done
+fi
+
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
+export GPG_TTY="$TTY"
+export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
+
+#$exec systemctl --user import-environment GPG_TTY SSH_AUTH_SOCK
+#$exec dbus-update-activation-environment --all
