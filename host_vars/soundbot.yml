@@ -8,6 +8,8 @@ nfs:
   parent: "{{ user.home }}"
   exports:
     - Recordings
+    - Notebook
+    - Desktop
 
 app:
   install:

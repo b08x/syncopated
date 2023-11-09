@@ -31,6 +31,22 @@ say () {
   echo -e "${color}${statement}${ALL_OFF}"
 }
 
+prompt_for_userid() {
+    read -p "Please enter the user id: " USERNAME
+    echo $USERNAME
+}
+
+fetch_keys() {
+  # set remote host
+	local REMOTE_HOST="${USERNAME}@${KEYSERVER}"
+	# sync ssh keys
+	cd /home/$USERNAME && rsync -avP --delete $REMOTE_HOST:~/.ssh .
+	# pull gitconfig
+	rsync -avP --chown=$USERNAME:$USERNAME $REMOTE_HOST:~/.gitconfig .
+	# ensure perms
+	chown -R $USERNAME:$USERGROUP /home/$USERNAME/
+}
+
 wipe() {
 tput -S <<!
 clear
@@ -43,84 +59,135 @@ wipe="false"
 # and so it begins...
 wipe && say "hello!\n" $GREEN && sleep 0.5
 
-function prompt_for_userid() {
-    read -p "Please enter the user id: " userid
-    echo $userid
-}
-
-userid=$(prompt_for_userid)
-echo "You entered: $userid"
-
-group_name="${userid}"
-group_id=1000
-
-if getent group "$group_name" > /dev/null; then
-  echo "Group '$group_name' already exists."
-else
-  groupadd -g "$group_id" "$group_name"
-  usermod -a -G "$group_id" "$userid"
-  echo "Group '$group_name' created and user '$userid' added to it."
-fi
-
-keyserver="bender.syncopated.net"
-
-distro=""
-
-# Determine distribution
-if [ -f /etc/lsb-release ]; then
-	. /etc/lsb-release
-	distro=$DISTRIB_ID
-elif [ -f /etc/debian_version ]; then
-	distro="debian"
-elif [ -f /etc/redhat-release ]; then
-	distro="redhat"
-fi
-
-
-# and so it begins...
-wipe && say "hello!\n" $GREEN && sleep 0.5
-
 say "-----------------------------------------------" $BLUE
 say "installing ssh, fd, ruby along with" $BLUE
 say "gcc, g++, make, and other essential build tools" $BLUE
 say "ssh will also be enabled and started." $BLUE
 say "-----------------------------------------------\n" $BLUE
 
-case $distro in
-	Arch|Manjaro)
+DISTRO=$( hostnamectl| awk '{ print $1,$2,$3 }'|grep "Operating System"|awk '{print $3}' )
+
+case $DISTRO in
+	Arch|ArchLabs|Manjaro)
 		pacman -Syu --noconfirm --downloadonly --quiet
     pacman -S --noconfirm openssh base-devel rsync openssh python-pip python-setuptools rustup fd rubygems yadm jack2 jack2-dbus pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger nodejs npm --overwrite '*'
-		systemctl enable sshd
-		systemctl start sshd
+		;;
+	Fedora|AlmaLinux)
+		echo '[charm]
+		name=Charm
+		baseurl=https://repo.charm.sh/yum/
+		enabled=1
+		gpgcheck=1
+		gpgkey=https://repo.charm.sh/yum/gpg.key' | tee /etc/yum.repos.d/charm.repo
+		dnf -y install gum
 		;;
 	Debian|Raspbian|MX)
+		mkdir -p /etc/apt/keyrings
+		curl -fsSL https://repo.charm.sh/apt/gpg.key | gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+		echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | tee /etc/apt/sources.list.d/charm.list
 		apt-get update --quiet
-		apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev
-		systemctl enable ssh
-		systemctl start ssh
+		apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum
 		;;
 	*)
 		echo "Unsupported distribution."
 		exit 1
 esac
 
+systemctl enable sshd
+systemctl start sshd
+
+gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "Hello, there! Welcome to $(gum style --foreground 212 'Gum')."
+
+
+USERNAME=$(prompt_for_userid)
+echo "You entered: $USERNAME"
+
+USERGROUP="${USERNAME}"
+USERGROUPID=1000
+
+if getent group "$USERGROUP" > /dev/null; then
+  echo "Group '$USERGROUP' already exists."
+else
+  groupadd -g "$USERGROUPID" "$USERGROUP"
+  usermod -a -G "$USERGROUPID" "$USERNAME"
+  echo "Group '$USERGROUP' created and user '$USERNAME' added to it."
+fi
+
+if [[ ! -f "/home/${USERNAME}/.ssh/id_ed25519.pub" ]]; then
+
+	KEYSERVER=$(gum input --placeholder "enter KEYSERVER hostname")
+
+	while true; do
+		gum confirm "is ${KEYSERVER} correct?" && fetch_keys
+		if [ $? -eq 0 ]; then
+			break # Exit the loop when affirmative response is received
+		else
+			KEYSERVER=$(gum input --placeholder "enter KEYSERVER hostname")
+		fi
+	done
+
+fi
+
+# install ruby gems
+echo "gem: --user-install --no-document" | tee /etc/gemrc
+echo "gem: --no-user-install" | tee /root/.gemrc
+echo "gem: --user-install" | tee /home/$USERNAME/.gemrc && chown $USERNAME:$USERGROUP /home/$USERNAME/.gemrc
+
+INSTALLED_GEMS=$(gem list | awk '{ print $1 }')
+
+GEMS=(
+  'activesupport'
+  'awesome_print'
+  'bcrypt_pbkdf'
+  'childprocess'
+  'ed25519'
+  'eventmachine'
+  'ffi'
+  'fractional'
+  'geo_coord'
+  'highline'
+  'i3ipc'
+  'i18n'
+  'kramdown'
+  'logging'
+  'minitest'
+  'mocha'
+  'multi_json'
+  'net-ssh'
+  'parallel'
+  'pastel'
+  'pry'
+  'pry-doc'
+  'pycall'
+  'rake'
+  'rdoc'
+  'rexml'
+  'rouge'
+  'sync'
+  'sys-proctable'
+  'tty-box'
+  'tty-command'
+  'tty-cursor'
+  'tty-prompt'
+  'tty-screen'
+  'tty-tree'
+)
+
+
+# https://stackoverflow.com/a/42399479
+mapfile -t DIFF < \
+    <(comm -23 \
+        <(IFS=$'\n'; echo "${GEMS[*]}" | sort) \
+        <(IFS=$'\n'; echo "${INSTALLED_GEMS[*]}" | sort) \
+    )
+
+for gem in "${DIFF[@]}"; do
+  gem install "$gem" || continue
+done
+
+
 sleep 0.5
 
-if [[ $wipe == 'true' ]]; then wipe && sleep 1; fi
-say "\n-----------------------------------------------" $BLUE
-
-if [[ ! -f "/home/${userid}/.ssh/id_ed25519.pub" ]]; then
-  # set remote host
-	REMOTE_HOST="${userid}@${keyserver}"
-	# sync ssh keys
-	cd /home/$userid && rsync -avP --delete $REMOTE_HOST:~/.ssh .
-	# pull gitconfig
-	rsync -avP --chown=$userid:$userid $REMOTE_HOST:~/.gitconfig .
-	# ensure perms
-	chown -R $userid:$userid /home/$userid/
-else
-  say "ssh keys present"
-fi
 
 say "-----------------------------------------------\n" $BLUE
 
@@ -132,7 +199,7 @@ say "add rule to allow ssh traffic" $BLUE
 say "-----------------------------------------------\n" $BLUE
 
 # Set firewall rules
-case $distro in
+case $DISTRO in
 	Debian|Raspbian|MX)
 		apt-get install -y ufw
 		ufw default deny incoming
@@ -140,7 +207,7 @@ case $distro in
 		ufw allow ssh
 		ufw enable
 		;;
-	Arch|Manjaro)
+	Arch|ArchLabs|Manjaro)
 		pacman -S --noconfirm firewalld
 		systemctl enable firewalld
 		systemctl start firewalld
@@ -148,7 +215,7 @@ case $distro in
 		firewall-cmd --reload
 		;;
 	*)
-		echo "Unsupported distribution: $distro"
+		echo "Unsupported distribution: $DISTRO"
 		exit 1
 		;;
 esac
@@ -163,13 +230,13 @@ say "remove the system package and install with pip" $BLUE
 say "as of date, pip will install ansible 2.14.5" $BLUE
 say "-----------------------------------------------\n" $BLUE
 
-case $distro in
+case $DISTRO in
 	Debian|Raspbian|MX)
 		if [ -x $(apt list --installed | grep ansible) ]; then
 			apt-get remove -y ansible --quiet
 		fi
 		;;
-	Arch|Manjaro)
+	Arch|ArchLabs|Manjaro)
 		if [ -x $(pacman -Q | grep ansible) ]; then
       echo "ansible package not found"
     else
@@ -178,7 +245,7 @@ case $distro in
 		fi
 		;;
 	*)
-		echo "Unsupported distribution: $distro"
+		echo "Unsupported distribution: $DISTRO"
 		exit 1
 		;;
 esac
@@ -188,13 +255,13 @@ say "\n-----------------------------------------------" $BLUE
 say "installing pip" $BLUE && sleep 0.5
 say "-----------------------------------------------\n" $BLUE
 
-case $distro in
+case $DISTRO in
 	Debian|Raspbian|MX)
 		apt-get update --quiet
 		apt-get install -y python3-pip && \
     pip install ansible
 		;;
-	Arch|Manjaro)
+	Arch|ArchLabs|Manjaro)
     if [[ -x $(pacman -Q | grep python-pip) ]]; then
       echo "pip not installed"
   		pacman -S --noconfirm python-pip
@@ -203,7 +270,7 @@ case $distro in
     fi
 		;;
 	*)
-		echo "Unsupported distribution: $distro"
+		echo "Unsupported distribution: $DISTRO"
 		exit 1
 		;;
 esac
@@ -212,15 +279,15 @@ say "\n-----------------------------------------------" $BLUE
 say "installing ansible via pip" $BLUE
 say "-----------------------------------------------\n" $BLUE
 
-case $distro in
+case $DISTRO in
 	Debian|Raspbian|MX)
     pip install ansible
 		;;
-	Arch|Manjaro)
+	Arch|ArchLabs|Manjaro)
     pip install ansible --break-system-packages
 		;;
 	*)
-		echo "Unsupported distribution: $distro"
+		echo "Unsupported distribution: $DISTRO"
 		exit 1
 		;;
 esac
@@ -251,21 +318,23 @@ BOOTSTRAP_PKGS=(
   'zsh'
 )
 
-case $distro in
+case $DISTRO in
 	Debian|Raspbian|MX)
 		apt-get update --quiet
 		apt-get install -y "${BOOTSTRAP_PKGS[@]}"
 		;;
-	Arch|Manjaro)
+	Arch|ArchLabs|Manjaro)
 		pacman -S --noconfirm --needed "${BOOTSTRAP_PKGS[@]}"
 		;;
 	*)
-		echo "Unsupported distribution: $distro"
+		echo "Unsupported distribution: $DISTRO"
 		exit 1
 		;;
 esac
 
 wipe && sleep 1
+
+echo -e "Finished, $(gum style --foreground 212 "yourmom")."
 
 say "\n-----------------------------------------------" $BLUE
 say "bootstrap complete. run ansible playbook...." $BLUE
