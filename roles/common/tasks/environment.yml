@@ -9,7 +9,7 @@
     mode: '0644'
     backup: yes
 
-- name: Adjust /etc/profile to load ~/.profile
+- name: Adjust /etc/profile
   copy:
     src: "etc/profile"
     dest: "/etc/profile"
@@ -29,4 +29,4 @@
   with_items:
     - .aliases
     - .profile
-  tags: ['env', 'profile']
+  tags: ['profile']

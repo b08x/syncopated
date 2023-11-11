@@ -1,6 +1,11 @@
 ---
 # tasks file for desktop
 
+- name: Collect only selected facts
+  setup:
+    filter:
+      - 'ansible_processor'
+
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
@@ -168,6 +173,21 @@
   when: desktop.barrier.client is defined
   tags: ['barrier']
 
+- name: Install Thunar actions
+  copy:
+    src: "files/etc/xdg/Thunar/{{ item }}"
+    dest: "/etc/xdg/Thunar/{{ item }}"
+    mode: '0644'
+  with_items:
+    - accels.scm
+    - uca.xml
+  tags: ['thunar']
+
+- name: Set Thunar as default for opening directories
+  shell: xdg-mime default thunar.desktop inode/directory
+  become_user: "{{ user.name }}"
+  tags: ['thunar']
+
 - name: Set xdg autostart applications
   synchronize:
     src: etc/xdg/autostart/
@@ -186,3 +206,6 @@
       - "--chown=root:root"
       - "--backup"
       - "--suffix={{ suffix }}"
+
+- name: Update desktop database
+  command: bash -lc "update-desktop-database"
