@@ -1,0 +1,20 @@
+---
+
+- name: clone  repository
+  git:
+    repo: https://github.com/asdf-vm/asdf.git
+    dest: "{{ user.home }}/.asdf"
+    recursive: yes
+    accept_hostkey: yes
+    update: no
+    force: no
+    version: v0.13.1
+  check_mode: no
+
+# add asdf plugin to oh-my-zsh plugins var
+
+- name: install ruby plugin
+  shell: |
+    asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git && \
+    asdf install ruby 3.1.4
+    asdf global ruby 3.1.4
