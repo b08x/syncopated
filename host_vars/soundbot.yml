@@ -4,12 +4,13 @@ autologin: True
 
 bluetooth: True
 
-nfs:
-  parent: "{{ user.home }}"
-  exports:
-    - Recordings
-    - Notebook
-    - Desktop
+share:
+  nfs:
+    parent: "{{ user.home }}"
+    exports:
+      - Recordings
+      - Notebook
+      - Desktop
 
 app:
   install:

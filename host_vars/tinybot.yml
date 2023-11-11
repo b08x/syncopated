@@ -3,12 +3,13 @@ autologin: True
 
 bluetooth: True
 
-nfs:
-  parent: "{{ user.home }}"
-  exports:
-    - Archive
-    - Workspace
-    - Public
+share:
+  nfs:
+    parent: "{{ user.home }}"
+    exports:
+      - Archive
+      - Workspace
+      - Public
 
 app:
   install:

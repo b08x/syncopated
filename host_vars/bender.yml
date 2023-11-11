@@ -4,11 +4,12 @@ autologin: True
 
 bluetooth: False
 
-nfs:
-  parent: /
-  exports:
-    - backup
-    - storage
+share:
+  nfs:
+    parent: /
+    exports:
+      - backup
+      - storage
 
 app:
   install:

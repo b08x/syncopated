@@ -10,3 +10,4 @@ roles/desktop/files/usr/local/share/desktop-directories/
 docs/example/playbooks/vars/Archlinux-i3.yml
 *.cast
 *.bz2
+.obsidian/

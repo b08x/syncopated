@@ -4,9 +4,10 @@ autologin: True
 
 bluetooth: False
 
-nfs:
-  parent: ""
-  exports: []
+share:
+  nfs:
+    parent: ""
+    exports: []
 
 app:
   install:
@@ -65,4 +66,4 @@ network:
       ip4: 192.168.36.5
       autoconnect: True
       state: present
-      method4: manual      
+      method4: manual
