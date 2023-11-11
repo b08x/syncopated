@@ -4,10 +4,11 @@ autologin: True
 
 bluetooth: False
 
-nfs:
-  parent: "{{ user.home }}"
-  exports:
-    - Videos
+share:
+  nfs:
+    parent: "{{ user.home }}"
+    exports:
+      - Videos
 
 app:
   install:
@@ -42,7 +43,7 @@ desktop:
 #     - "jacktrip -c tinybot.soundbot.net -n 4 -q auto -b 24 -D --udprt &"
 
 i3:
-  autostart: 
+  autostart:
     - "ray-daemon --session-root ~/NetworkSessions -p 7777"
   tray_output: 'DVI-I-1'
   assignments: 'default'
@@ -72,7 +73,7 @@ network:
       dns4_search: syncopated.net
       autoconnect: True
       state: present
-      method4: manual    
+      method4: manual
     enp14s0:
       type: ethernet
       ifname: enp14s0

@@ -4,9 +4,13 @@ autologin: True
 
 bluetooth: False
 
-nfs:
-  parent: ""
-  exports: []
+share:
+  nfs:
+    parent: "{{ user.home }}"
+    exports:
+      - Public
+      - Workspace
+      - Desktop
 
 app:
   install:

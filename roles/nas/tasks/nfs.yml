@@ -1,4 +1,5 @@
 ---
+
 - block:
     - name: Ensure group nobody exists
       group:
@@ -63,13 +64,13 @@
 
 - name: Ensure the exported folder already exists
   file:
-    path: "{{ nfs.parent }}/{{ item }}"
+    path: "{{ share.nfs.parent }}/{{ item }}"
     state: directory
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
     mode: g+s
   with_items:
-    - "{{ nfs.exports }}"
+    - "{{ share.nfs.exports }}"
 
 - name: Create exports folder
   file:
@@ -79,15 +80,15 @@
     group: "{{ user.group }}"
     recurse: True
   with_items:
-    - "{{ nfs.exports }}"
+    - "{{ share.nfs.exports }}"
 
 - name: Ensure required entries are made to hosts file. # Notes 1232
   lineinfile:
     path: /etc/fstab
     state: present
-    line: "{{ nfs.parent }}/{{ item }} /srv/exports/{{ item }} none bind 0 0"
+    line: "{{ share.nfs.parent }}/{{ item }} /srv/exports/{{ item }} none bind 0 0"
   with_items:
-    - "{{ nfs.exports }}"
+    - "{{ share.nfs.exports }}"
   register: fstab
 
 - name: reload systemd
@@ -99,7 +100,7 @@
   shell: |
     mount /srv/exports/{{ item }}
   with_items:
-    - "{{ nfs.exports }}"
+    - "{{ share.nfs.exports }}"
 
 - name: Set the exports
   template:

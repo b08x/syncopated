@@ -6,13 +6,6 @@
     - hardware
     - network
   vars:
-    ports:
-      lockd:
-        tcp: 32803
-        udp: 32769
-      mountd: 892
-      statd: 662
-      rpc: 40418
     path:
       - "{{ lookup('env','HOME') }}/.local/bin"
   environment:
@@ -23,8 +16,8 @@
 
   roles:
 
-    - role: nfs
-      tags: ['nfs']
+    - role: nas
+      tags: ['nas']
 
   post_tasks:
 
