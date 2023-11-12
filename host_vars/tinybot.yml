@@ -57,7 +57,7 @@ network:
       type: ethernet
       ifname: eth0
       conn_name: eth0
-      mac: 68:1d:ef:2a:b4:03
+      mac: 68:1d:ef:2a:ac:47
       ip4: 192.168.41.26
       gw4: 192.168.41.1
       dns4: 192.168.41.41, 192.168.41.1
@@ -69,7 +69,7 @@ network:
       type: ethernet
       ifname: eth1
       conn_name: audio
-      mac: 68:1d:ef:2a:ac:47
+      mac: 68:1d:ef:2a:b4:03
       ip4: 192.168.36.2
       autoconnect: True
       state: present

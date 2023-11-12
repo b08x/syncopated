@@ -8,12 +8,12 @@
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
+  tags: ["always"]
 
 - name: Install audio codec packages
-  shell: "{{ package_install_command }} {{ audio.packages.codecs|join(' ') }}"
+  shell: "{{ package_install_command }} {{ pkgs__audio_codecs|join(' ') }}"
   become: False
-  tags: ['packages']
+  tags: ["packages"]
 
 - name: Ensure root directories are created
   file:
@@ -24,8 +24,8 @@
     mode: "{{ item.mode | default(audio_directory_default_mode) }}"
     recurse: "{{ item.recurse | default(audio_directory_default_recurse) }}"
   with_items: "{{ audio_directory_definitions }}"
-  tags: ['always']
+  tags: ["always"]
 
 - import_tasks:
     file: tuning.yml
-  tags: ['tuning', 'realtime']
+  tags: ["tuning", "realtime"]
