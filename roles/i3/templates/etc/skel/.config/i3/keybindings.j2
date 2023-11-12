@@ -109,7 +109,7 @@ bindsym {{ keybinding.key }} exec {{ keybinding.exec }}
 ##-------------------- Launchers ----------------------##
 ###############################################################
 
-bindsym XF86RotateWindows [class="scriber"] focus
+bindsym XF86RotateWindows '[class="URxvt" title="scriber.rb"]' focus
 
 # bindsym Control+Menu $exec wmfocus
 #
@@ -147,7 +147,7 @@ bindsym $mod+F8 [class="^VMPK"] scratchpad show
 ##### bindsym <var> focus output HDMI-2
 ##### bindsym XF86LaunchB nop dropdown
 
-bindsym $mod+Return $exec terminator
+bindsym $mod+Return $exec {{ desktop.terminal }}
 
 #############################
 #### ---{ other }--- ###
