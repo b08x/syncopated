@@ -99,7 +99,7 @@
   file:
     path: /usr/share/backgrounds/syncopated
     state: directory
-    mode: '2755'
+    mode: '0755'
     group: "{{ user.group }}"
 
 - name: Install backgrounds

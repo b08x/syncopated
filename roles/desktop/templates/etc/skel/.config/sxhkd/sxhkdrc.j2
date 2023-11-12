@@ -74,13 +74,13 @@ super + x
 
 #super + End
 #	terminator
-
+{% if desktop.browser == 'google-chrome-stable' %}
 super + Home
-  {{ desktop.browser }} %U
+  {{ desktop.browser }} --disable-gpu %U
 
 super + shift + Home
-  {{ desktop.browser }} --new-window %U
-
+  {{ desktop.browser }} --disable-gpu --incognito %U
+{% endif %}
 super + KP_Enter
   {{ desktop.terminal }} -e ranger
 
