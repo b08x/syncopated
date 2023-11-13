@@ -17,3 +17,10 @@ audio_directory_definitions:
   - dest: /etc/sysctl.d
   - dest: /etc/tuned/realtime-modified
   - dest: /usr/local/share/vamp
+
+cpupower:
+  governor: powersave
+  perf_bias: 6
+
+tuned:
+  profile: powersave

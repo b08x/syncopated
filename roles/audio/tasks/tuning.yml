@@ -28,7 +28,7 @@
     dest: "/etc/udev/rules.d/40-timer-permissions.rules"
     mode: '0644'
 
-- name: Set sysctl params
+- name: Set sysctl parameters
   copy:
     src: etc/sysctl.d/99-cachyos-settings.conf
     dest: /etc/sysctl.d/99-cachyos-settings.conf
@@ -39,7 +39,7 @@
 - block:
 
     - block:
-        - name: install Tuned
+        - name: Install Tuned
           aur:
             use: paru
             name: tuned
@@ -48,7 +48,7 @@
           become: False
           when: ansible_distribution == 'Archlinux'
 
-        - name: install Tuned
+        - name: Install Tuned
           dnf:
             name: tuned
             state: present
@@ -57,18 +57,18 @@
 
       tags: ['packages']
 
-
     - name: Enable tuned service
       systemd:
         name: tuned
-        enabled: no
+        enabled: yes
+        state: started
+      register: tuned_service
       ignore_errors: "{{ ansible_check_mode }}"
 
-    # - name: Set tuned profile to laptop-battery-powersave
-    #   shell: |
-    #     tuned-adm profile laptop-battery-powersave
-    #   register: tuned_profile
-    #   changed_when: tuned_profile.rc != 0
+    - name: print tuned_service
+      debug:
+        msg: "{{ tuned_service }}"
+      when: debug_playbook|bool
 
     - name: Install realtime-modified profile
       copy:
@@ -78,12 +78,24 @@
         group: root
         mode: '0644'
 
+    - name: Set tuned profile
+      shell: |
+        tuned-adm profile {{ tuned.profile }}
+      register: tuned_profile
+      changed_when: tuned_profile.rc != 0
+      when: tuned_service.state == 'started'
+
+    - name: print tuned_service
+      debug:
+        msg: "{{ tuned_profile }}"
+      when: debug_profile|bool
+
   tags: ['tuned']
 
 
 - block:
     - block:
-        - name: install rtkit
+        - name: Install rtirq & rtkit
           aur:
             use: auto
             name: "rtkit,rtirq"
@@ -91,7 +103,7 @@
           become: False
           when: ansible_distribution == 'Archlinux'
 
-        - name: install rtkit
+        - name: Install rtkit
           dnf:
             name: rtkit
             state: present
@@ -100,7 +112,7 @@
 
       tags: ['packages']
 
-    - name: Install rtirq defaults
+    - name: Set rtirq defaults
       copy:
         src: etc/sysconfig/rtirq
         dest: /etc/rtirq.conf
@@ -111,7 +123,7 @@
       register: rtirq_config
 
     # rtkit package should be Installed before this happens
-    - name: Install rtkit.conf
+    - name: Set rtkit parameters
       copy:
         src: etc/rtkit.conf
         dest: /etc/rtkit.conf
@@ -121,7 +133,7 @@
         mode: '0644'
       register: rtkit_conf
 
-    - name: Install rtkit systemd file
+    - name: Set rtkit systemd parameters
       template:
         src: usr/lib/systemd/system/rtkit-daemon.service.j2
         dest: /usr/lib/systemd/system/rtkit-daemon.service
@@ -136,7 +148,7 @@
 - block:
 
     - block:
-        - name: install cpupower
+        - name: Install cpupower
           aur:
             use: auto
             name: cpupower
@@ -144,7 +156,7 @@
           become: False
           when: ansible_distribution == 'Archlinux'
 
-        - name: install kernel-tools(cpupower)
+        - name: Install kernel-tools(cpupower)
           dnf:
             name: kernel-tools
             state: present
@@ -153,7 +165,7 @@
 
       tags: ['packages']
 
-    - name: Install cpucpower defaults
+    - name: Set cpucpower defaults
       template:
         src: etc/default/cpupower.j2
         dest: /etc/default/cpupower

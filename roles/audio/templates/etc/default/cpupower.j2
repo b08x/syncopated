@@ -1,28 +1,11 @@
 # Define CPUs governor
 # valid governors: ondemand, performance, powersave, conservative, userspace.
-governor='powersave'
+governor='{{ cpupower.governor }}'
 
 # Limit frequency range
 # Valid suffixes: Hz, kHz (default), MHz, GHz, THz
-{% if ansible_hostname == "soundbot" %}
-min_freq="400MHz"
-max_freq="4000MHz"
-{% endif %}
-
-{% if ansible_hostname == "ninjabot" %}
-min_freq="1600MHz"
-max_freq="5900MHz"
-{% endif %}
-
-{% if ansible_hostname == "lapbot" %}
-min_freq="800Hz"
-max_freq="2700MHz"
-{% endif %}
-
-# {% if ansible_hostname == "tinybot" %}
-# min_freq="400Hz"
-# max_freq="4900MHz"
-# {% endif %}
+#min_freq=""
+#max_freq=""
 
 # Specific frequency to be set.
 # Requires userspace governor to be available.
@@ -41,6 +24,6 @@ max_freq="2700MHz"
 #  Sets a register on supported Intel processore which allows software to convey
 # its policy for the relative importance of performance versus energy savings to
 # the  processor. See man (1) CPUPOWER-SET for additional details.
-#perf_bias=
+perf_bias={{ cpupower.perf_bias }}
 
 # vim:set ts=2 sw=2 ft=sh et:
