@@ -1,6 +1,16 @@
 ---
 # tasks file for desktop
 
+- name: test expected_value
+  debug:
+    msg: "{{ expected_value }}"
+  tags: ['testing']
+
+- name: Starting base tasks
+  debug:
+    msg: "Starting common tasks"
+  register: expected_value
+
 - name: Collect only selected facts
   setup:
     filter:
