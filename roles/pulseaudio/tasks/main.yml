@@ -8,12 +8,12 @@
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
+  tags: ["always"]
 
 - name: Install pulseaudio packages
   shell: "{{ package_install_command }} {{ pulseaudio.packages|join(' ') }}"
   become: False
-  tags: ['packages']
+  tags: ["packages"]
 
 - name: Ensure pulseaudio directories are created
   file:
@@ -25,7 +25,7 @@
     recurse: "{{ item.recurse | default(pulse_directory_default_recurse) }}"
   with_items: "{{ pulse_directory_definitions }}"
   check_mode: no
-  tags: ['profile']
+  tags: ["profile"]
 
 - name: Update pulseaudio configs
   copy:
@@ -33,7 +33,7 @@
     dest: "/etc/skel/.config/pulse/{{ item }}"
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
     backup: yes
   with_items:
     - client.conf
@@ -42,7 +42,6 @@
     - system.pa
 
 - block:
-
     - block:
         - name: install bluetooth packages
           aur:
@@ -50,10 +49,13 @@
             name: "{{ item }}"
             state: present
           with_items:
+            - bluetooth-autoconnect
+            - bluez
+            - bluez-utils
             - pulseaudio-bluetooth
           become: False
 
-      tags: ['packages']
+      tags: ["packages"]
 
     - name: Ensure default.pa.d exists
       file:
@@ -64,12 +66,11 @@
       copy:
         src: etc/pulse/default.pa.d/bluetooth.pa
         dest: /etc/pulse/default.pa.d/bluetooth.pa
-        mode: '0644'
+        mode: "0644"
 
   when: bluetooth|bool
   notify: restart pulseaudio
-  tags: ['bluetooth']
-
+  tags: ["bluetooth"]
 # - name: Adjust pulseaudio.service file
 #   lineinfile:
 #     path: /usr/lib/systemd/user/pulseaudio.service

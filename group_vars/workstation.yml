@@ -1,5 +1,7 @@
 ---
 
+expected_value: "groupvars_workstation"
+
 bluetooth: True
 
 desktop:

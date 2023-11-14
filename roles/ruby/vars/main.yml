@@ -5,6 +5,7 @@ gems:
   - activesupport
   - awesome_print
   - bcrypt_pbkdf
+  - bundler
   - childprocess
   - clipboard
   - colorize

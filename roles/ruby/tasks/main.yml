@@ -53,31 +53,49 @@
     dest: "/root/.gemrc"
     owner: root
 
-- name: Install ruby profile.d script
-  template:
-    src: etc/profile.d/ruby.sh.j2
-    dest: /etc/profile.d/ruby.sh
+- name: set --user-install in /home/user/.gemrc
+  copy:
+    content: |
+      gem: --user-install
+    dest: "{{ user.home }}/.gemrc"
+    owner: "{{ user.name }}"
+
+- name: set --no-user-install in /etc/.gemrc
+  copy:
+    content: |
+      gem: --user-install
+    dest: "/etc/.gemrc"
     owner: root
-    group: root
-    mode: '0755'
-    backup: True
 
-- name: update system bundler
-  shell: gem update --system 3.4.21
+- import_tasks:
+    file: asdf.yml
+  tags: ['asdf']
 
-- name: gather list of installed gems
-  shell: "gem list | awk '{ print $1 }'"
-  become: False
-  register: gemlist
-  changed_when: gemlist.rc != 0
-  ignore_errors: "{{ ansible_check_mode }}"
+# - name: Install ruby profile.d script
+#   template:
+#     src: etc/profile.d/ruby.sh.j2
+#     dest: /etc/profile.d/ruby.sh
+#     owner: root
+#     group: root
+#     mode: '0755'
+#     backup: True
 
-- name: set list of gems to install
-  set_fact:
-    ruby__gems: "{{ gems|difference(gemlist.stdout) }}"
-
-- name: install ruby gems
-  shell: "gem install {{ item }}"
-  with_items:
-    - "{{ ruby__gems }}"
-  when: ruby__gems | length > 0
+# - name: update system bundler
+#   shell: gem update --system 3.4.21
+#
+# - name: gather list of installed gems
+#   shell: "gem list | awk '{ print $1 }'"
+#   become: False
+#   register: gemlist
+#   changed_when: gemlist.rc != 0
+#   ignore_errors: "{{ ansible_check_mode }}"
+#
+# - name: set list of gems to install
+#   set_fact:
+#     ruby__gems: "{{ gems|difference(gemlist.stdout) }}"
+#
+# - name: install ruby gems
+#   shell: "gem install {{ item }}"
+#   with_items:
+#     - "{{ ruby__gems }}"
+#   when: ruby__gems | length > 0

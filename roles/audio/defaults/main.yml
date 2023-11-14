@@ -2,7 +2,7 @@
 # defaults file for audio
 
 # The default directory permission mode when creating directories using `audio_directory_definitions`
-audio_directory_default_mode: '0755'
+audio_directory_default_mode: "0755"
 
 # The default directory owner when creating directories using `audio_directory_definitions`
 audio_directory_default_owner: root
@@ -14,8 +14,13 @@ audio_directory_default_recurse: False
 
 audio_directory_definitions:
   - dest: /etc/security/limits.d
-    mode: '0750'
   - dest: /etc/sysctl.d
-    mode: '0750'
   - dest: /etc/tuned/realtime-modified
   - dest: /usr/local/share/vamp
+
+cpupower:
+  governor: powersave
+  perf_bias: 6
+
+tuned:
+  profile: powersave

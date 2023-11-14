@@ -1,5 +1,11 @@
 ---
-
+# these variable definitions can be set in the following locations:
+# group_vars/all.yml which will overwrite vars in
+# group_vars/group.yml which will overwrite vars in
+# playbook vars which will overwrite vars in
+# role/x/vars/main.yml which will overwrite vars in
+# host_vars/lapbot.yml
+expected_value: "hostvars_lapbot"
 autologin: True
 
 bluetooth: True

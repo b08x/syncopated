@@ -1,11 +1,10 @@
 ---
-- hosts: database
+- hosts: all
   become: True
   gather_subset:
     - hardware
     - network
   vars:
-    data: /srv/data
     path:
       - "{{ lookup('env','HOME') }}/.local/bin"
     redis: False
@@ -16,6 +15,7 @@
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
 
   pre_tasks:
+
     - name: warn about setting ANSIBLE_HOME
       debug:
         msg: "besure ANSIBLE_HOME is set to this directory"
@@ -31,24 +31,15 @@
         suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
       tags: ["always"]
 
-    - name: Ensure data directory exists
+    - name: Set permissions on /srv
       file:
-        path: /srv/data
+        path: /srv
         state: directory
         owner: root
         group: devops
         mode: g+s
 
-  tasks:
+  roles:
 
-    - import_tasks:
-        file: ../tasks/redis.yml
-      tags: ['redis']
-
-    - import_tasks:
-        file: ../tasks/pgvector.yml
-      tags: ['pgvector']
-
-    - import_tasks:
-        file: ../tasks/chromadb.yml
-      tags: ['chromadb']
+    - role: flowise
+      tags: ["flowise"]
