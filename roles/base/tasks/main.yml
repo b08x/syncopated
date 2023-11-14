@@ -1,8 +1,14 @@
 ---
 
-- name: Starting common tasks
+- name: test expected_value
+  debug:
+    msg: "{{ expected_value }}"
+  tags: ['testing']
+
+- name: Starting base tasks
   debug:
     msg: "Starting common tasks"
+  register: expected_value
 
 - name: Include distro vars
   include_vars:

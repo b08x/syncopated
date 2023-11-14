@@ -18,3 +18,5 @@ root_directory_definitions:
   - dest: /etc/pulse/default.pa.d
   - dest: /etc/systemd/timesyncd.conf.d
   - dest: /etc/xdg
+
+expected_value: "role_base_defaults"
