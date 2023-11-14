@@ -1,25 +1,24 @@
 ---
 # tasks file for desktop
-
-- name: test expected_value
-  debug:
-    msg: "{{ expected_value }}"
-  tags: ['testing']
-
-- name: Starting base tasks
-  debug:
-    msg: "Starting common tasks"
-  register: expected_value
-
 - name: Collect only selected facts
   setup:
     filter:
       - 'ansible_processor'
 
+- name: Starting desktop tasks
+  debug:
+    msg: "Starting desktop tasks"
+  register: expected_value
+
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
+
+- name: test expected_value
+  debug:
+    msg: "{{ expected_value }}"
+  tags: ['testing']
 
 - block:
     - name: Install desktop packages

@@ -10,6 +10,11 @@
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
 
+- name: test expected_value
+  debug:
+    msg: "{{ expected_value }}"
+  tags: ['testing']
+
 - name: Ensure terminal directories are created
   file:
     dest: "{{ terminal_directory_default_location }}/{{ item.dest }}"

@@ -65,10 +65,10 @@
       register: tuned_service
       ignore_errors: "{{ ansible_check_mode }}"
 
-    - name: print tuned_service
-      debug:
-        msg: "{{ tuned_service }}"
-      when: debug_playbook|bool
+    # - name: print tuned_service output
+    #   debug:
+    #     msg: "{{ tuned_service }}"
+    #   when:
 
     - name: Install realtime-modified profile
       copy:
@@ -85,10 +85,10 @@
       changed_when: tuned_profile.rc != 0
       when: tuned_service.state == 'started'
 
-    - name: print tuned_service
-      debug:
-        msg: "{{ tuned_profile }}"
-      when: debug_profile|bool
+    # - name: print tuned_service
+    #   debug:
+    #     msg: "{{ tuned_profile }}"
+    #   when:
 
   tags: ['tuned']
 

@@ -1,19 +1,24 @@
 ---
 
-- name: test expected_value
+- name: show expected_value
   debug:
     msg: "{{ expected_value }}"
   tags: ['testing']
 
 - name: Starting base tasks
   debug:
-    msg: "Starting common tasks"
+    msg: "Starting base tasks"
   register: expected_value
 
 - name: Include distro vars
   include_vars:
     file: vars/{{ ansible_distribution }}.yml
   tags: ['always']
+
+- name: show expected_value
+  debug:
+    msg: "{{ expected_value }}"
+  tags: ['testing']
 
 - name: Ensure root directories are created
   file:

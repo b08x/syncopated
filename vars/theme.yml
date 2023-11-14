@@ -1,6 +1,8 @@
 ---
 # defaults file for theme
 
+expected_value: "basedir_varsTheme"
+
 gtk:
   theme:
     name: ArchLabs-Dark
