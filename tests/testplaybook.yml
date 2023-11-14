@@ -1,0 +1,58 @@
+---
+- hosts: test
+  become: True
+  gather_subset:
+    - hardware
+    - network
+  vars:
+    # expected_value will be overwritten in roles/base/vars/main.yml
+    expected_value: "playbook_vars"
+    
+  roles:
+    - role: test
+      tags: ["test"]
+
+    - role: base
+      tags: ["base"]
+
+    - role: terminal
+      tags: ["terminal"]
+
+    - role: network
+      tags: ["network"]
+
+    - role: ruby
+      tags: ["ruby"]
+
+    - role: alsa
+      tags: ["audio"]
+
+    - role: pipewire
+      tags: ["pipewire"]
+
+    - role: jack
+      tags: ["audio"]
+
+    - role: pulseaudio
+      tags: ["audio"]
+
+    - role: audio
+      tags: ["audio"]
+
+    - role: docker
+      tags: ['docker']
+
+    - role: libvirt
+      tags: ['libvirt']
+
+    - role: theme
+      tags: ["theme"]
+
+    - role: desktop
+      tags: ['desktop']
+
+    - role: user
+      tags: ["user"]
+
+    - role: applications
+      tags: ['applications']
