@@ -1,0 +1,42 @@
+---
+# defaults file for flowise
+
+flowise:
+  repo: https://github.com/FlowiseAI/Flowise.git
+  version: flowise@1.3.8
+  path: "/srv/flowise"
+  image: flowiseai/flowise
+  volumes:
+    - host: ~/.flowise
+      container: /root/.flowise
+  ports:
+    - host: 3002
+      container: 3002
+env:
+  vars:
+    port: 3002
+    database_path: /root/.flowise
+    apikey_path: /root/.flowise
+    secretkey_path: /root/.flowise
+    log_path: /root/.flowise/logs
+    # number_of_proxies:  1
+    # database_type: postgres
+    # database_port: ""
+    # database_host: ""
+    # database_name: "flowise"
+    # database_user: ""
+    # database_password: ""
+    # flowise_username: user
+    # flowise_password: 1234
+    # flowise_secretkey_overwrite: myencryptionkey
+    debug: true
+    log_level: debug (error | warn | info | verbose | debug)
+    # tool_function_builtin_dep: crypto,fs
+    # tool_function_external_dep: moment,lodash
+    # langchain_tracing_v2: true
+    # langchain_endpoint: https://api.smith.langchain.com
+    # langchain_api_key: your_api_key
+    # langchain_project: your_project
+
+compose:
+  command: /bin/sh -c "sleep 3; flowise start"
