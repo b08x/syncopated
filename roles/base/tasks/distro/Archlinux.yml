@@ -39,7 +39,7 @@
 
 - name: Install utility packages
   pacman:
-    name: "{{ pkgs__utility }}"
+    name: "{{ packages.utility }}"
     state: present
     extra_args: --noconfirm --overwrite '*'
   tags: ['packages']

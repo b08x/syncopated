@@ -4,16 +4,11 @@
   debug:
     msg: "Starting xorg tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - block:
     - name: install xorg packages
       aur:
         use: paru
-        name: "{{ xorg.packages }}"
+        name: "{{ packages.xorg }}"
         state: present
       become: False
       when: ansible_distribution == 'Archlinux'

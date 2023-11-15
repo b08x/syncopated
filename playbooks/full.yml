@@ -4,8 +4,8 @@
   gather_subset:
     - hardware
     - network
-  # vars_files:
-  #   - ../vars/theme.yml
+  vars_files:
+    - ../vars/theme.yml
   vars:
     # expected_value will be overwritten in roles/base/vars/main.yml
     # expected_value: "playbook_vars"

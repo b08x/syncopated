@@ -3,12 +3,12 @@
 - import_tasks:
     file: distro/Archlinux.yml
   when: ansible_distribution == 'Archlinux'
-  tags: ['always']
+  tags: ['repo']
 
 - import_tasks:
     file: distro/AlmaLinux.yml
   when: ansible_distribution == 'AlmaLinux'
-  tags: ['always']
+  tags: ['repo']
 
 - name: set package_manager_install fact
   set_fact:

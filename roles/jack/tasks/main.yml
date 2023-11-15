@@ -4,11 +4,6 @@
   debug:
     msg: "Starting jack tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ["always"]
-
 # - name: Remove jack1
 #   pacman:
 #     name: jack
@@ -19,7 +14,7 @@
 #   tags: ['packages']
 
 - name: Install jack2 packages
-  shell: "{{ package_install_command }} {{ pkgs__jack|join(' ') }}"
+  shell: "{{ package_install_command }} {{ packages.jack|join(' ') }}"
   become: False
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['packages']

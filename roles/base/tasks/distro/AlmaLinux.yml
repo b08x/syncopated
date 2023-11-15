@@ -69,7 +69,7 @@
 
 - name: Install Utility Packages
   dnf:
-    name: "{{ pkgs__utility }}"
+    name: "{{ packages.utility }}"
     state: present
   tags: ['packages']
 #

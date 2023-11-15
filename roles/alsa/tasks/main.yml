@@ -4,12 +4,7 @@
   debug:
     msg: "Starting alsa tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - name: Install alsa packages
-  shell: "{{ package_install_command }} {{ alsa.packages|join(' ') }}"
+  shell: "{{ package_install_command }} {{ packages.alsa|join(' ') }}"
   become: False
   tags: ['packages']

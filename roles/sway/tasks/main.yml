@@ -4,17 +4,12 @@
   debug:
     msg: "Starting sway tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - name: Install sway packages
-  shell: "{{ package_install_command }} {{ sway.packages | join(' ') }}"
+  shell: "{{ package_install_command }} {{ packages.sway | join(' ') }}"
   become: False
   tags: ['packages']
 
-- name: Ensure sway directories are created
+- name: Ensure sway directories exist
   file:
     dest: "{{ item.dest }}"
     state: directory

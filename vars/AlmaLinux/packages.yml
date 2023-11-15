@@ -1,0 +1,12 @@
+---
+
+packages:
+  utility:
+    - aria2
+    - gnome-keyring
+    - gnome-keyring-pam
+    - htop
+    - inxi
+    - neovim
+    - ranger
+    - systemd-timesyncd

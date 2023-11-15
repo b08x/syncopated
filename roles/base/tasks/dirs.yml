@@ -5,7 +5,7 @@
     file: vars/dirs.yml
   tags: ['always']
 
-- name: Ensure root directories are created
+- name: Ensure root directories exist
   file:
     dest: "{{ item.dest }}"
     state: directory
@@ -15,7 +15,7 @@
     recurse: "{{ item.recurse | default(root_directory_default_recurse) }}"
   with_items: "{{ root_directory_definitions }}"
 
-- name: Ensure home directories are created
+- name: Ensure home directories exist
   file:
     dest: "{{ home_directory_default_location }}/{{ item.dest }}"
     state: directory

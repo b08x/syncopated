@@ -10,17 +10,12 @@
     msg: "Starting base tasks"
   register: expected_value
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - name: show expected_value
   debug:
     msg: "{{ expected_value }}"
   tags: ['testing']
 
-- name: Ensure root directories are created
+- name: Ensure root directories exist
   file:
     dest: "{{ item.dest }}"
     state: directory
@@ -29,7 +24,6 @@
     mode: "{{ item.mode | default(root_directory_default_mode) }}"
     recurse: "{{ item.recurse | default(root_directory_default_recurse) }}"
   with_items: "{{ root_directory_definitions }}"
-  tags: ['always']
 
 - import_tasks:
     file: environment.yml

@@ -5,17 +5,12 @@
   debug:
     msg: "Starting terminal tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - name: test expected_value
   debug:
     msg: "{{ expected_value }}"
   tags: ['testing']
 
-- name: Ensure terminal directories are created
+- name: Ensure terminal directories exist
   file:
     dest: "{{ terminal_directory_default_location }}/{{ item.dest }}"
     state: directory
@@ -25,20 +20,21 @@
     recurse: "{{ item.recurse | default(terminal_directory_default_recurse) }}"
   with_items: "{{ terminal_directory_definitions }}"
   check_mode: no
-  tags: ['always']
+
+- name: Install terminal packages
+  shell: "{{ package_install_command }} {{ packages.terminal|join(' ') }}"
+  become: False
+  tags: ['packages']
 
 - name: Import bash role
   import_role:
     name: bash
+  tags: ['shell', 'profile']
 
 - name: Import zsh role
   import_role:
     name: zsh
-
-- name: Install terminal packages
-  shell: "{{ package_install_command }} {{ pkgs__terminal|join(' ') }}"
-  become: False
-  tags: ['packages']
+  tags: ['shell', 'profile']
 
 - name: Install alacritty template
   template:

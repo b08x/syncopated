@@ -36,8 +36,8 @@ desktop:
   audio: "jack"
   barrier:
     client:
-      name: tinybot.syncopated.net
-      server: "[soundbot.syncopated.net]:24800"
+      name: tinybot
+      server: "[soundbot]:24800"
 
 x:
   autostart:
@@ -70,7 +70,7 @@ network:
       ifname: eth1
       conn_name: audio
       mac: 68:1d:ef:2a:b4:03
-      ip4: 192.168.36.2/28
+      ip4: 192.168.36.2/24
       autoconnect: True
       state: present
       method4: manual

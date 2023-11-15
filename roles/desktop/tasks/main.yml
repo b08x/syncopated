@@ -10,11 +10,6 @@
     msg: "Starting desktop tasks"
   register: expected_value
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - name: test expected_value
   debug:
     msg: "{{ expected_value }}"
@@ -24,37 +19,37 @@
     - name: Install desktop packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__desktop|join(' ') }}"
+        - "{{ packages.desktop|join(' ') }}"
 
     - name: Install browser packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__browser|join(' ') }}"
+        - "{{ packages.browser|join(' ') }}"
 
     - name: Install development packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__development|join(' ') }}"
+        - "{{ packages.development|join(' ') }}"
 
     - name: Install doc packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__docs|join(' ') }}"
+        - "{{ packages.docs|join(' ') }}"
 
     - name: Install python packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__python|join(' ') }}"
+        - "{{ packages.python|join(' ') }}"
 
     - name: Install utility packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__utils|join(' ') }}"
+        - "{{ packages.utils|join(' ') }}"
 
   become: False
   tags: ['packages']
 
-- name: Ensure desktop directories are created
+- name: Ensure desktop directories exist
   file:
     dest: "{{ desktop_directory_default_location }}/{{ item.dest }}"
     state: directory
@@ -64,7 +59,6 @@
     recurse: "{{ item.recurse | default(desktop_directory_default_recurse) }}"
   with_items: "{{ desktop_directory_definitions }}"
   check_mode: no
-  tags: ['always']
 
 - import_tasks:
     file: autologin.yml

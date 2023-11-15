@@ -35,8 +35,8 @@ desktop:
   audio: "jack"
   barrier:
     client:
-      name: ninjabot.syncopated.net
-      server: '[soundbot.syncopated.net]:24800'
+      name: ninjabot
+      server: '[soundbot]:24800'
 
 # x:
 #   autostart:

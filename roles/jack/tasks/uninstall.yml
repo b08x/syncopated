@@ -23,7 +23,7 @@
     state: absent
 
 - name: UnInstall jack packages
-  shell: "{{ package_uninstall_command }} {{ jack.packages|join(' ') }}"
+  shell: "{{ package_uninstall_command }} {{ packages.jack|join(' ') }}"
   become: False
   register: uninstall
   changed_when: uninstall.rc == 0

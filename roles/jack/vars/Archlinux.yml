@@ -1,9 +1,0 @@
----
-pkgs__jack:
-  - jack2
-  - jack2-dbus
-  - jack-example-tools
-  - jack_capture
-  - jack_utils
-  - jacktrip
-  - njconnect
