@@ -4,6 +4,8 @@
 # Syntax: simple "KEY=VAL" pairs on separate lines
 UU_ORDER="/etc/environment"
 
+HOSTNAME=$(hostnamectl --static)
+
 ECASOUND=ecasound
 LADSPA_PATH="/usr/lib/ladspa"
 LADSPA_RDF_PATH="/usr/share/ladspa/rdf"

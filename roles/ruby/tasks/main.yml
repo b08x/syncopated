@@ -4,11 +4,6 @@
   debug:
     msg: "Starting ruby tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - block:
     - name: install system ruby packages
       dnf:
@@ -71,14 +66,14 @@
     file: asdf.yml
   tags: ['asdf']
 
-# - name: Install ruby profile.d script
-#   template:
-#     src: etc/profile.d/ruby.sh.j2
-#     dest: /etc/profile.d/ruby.sh
-#     owner: root
-#     group: root
-#     mode: '0755'
-#     backup: True
+- name: Install ruby profile.d script
+  template:
+    src: etc/profile.d/ruby.sh.j2
+    dest: /etc/profile.d/ruby.sh
+    owner: root
+    group: root
+    mode: '0755'
+    backup: True
 
 # - name: update system bundler
 #   shell: gem update --system 3.4.21

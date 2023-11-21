@@ -18,7 +18,7 @@
     mode: '0644'
     backup: yes
 
-- name:  Install .aliases and .profile
+- name:  Set .aliases and .profile
   template:
     src: "etc/skel/{{ item }}.j2"
     dest: "/etc/skel/{{ item }}"
