@@ -8,3 +8,10 @@
   shell: "{{ package_install_command }} {{ packages.alsa|join(' ') }}"
   become: False
   tags: ['packages']
+
+- name: Set alsa card order
+  lineinfile:
+    path: /etc/modprobe.d/10-alsa_usb.conf
+    line: "options snd slots=snd-hda-intel,snd-usb-audio"
+    create: yes
+    backup: yes
