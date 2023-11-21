@@ -1,8 +1,7 @@
-# Ansible Collection: Syncopated
+# syncopated
 
-The "Syncopated" Ansible collection contains roles, playbooks, and modules to help configure and manage Linux hosts that are part of an audio production workflow. This includes digital signal processing (DSP) servers as well as digital audio workstation (DAW) client machines.
+An exercise in configuration management.
 
-The collection aims to automate and simplify setting up the Linux infrastructure for professional audio production environments. It handles mundane system configuration to allow engineers to focus on their creative work. The consistent configurations aid collaboration between sound engineers when working across different
-studios and facilities.
+Intended to serve as an IaC framework for small labs or studios. Based on Ansible, the repository contains roles, playbooks, and modules to help configure and manage Linux hosts that are part of an audio production workflow.
 
-[README](roles/alsa/README.md)
+`bash <(curl http://github/b08x/syncopated/setup.sh)`
