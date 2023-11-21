@@ -1,4 +1,9 @@
 
+## global envrionment
+
+* `/etc/profile` initializes variables for login shells _only_.
+* *
+
 Templates that comprise a user profile are used in several roles. 
 
 ## [bash](roles/bash/README.md)
@@ -8,9 +13,9 @@ Templates that comprise a user profile are used in several roles.
 └── .bashrc
 ```
 
-## [common](roles/common/README.md)
+## [base](roles/base/README.md)
 ```markdown
-[common](roles/common/templates/etc/skel)
+[ base](roles/base/templates/etc/skel)
 ├── .aliases.j2
 ├── .config
 │   └── environment.d

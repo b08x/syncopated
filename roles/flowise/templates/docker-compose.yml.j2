@@ -1,8 +1,9 @@
-version: '3.1'
+version: '3.9'
 
 services:
   flowise:
     image: {{ flowise.image }}
+    container_name: {{ flowise.container_name }}
     restart: always
     environment:
 {% for item in lookup('ansible.builtin.dict', env.vars) %}
@@ -24,6 +25,7 @@ services:
        ipv4_address: 10.5.0.5
   db:
     image: ankane/pgvector
+    container_name: postgres
     environment:
       POSTGRES_HOST_AUTH_METHOD: "trust"
       POSTGRES_DB: laudllm
@@ -35,6 +37,7 @@ services:
        ipv4_address: 10.5.0.6
   redis:
     image: redis:latest
+    container_name: redis
     ports:
       - "6379:6379"
       - "8001:8001"
@@ -43,9 +46,24 @@ services:
        ipv4_address: 10.5.0.7
     volumes:
       - redis_data:/data
+  chromadb:
+    image: ghcr.io/chroma-core/chroma:latest
+    container_name: chromadb
+    volumes:
+      - chroma_persistent_folder:/chroma/chroma/
+    environment:
+      - IS_PERSISTENT=TRUE
+    ports:
+      - "8000:8000"
+    networks:
+     network:
+       ipv4_address: 10.5.0.8
 
 volumes:
   redis_data:
+    driver: local
+  chroma_persistent_folder:
+    driver: local
 
 networks:
   network:

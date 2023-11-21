@@ -1,7 +1,5 @@
 # syncopated
 
-Intended to serve as an automated infrastructure-as-code management framework for small labs or studios. Based on Ansible, the collection contains roles, playbooks, and modules to help configure and manage Linux hosts that are part of an audio production workflow.
-
 
 |    Path                        |    Content                                                               |
 |:-------------------------------|:-------------------------------------------------------------------------|
@@ -43,4 +41,3 @@ Intended to serve as an automated infrastructure-as-code management framework fo
 
 
 If a variable is set in a role variable (vars/main.yml)
-

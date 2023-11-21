@@ -28,4 +28,9 @@
         - docker-compose.yml
         - .env
 
+    # - name: Verify that flowise services are not running
+    #   ansible.builtin.assert:
+    #     that:
+    #       - "not output.services.chromadb.chromadb_chromadb_1.state.running"
+
   become: False
