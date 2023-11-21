@@ -5,7 +5,7 @@
     msg: "Starting ruby tasks"
 
 - block:
-    - name: install system ruby packages
+    - name: Install system ruby packages
       dnf:
         name: "{{ item }}"
         state: present
@@ -22,7 +22,7 @@
         - rubygems
       when: ansible_distribution == 'AlmaLinux'
 
-    - name: install system ruby packages
+    - name: Install system ruby packages
       pacman:
         name: "{{ item }}"
         state: present
@@ -41,21 +41,21 @@
 # by default /etc/gemrc is set to --user-install
 # set --no-user-install in /root/.gemrc
 # to install gems system wide using sudo
-- name: set --no-user-install in /root/.gemrc
+- name: Set --no-user-install in /root/.gemrc
   copy:
     content: |
       gem: --no-user-install --no-document
     dest: "/root/.gemrc"
     owner: root
 
-- name: set --user-install in /home/user/.gemrc
+- name: Set --user-install in /home/user/.gemrc
   copy:
     content: |
       gem: --user-install
     dest: "{{ user.home }}/.gemrc"
     owner: "{{ user.name }}"
 
-- name: set --no-user-install in /etc/.gemrc
+- name: Set --no-user-install in /etc/.gemrc
   copy:
     content: |
       gem: --user-install

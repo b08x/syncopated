@@ -10,7 +10,7 @@
   when: ansible_distribution == 'AlmaLinux'
   tags: ['repo']
 
-- name: set package_manager_install fact
+- name: Set package_manager_install fact
   set_fact:
     package_install_command: "{{ package_manager_command }}"
   vars:
@@ -24,7 +24,7 @@
       {{ package_manager_command_map.get(ansible_distribution, '# Unsupported distribution') }}
   tags: ['always']
 
-- name: set package_manager_uninstall fact
+- name: Set package_manager_uninstall fact
   set_fact:
     package_uninstall_command: "{{ package_manager_uninstall_command }}"
   vars:

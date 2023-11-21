@@ -1,12 +1,12 @@
 ---
 
-- name: check if deadbeef is already installed
+- name: Check if deadbeef is already installed
   stat:
     path: /usr/bin/deadbeef
   register: result
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: install deadbeef
+- name: Install deadbeef
   aur:
     use: auto
     name: deadbeef-git
@@ -15,7 +15,7 @@
   when: ansible_distribution == 'Archlinux'
   tags: ['packages']
 
-- name: install deadbeef
+- name: Install deadbeef
   dnf:
     name: deadbeef-static
     state: present
@@ -33,7 +33,7 @@
     - ".config/deadbeef"
     - ".local/lib/deadbeef"
 
-- name: sync deadbeef plugins
+- name: Sync deadbeef plugins
   synchronize:
     src: home/.local/lib/deadbeef/
     dest: "{{ user.home }}/.local/lib/deadbeef/"
@@ -46,7 +46,7 @@
       - "--update"
       - "--omit-dir-times"
 
-- name: sync deadbeef config folder
+- name: Sync deadbeef config folder
   synchronize:
     src: home/.config/deadbeef/
     dest: "{{ user.home }}/.config/deadbeef/"

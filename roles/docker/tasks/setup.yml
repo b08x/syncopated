@@ -104,7 +104,7 @@
     dest: "/etc/modprobe.d/disable-overlay-redirect-dir.conf"
     owner: root
 
-- name: set docker service preset
+- name: Set docker service preset
   systemd:
     name: docker
     enabled: True

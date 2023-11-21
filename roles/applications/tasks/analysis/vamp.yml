@@ -1,6 +1,6 @@
 ---
 
-- name: check if the vamp plugins currently exist
+- name: Check if the vamp plugins currently exist
   stat:
     path: "/usr/local/share/vamp/vamp-example-plugins.so"
   register: vamp_installed
@@ -8,13 +8,13 @@
 
 - block:
 
-    - name: fetch vamp plugin installer
+    - name: Fetch vamp plugin installer
       get_url:
         url: "https://code.soundsoftware.ac.uk/attachments/download/2696/vamp-plugin-pack-installer-1.0"
         dest: /tmp
         mode: '0755'
 
-    - name: set user perms for /usr/local/share/vamp
+    - name: Set user perms for /usr/local/share/vamp
       file:
         path: /usr/local/share/vamp
         state: directory
@@ -22,7 +22,7 @@
         group: "{{ user.group }}"
         mode: '0755'
 
-    - name: run vamp plugin pack installer
+    - name: Run vamp plugin pack installer
       script: |
         /usr/bin/uxterm -class 'backup' -e /usr/bin/env DISPLAY=:0 /usr/bin/env VAMP_PATH="/usr/local/share/vamp" ./vamp-plugin-pack-installer-1.0
       args:

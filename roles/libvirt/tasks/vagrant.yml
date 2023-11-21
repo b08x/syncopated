@@ -5,7 +5,7 @@
     - name: Add Hasicorp repository
       shell: yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
 
-    - name: install vagrant requirements
+    - name: Install vagrant requirements
       dnf:
         name: "{{ item }}"
         state: present
@@ -22,7 +22,7 @@
         - ruby-devel
         - zlib-devel
 
-    - name: install vagrant
+    - name: Install vagrant
       dnf:
         name: vagrant
         state: present
@@ -33,7 +33,7 @@
 
 - block:
 
-    - name: install vagrant
+    - name: Install vagrant
       pacman:
         name: vagrant
         state: present

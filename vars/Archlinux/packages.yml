@@ -501,7 +501,7 @@ packages:
     - gnome-keyring
     - grsync
     - inxi
-    - input-remapper-git
+    # - input-remapper-git
     - redshift
     - seahorse
     - timeshift

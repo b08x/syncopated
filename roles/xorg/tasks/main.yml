@@ -5,7 +5,7 @@
     msg: "Starting xorg tasks"
 
 - block:
-    - name: install xorg packages
+    - name: Install xorg packages
       aur:
         use: paru
         name: "{{ packages.xorg }}"
@@ -13,7 +13,7 @@
       become: False
       when: ansible_distribution == 'Archlinux'
 
-    - name: install host specific xorg packages
+    - name: Install host specific xorg packages
       aur:
         use: paru
         name: "{{ host.xorg.video }}"

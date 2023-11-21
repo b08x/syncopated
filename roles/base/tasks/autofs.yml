@@ -11,14 +11,14 @@
   when: ansible_distribution == 'Archlinux'
 
 - block:
-    - name: install autofs
+    - name: Install autofs
       dnf:
         name: autofs
         state: present
         update_cache: yes
       when: ansible_distribution == 'AlmaLinux'
 
-    - name: install autofs
+    - name: Install autofs
       aur:
         use: auto
         name: autofs
@@ -47,7 +47,7 @@
         - auto.mnt
       register: autofsconfig
 
-    - name: enable autofs service
+    - name: Enable autofs service
       systemd:
         name: autofs
         enabled: yes

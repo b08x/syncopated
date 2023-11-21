@@ -19,7 +19,7 @@
     recurse: "{{ item.recurse | default(sway_directory_default_recurse) }}"
   with_items: "{{ sway_directory_definitions }}"
 
-- name: fonts config
+- name: Set fonts config
   copy:
     src: etc/fonts/conf.d/51-monospace.conf
     dest: /etc/fonts/conf.d/51-monospace.conf

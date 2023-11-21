@@ -1,6 +1,6 @@
 ---
 
-- name: disable jack services
+- name: Disable jack services
   systemd:
     name: jack_control
     enabled: no
@@ -17,7 +17,7 @@
   # failed_when: servicestat.state != 'stopped'
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: remove jack_control service file
+- name: Remove jack_control service file
   file:
     path: "/usr/lib/systemd/user/jack_control.service"
     state: absent

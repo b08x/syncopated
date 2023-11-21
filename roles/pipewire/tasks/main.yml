@@ -10,7 +10,7 @@
     msg: "{{ desktop }}"
 
 - block:
-    - name: stop pipewire service
+    - name: Stop pipewire service
       systemd:
         name: "{{ item }}"
         state: stopped
