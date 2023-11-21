@@ -25,7 +25,7 @@
     backup: yes
   register: xdg_defaults
 
-- name: xdg-user-dirs-update service
+- name: Enable xdg-user-dirs-update service
   systemd:
     name: xdg-user-dirs-update.service
     enabled: yes

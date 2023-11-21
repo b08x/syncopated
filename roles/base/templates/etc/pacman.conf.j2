@@ -87,18 +87,20 @@ Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64/
 
 [proaudio]
 Server = https://arch.osamc.de/$repo/$arch
-{% if inventory_hostname in groups.get('workstation', []) %}
+
+# {% if inventory_hostname in groups.get('workstation', []) %}
+
 # cachyos repos
-{% if architecture == 'x86-64-v3' %}
-[cachyos-v3]
-Include = /etc/pacman.d/cachyos-v3-mirrorlist
-
-[cachyos-core-v3]
-Include = /etc/pacman.d/cachyos-v3-mirrorlist
-
-[cachyos-extra-v3]
-Include = /etc/pacman.d/cachyos-v3-mirrorlist
-{% else %}
+# {% if architecture == 'x86-64-v3' %}
+# [cachyos-v3]
+# Include = /etc/pacman.d/cachyos-v3-mirrorlist
+#
+# [cachyos-core-v3]
+# Include = /etc/pacman.d/cachyos-v3-mirrorlist
+#
+# [cachyos-extra-v3]
+# Include = /etc/pacman.d/cachyos-v3-mirrorlist
+# {% else %}
 #<disabled_v3>[cachyos-v3]
 #<disabled_v3>Include = /etc/pacman.d/cachyos-v3-mirrorlist
 
@@ -107,11 +109,11 @@ Include = /etc/pacman.d/cachyos-v3-mirrorlist
 
 #<disabled_v3>[cachyos-extra-v3]
 #<disabled_v3>Include = /etc/pacman.d/cachyos-v3-mirrorlist
-{% endif %}
-
-[cachyos]
-Include = /etc/pacman.d/cachyos-mirrorlist
-{% endif %}
+# {% endif %}
+#
+# [cachyos]
+# Include = /etc/pacman.d/cachyos-mirrorlist
+# {% endif %}
 # The testing repositories are disabled by default. To enable, uncomment the
 # repo name header and Include lines. You can add preferred servers immediately
 # after the header, and they will be used before the default mirrors.
