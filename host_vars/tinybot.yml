@@ -7,7 +7,6 @@ share:
   nfs:
     parent: "{{ user.home }}"
     exports:
-      - Archive
       - Workspace
       - Public
 

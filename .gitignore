@@ -11,3 +11,5 @@ docs/example/playbooks/vars/Archlinux-i3.yml
 *.cast
 *.bz2
 .obsidian/
+galaxy_cache/
+galaxy_token
