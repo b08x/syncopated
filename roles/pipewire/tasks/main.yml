@@ -5,17 +5,12 @@
   debug:
     msg: "Starting pipewire tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - name: Show desktop variables
   debug:
     msg: "{{ desktop }}"
 
 - block:
-    - name: stop pipewire service
+    - name: Stop pipewire service
       systemd:
         name: "{{ item }}"
         state: stopped
@@ -40,7 +35,7 @@
     #     msg: "{{ servicestat.results[0] }}"
 
     - name: UnInstall pipewire packages
-      shell: "{{ package_uninstall_command }} {{ pipewire.packages|join(' ') }}"
+      shell: "{{ package_uninstall_command }} {{ packages.pipewire|join(' ') }}"
       become: False
       register: uninstall
       changed_when: uninstall.rc == 0

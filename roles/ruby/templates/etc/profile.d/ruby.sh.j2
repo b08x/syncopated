@@ -1,2 +1,4 @@
 export UU_ORDER="$UU_ORDER:/etc/profile.d/ruby.sh"
-echo $PATH | grep -q "$HOME/.local/share/gem/ruby/{{ ruby__version }}/bin:" || export PATH="$HOME/.local/share/gem/ruby/{{ ruby__version }}/bin:$PATH"
+{% for version in rubies %}
+echo $PATH | grep -q "$HOME/.gem/ruby/{{ version }}/bin:" || export PATH="$HOME/.gem/ruby/{{ version }}/bin::$PATH"
+{% endfor %}

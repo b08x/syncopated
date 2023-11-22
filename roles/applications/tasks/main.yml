@@ -4,71 +4,66 @@
   debug:
     msg: "Starting applications role tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - block:
     - name: Install ambisonics packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__ambisonics|join(' ') }}"
+        - "{{ packages.ambisonics|join(' ') }}"
 
     - name: Install analysis packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__analysis|join(' ') }}"
+        - "{{ packages.analysis|join(' ') }}"
 
     - name: Install dev packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__dev|join(' ') }}"
+        - "{{ packages.dev|join(' ') }}"
 
     - name: Install editors packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__editors|join(' ') }}"
+        - "{{ packages.editors|join(' ') }}"
 
     - name: Install loopers packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__loopers|join(' ') }}"
+        - "{{ packages.loopers|join(' ') }}"
 
     - name: Install midi packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__midi|join(' ') }}"
+        - "{{ packages.midi|join(' ') }}"
 
     - name: Install plugin packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__plugins|join(' ') }}"
+        - "{{ packages.plugins|join(' ') }}"
 
     - name: Install sampler packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__samplers|join(' ') }}"
+        - "{{ packages.samplers|join(' ') }}"
 
     - name: Install sequencer packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__sequencers|join(' ') }}"
+        - "{{ packages.sequencers|join(' ') }}"
 
     - name: Install synth packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__synths|join(' ') }}"
+        - "{{ packages.synths|join(' ') }}"
 
     - name: Install tool packages
       shell: "{{ package_install_command }} {{ item }}"
       with_items:
-        - "{{ pkgs__tools|join(' ') }}"
+        - "{{ packages.tools|join(' ') }}"
 
   become: False
   tags: ['packages']
 
-- name: Ensure application directories are created
+- name: Ensure application directories exist
   file:
     dest: "{{ application_directory_default_location }}/{{ item.dest }}"
     state: directory

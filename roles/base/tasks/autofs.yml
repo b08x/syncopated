@@ -1,0 +1,54 @@
+---
+
+- name: Set autofs config folder
+  set_fact:
+    _autofs_dir: /etc
+  when: ansible_distribution == 'AlmaLinux'
+
+- name: Set autofs config folder
+  set_fact:
+    _autofs_dir: /etc/autofs
+  when: ansible_distribution == 'Archlinux'
+
+- block:
+    - name: Install autofs
+      dnf:
+        name: autofs
+        state: present
+        update_cache: yes
+      when: ansible_distribution == 'AlmaLinux'
+
+    - name: Install autofs
+      aur:
+        use: auto
+        name: autofs
+        state: present
+      become: False
+      when: ansible_distribution == 'Archlinux'
+
+  tags: ['packages']
+
+- block:
+    - name: Create mount directory folder if it doesn't already exist
+      file:
+        path: /mnt/{{ autofs_client.host }}
+        state: directory
+        mode: '0755'
+
+    - name: Install autofs configs
+      template:
+        src: etc/autofs/{{ item }}.j2
+        dest: "{{ _autofs_dir }}/{{ item }}"
+        mode: '0644'
+        backup: yes
+      with_items:
+        - autofs.conf
+        - auto.master
+        - auto.mnt
+      register: autofsconfig
+
+    - name: Enable autofs service
+      systemd:
+        name: autofs
+        enabled: yes
+      ignore_errors: "{{ ansible_check_mode }}"

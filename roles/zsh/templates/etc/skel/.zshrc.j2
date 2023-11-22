@@ -118,13 +118,19 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;36m'
 export LESS=-R
 
-# set home bin directory to load first
-PATH="$HOME/bin:$PATH"
+useditor() {
+  export EDITOR="$@"
+  export GIT_EDITOR="$@"
+  export SVN_EDITOR="$@"
+}
 
-if [ -d $HOME/.cargo/bin ]; then
-  PATH="$PATH:$HOME/.cargo/bin"
-fi
+if [[ ! -n $EDITOR ]]; then useditor nvim; fi
 
-export -U PATH
+[ -n "$DISPLAY" ] && export TERM="{{ desktop.terminal }}" || export TERM=xterm
+[ -n "$DISPLAY" ] && export TERMINAL="{{ desktop.terminal }}" || export TERMINAL=xterm
+
+TERMCMD="$TERMINAL"
+
+[ -n "$DISPLAY" ] && export BROWSER="{{ desktop.browser }}" || export BROWSER=links
 
 eval "$(zoxide init zsh)"

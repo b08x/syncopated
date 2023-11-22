@@ -8,10 +8,10 @@ control + Menu
   wmfocus
 
 XF86AudioRecord
-  {{ desktop.terminal }} --class "scriber" -e ~/RobotStuff/bin/scriber.rb
+  urxvt -name scriber -e ~/RobotStuff/bin/scriber.rb
 
 super + XF86AudioRecord
-  {{ desktop.terminal }} --class "scriber" -e ~/RobotStuff/bin/scriber.rb --new-file
+  urxvt -name scriber -e ~/RobotStuff/bin/scriber.rb --new-file
 
 Menu
   ~/.config/rofi/scripts/launcher_t1.sh
@@ -74,13 +74,13 @@ super + x
 
 #super + End
 #	terminator
-
+{% if desktop.browser == 'google-chrome-stable' %}
 super + Home
-  {{ desktop.browser }} %U
+  {{ desktop.browser }} --disable-gpu %U
 
 super + shift + Home
-  {{ desktop.browser }} --new-window %U
-
+  {{ desktop.browser }} --disable-gpu --incognito %U
+{% endif %}
 super + KP_Enter
   {{ desktop.terminal }} -e ranger
 
@@ -88,7 +88,7 @@ super + shift + KP_Enter
   thunar
 
 shift + Print
-  maim -s | xclip -selection clipboard -t image/png
+  maim -u -s | xclip -selection clipboard -t image/png
 
 super + Print
   simplescreenrecorder --start-hidden

@@ -1,11 +1,6 @@
 ---
 # tasks file for input
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - import_tasks:
     file: swhkd.yml
   tags: ['swhkd', 'keybindings']

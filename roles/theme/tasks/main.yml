@@ -5,26 +5,21 @@
   debug:
     msg: "Starting theme tasks!"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
-- name: pkgs_theme
+- name: Group packages to install
   set_fact:
-    pkgs__theme: "{{ pkgs__icons + pkgs__cursors + pkgs__gtk3 + pkgs__qt5 + pkgs__qt6 + pkgs__kvantum + pkgs__fonts }}"
+    packagesTheme: "{{ packages.icons + packages.cursors + packages.gtk3 + packages.qt5 + packages.qt6 + packages.kvantum + packages.fonts }}"
   tags: ['packages','theme']
 
-- name: install theme packages
+- name: Install theme group packages
   aur:
     use: paru
-    name: "{{ pkgs__theme | flatten(1) }}"
+    name: "{{ packagesTheme | flatten(1) }}"
     state: present
   become: False
   when: ansible_distribution == 'Archlinux'
   tags: ['packages','theme']
 
-- name: Ensure theme directories are created
+- name: Ensure theme directories exist
   file:
     dest: "{{ theme_directory_default_location }}/{{ item.dest }}"
     state: directory
@@ -99,7 +94,7 @@
   file:
     path: /usr/share/backgrounds/syncopated
     state: directory
-    mode: '2755'
+    mode: '0755'
     group: "{{ user.group }}"
 
 - name: Install backgrounds

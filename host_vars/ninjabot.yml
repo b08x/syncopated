@@ -35,16 +35,15 @@ desktop:
   audio: "jack"
   barrier:
     client:
-      name: ninjabot.syncopated.net
-      server: '[soundbot.syncopated.net]:24800'
+      name: ninjabot
+      server: '[soundbot]:24800'
 
-# x:
-#   autostart:
-#     - "jacktrip -c tinybot.soundbot.net -n 4 -q auto -b 24 -D --udprt &"
-
-i3:
+x:
   autostart:
     - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+
+i3:
+  autostart: 'default'
   tray_output: 'DVI-I-1'
   assignments: 'default'
   workspaces:

@@ -10,7 +10,7 @@
   tags: ['packages']
 
 - name: Install jack2 packages
-  shell: "{{ package_install_command }} {{ jack.packages|join(' ') }}"
+  shell: "{{ package_install_command }} {{ packages.jack|join(' ') }}"
   become: False
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['packages']
@@ -37,7 +37,7 @@
     dest: "/usr/lib/systemd/user/jack_control.service"
     mode: '0644'
 
-- name: enable jack services
+- name: Enable jack services
   systemd:
     name: jack_control
     enabled: yes

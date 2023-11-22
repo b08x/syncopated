@@ -1,4 +1,6 @@
 ---
+expected_value: "groupvars_all"
+
 keyserver: bender.syncopated.net
 
 user:

@@ -3,11 +3,6 @@
   debug:
     msg: "Starting network tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - import_tasks:
     file: firewall.yml
   tags: ['firewall']

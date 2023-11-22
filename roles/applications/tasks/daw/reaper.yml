@@ -1,13 +1,13 @@
 ---
 
-- name: check if reaper is already installed
+- name: Check if reaper is already installed
   stat:
     path: /usr/local/bin/reaper
   register: result
   ignore_errors: "{{ ansible_check_mode }}"
 
 - block:
-    - name: check reaper version
+    - name: Check reaper version
       shell: |
         cat whatsnew.txt | grep {{ reaper.version }}
       args:
@@ -16,37 +16,37 @@
       changed_when: if_installed_version.stdout == ''
       failed_when: "'No such file or directory' in if_installed_version.msg and if_installed_version.rc != 0"
 
-    - name: debug msg
+    - name: Debug msg
       debug:
         msg: "{{ if_installed_version }}"
 
-    - name: backup reaper home config
+    - name: Backup reaper home config
       shell: /usr/local/bin/backup_reaper.sh
       register: reaper_backup
       become_user: "{{ user.name }}"
       tags: ['backup']
 
-    - name: debug msg
+    - name: Debug msg
       debug:
         msg: "{{ reaper_backup }}"
 
   when: result.stat.exists
 
 - block:
-    - name: fetch reaper
+    - name: Fetch reaper
       get_url:
         url: "{{ reaper.url }}{{ reaper.file }}"
         dest: "/tmp"
         # validate_certs: no
 
-    - name: uninstall reaper
+    - name: Uninstall reaper
       shell: |
         bash -x ./uninstall-reaper.sh --quiet --uninstall
       args:
         chdir: /opt/REAPER
       when: result.stat.exists
 
-    - name: extract and install reaper
+    - name: Extract and install reaper
       shell: |
         tar -xvf {{ reaper.file }}
 
@@ -60,7 +60,7 @@
 
   when: (not result.stat.exists or if_installed_version.changed)
 
-- name: uninstall reaper only
+- name: Uninstall reaper only
   shell: |
     bash -x ./uninstall-reaper.sh --quiet --uninstall
   args:

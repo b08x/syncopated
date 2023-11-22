@@ -5,11 +5,6 @@
   debug:
     msg: "Starting zsh tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - name: Install oh-my-zsh
   shell: |
     if [ ! -d "/usr/local/share/oh-my-zsh" ]; then
@@ -17,7 +12,7 @@
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     fi
 
-- name: sync folder
+- name: Install zsh custom functions
   synchronize:
     src: etc/skel/.zsh/
     dest: /etc/skel/.zsh/
@@ -37,7 +32,7 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['env', 'profile']
 
-- name: Copy zshenv and zshrc to /etc/skel
+- name: Set zsh profile configs
   template:
     src: "etc/skel/{{ item }}.j2"
     dest: "/etc/skel/{{ item }}"

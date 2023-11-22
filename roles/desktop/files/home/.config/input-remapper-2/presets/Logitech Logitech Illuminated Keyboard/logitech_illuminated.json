@@ -1,0 +1,50 @@
+[
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 58,
+                "origin_hash": "f636ef845bf56e205b59d13d728999f9"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "XF86LaunchB",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 113,
+                "origin_hash": "6b16805d7f6ec6a6f7f7f793e6f32d3a"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "XF86AudioMute",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 114,
+                "origin_hash": "6b16805d7f6ec6a6f7f7f793e6f32d3a"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "XF86AudioLowerVolume",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 115,
+                "origin_hash": "6b16805d7f6ec6a6f7f7f793e6f32d3a"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "XF86AudioRaiseVolume",
+        "mapping_type": "key_macro"
+    }
+]

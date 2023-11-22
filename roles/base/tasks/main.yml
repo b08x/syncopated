@@ -1,0 +1,66 @@
+---
+
+# - name: show expected_value
+#   debug:
+#     msg: "{{ expected_value }}"
+#   tags: ['testing']
+
+- name: Starting base tasks
+  debug:
+    msg: "Starting base tasks"
+  register: expected_value
+
+# - name: show expected_value
+#   debug:
+#     msg: "{{ expected_value }}"
+#   tags: ['testing']
+
+- name: Ensure root directories exist
+  file:
+    dest: "{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(root_directory_default_owner) }}"
+    group: "{{ item.group | default(root_directory_default_group) }}"
+    mode: "{{ item.mode | default(root_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(root_directory_default_recurse) }}"
+  with_items: "{{ root_directory_definitions }}"
+
+- import_tasks:
+    file: environment.yml
+  tags: ['env', 'profile']
+
+- import_tasks:
+    file: xdg.yml
+  tags: ['xdg', 'profile']
+
+- import_tasks:
+    file: sshd.yml
+  tags: ['sshd']
+
+- import_tasks:
+    file: sudoers.yml
+  tags: ['sudoers']
+
+- import_tasks:
+    file: repos.yml
+  tags: ['repo', 'packages']
+
+- import_tasks:
+    file: updatedb.yml
+  tags: ['updatedb']
+
+- import_tasks:
+    file: zram.yml
+  tags: ['zram']
+
+- import_tasks:
+    file: grub.yml
+  tags: ['grub']
+
+- import_tasks:
+    file: autofs.yml
+  tags: ['autofs']
+
+- import_tasks:
+    file: scripts.yml
+  tags: ['scripts']

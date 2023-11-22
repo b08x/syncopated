@@ -7,7 +7,6 @@ share:
   nfs:
     parent: "{{ user.home }}"
     exports:
-      - Archive
       - Workspace
       - Public
 
@@ -36,8 +35,8 @@ desktop:
   audio: "jack"
   barrier:
     client:
-      name: tinybot.syncopated.net
-      server: "[soundbot.syncopated.net]:24800"
+      name: tinybot
+      server: "[soundbot]:24800"
 
 x:
   autostart:
@@ -57,8 +56,8 @@ network:
       type: ethernet
       ifname: eth0
       conn_name: eth0
-      mac: 68:1d:ef:2a:b4:03
-      ip4: 192.168.41.26
+      mac: 68:1d:ef:2a:ac:47
+      ip4: 192.168.41.26/24
       gw4: 192.168.41.1
       dns4: 192.168.41.41, 192.168.41.1
       dns4_search: syncopated.net
@@ -69,8 +68,8 @@ network:
       type: ethernet
       ifname: eth1
       conn_name: audio
-      mac: 68:1d:ef:2a:ac:47
-      ip4: 192.168.36.2
+      mac: 68:1d:ef:2a:b4:03
+      ip4: 192.168.36.2/24
       autoconnect: True
       state: present
       method4: manual

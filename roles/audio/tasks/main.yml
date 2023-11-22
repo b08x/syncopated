@@ -5,17 +5,12 @@
   debug:
     msg: "Starting audio tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - name: Install audio codec packages
-  shell: "{{ package_install_command }} {{ audio.packages.codecs|join(' ') }}"
+  shell: "{{ package_install_command }} {{ packages.codecs|join(' ') }}"
   become: False
-  tags: ['packages']
+  tags: ["packages"]
 
-- name: Ensure root directories are created
+- name: Ensure root directories exist
   file:
     dest: "{{ item.dest }}"
     state: directory
@@ -24,8 +19,18 @@
     mode: "{{ item.mode | default(audio_directory_default_mode) }}"
     recurse: "{{ item.recurse | default(audio_directory_default_recurse) }}"
   with_items: "{{ audio_directory_definitions }}"
-  tags: ['always']
 
 - import_tasks:
     file: tuning.yml
-  tags: ['tuning', 'realtime']
+  tags: ["tuning", "realtime"]
+
+- name: Set JackTrip autostart entry
+  template:
+    src: home/.config/autostart/JackTrip.desktop.j2
+    dest: "{{ user.home }}/.config/autostart/JackTrip.desktop"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: yes
+    validate: 'dex -d %s'
+  when: jacktrip.server.args != '' or jacktrip.client.args != ''

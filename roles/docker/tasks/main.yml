@@ -5,15 +5,6 @@
   debug:
     msg: "Starting docker tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
-- name: Starting docker tasks
-  debug:
-    msg: "Starting docker tasks"
-
 # https://discuss.python.org/t/getting-requirements-to-build-wheel-did-not-run-successfully-exit-code-1/30365/2
 - block:
     - name: Echo the pip constraint variable into a file
@@ -44,7 +35,7 @@
         - docker-compose
       when: ansible_distribution == 'AlmaLinux'
 
-  tags: ['packages', 'always']
+  tags: ['packages']
 
 - name: Ensure docker data directory exists
   file:

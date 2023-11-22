@@ -5,21 +5,16 @@
   debug:
     msg: "Starting i3 tasks"
 
-- name: Include distro vars
-  include_vars:
-    file: vars/{{ ansible_distribution }}.yml
-  tags: ['always']
-
 - name: Show i3 variables
   debug:
     msg: "{{ i3 }}"
 
 - name: Install i3 packages
-  shell: "{{ package_install_command }} {{ i3__pkgs | join(' ') }}"
+  shell: "{{ package_install_command }} {{ packages.i3 | join(' ') }}"
   become: False
   tags: ['packages']
 
-- name: Ensure i3 directories are created
+- name: Ensure i3 directories exist
   file:
     dest: "{{ i3_directory_default_location }}/{{ item.dest }}"
     state: directory

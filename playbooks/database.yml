@@ -51,4 +51,4 @@
 
     - import_tasks:
         file: ../tasks/chromadb.yml
-      tags: ['chromadb']      
+      tags: ['chromadb']

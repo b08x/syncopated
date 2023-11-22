@@ -1,26 +1,26 @@
 ---
 
-- name: check if sonic-lineup is already installed
+- name: Check if Sonic-Lineup is already installed
   stat:
     path: /usr/local/bin/sonic-lineup
   register: result
   ignore_errors: "{{ ansible_check_mode }}"
 
 - block:
-    - name: fetch soniclineup
+    - name: Fetch Sonic-Lineup
       get_url:
         url: "{{ url }}/{{ file }}"
         dest: "/tmp"
         validate_certs: no
 
-    - name: link soniclineup to bin
+    - name: Link Sonic-Lineup to bin
       shell: |
         chmod +x {{ file }}
         mv -v {{ file }} /usr/local/bin/
       args:
         chdir: "/tmp"
 
-    - name: create symlink
+    - name: Create symlink
       file:
         src: "/usr/local/bin/SonicLineup-1.1-x86_64.AppImage"
         dest: "/usr/local/bin/sonic-lineup"
@@ -33,7 +33,7 @@
     file: "SonicLineup-1.1-x86_64.AppImage"
 
 
-- name: uninstall soniclineup
+- name: Uninstall Sonic-Lineup
   file:
     path: "/usr/local/bin/sonic-lineup"
     state: absent

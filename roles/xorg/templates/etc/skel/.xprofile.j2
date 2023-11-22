@@ -5,6 +5,15 @@ export XDG_DESKTOP_SESSION="{{ desktop.wm }}"
 export XDG_CURRENT_DESKTOP="{{ desktop.wm }}"
 export XDG_CONFIG_HOME="$HOME/.config"
 
+export NO_AT_BRIDGE=1
+export QT_SCALE_FACTOR=1.0
+export QT_FONT_DPI=96
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+
+export RAY_PARENT_SCRIPT_DIR="$HOME/Sessions/ray-scripts"
+
 if [ -d /usr/share/fonts/75dpi ]; then
 	xset +fp /usr/share/fonts/75dpi
 fi
@@ -19,31 +28,13 @@ xset -b
 
 numlockx on
 
-if test -f "$HOME/.asound.state"; then
-	alsactl restore -f "$HOME/.asound.state"
-fi
-
-if [ ! -d /tmp/reaper ]; then
-	mkdir -pv /tmp/reaper
-fi
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 picom -b &
-
 nm-applet &
-#redshift &
-
-if [ -x "$(command -v autorandr)" ]; then
-	autorandr -l "$(autorandr --detected)"
-	sleep 0.5
-else
-	echo "autorandr not found"
-fi
-
+redshift-gtk &
 nitrogen --restore &
-
 dunst &
-
-pactl -- set-sink-volume 0 55%
 
 {% if x.autostart != 'default' %}
 {% for program in x.autostart %}
@@ -51,5 +42,3 @@ pactl -- set-sink-volume 0 55%
 
 {% endfor %}
 {% endif %}
-
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &

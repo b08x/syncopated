@@ -1,5 +1,19 @@
 ---
-bluetooth: True
+autologin: True
+
+bluetooth: False
+
+app:
+  install:
+    reaper: True
+    pulsar: True
+    vscode: True
+    vamp: True
+    mixxx: True
+    annotator: True
+    soniclineup: True
+    touchosc: True
+    tony: True
 
 desktop:
   wm: i3

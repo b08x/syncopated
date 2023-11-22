@@ -66,6 +66,17 @@ bindcode $mod+Mod2+$KP_9 workspace $ws9
 bindcode $mod+Mod2+$KP_0 workspace $ws10
 
 ### move focused container to workspace
+bindcode $mod+Shift+Mod2+$KP_1 move container to workspace $ws1
+bindcode $mod+Shift+Mod2+$KP_2 move container to workspace $ws2
+bindcode $mod+Shift+Mod2+$KP_3 move container to workspace $ws3
+bindcode $mod+Shift+Mod2+$KP_4 move container to workspace $ws4
+bindcode $mod+Shift+Mod2+$KP_5 move container to workspace $ws5
+bindcode $mod+Shift+Mod2+$KP_6 move container to workspace $ws6
+bindcode $mod+Shift+Mod2+$KP_7 move container to workspace $ws7
+bindcode $mod+Shift+Mod2+$KP_8 move container to workspace $ws8
+bindcode $mod+Shift+Mod2+$KP_9 move container to workspace $ws9
+bindcode $mod+Shift+Mod2+$KP_0 move container to workspace $ws10
+
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+Shift+3 move container to workspace $ws3
@@ -77,16 +88,6 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
-bindcode $mod+Shift+Mod2+$KP_1 move container to workspace $ws1
-bindcode $mod+Shift+Mod2+$KP_2 move container to workspace $ws2
-bindcode $mod+Shift+Mod2+$KP_3 move container to workspace $ws3
-bindcode $mod+Shift+Mod2+$KP_4 move container to workspace $ws4
-bindcode $mod+Shift+Mod2+$KP_5 move container to workspace $ws5
-bindcode $mod+Shift+Mod2+$KP_6 move container to workspace $ws6
-bindcode $mod+Shift+Mod2+$KP_7 move container to workspace $ws7
-bindcode $mod+Shift+Mod2+$KP_8 move container to workspace $ws8
-bindcode $mod+Shift+Mod2+$KP_9 move container to workspace $ws9
-bindcode $mod+Shift+Mod2+$KP_0 move container to workspace $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -109,7 +110,7 @@ bindsym {{ keybinding.key }} exec {{ keybinding.exec }}
 ##-------------------- Launchers ----------------------##
 ###############################################################
 
-bindsym XF86RotateWindows [class="scriber"] focus
+bindsym XF86RotateWindows '[class="URxvt" title="scriber.rb"]' focus
 
 # bindsym Control+Menu $exec wmfocus
 #
@@ -147,7 +148,7 @@ bindsym $mod+F8 [class="^VMPK"] scratchpad show
 ##### bindsym <var> focus output HDMI-2
 ##### bindsym XF86LaunchB nop dropdown
 
-bindsym $mod+Return $exec terminator
+bindsym $mod+Return $exec {{ desktop.terminal }}
 
 #############################
 #### ---{ other }--- ###

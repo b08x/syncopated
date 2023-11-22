@@ -1,11 +1,11 @@
 ---
 
-- name: print host network vars
+- name: Print host network vars
   debug:
     msg: "print {{ item }}"
   with_dict: "{{ network.interfaces }}"
 
-- name: add ethernet device
+- name: Add ethernet device
   community.general.nmcli:
     type: "{{ item.value.type }}"
     ifname: "{{ item.value.ifname }}"
@@ -24,7 +24,7 @@
     - item.value.conn_name == item.value.ifname
     - item.value.method4 != 'disabled'
 
-- name: add wifi device
+- name: Add wifi device
   community.general.nmcli:
     type: "{{ item.value.type }}"
     ifname: "{{ item.value.ifname }}"
@@ -47,7 +47,7 @@
     - item.value.method4 != 'disabled'
   tags: ['wireless']
 
-- name: add audio subnet device
+- name: Add audio subnet device
   community.general.nmcli:
     type: "{{ item.value.type }}"
     ifname: "{{ item.value.ifname }}"
@@ -62,7 +62,7 @@
     - item.value.conn_name == 'audio'
     - item.value.method4 != 'disabled'
 
-- name: add bridge device
+- name: Add bridge device
   community.general.nmcli:
     type: "{{ item.value.type }}"
     ifname: "{{ item.value.ifname }}"
@@ -78,7 +78,7 @@
     - item.value.type == 'bridge'
     - item.value.method4 != 'disabled'
 
-- name: add bridge slave
+- name: Add bridge slave
   community.general.nmcli:
     type: "{{ item.value.type }}"
     ifname: "{{ item.value.ifname }}"
@@ -93,7 +93,7 @@
     - item.value.bridge is defined
     - item.value.method4 != 'disabled'
 
-- name: deactive device
+- name: Deactive device
   community.general.nmcli:
     type: "{{ item.value.type }}"
     ifname: "{{ item.value.ifname }}"
@@ -107,7 +107,7 @@
     - item.value.type == 'ethernet'
     - item.value.method4 == 'disabled'
 
-- name: deactive device
+- name: Deactive device
   community.general.nmcli:
     type: "{{ item.value.type }}"
     ifname: "{{ item.value.ifname }}"
@@ -123,7 +123,7 @@
     - item.value.type == 'wifi'
     - item.value.method4 == 'disabled'
 
-- name: ensure NetworkManager is enabled and restart service
+- name: Ensure NetworkManager is enabled and restart service
   systemd:
     name: NetworkManager
     enabled: yes

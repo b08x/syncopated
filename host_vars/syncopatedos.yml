@@ -35,13 +35,10 @@ desktop:
   terminal_alt: "alacritty"
   browser: "qutebrowser"
   audio: "jack"
-  # barrier:
-  #   client:
-  #     name: tinybot.syncopated.net
-  #     server: "[soundbot.syncopated.net]:24800"
 
 x:
-  autostart: 'default'
+  autostart:
+    - bash ~/.screenlayout/syncopatedos.sh
 
 i3:
   autostart: 'default'
@@ -64,3 +61,9 @@ network:
       autoconnect: True
       state: present
       method4: manual
+
+jacktrip:
+  server:
+    args: "-s -n 4 -q auto -b 24 -D --udprt"
+  client:
+    args: ""

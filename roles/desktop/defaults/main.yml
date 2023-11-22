@@ -31,6 +31,7 @@ desktop_directory_definitions:
   - dest: ".config/dunst"
   - dest: ".config/environment.d"
   - dest: ".config/input-remapper-2"
+  - dest: ".config/input-remapper-2/presets"  
   - dest: ".config/jgmenu"
   - dest: ".config/nitrogen"
   - dest: ".config/picom"
