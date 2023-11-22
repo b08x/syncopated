@@ -30,7 +30,7 @@
     mode: '0644'
   become: False
 
-- name: install ruby plugin
+- name: Install ruby plugin
   shell: |
     source ~/.zshrc && \
     asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git && \

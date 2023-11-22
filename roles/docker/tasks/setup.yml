@@ -1,9 +1,5 @@
 ---
 
-- name: Starting docker tasks
-  debug:
-    msg: "Starting docker tasks"
-
 - block:
 
     - block:

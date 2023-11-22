@@ -59,7 +59,7 @@
 
 
 - block:
-    - name: Cetch Protokol
+    - name: Fetch Protokol
       get_url:
         url: "{{ protokol.url }}/{{ protokol.file }}"
         dest: "/tmp"

@@ -60,6 +60,16 @@ theme.yml - theme variables
 
 -   Role variables allow users to customize the role without modifying the role's default behavior.
 
+# demo
+
+[![asciicast](https://asciinema.org/a/622463.svg)](https://asciinema.org/a/622463)
+
 # testing
 
-`bash <(curl http://github/b08x/syncopated/bootstrap.sh)`
+#TODO:
+
+- [ ] [distrobox](https://github.com/89luca89/distrobox)
+
+- [ ] [vagrant](https://github.com/hashicorp/vagrant)
+
+- [ ] yadm
