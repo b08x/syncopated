@@ -31,7 +31,8 @@ env:
     # flowise_password: 1234
     # flowise_secretkey_overwrite: myencryptionkey
     debug: true
-    log_level: debug (error | warn | info | verbose | debug)
+    # (error | warn | info | verbose | debug)
+    log_level: debug
     # tool_function_builtin_dep: crypto,fs
     # tool_function_external_dep: moment,lodash
     # langchain_tracing_v2: true
