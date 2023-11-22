@@ -10,10 +10,10 @@
     msg: "Starting desktop tasks"
   register: expected_value
 
-- name: test expected_value
-  debug:
-    msg: "{{ expected_value }}"
-  tags: ['testing']
+# - name: test expected_value
+#   debug:
+#     msg: "{{ expected_value }}"
+#   tags: ['testing']
 
 - block:
     - name: Install desktop packages
@@ -103,9 +103,9 @@
     file: sxhkd.yml
   tags: ['sxhkd', 'keybindings']
 
-# - import_tasks:
-#     file: inputRemapper.yml
-#   tags: ['inputRemapper', 'keybindings']
+- import_tasks:
+    file: inputRemapper.yml
+  tags: ['inputRemapper', 'keybindings']
 
 - import_tasks:
     file: menu.yml

@@ -11,7 +11,7 @@
   changed_when: false
 
 - block:
-    - name: install vscode
+    - name: Install vscode
       aur:
         use: auto
         name: code

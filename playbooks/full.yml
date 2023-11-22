@@ -37,10 +37,10 @@
     DISPLAY: ":0"
 
   pre_tasks:
-    - name: show expected_value
-      debug:
-        msg: "{{ expected_value }}"
-      tags: ['testing']
+    # - name: show expected_value
+    #   debug:
+    #     msg: "{{ expected_value }}"
+    #   tags: ['testing']
 
     # - name: Set expected_value
     #   set_fact:
@@ -75,18 +75,18 @@
       check_mode: False
 
     - block:
-        - name: check if keys are present
+        - name: Check if keys are present
           stat:
             path: "{{ user.home }}/.ssh/id_ed25519"
           register: keys
 
-        - name: start ssh daemon
+        - name: Start ssh daemon
           service:
             name: sshd
             state: started
             enabled: True
 
-        - name: copy keys from remote host
+        - name: Copy keys from remote host
           delegate_to: 127.0.0.1
           run_once: True
           become_user: "{{ user.name }}"
@@ -109,21 +109,21 @@
         expected_value: "playbook_pre_task_blockVar"
       tags: ['testing']
 
-    - block:
-
-        - name: show expected_value
-          debug:
-            msg: "{{ expected_value }}"
-          tags: ['testing']
-
-      vars:
-        expected_value: "playbook_preTask_blockvar"
-      tags: ['testing']
-
-    - name: show expected_value
-      debug:
-        msg: "{{ expected_value }}"
-      tags: ['testing']
+    # - block:
+    #
+    #     - name: Show expected_value
+    #       debug:
+    #         msg: "{{ expected_value }}"
+    #       tags: ['testing']
+    #
+    #   vars:
+    #     expected_value: "playbook_preTask_blockvar"
+    #   tags: ['testing']
+    #
+    # - name: Ahow expected_value
+    #   debug:
+    #     msg: "{{ expected_value }}"
+    #   tags: ['testing']
 
   roles:
     - role: base
@@ -134,6 +134,12 @@
 
     - role: network
       tags: ["network"]
+
+    - role: docker
+      tags: ['docker']
+
+    - role: libvirt
+      tags: ['libvirt']
 
     - role: ruby
       tags: ["ruby"]
@@ -151,13 +157,7 @@
       tags: ["pulseaudio", "audio"]
 
     - role: audio
-      tags: ["audio"]
-
-    - role: docker
-      tags: ['docker']
-
-    - role: libvirt
-      tags: ['libvirt']
+      tags: ["tuning"]
 
     - role: theme
       tags: ["theme"]

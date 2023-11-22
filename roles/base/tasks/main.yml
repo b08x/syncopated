@@ -1,19 +1,19 @@
 ---
 
-- name: show expected_value
-  debug:
-    msg: "{{ expected_value }}"
-  tags: ['testing']
+# - name: show expected_value
+#   debug:
+#     msg: "{{ expected_value }}"
+#   tags: ['testing']
 
 - name: Starting base tasks
   debug:
     msg: "Starting base tasks"
   register: expected_value
 
-- name: show expected_value
-  debug:
-    msg: "{{ expected_value }}"
-  tags: ['testing']
+# - name: show expected_value
+#   debug:
+#     msg: "{{ expected_value }}"
+#   tags: ['testing']
 
 - name: Ensure root directories exist
   file:

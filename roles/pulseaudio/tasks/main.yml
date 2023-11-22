@@ -38,7 +38,7 @@
 
 - block:
     - block:
-        - name: install bluetooth packages
+        - name: Install bluetooth packages
           aur:
             use: auto
             name: "{{ item }}"

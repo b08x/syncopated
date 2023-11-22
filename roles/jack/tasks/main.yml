@@ -39,7 +39,7 @@
     dest: "/usr/lib/systemd/user/jack_control.service"
     mode: '0644'
 
-- name: enable jack services
+- name: Enable jack services
   systemd:
     name: jack_control
     enabled: yes

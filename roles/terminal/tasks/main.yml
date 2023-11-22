@@ -5,10 +5,20 @@
   debug:
     msg: "Starting terminal tasks"
 
-- name: test expected_value
-  debug:
-    msg: "{{ expected_value }}"
-  tags: ['testing']
+# - name: test expected_value
+#   debug:
+#     msg: "{{ expected_value }}"
+#   tags: ['testing']
+
+- name: Import bash role
+  import_role:
+    name: bash
+  tags: ['shell', 'profile']
+
+- name: Import zsh role
+  import_role:
+    name: zsh
+  tags: ['shell', 'profile']
 
 - name: Ensure terminal directories exist
   file:
@@ -25,16 +35,6 @@
   shell: "{{ package_install_command }} {{ packages.terminal|join(' ') }}"
   become: False
   tags: ['packages']
-
-- name: Import bash role
-  import_role:
-    name: bash
-  tags: ['shell', 'profile']
-
-- name: Import zsh role
-  import_role:
-    name: zsh
-  tags: ['shell', 'profile']
 
 - name: Install alacritty template
   template:

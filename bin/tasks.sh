@@ -3,12 +3,14 @@
 INVENTORY="${ANSIBLE_HOME}/inventory.ini"
 PLAYBOOKS="${ANSIBLE_HOME}/playbooks"
 
-tags=$(ansible-playbook -i $INVENTORY $PLAYBOOKS/full.yml --list-tags | awk -F 'TASK TAGS:' '{print $2}' | xargs |
-	xargs | sd '^\[|\]|,' '')
+# tags=$(ansible-playbook -i $INVENTORY $PLAYBOOKS/full.yml --list-tags | awk -F 'TASK TAGS:' '{print $2}' | xargs |
+# 	xargs | sd '^\[|\]|,' '')
+#
+# gum choose --no-limit ${tags[@]}
 
-gum choose --no-limit ${tags[@]}
+# tasks=$(ansible-playbook -i $INVENTORY "${PLAYBOOKS}/full.yml" --list-tasks | awk -F ':' '{print $2}' | awk -F '\t' '{print $1}'| uniq | gum filter --no-limit)
 
-tasks=$(ansible-playbook -i $INVENTORY "${PLAYBOOKS}/full.yml" --list-tasks | awk -F ':' '{print $2}' | awk -F '\t' '{print $1}'| uniq | gum filter --no-limit)
+tasks=$(ansible-playbook -i $INVENTORY "${PLAYBOOKS}/full.yml" --list-tasks | awk -F ':' '{print $2}' | awk -F '\t' '{print $1}'| uniq)
 
 echo $tasks
 exit

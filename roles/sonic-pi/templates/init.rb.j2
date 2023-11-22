@@ -1,0 +1,29 @@
+# Sonic Pi init file
+# Code in here will be evaluated on launch.
+
+LIBRARY = File.join(ENV['HOME'], "Library")
+STUDIO = File.join(ENV['HOME'], "Studio")
+
+ROBOTSTUFF = File.join(STUDIO, "applications", "sonic-pi")
+
+SNIPPETS = File.join(ROBOTSTUFF, "snippets")
+
+DRUMKITS = File.join(ENV['HOME'], ".hydrogen", "data", "drumkits/**")
+SOUNDS = File.join(LIBRARY, "sounds/**")
+COLLECTIONS = File.join(LIBRARY, "sounds", "collections/**")
+AMBIENT = File.join(LIBRARY, "sounds", "ambient/**")
+SOUNDBYTES = File.join(LIBRARY, "sounds", "soundbytes/**")
+FX = File.join(LIBRARY, "sounds", "fx/**")
+INSTRUMENTS = File.join(LIBRARY, "sounds", "instruments/**")
+LOOPS = File.join(LIBRARY, "sounds", "loops/**")
+PERCS = File.join(LIBRARY, "sounds", "percussion/**")
+SOUNDSCAPES = File.join(LIBRARY, "sounds", "soundscapes/**")
+SYNTHS = File.join(LIBRARY, "sounds", "synths/**")
+
+load_snippets SNIPPETS, true
+
+# Run all files in the helpers subdirectory
+Dir.glob("#{ROBOTSTUFF}/helpers/**/*.{spi,rb}").each do |path|
+  run_file path
+end
+
