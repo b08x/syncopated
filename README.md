@@ -1,30 +1,28 @@
 # syncopated
 
-An exercise in configuration management. Intended to serve as an IaC framework for small labs or studios. 
+An exercise in configuration management. Intended to serve as an IaC framework for a small lab or studio.
 
 Based on Ansible, the repository contains roles, playbooks, and modules to help configure and manage Linux hosts that are part of an audio production workflow.
 
 ## directory index
 
-|    Path                        |    Content                                                               |
-|:-------------------------------|:-------------------------------------------------------------------------|
-|    [bin](bin/)                        |    Shell scripts                                                         |
-|    [docs](docs/)                       |    Documentation                                                         |
-|    [files](files/)                      |    Additional Files not included in roles                                |
-|    [group_vars](group_vars/)                 |    Variables for Host Groups                                             |
-|    [host_vars](host_vars/)                  |    Variables for Hosts                                                   |
-|    [playbooks](playbooks/)                  |    Ansible Playbooks                                                     |
-|    [plugins](plugins/)                    |    Ansible Plugins and Modules                                           |
-|    [roles](roles/)                      |    Ansible Roles                                                          |
-|    [tasks](tasks/)                      |    Additional tasks not included in roles                                |
-|    [templates](templates/)                  |    Additional templates not included in roles                            |
-|    [vars](vars/)                       |    Variables to include in playbooks and tasks                                     |                              |
-|    ansible.cfg                 |    Ansible configuration file                                            |
-|    inventory.ini               |    Host inventory                                                        |
-
+| Path                      | Content                                     |     |
+| :------------------------ | :------------------------------------------ | --- |
+| [bin](bin/)               | Shell scripts                               |     |
+| [docs](docs/)             | Documentation                               |     |
+| [files](files/)           | Additional Files not included in roles      |     |
+| [group_vars](group_vars/) | Variables for Host Groups                   |     |
+| [host_vars](host_vars/)   | Variables for Hosts                         |     |
+| [playbooks](playbooks/)   | Ansible Playbooks                           |     |
+| [plugins](plugins/)       | Ansible Plugins and Modules                 |     |
+| [roles](roles/)           | Ansible Roles                               |     |
+| [tasks](tasks/)           | Additional tasks not included in roles      |     |
+| [templates](templates/)   | Additional templates not included in roles  |     |
+| [vars](vars/)             | Variables to include in playbooks and tasks |     |
+| ansible.cfg               | Ansible configuration file                  |     |
+| inventory.ini             | Host inventory                              |     |
 
 ## variables
-
 
 ### group_vars
 
@@ -46,27 +44,22 @@ theme.yml - theme variables
 
 ### role variables
 
-
 #### defaults/main.yml
 
- * These variables are intended to provide default values that can be overridden by the user or in other levels of precedence.
+-   These variables are intended to provide default values that can be overridden by the user or in other levels of precedence.
 
- * Role defaults are automatically loaded by Ansible, and their values serve as the default configuration for the role.
+-   Role defaults are automatically loaded by Ansible, and their values serve as the default configuration for the role.
 
- * If a variable is not defined elsewhere in the playbook, Ansible will use the value specified in the role defaults.
+-   If a variable is not defined elsewhere in the playbook, Ansible will use the value specified in the role defaults.
 
 #### vars/main.yml
 
- * These variables are meant to be set by the user or in the playbook to customize the behavior of the role.
+-   These variables are meant to be set by the user or in the playbook to customize the behavior of the role.
 
- * Role variables take precedence over role defaults. If the same variable is defined in both role defaults and role variables, the value from role variables will be used.
+-   Role variables take precedence over role defaults. If the same variable is defined in both role defaults and role variables, the value from role variables will be used.
 
- * Role variables allow users to customize the role without modifying the role's default behavior.
-
-
+-   Role variables allow users to customize the role without modifying the role's default behavior.
 
 # testing
 
 `bash <(curl http://github/b08x/syncopated/bootstrap.sh)`
-
-
