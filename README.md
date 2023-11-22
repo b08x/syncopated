@@ -1,38 +1,51 @@
 # syncopated
 
-An exercise in configuration management.
+An exercise in configuration management. Intended to serve as an IaC framework for small labs or studios. 
 
-Intended to serve as an IaC framework for small labs or studios. Based on Ansible, the repository contains roles, playbooks, and modules to help configure and manage Linux hosts that are part of an audio production workflow.
+Based on Ansible, the repository contains roles, playbooks, and modules to help configure and manage Linux hosts that are part of an audio production workflow.
 
-`bash <(curl http://github/b08x/syncopated/setup.sh)`
+## directory index
 
 |    Path                        |    Content                                                               |
 |:-------------------------------|:-------------------------------------------------------------------------|
-|    bin/                        |    Shell scripts                                                         |
-|    docs/                       |    Documentation                                                         |
-|    files/                      |    Additional Files not included in roles                                |
-|    group_vars/                 |    Variables for Host Groups                                             |
-|    host_vars/                  |    Variables for Hosts                                                   |
-|    playbooks/                  |    Ansible Playbooks                                                     |
-|    plugins/                    |    Ansible Plugins and Modules                                           |
-|    roles/                      |    Custom Roles                                                          |
-|    tasks/                      |    Additional tasks not included in roles                                |
-|    templates/                  |    Additional templates not included in roles                            |
-|    vars/                       |    Variables for playbooks and roles                                     |
-|    logs/                       |    Execution logs                                                        |
+|    [bin](bin/)                        |    Shell scripts                                                         |
+|    [docs](docs/)                       |    Documentation                                                         |
+|    [files](files/)                      |    Additional Files not included in roles                                |
+|    [group_vars](group_vars/)                 |    Variables for Host Groups                                             |
+|    [host_vars](host_vars/)                  |    Variables for Hosts                                                   |
+|    [playbooks](playbooks/)                  |    Ansible Playbooks                                                     |
+|    [plugins](plugins/)                    |    Ansible Plugins and Modules                                           |
+|    [roles](roles/)                      |    Ansible Roles                                                          |
+|    [tasks](tasks/)                      |    Additional tasks not included in roles                                |
+|    [templates](templates/)                  |    Additional templates not included in roles                            |
+|    [vars](vars/)                       |    Variables to include in playbooks and tasks                                     |                              |
 |    ansible.cfg                 |    Ansible configuration file                                            |
 |    inventory.ini               |    Host inventory                                                        |
 
 
 ## variables
 
+
 ### group_vars
+
+all.yml - variables applied to all hosts
+
+server.yml - variables applied to hosts in the server group
+
+workstation.yml - variables applied to hosts in workstation group
 
 ### host_vars
 
+variables for individual hosts
+
 ### vars
 
+{{ distro }}/packages.yml - package lists
+
+theme.yml - theme variables
+
 ### role variables
+
 
 #### defaults/main.yml
 
@@ -50,4 +63,10 @@ Intended to serve as an IaC framework for small labs or studios. Based on Ansibl
 
  * Role variables allow users to customize the role without modifying the role's default behavior.
 
-[roles](roles/)
+
+
+# testing
+
+`bash <(curl http://github/b08x/syncopated/bootstrap.sh)`
+
+

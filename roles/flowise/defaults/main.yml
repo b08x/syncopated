@@ -8,7 +8,7 @@ flowise:
   image: flowiseai/flowise
   container_name: flowise
   volumes:
-    - host: ~/.flowise
+    - host: /data/flowise-latest
       container: /root/.flowise
   ports:
     - host: 3002
