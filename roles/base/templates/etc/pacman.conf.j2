@@ -88,6 +88,10 @@ Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64/
 [proaudio]
 Server = https://arch.osamc.de/$repo/$arch
 
+[endeavouros]
+SigLevel = PackageRequired
+Include = /etc/pacman.d/endeavouros-mirrorlist
+
 {% if ansible_facts['hostname'] == 'lapbot' %}
 # cachyos repos
 {% if architecture == 'x86-64-v3' %}
@@ -144,10 +148,10 @@ Include = /etc/pacman.d/mirrorlist
 # Server =  https://github.com/ArchLabs/$repo/raw/master/$arch
 # Server =  https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
 
-[archlabs]
-Server = https://pub-7d84e047b852442a86fd6d7feb1ff2cd.r2.dev/$repo/$arch
-Server = https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
-Server = https://github.com/ArchLabs/$repo/raw/master/$arch
-Server = https://sourceforge.net/projects/archlabs-repo/files/$repo/$arch
+# [archlabs]
+# Server = https://pub-7d84e047b852442a86fd6d7feb1ff2cd.r2.dev/$repo/$arch
+# Server = https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
+# Server = https://github.com/ArchLabs/$repo/raw/master/$arch
+# Server = https://sourceforge.net/projects/archlabs-repo/files/$repo/$arch
 
 # vim:ft=config

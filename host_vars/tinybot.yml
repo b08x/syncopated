@@ -1,5 +1,5 @@
 ---
-autologin: True
+autologin: False
 
 bluetooth: True
 
@@ -24,7 +24,7 @@ app:
 
 docker:
   service: "enabled"
-  storage: /srv/lib/docker
+  storage: /var/lib/docker
   nvidia: False
 
 desktop:
