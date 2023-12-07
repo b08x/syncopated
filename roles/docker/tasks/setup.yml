@@ -64,7 +64,9 @@
     append: yes
   with_items:
     - "{{ users }}"
-  check_mode: no
+  check_mode: yes
+  register: dockergroup
+  failed_when: "not 'Group docker does not exist' in dockergroup.msg"
   tags: ['groups']
 
 - name: Set docker storage location
@@ -74,6 +76,8 @@
     line: "ExecStart=/usr/bin/dockerd --data-root {{ docker.storage }} -H fd:// --containerd=/run/containerd/containerd.sock"
     insertafter: "[Service]"
     firstmatch: True
+  register: dockerstorage
+  failed_when: "not 'Destination /usr/lib/systemd/system/docker.service does not exist' in dockerstorage.msg"
   notify: reload systemd daemon
 
 - name: Create docker config directory
@@ -104,4 +108,6 @@
   systemd:
     name: docker
     enabled: True
+  register: dockerservice
+  failed_when: "not 'Could not find the requested service' in dockerservice.msg"
   when: docker.service == 'enabled'
