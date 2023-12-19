@@ -55,6 +55,9 @@
 
 - import_tasks:
     file: grub.yml
+  when:
+    - ansible_distribution != 'AlmaLinux'
+    - ansible_distribution != 'Archlinux'
   tags: ['grub']
 
 - import_tasks:

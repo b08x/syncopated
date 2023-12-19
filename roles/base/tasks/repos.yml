@@ -10,6 +10,11 @@
   when: ansible_distribution == 'AlmaLinux'
   tags: ['repo']
 
+- import_tasks:
+    file: distro/Debian.yml
+  when: ansible_distribution == 'Debian'
+  tags: ['repo']
+
 - name: Set package_manager_install fact
   set_fact:
     package_install_command: "{{ package_manager_command }}"

@@ -1,11 +1,5 @@
 ---
 
-- name: Symlink /etc/os-release to /etc/system-release
-  file:
-    src: /etc/os-release
-    dest: /etc/system-release
-    state: link
-
 - name: Import syncopated repo key
   community.general.pacman_key:
     id: 36A6ECD355DB42B296C0CEE2157CA2FC56ECC96A

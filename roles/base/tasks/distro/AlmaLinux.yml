@@ -1,11 +1,5 @@
 ---
 
-- name: Symlink /etc/os-release to /etc/system-release
-  file:
-    src: /etc/almalinux-release
-    dest: /etc/system-release
-    state: link
-
 - name: Disable selinux
   lineinfile:
     path: /etc/selinux/config

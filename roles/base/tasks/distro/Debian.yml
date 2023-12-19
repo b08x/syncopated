@@ -1,0 +1,74 @@
+---
+
+- block:
+    - name: update if the last one is more than 3600 seconds ago
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: install software-props to use apt-key
+      apt:
+        name: "{{ packages.software_props }}"
+        state: present
+
+    - name: grab kxstudio repo package
+      get_url:
+        url: https://launchpad.net/~kxstudio-debian/+archive/kxstudio/+files/kxstudio-repos_11.1.0_all.deb
+        dest: "/tmp/"
+      register: kx_repo_deb
+      changed_when: kx_repo_deb.failed
+      tags: ['kxrepo']
+
+    - name: install kxstudio repo package
+      shell: |
+        dpkg -i kxstudio-repos_11.1.0_all.deb
+
+        apt clean all && apt update
+
+        apt update
+      args:
+        chdir: "/tmp"
+      register: kx_repo
+      changed_when: kx_repo.failed
+      tags: ['kxrepo']
+
+    # - name: install liquorix repos
+    #   shell: |
+    #     curl 'https://liquorix.net/add-liquorix-repo.sh' | sudo bash
+    #
+    #     apt clean all
+    #
+    #     apt update
+    #   args:
+    #     chdir: "/tmp"
+    #   register: liquorix_repo
+    #   changed_when: liquorix_repo.failed
+    #   tags: ['kernel']
+    #
+    # - name: install liquorix kernel
+    #   apt:
+    #     name: "{{ packages.kernel }}"
+    #     state: latest
+    #   register: installed_kernel
+    #
+    # - name: reboot host if new kernel is installed
+    #   ansible.builtin.reboot:
+    #   async: 1
+    #   poll: 0
+    #   ignore_errors: True
+    #   when: installed_kernel.changed
+    #
+    # - name: wait for host to reboot
+    #   wait_for_connection:
+    #     connect_timeout: 20
+    #     sleep: 5
+    #     delay: 5
+    #     timeout: 120
+    #   when: installed_kernel.changed
+
+    - name: install base packages
+      apt:
+        name: "{{ packages.base }}"
+        state: present
+
+  become: True

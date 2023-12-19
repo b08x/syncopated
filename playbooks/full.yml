@@ -2,6 +2,7 @@
 - hosts: all
   tags: ['workstation']
   become: True
+  # gather_facts: true
   gather_subset:
     - hardware
     - network
@@ -39,7 +40,7 @@
   pre_tasks:
     # - name: show expected_value
     #   debug:
-    #     msg: "{{ expected_value }}"
+    #     var: ansible_distribution
     #   tags: ['testing']
 
     # - name: Set expected_value
@@ -47,9 +48,22 @@
     #     expected_value: "playbook_pretask_setfact"
     #   tags: ["testing"]
 
+    - name: Symlink /etc/os-release to /etc/system-release
+      file:
+        src: /etc/os-release
+        dest: /etc/system-release
+        state: link
+
     - name: Set admin group name
       set_fact:
         admin_group: wheel
+      when: ansible_distribution == 'Archlinux' or ansible_distribution == "AlmaLinux"
+      tags: ["always"]
+
+    - name: Set admin group name
+      set_fact:
+        admin_group: sudo
+      when: ansible_distribution == "Debian"
       tags: ["always"]
 
     - name: Check -march support
