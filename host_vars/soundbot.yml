@@ -69,7 +69,7 @@ network:
       ifname: enp0s20f0u1u4
       conn_name: audio
       mac: 00:e0:4d:78:b7:7c
-      ip4: 192.168.36.1
+      ip4: 192.168.36.1/24
       autoconnect: True
       state: present
       method4: manual
