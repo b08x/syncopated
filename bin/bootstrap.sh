@@ -56,58 +56,89 @@ cup 1
 
 wipe="false"
 
+DISTRO=$(lsb_release -si)
+
+case $DISTRO in
+	Arch|ArchLabs|cachyos|EndeavourOS)
+		pacman -Syu --noconfirm --downloadonly --quiet
+    pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
+    firewalld python-setuptools rustup fd rubygems yadm jack2 jack2-dbus \
+    pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger \
+    nodejs npm yadm --overwrite '*'
+		;;
+	Fedora|AlmaLinux)
+		echo '[charm]
+		name=Charm
+		baseurl=https://repo.charm.sh/yum/
+		enabled=1
+		gpgcheck=1
+		gpgkey=https://repo.charm.sh/yum/gpg.key' | tee /etc/yum.repos.d/charm.repo
+		dnf -y install gum
+		;;
+	Debian|Raspbian|MX)
+		mkdir -p /etc/apt/keyrings
+		curl -fsSL https://repo.charm.sh/apt/gpg.key | gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+		echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | tee /etc/apt/sources.list.d/charm.list
+		apt-get update --quiet
+		apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum yadm
+		;;
+	*)
+		echo "Unsupported distribution."
+		exit 1
+esac
+
 # and so it begins...
 wipe && say "hello!\n" $GREEN && sleep 0.5
 
-say "-----------------------------------------------" $BLUE
-say "installing ssh, fd, ruby along with" $BLUE
-say "gcc, g++, make, and other essential build tools" $BLUE
-say "ssh will also be enabled and started." $BLUE
-say "-----------------------------------------------\n" $BLUE
+# say "-----------------------------------------------" $BLUE
+# say "installing ssh, fd, ruby along with" $BLUE
+# say "gcc, g++, make, and other essential build tools" $BLUE
+# say "ssh will also be enabled and started." $BLUE
+# say "-----------------------------------------------\n" $BLUE
 
-BOOTSTRAP_PKGS=(
-  'ansible'
-  'aria2'
-  'base-devel' 
-  'bat'
-  'bc'
-  'cargo'
-  'ccache'
-  'cmake'
-  'dialog'
-  'fd' 
-  'git'
-  'git-lfs'
-  'gum' 
-  'htop'
-  # 'jack2' 
-  # 'jack2-dbus' 
-  'lnav'
-  'most' 
-  'neovim'
-  'net-tools'
-  'nodejs' 
-  'npm'
-  'openssh' 
-  # 'pulseaudio' 
-  # 'pulseaudio-alsa' 
-  # 'pulseaudio-jack' 
-  'python-pip' 
-  'python-setuptools' 
-  'ranger' 
-  'rsync' 
-  'rubygems' 
-  'rustup' 
-  'unzip'
-  'wget'
-  'yadm' 
-  'zsh'
-)
+# BOOTSTRAP_PKGS=(
+#   'ansible'
+#   'aria2'
+#   'base-devel'
+#   'bat'
+#   'bc'
+#   'cargo'
+#   'ccache'
+#   'cmake'
+#   'dialog'
+#   'fd'
+#   'git'
+#   'git-lfs'
+#   'gum'
+#   'htop'
+#   # 'jack2'
+#   # 'jack2-dbus'
+#   'lnav'
+#   'most'
+#   'neovim'
+#   'net-tools'
+#   'nodejs'
+#   'npm'
+#   'openssh'
+#   # 'pulseaudio'
+#   # 'pulseaudio-alsa'
+#   # 'pulseaudio-jack'
+#   'python-pip'
+#   'python-setuptools'
+#   'ranger'
+#   'rsync'
+#   'rubygems'
+#   'rustup'
+#   'unzip'
+#   'wget'
+#   'yadm'
+#   'zsh'
+# )
 
 
-pacman -Syu --noconfirm --downloadonly --quiet
-
-pacman -S --noconfirm --needed "${BOOTSTRAP_PKGS[@]}" --overwrite '*'
+# pacman -Syu --noconfirm --downloadonly --quiet
+#
+# pacman -S --noconfirm --needed "${BOOTSTRAP_PKGS[@]}" --overwrite '*'
 
 systemctl enable sshd
 systemctl start sshd
@@ -212,14 +243,83 @@ say "set defaults to deny inbound and allow outbound" $BLUE
 say "add rule to allow ssh traffic" $BLUE
 say "-----------------------------------------------\n" $BLUE
 
-pacman -S --noconfirm firewalld
-
-systemctl enable firewalld && systemctl start firewalld
-
-firewall-cmd --zone=public --add-service=ssh --permanent
-firewall-cmd --reload
+# Set firewall rules
+case $DISTRO in
+	Debian|Raspbian|MX)
+		apt-get install -y ufw
+		ufw default deny incoming
+		ufw default allow outgoing
+		ufw allow ssh
+		ufw enable
+		;;
+	Arch|ArchLabs|Manjaro)
+		pacman -S --noconfirm firewalld
+		systemctl enable firewalld
+		systemctl start firewalld
+		firewall-cmd --zone=public --add-service=ssh --permanent
+		firewall-cmd --reload
+		;;
+	*)
+		echo "Unsupported distribution: $DISTRO"
+		exit 1
+		;;
+esac
 
 wipe && sleep 1
+
+if [[ $wipe == 'true' ]]; then wipe && sleep 1; fi
+say "\n-----------------------------------------------" $BLUE
+say "check for ansible installations..." $BLUE
+say "if installed with a system package," $BLUE
+say "remove the system package and install with pip" $BLUE
+say "as of date, pip will install ansible 2.14.5" $BLUE
+say "-----------------------------------------------\n" $BLUE
+
+case $DISTRO in
+	Debian|Raspbian|MX)
+		if [ -x $(apt list --installed | grep ansible) ]; then
+			apt-get remove -y ansible --quiet
+		fi
+		;;
+	Arch|ArchLabs|Manjaro)
+		if [ -x $(pacman -Q | grep ansible) ]; then
+      echo "ansible package not found"
+    else
+      echo "ansible package found...removing"
+			pacman -Rdd ansible --noconfirm
+		fi
+		;;
+	*)
+		echo "Unsupported distribution: $DISTRO"
+		exit 1
+		;;
+esac
+
+if [[ $wipe == 'true' ]]; then wipe && sleep 1; fi
+say "\n-----------------------------------------------" $BLUE
+say "installing pip" $BLUE && sleep 0.5
+say "-----------------------------------------------\n" $BLUE
+
+case $DISTRO in
+	Debian|Raspbian|MX)
+		apt-get update --quiet
+		apt-get install -y python3-pip && \
+    pip install ansible
+		;;
+	Arch|ArchLabs|Manjaro)
+    if [[ -x $(pacman -Q | grep python-pip) ]]; then
+      echo "pip not installed"
+  		pacman -S --noconfirm python-pip && \
+      pip install ansible --break-system-packages
+    else
+      echo "pip installed"
+    fi
+		;;
+	*)
+		echo "Unsupported distribution: $DISTRO"
+		exit 1
+		;;
+esac
 
 echo -e "Finished, $(gum style --foreground 212 "...")."
 

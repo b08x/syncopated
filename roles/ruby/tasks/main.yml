@@ -5,6 +5,23 @@
     msg: "Starting ruby tasks"
 
 - block:
+
+    - name: Install system ruby packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - cmake
+        - libgit2-dev
+        - libopenslide-dev
+        - libssl-dev
+        - libvips-dev
+        - libyaml-dev
+        - openssl
+        - postgresql-server-dev-13
+        - ruby-dev
+      when: ansible_distribution == 'Debian'
+
     - name: Install system ruby packages
       dnf:
         name: "{{ item }}"

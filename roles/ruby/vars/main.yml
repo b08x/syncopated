@@ -10,6 +10,7 @@ gems:
   - clipboard
   - colorize
   - coltrane
+  - debug
   - drydock
   - ed25519
   - eventmachine
@@ -19,6 +20,7 @@ gems:
   - highline
   - i3ipc
   - i18n
+  - irb
   - json
   - jsonl
   - kramdown
@@ -35,6 +37,7 @@ gems:
   - pastel
   - pry
   - pry-doc
+  - psych
   - rake
   - rdoc
   - rexml
