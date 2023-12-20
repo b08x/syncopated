@@ -48,5 +48,5 @@
     dest: /etc/paru.conf
     mode: '0644'
     backup: True
-  ignore_errors: "{{ ansible_check_mode }}"
+  # ignore_errors: "{{ ansible_check_mode }}"
   tags: ['repo']

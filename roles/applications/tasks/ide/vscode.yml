@@ -16,6 +16,7 @@
         use: auto
         name: code
         state: present
+      when: ansible_distribution == 'Archlinux'
 
     - name: Check currently installed extensions
       shell: code --list-extensions
