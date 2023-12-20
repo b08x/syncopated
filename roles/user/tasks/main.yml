@@ -5,31 +5,24 @@
   debug:
     msg: "Starting user tasks"
 
-- name: Set user shell
-  user:
-    name: "{{ item.name }}"
-    shell: "{{ item.shell }}"
-  with_items: "{{ users }}"
-  tags: ['profile']
-
-- name: Sync /etc/skel with users home
-  synchronize:
-    src: /etc/skel/
-    dest: "{{ item.home }}/"
-    recursive: yes
-    mode: push
-    delete: no
-    checksum: yes
-    perms: no
-    rsync_opts:
-      - "--update"
-      - "--progress"
-      - "--itemize-changes"
-      - "--exclude='*.*~'"
-      - "--omit-dir-times"
-      - "--chown={{ item.name }}:{{ item.group }}"
-      - "--backup"
-      - "--suffix={{ suffix }}"
-  with_items: "{{ users }}"
-  delegate_to: "{{ inventory_hostname }}"
-  tags: ['always', 'env', 'profile']
+# - name: Sync /etc/skel with users home
+#   synchronize:
+#     src: /etc/skel/
+#     dest: "{{ item.home }}/"
+#     recursive: yes
+#     mode: push
+#     delete: no
+#     checksum: yes
+#     perms: no
+#     rsync_opts:
+#       - "--update"
+#       - "--progress"
+#       - "--itemize-changes"
+#       - "--exclude='*.*~'"
+#       - "--omit-dir-times"
+#       - "--chown={{ item.name }}:{{ item.group }}"
+#       - "--backup"
+#       - "--suffix={{ suffix }}"
+#   with_items: "{{ users }}"
+#   delegate_to: "{{ inventory_hostname }}"
+#   tags: ['always', 'env', 'profile']

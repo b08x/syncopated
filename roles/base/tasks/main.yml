@@ -15,6 +15,10 @@
 #     msg: "{{ expected_value }}"
 #   tags: ['testing']
 
+- import_tasks:
+    file: sudoers.yml
+  tags: ['sudoers']
+
 - name: Ensure root directories exist
   file:
     dest: "{{ item.dest }}"
@@ -36,10 +40,6 @@
 - import_tasks:
     file: sshd.yml
   tags: ['sshd']
-
-- import_tasks:
-    file: sudoers.yml
-  tags: ['sudoers']
 
 - import_tasks:
     file: repos.yml

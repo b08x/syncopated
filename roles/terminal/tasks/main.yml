@@ -5,6 +5,13 @@
   debug:
     msg: "Starting terminal tasks"
 
+- name: Set user shell
+  user:
+    name: "{{ item.name }}"
+    shell: "{{ item.shell }}"
+  with_items: "{{ users }}"
+  tags: ['profile']
+
 # - name: test expected_value
 #   debug:
 #     msg: "{{ expected_value }}"
@@ -39,9 +46,9 @@
 - name: Install alacritty template
   template:
     src: etc/skel/.config/alacritty/alacritty.yml.j2
-    dest: /etc/skel/.config/alacritty/alacritty.yml
-    owner: root
-    group: root
+    dest: "{{ user.home }}/.config/alacritty/alacritty.yml"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
     mode: '0644'
     backup: True
   tags: ['alacritty']
@@ -49,9 +56,9 @@
 - name: Install kitty templates
   template:
     src: "etc/skel/.config/kitty/{{ item }}.j2"
-    dest: "/etc/skel/.config/kitty/{{ item }}"
-    owner: root
-    group: root
+    dest: "{{ user.home }}/.config/kitty/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
     mode: '0644'
     backup: True
   with_items:
@@ -64,9 +71,9 @@
 - name: Install htop and lnav configs
   template:
     src: "etc/skel/.config/{{ item }}.j2"
-    dest: "/etc/skel/.config/{{ item }}"
-    owner: root
-    group: root
+    dest: "{{ user.home }}/.config/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
     mode: '0644'
     backup: yes
   with_items:
@@ -77,7 +84,7 @@
 - name: Install ranger configs
   synchronize:
     src: etc/skel/.config/ranger/
-    dest: /etc/skel/.config/ranger/
+    dest: "{{ user.home }}/.config/ranger/"
     recursive: yes
     mode: push
     delete: no
@@ -88,7 +95,7 @@
       - "--omit-dir-times"
       - "--progress"
       - "--itemize-changes"
-      - "--chown=root:root"
+      # - "--chown={{ user.name }}:{{ user.name }}"
       - "--backup"
       - "--suffix={{ suffix }}"
   ignore_errors: "{{ ansible_check_mode }}"
