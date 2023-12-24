@@ -8,3 +8,7 @@
 - name: reload firewalld
   shell: "firewall-cmd --reload"
   ignore_errors: True
+
+- name: reload ufw
+  shell: "ufw reload"
+  ignore_errors: True

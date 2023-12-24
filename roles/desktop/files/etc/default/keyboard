@@ -1,0 +1,10 @@
+# KEYBOARD CONFIGURATION FILE
+
+# Consult the keyboard(5) manual page.
+
+XKBMODEL="logitech_base"
+XKBLAYOUT="us"
+XKBVARIANT=""
+XKBOPTIONS="grp:lalt_lshift_toggle,compose:ralt,grp_led:scroll,caps:super,terminate:ctrl_alt_bksp"
+
+BACKSPACE="guess"

@@ -45,6 +45,7 @@
       notify: reload firewalld
 
   ignore_errors: "{{ ansible_check_mode }}"
+  when: ansible_distribution == 'Archlinux' or ansible_distribution == 'AlmaLinux'
 
 
 # Hello. Can you refactor this Ansible task?

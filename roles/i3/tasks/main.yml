@@ -52,7 +52,7 @@
     - name: Set i3 configuration
       template:
         src: "etc/skel/{{ item }}.j2"
-        dest: "/etc/skel/{{ item }}"
+        dest: "{{ user.home }}/{{ item }}"
         owner: root
         group: root
         mode: '0644'
@@ -70,7 +70,7 @@
     - name: Set i3status-rs configuration
       template:
         src: "etc/skel/{{ item }}.j2"
-        dest: "/etc/skel/{{ item }}"
+        dest: "{{ user.home }}/{{ item }}"
         owner: root
         group: root
         mode: '0644'

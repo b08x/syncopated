@@ -62,7 +62,7 @@
     jack_control dps midi-driver {{ jack_control.dps.mididriver }}
     jack_control dps monitor {{ jack_control.dps.monitor }}
   environment:
-    DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/{{ user.uid }}/bus"
+    DBUS_SESSION_BUS_ADDRESS: "{{ lookup('env','DBUS_SESSION_BUS_ADDRESS') }}"
   register: result
   changed_when: result.rc != 0
   become: False

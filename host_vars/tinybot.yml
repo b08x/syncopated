@@ -28,6 +28,7 @@ docker:
   nvidia: False
 
 desktop:
+  dm: lightdm
   wm: i3
   terminal: "kitty"
   terminal_alt: "alacritty"
@@ -52,21 +53,21 @@ i3:
 
 network:
   interfaces:
-    eth0:
+    enp3s0:
       type: ethernet
-      ifname: eth0
-      conn_name: eth0
+      ifname: enp3s0
+      conn_name: enp3s0
       mac: 68:1d:ef:2a:ac:47
-      ip4: 192.168.41.26/24
+      ip4: 192.168.41.43/24
       gw4: 192.168.41.1
       dns4: 192.168.41.41, 192.168.41.1
       dns4_search: syncopated.net
       autoconnect: True
       state: present
       method4: manual
-    eth1:
+    enp2s0:
       type: ethernet
-      ifname: eth1
+      ifname: enp2s0
       conn_name: audio
       mac: 68:1d:ef:2a:b4:03
       ip4: 192.168.36.2/24

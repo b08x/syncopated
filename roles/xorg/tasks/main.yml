@@ -48,7 +48,7 @@
 - name: Install xorg configs
   template:
     src: "etc/skel/{{ item }}.j2"
-    dest: "/etc/skel/{{ item }}"
+    dest: "{{ user.home }}/{{ item }}"
     owner: root
     group: root
     mode: "0644"

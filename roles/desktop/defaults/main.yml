@@ -13,12 +13,12 @@
 desktop_directory_default_mode: "0755"
 
 # The default directory owner when creating directories using `desktop_directory_definitions`
-desktop_directory_default_owner: root
+desktop_directory_default_owner: "{{ user.name }}"
 
 # The default directory group when creating directories using `desktop_directory_definitions`
-desktop_directory_default_group: root
+desktop_directory_default_group: "{{ user.group }}"
 
-desktop_directory_default_location: "/etc/skel"
+desktop_directory_default_location: "{{ user.home }}"
 
 desktop_directory_default_recurse: False
 
@@ -31,7 +31,7 @@ desktop_directory_definitions:
   - dest: ".config/dunst"
   - dest: ".config/environment.d"
   - dest: ".config/input-remapper-2"
-  - dest: ".config/input-remapper-2/presets"  
+  - dest: ".config/input-remapper-2/presets"
   - dest: ".config/jgmenu"
   - dest: ".config/nitrogen"
   - dest: ".config/picom"

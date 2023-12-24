@@ -45,8 +45,8 @@
   template:
     src: "etc/skel/{{ item }}.j2"
     dest: "{{ user.home }}/{{ item }}"
-    owner: root
-    group: root
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
     mode: '0644'
     backup: True
   with_items:

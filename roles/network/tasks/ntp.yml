@@ -19,4 +19,6 @@
     timedatectl set-ntp true && \
     sleep 4 && \
     hwclock --systohc
-  when: timesyncd_conf.changed
+  when:
+    - timesyncd_conf.changed
+    - ansible_distribution != 'Debian'

@@ -179,8 +179,8 @@
     - role: desktop
       tags: ['desktop']
 
-    - role: user
-      tags: ["user"]
+    # - role: user
+    #   tags: ["user"]
 
     - role: applications
       tags: ['applications']
