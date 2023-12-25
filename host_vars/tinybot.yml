@@ -44,8 +44,8 @@ x:
     - xrandr --output HDMI-1 --auto
 
 i3:
-  autostart:
-    - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+  autostart: "default"
+    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
   tray_output: "HDMI-1"
   assignments: "default"
   workspaces: "default"
@@ -55,8 +55,8 @@ network:
   interfaces:
     enp3s0:
       type: ethernet
-      ifname: enp3s0
-      conn_name: enp3s0
+      ifname: eth1
+      conn_name: eth1
       mac: 68:1d:ef:2a:ac:47
       ip4: 192.168.41.43/24
       gw4: 192.168.41.1
@@ -67,7 +67,7 @@ network:
       method4: manual
     enp2s0:
       type: ethernet
-      ifname: enp2s0
+      ifname: eth0
       conn_name: audio
       mac: 68:1d:ef:2a:b4:03
       ip4: 192.168.36.2/24

@@ -26,12 +26,12 @@
 i3_directory_default_mode: "0755"
 
 # The default directory owner when creating directories using `i3_directory_definitions`
-i3_directory_default_owner: root
+i3_directory_default_owner: "{{ user.name }}"
 
 # The default directory group when creating directories using `i3_directory_definitions`
-i3_directory_default_group: root
+i3_directory_default_group: "{{ user.group }}"
 
-i3_directory_default_location: "/etc/skel"
+i3_directory_default_location: "{{ user.home }}"
 
 i3_directory_default_recurse: False
 

@@ -74,6 +74,7 @@ packages:
   desktop:
     # - obs-rtspserver
     # - pgmodeler
+    - archlinux-xdg-menu
     - ascii-image-converter
     - asciiquarium-transparent-git
     - cbonsai

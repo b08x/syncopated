@@ -1,6 +1,6 @@
 ---
 # tasks file for alsa
-- name: Starting alsa tasks
+- name: Alsa Tasks
   debug:
     msg: "Starting alsa tasks"
 

@@ -53,7 +53,7 @@ desktop_directory_definitions:
   - dest: ".config/rofi/powermenu/type-5/shared"
   - dest: ".config/rofi/powermenu/type-6/shared"
   - dest: ".config/rofi/scripts"
-  - dest: ".config/swhkd"
+  - dest: ".config/sxhkd"
   - dest: ".zsh"
   - dest: ".config/qutebrowser"
   - dest: ".config/zim"

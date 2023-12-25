@@ -1,5 +1,5 @@
 ---
-- name: Starting network tasks
+- name: Network Tasks
   debug:
     msg: "Starting network tasks"
 
