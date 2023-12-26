@@ -119,17 +119,11 @@ packages:
     - xclip
     - xdot
     - zenity
-  dev:
-    - bipscript
-    - bipscript-ide
-    - bluetooth-autoconnect
-    - rtaudio
-    - sc3-plugins
-    - sonic-pi-git
-    - supercollider
   development:
     - bash-language-server
     - beautysh
+    - bipscript
+    - bipscript-ide
     - code-marketplace
     - devdocs-desktop
     - git
@@ -151,6 +145,10 @@ packages:
     - npm
     - nyan-lang-git
     - obsidian
+    - rtaudio
+    - sc3-plugins
+    - sonic-pi-git
+    - supercollider
   docs:
     - gnuplot
     - highlight
@@ -274,15 +272,15 @@ packages:
     - sendmidi
     - vmpk
   pipewire:
-    - libwireplumber
-    - wireplumber
     - gst-plugin-pipewire
-    - libpipewire
+    # - libpipewire
+    # - libwireplumber
     - pipewire
     - pipewire-alsa
     - pipewire-audio
     - pipewire-jack
     - pipewire-pulse
+    - wireplumber
   plugins:
     - calf
     - caps-lv2-git
@@ -322,7 +320,6 @@ packages:
     - pamixer
     - pavucontrol
     - pulseaudio-alsa
-    - pulseaudio-bluetooth
     - pulseaudio-jack
     - pulsemixer
   python:

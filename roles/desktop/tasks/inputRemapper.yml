@@ -1,5 +1,9 @@
 ---
 
 - name: Install input-remapper
-  shell: "{{ package_install_command }} input-remapper-git"
+  aur:
+    use: paru
+    name: input-remapper-git
+    state: present
   become: False
+  tags: ['packages']

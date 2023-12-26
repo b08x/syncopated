@@ -6,9 +6,12 @@
     msg: "Starting pulseaudio tasks"
 
 - name: Install pulseaudio packages
-  shell: "{{ package_install_command }} {{ packages.pulseaudio|join(' ') }}"
+  aur:
+    use: paru
+    name: "{{ packages.pulseaudio }}"
+    state: present
   become: False
-  tags: ["packages"]
+  tags: ['packages']
 
 - name: Ensure pulseaudio directories exist
   file:

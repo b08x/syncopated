@@ -24,9 +24,8 @@ EndSection
 {% if ansible_facts['hostname'] == 'soundbot' %}
 Section "Device"
     Identifier  "Intel Graphics"
-    Driver      "intel"
-    BusID       "PCI:0:2:0"
-    Option      "TearFree" "true"
-    Option      "DRI" "2"
+    Driver      "modesetting"
+    Option      "AccelMethod"   "glamor"
+    Option      "DRI"   "3"
 EndSection
 {% endif %}

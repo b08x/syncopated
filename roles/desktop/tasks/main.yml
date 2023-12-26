@@ -17,34 +17,40 @@
 
 - block:
     - name: Install desktop packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.desktop|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.desktop }}"
+        state: present
 
     - name: Install browser packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.browser|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.browser }}"
+        state: present
 
     - name: Install development packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.development|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.development }}"
+        state: present
 
-    - name: Install doc packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.docs|join(' ') }}"
+    - name: Install docs packages
+      aur:
+        use: paru
+        name: "{{ packages.docs }}"
+        state: present
 
     - name: Install python packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.python|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.python }}"
+        state: present
 
     - name: Install utility packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.utils|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.utility }}"
+        state: present
 
   become: False
   tags: ['packages']
@@ -65,29 +71,18 @@
   tags: ['autologin']
   when: autologin|default(false)|bool == True
 
-- name: Import xorg role
-  import_role:
-    name: xorg
-  tags: ['xorg']
-  when: desktop.wm == 'i3'
-
-- name: Import i3 role
-  import_role:
-    name: i3
-  tags: ['i3']
-  when: desktop.wm == 'i3'
-
-- name: Import sway role
-  import_role:
-    name: sway
-  tags: ['sway']
-  when: desktop.wm == 'sway'
-
-- name: Import gnome role
-  import_role:
-    name: gnome
-  tags: ['gnome']
-  when: desktop.wm == 'gnome'
+#NOTETHIS: these can be used in a seperate playbook
+# - name: Import sway role
+#   import_role:
+#     name: sway
+#   tags: ['sway']
+#   when: desktop.wm == 'sway'
+#
+# - name: Import gnome role
+#   import_role:
+#     name: gnome
+#   tags: ['gnome']
+#   when: desktop.wm == 'gnome'
 
 # if this file does not exist, lightdm will fail to start
 - name: Set dmrc to selected window manager
@@ -212,28 +207,3 @@
 
 - name: Update desktop database
   command: bash -lc "update-desktop-database"
-
-- name: Synchronize templates - rofi
-  template:
-    src: "etc/skel/{{ item }}.j2"
-    dest: "{{ user.home }}/{{ item }}"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: preserve
-    backup: yes
-  with_items:
-    - .config/rofi/config.rasi
-    - .config/rofi/gruvbox-common.rasi
-    - .config/rofi/gruvbox-dark-hard.rasi
-    - .config/rofi/colors/onedark.rasi
-    - .config/rofi/scripts/launcher_main.sh
-    - .config/rofi/scripts/launcher_t1.sh
-    - .config/rofi/scripts/launcher_t4.sh
-    - .config/rofi/launchers/type-1/shared/colors.rasi
-    - .config/rofi/launchers/type-1/shared/fonts.rasi
-    - .config/rofi/launchers/type-1/style-8.rasi
-    - .config/rofi/launchers/type-1/style-10.rasi
-    - .config/rofi/launchers/type-4/shared/colors.rasi
-    - .config/rofi/launchers/type-4/shared/fonts.rasi
-    - .config/rofi/launchers/type-4/style-6.rasi
-  tags: ['profile', 'rofi']

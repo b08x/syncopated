@@ -66,7 +66,7 @@ network:
   interfaces:
     enp0s20f0u1u4:
       type: ethernet
-      ifname: enp0s20f0u1u4
+      ifname: eth2
       conn_name: audio
       mac: 00:e0:4d:78:b7:7c
       ip4: 192.168.36.1/24
@@ -75,9 +75,9 @@ network:
       method4: manual
     enp13s0u1:
       type: ethernet
-      ifname: enp13s0u1
-      conn_name: enp13s0u1
-      mac: 00:50:b6:91:fc:4d
+      ifname: eth0
+      conn_name: eth0
+      mac: 00:50:b6:91:fc:40
       ip4: 192.168.41.42/24
       gw4: 192.168.41.1
       dns4:
@@ -88,28 +88,28 @@ network:
       state: present
       method4: manual
 
-  host:
-    xorg:
-      video:
-      # intel:
-        - intel-gpu-tools
-        - intel-media-driver
-        - intel-ucode
-        - libva-intel-driver
-        - libva-mesa-driver
-        # - libvdpau-va-gl-i965
-        - vulkan-headers
-        - vulkan-icd-loader
-        - vulkan-intel
-        - xf86-video-intel
-      # opengl:
-        - libva-utils
-        - libvdpau-va-gl
-        - libva-mesa-driver
-        - mesa
-        - mesa-utils
-        - mesa-vdpau
-        - vdpauinfo
-      # opencl:
-        - opencl-clover-mesa
-        - opencl-rusticl-mesa
+host:
+  xorg:
+    video:
+    # intel:
+      - intel-gpu-tools
+      - intel-media-driver
+      - intel-ucode
+      - libva-intel-driver
+      - libva-mesa-driver
+      # - libvdpau-va-gl-i965
+      - vulkan-headers
+      - vulkan-icd-loader
+      - vulkan-intel
+      - xf86-video-intel
+    # opengl:
+      - libva-utils
+      - libvdpau-va-gl
+      - libva-mesa-driver
+      - mesa
+      - mesa-utils
+      - mesa-vdpau
+      - vdpauinfo
+    # opencl:
+      - opencl-clover-mesa
+      - opencl-rusticl-mesa

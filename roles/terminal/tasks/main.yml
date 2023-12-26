@@ -39,7 +39,10 @@
   check_mode: no
 
 - name: Install terminal packages
-  shell: "{{ package_install_command }} {{ packages.terminal|join(' ') }}"
+  aur:
+    use: paru
+    name: "{{ packages.terminal }}"
+    state: present
   become: False
   tags: ['packages']
 

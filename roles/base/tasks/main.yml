@@ -55,15 +55,26 @@
 
 - import_tasks:
     file: grub.yml
-  when:
-    - ansible_distribution != 'AlmaLinux'
-    - ansible_distribution != 'Archlinux'
   tags: ['grub']
 
 - import_tasks:
     file: autofs.yml
   tags: ['autofs']
 
-- import_tasks:
-    file: scripts.yml
-  tags: ['scripts']
+- name: Install utility scripts
+  synchronize:
+    src: usr/local/bin/
+    dest: /usr/local/bin/
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--backup"
+      - "--suffix={{ suffix }}"
+      - "--chmod=0755"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: ['always']

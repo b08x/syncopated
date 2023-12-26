@@ -5,10 +5,13 @@
   debug:
     msg: "Starting audio tasks"
 
-- name: Install audio codec packages
-  shell: "{{ package_install_command }} {{ packages.codecs|join(' ') }}"
+- name: Install codecs packages
+  aur:
+    use: paru
+    name: "{{ packages.codecs }}"
+    state: present
   become: False
-  tags: ["packages"]
+  tags: ['packages']
 
 - name: Ensure root directories exist
   file:

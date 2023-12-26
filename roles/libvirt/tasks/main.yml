@@ -31,20 +31,6 @@
         - virt-manager
         - virt-viewer
 
-  when: ansible_distribution == 'Archlinux'
-  tags: ['packages']
-
-- block:
-    - name: Install Virtualization Group
-      dnf:
-        name: "{{ item }}"
-        state: present
-        update_cache: yes
-      loop:
-        - '@Virtualization Host'
-        - libvirt-devel
-
-  when: ansible_distribution == 'AlmaLinux'
   tags: ['packages']
 
 - name: Set socket group and perms to allow for remote access

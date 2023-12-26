@@ -17,7 +17,6 @@
         state: present
       become: False
 
-  when: ansible_distribution == 'Archlinux'
   tags: ['packages']
 
 - name: Ensure theme directories exist
