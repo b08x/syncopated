@@ -1,7 +1,7 @@
 ---
 # tasks file for pulseaudio
 
-- name: Starting pulseaudio tasks
+- name: Pulseaudio Tasks
   debug:
     msg: "Starting pulseaudio tasks"
 
@@ -26,8 +26,8 @@
   copy:
     src: "etc/pulse/{{ item }}"
     dest: "{{ user.home }}/.config/pulse/{{ item }}"
-    owner: root
-    group: root
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
     mode: "0644"
     backup: yes
   with_items:

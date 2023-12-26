@@ -25,6 +25,7 @@
         state: enabled
         permanent: yes
       with_items:
+          - 1935/tcp
           - 4464/udp
           - 4560/udp
           - 6666/tcp

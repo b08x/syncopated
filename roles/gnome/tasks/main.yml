@@ -1,6 +1,6 @@
 ---
 # tasks file for gnome
 
-- name: Starting gnome tasks
+- name: Gnome Tasks
   debug:
     msg: "Starting gnome tasks"

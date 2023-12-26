@@ -1,6 +1,6 @@
 ---
 # tasks file for xorg
-- name: Starting xorg tasks
+- name: Xorg Tasks
   debug:
     msg: "Starting xorg tasks"
 
@@ -38,9 +38,9 @@
 - name: Disable vblank
   copy:
     src: etc/skel/.drirc
-    dest: /etc/skel/.drirc
-    owner: root
-    group: root
+    dest: "{{ user.home }}/.drirc"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
     mode: '0644'
     backup: yes
   tags: ["video"]
@@ -49,8 +49,8 @@
   template:
     src: "etc/skel/{{ item }}.j2"
     dest: "{{ user.home }}/{{ item }}"
-    owner: root
-    group: root
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
     mode: "0644"
     backup: yes
   with_items:
@@ -63,7 +63,7 @@
 
 - name: Ensure .xinitrc is executable
   file:
-    path: "/etc/skel/.xinitrc"
+    path: "{{ user.home }}/.xinitrc"
     mode: "0755"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['env', 'profile']

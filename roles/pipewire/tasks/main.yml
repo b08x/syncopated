@@ -1,7 +1,7 @@
 ---
 # tasks file for pipewire
 
-- name: Starting pipewire tasks
+- name: Pipewire Tasks
   debug:
     msg: "Starting pipewire tasks"
 

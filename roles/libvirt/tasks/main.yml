@@ -1,7 +1,7 @@
 ---
 # tasks file for libvirt
 
-- name: Starting libvirt tasks
+- name: Libvirt Tasks
   debug:
     msg: "Starting libvirt tasks"
 

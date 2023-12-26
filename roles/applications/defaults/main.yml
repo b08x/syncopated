@@ -1,7 +1,7 @@
 ---
 
 # The default directory permission mode when creating directories using `application_directory_definitions`
-application_directory_default_mode: "0755"
+application_directory_default_mode: '0750'
 
 # The default directory owner when creating directories using `application_directory_definitions`
 application_directory_default_owner: root

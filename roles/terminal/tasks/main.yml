@@ -1,7 +1,7 @@
 ---
 # tasks file for terminal
 
-- name: Starting terminal tasks
+- name: Terminal Tasks
   debug:
     msg: "Starting terminal tasks"
 

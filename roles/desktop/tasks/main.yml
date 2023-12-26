@@ -5,7 +5,7 @@
     filter:
       - 'ansible_processor'
 
-- name: Starting desktop tasks
+- name: Desktop Tasks
   debug:
     msg: "Starting desktop tasks"
   register: expected_value
@@ -217,8 +217,8 @@
   template:
     src: "etc/skel/{{ item }}.j2"
     dest: "{{ user.home }}/{{ item }}"
-    owner: root
-    group: root
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
     mode: preserve
     backup: yes
   with_items:
@@ -237,4 +237,3 @@
     - .config/rofi/launchers/type-4/shared/fonts.rasi
     - .config/rofi/launchers/type-4/style-6.rasi
   tags: ['profile', 'rofi']
-

@@ -10,7 +10,7 @@
 #       terminal: no
 
 # The default directory permission mode when creating directories using `desktop_directory_definitions`
-desktop_directory_default_mode: "0755"
+desktop_directory_default_mode: '0750'
 
 # The default directory owner when creating directories using `desktop_directory_definitions`
 desktop_directory_default_owner: "{{ user.name }}"

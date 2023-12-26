@@ -2,15 +2,15 @@
 # defaults file for pulseaudio
 
 # The default directory permission mode when creating directories using `pulse_directory_definitions`
-pulse_directory_default_mode: "0755"
+pulse_directory_default_mode: '0755'
 
 # The default directory owner when creating directories using `pulse_directory_definitions`
-pulse_directory_default_owner: root
+pulse_directory_default_owner: "{{ user.name }}"
 
 # The default directory group when creating directories using `pulse_directory_definitions`
-pulse_directory_default_group: root
+pulse_directory_default_group: "{{ user.group }}"
 
-pulse_directory_default_location: "/etc/skel"
+pulse_directory_default_location: "{{ user.home }}"
 
 pulse_directory_default_recurse: False
 

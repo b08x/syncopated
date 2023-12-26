@@ -1,7 +1,7 @@
 ---
 # tasks file for i3
 
-- name: Starting i3 tasks
+- name: i3 Tasks
   debug:
     msg: "Starting i3 tasks"
 
@@ -53,8 +53,8 @@
       template:
         src: "etc/skel/{{ item }}.j2"
         dest: "{{ user.home }}/{{ item }}"
-        owner: root
-        group: root
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
         mode: '0644'
         backup: yes
       register: wmconfig

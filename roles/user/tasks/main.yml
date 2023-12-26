@@ -1,7 +1,7 @@
 ---
 # tasks file for user
 
-- name: Starting user tasks
+- name: User Tasks
   debug:
     msg: "Starting user tasks"
 

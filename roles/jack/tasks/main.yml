@@ -1,6 +1,6 @@
 # tasks file for jack
 
-- name: Starting jack tasks
+- name: Jack Tasks
   debug:
     msg: "Starting jack tasks"
 

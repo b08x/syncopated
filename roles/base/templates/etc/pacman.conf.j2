@@ -50,28 +50,6 @@ SigLevel    = Required DatabaseOptional
 LocalFileSigLevel = Optional
 #RemoteFileSigLevel = Required
 
-# NOTE: You must run `pacman-key --init` before first using pacman; the local
-# keyring can then be populated with the keys of all official Arch Linux
-# packagers with `pacman-key --populate archlinux`.
-
-#
-# REPOSITORIES
-#   - can be defined here or included from another file
-#   - pacman will search repositories in the order defined here
-#   - local/custom mirrors can be added here or in separate files
-#   - repositories listed first will take precedence when packages
-#     have identical names, regardless of version number
-#   - URLs will have $repo replaced by the name of the current repo
-#   - URLs will have $arch replaced by the name of the architecture
-#
-# Repository entries are of the format:
-#       [repo-name]
-#       Server = ServerName
-#       Include = IncludePath
-#
-# The header [repo-name] is crucial - it must be present and
-# uncommented to enable the repo.
-#
 {% if architecture == 'x86-64-v3' %}
 [syncopated-v3]
 SigLevel = Optional TrustAll
@@ -121,30 +99,14 @@ Include = /etc/pacman.d/cachyos-v3-mirrorlist
 Include = /etc/pacman.d/cachyos-mirrorlist
 {% endif %}
 
-# The testing repositories are disabled by default. To enable, uncomment the
-# repo name header and Include lines. You can add preferred servers immediately
-# after the header, and they will be used before the default mirrors.
-
-#[testing]
-#Include = /etc/pacman.d/mirrorlist
-
 [core]
 Include = /etc/pacman.d/mirrorlist
 
 [extra]
 Include = /etc/pacman.d/mirrorlist
 
-#[community-testing]
-#Include = /etc/pacman.d/mirrorlist
-
 [community]
 Include = /etc/pacman.d/mirrorlist
-
-# The multilib repositories are enabled by default in ArchLabs.
-# If you don't run 32 bit applications you may comment them out
-
-#[multilib-testing]
-#Include = /etc/pacman.d/mirrorlist
 
 [multilib]
 Include = /etc/pacman.d/mirrorlist
@@ -154,11 +116,10 @@ Include = /etc/pacman.d/mirrorlist
 # Server =  https://github.com/ArchLabs/$repo/raw/master/$arch
 # Server =  https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
 
-{% if ansible_facts['hostname'] == 'tinybot' %}
 [archlabs]
 Server = https://pub-7d84e047b852442a86fd6d7feb1ff2cd.r2.dev/$repo/$arch
 Server = https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
 Server = https://github.com/ArchLabs/$repo/raw/master/$arch
 Server = https://sourceforge.net/projects/archlabs-repo/files/$repo/$arch
-{% endif %}
+
 # vim:ft=config

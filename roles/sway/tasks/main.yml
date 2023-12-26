@@ -1,6 +1,6 @@
 ---
 # tasks file for sway
-- name: Starting sway tasks
+- name: Sway Tasks
   debug:
     msg: "Starting sway tasks"
 

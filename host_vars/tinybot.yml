@@ -28,27 +28,42 @@ docker:
   nvidia: False
 
 desktop:
-  dm: lightdm
+  dm: False
   wm: i3
   terminal: "kitty"
   terminal_alt: "alacritty"
   browser: "google-chrome-stable"
   audio: "jack"
+  # barrier:
+  #   client:
+  #     name: tinybot
+  #     server: "[soundbot]:24800"
   barrier:
-    client:
+    server:
       name: tinybot
-      server: "[soundbot]:24800"
+      address: '[tinybot]:24800'
+      config: "{{ user.home }}/.config/Debauchee/tinybot.conf"
 
 x:
   autostart:
-    - xrandr --output HDMI-1 --auto
+    - bash ~/.screenlayout/tinybot.sh
 
 i3:
   autostart: "default"
     # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
   tray_output: "HDMI-1"
   assignments: "default"
-  workspaces: "default"
+  workspaces:
+    - "$ws1 output HDMI-1"
+    - "$ws2 output HDMI-1"
+    - "$ws3 output HDMI-1"
+    - "$ws4 output HDMI-1"
+    - "$ws5 output DP-2"
+    - "$ws6 output DP-2"
+    - "$ws7 output DP-2"
+    - "$ws8 output DP-2"
+    - "$ws9 output DP-2"
+    - "$ws10 output DP-2"
   keybindings: "default"
 
 network:

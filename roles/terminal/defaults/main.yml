@@ -2,7 +2,7 @@
 # defaults file for terminal
 
 # The default directory permission mode when creating directories using `terminal_directory_definitions`
-terminal_directory_default_mode: "0755"
+terminal_directory_default_mode: '0750'
 
 # The default directory owner when creating directories using `terminal_directory_definitions`
 terminal_directory_default_owner: "{{ user.name }}"

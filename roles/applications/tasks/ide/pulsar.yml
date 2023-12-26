@@ -37,4 +37,4 @@
       # when: install_pulsar.changed
 
   become: False
-  when: current_version.stdout != desired_version.stdout
+  # when: current_version.stdout != desired_version.stdout

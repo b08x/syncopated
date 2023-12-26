@@ -12,6 +12,7 @@
   unarchive:
     src: usr/local/share/fonts.tar.gz
     dest: "/usr/local/share/fonts"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # - name: Install fonts.conf
 #   copy:

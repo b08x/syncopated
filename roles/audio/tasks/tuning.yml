@@ -84,6 +84,7 @@
       register: tuned_profile
       changed_when: tuned_profile.rc != 0
       when: tuned_service.state == 'started'
+      ignore_errors: "{{ ansible_check_mode }}"
 
     # - name: print tuned_service
     #   debug:

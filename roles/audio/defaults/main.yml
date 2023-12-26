@@ -2,7 +2,7 @@
 # defaults file for audio
 
 # The default directory permission mode when creating directories using `audio_directory_definitions`
-audio_directory_default_mode: "0755"
+audio_directory_default_mode: '0750'
 
 # The default directory owner when creating directories using `audio_directory_definitions`
 audio_directory_default_owner: root

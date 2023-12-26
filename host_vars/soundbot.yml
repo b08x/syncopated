@@ -34,11 +34,11 @@ desktop:
   terminal_alt: "alacritty"
   browser: "google-chrome-stable"
   audio: "jack"
-  barrier:
-    server:
-      name: soundbot
-      address: '[soundbot]:24800'
-      config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
+  # barrier:
+  #   server:
+  #     name: soundbot
+  #     address: '[soundbot]:24800'
+  #     config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
 
 x:
   autostart:

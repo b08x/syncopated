@@ -1,7 +1,7 @@
 ---
 # tasks file for theme
 
-- name: Starting theme tasks
+- name: Theme Tasks
   debug:
     msg: "Starting theme tasks!"
 
@@ -18,7 +18,7 @@
       become: False
 
   when: ansible_distribution == 'Archlinux'
-  tags: ['packages','theme']
+  tags: ['packages']
 
 - name: Ensure theme directories exist
   file:
@@ -34,11 +34,11 @@
 
 - import_tasks:
     file: fonts.yml
-  tags: ['fonts','theme']
+  tags: ['fonts']
 
 - import_tasks:
     file: icons.yml
-  tags: ['icons','theme']
+  tags: ['icons']
 
 - name: Ensure /usr/local/share themes exists
   file:
@@ -47,7 +47,6 @@
     owner: root
     group: root
     recurse: True
-  tags: ['theme']
 
 - name: Extract themes into /usr/local/share/themes
   unarchive:
@@ -57,7 +56,7 @@
    - oomox-soundbot.tar.xz
    - ArchLabs-Dark.tar.gz
    - ArchLabs-Light.tar.gz
-  tags: ['theme']
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Install gtk configurations
   template:
@@ -109,4 +108,5 @@
       - "--update"
       - "--backup"
       - "--suffix={{ suffix }}"
+  ignore_errors: "{{ ansible_check_mode }}"
   tags: ['backgrounds']

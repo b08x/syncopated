@@ -1,6 +1,6 @@
 ---
 
-- name: Starting applications role tasks
+- name: Applications Tasks
   debug:
     msg: "Starting applications role tasks"
 

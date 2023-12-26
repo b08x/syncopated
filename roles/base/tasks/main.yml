@@ -5,7 +5,7 @@
 #     msg: "{{ expected_value }}"
 #   tags: ['testing']
 
-- name: Starting base tasks
+- name: Base Tasks
   debug:
     msg: "Starting base tasks"
   register: expected_value
