@@ -1,4 +1,7 @@
-# syncopated
+# syncopatedIaC
+
+# support/distros branch
+leaving this here should the need arise to include support for other distros, mainly Debian & RHEL based
 
 An exercise in configuration management. Intended to serve as an IaC framework for a small lab or studio.
 
