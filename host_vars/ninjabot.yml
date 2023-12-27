@@ -13,8 +13,8 @@ share:
 app:
   install:
     reaper: True
-    pulsar: True
-    vscode: True
+    pulsar: False
+    vscode: False
     vamp: True
     mixxx: True
     annotator: True

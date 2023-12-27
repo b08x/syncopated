@@ -1,10 +1,6 @@
 ###############################################################
 ############################ i3 config file (v4) ##############
 ###############################################################
-
-
-##------------ {Global Variables} ---------------------------##
-
 set $mod Mod4
 set $alt Mod1
 set $ctrl_l 37
@@ -56,9 +52,41 @@ set $urgent-bg-color {{ colors.urgent.background }}
 
 set $indicator {{ colors.focused.indicator }}
 
-##------------ {Window Behavior} ----------------------##
+###############################################################
+##-------------------- Window Behavior ----------------------##
+###############################################################
 
-include $HOME/.config/i3/window_behavior
+floating_modifier $mod
+
+workspace_auto_back_and_forth yes
+
+for_window [urgent=latest] focus
+
+focus_follows_mouse no
+
+mouse_warping output
+
+focus_on_window_activation urgent
+
+for_window [class="^.*"] border pixel 1
+default_border pixel 1
+
+new_window 1pixel
+new_float normal
+
+default_floating_border normal
+hide_edge_borders none
+
+{% if ansible_hostname == 'soundbot' %}
+gaps inner 14
+gaps outer -2
+{% else %}
+gaps inner 8
+gaps outer -2
+{% endif %}
+
+smart_gaps on
+smart_borders on
 
 ##------------ {Modes} ----------------------##
 
@@ -80,11 +108,22 @@ workspace {{ ws }}
 {% endfor %}
 {% endif %}
 
-
 #------------- {Window Assignments} ---------------------------#
 
-include $HOME/.config/i3/window_assignments
+# include $HOME/.config/i3/window_assignments
 
 #------------- {Autostart} ---------------------------#
 
-include $HOME/.config/i3/autostart
+$exec_always xrdb -load ~/.Xresources
+
+$exec "/usr/share/i3/scripts/i3autolayout.py"
+
+{% if i3.autostart != 'default' %}
+{% for a in i3.autostart %}
+$exec {{ a }}
+{% endfor %}
+{% endif %}
+
+$exec "dex -a -s /etc/xdg/autostart/:~/.config/autostart/"
+
+$exec_always "reload-sxhkd.sh"
