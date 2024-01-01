@@ -29,3 +29,11 @@ Section "Device"
     Option      "DRI"   "3"
 EndSection
 {% endif %}
+{% if ansible_facts['hostname'] == 'lapbot' %}
+Section "Device"
+    Identifier  "Intel Graphics"
+    Driver      "modesetting"
+    Option      "AccelMethod"   "glamor"
+    Option      "DRI"   "3"
+EndSection
+{% endif %}

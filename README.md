@@ -1,8 +1,8 @@
-# syncopated
+# syncopatedIaC
 
 An exercise in configuration management. Intended to serve as an IaC framework for a small lab or studio.
 
-Based on Ansible, the repository contains roles, playbooks, and modules to help configure and manage Linux hosts that are part of an audio production workflow.
+The repository contains Ansible roles, playbooks, and modules to help configure and manage Linux hosts that are part of an audio production workflow.
 
 ## directory index
 
@@ -38,9 +38,9 @@ variables for individual hosts
 
 ### vars
 
-{{ distro }}/packages.yml - package lists
+vars/{{ distro }}/packages.yml - package lists
 
-theme.yml - theme variables
+var/stheme.yml - theme variables
 
 ### role variables
 

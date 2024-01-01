@@ -105,6 +105,13 @@ network:
       state: present
       method4: manual
 
+host:
+  kernel:
+    - linux
+    - linux-headers
+  xorg:
+    video:
+      - mesa-amber
 
 # host:
 #   packages:

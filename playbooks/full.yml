@@ -10,6 +10,7 @@
     - ../vars/{{ ansible_facts["distribution"] }}/packages.yml
     - ../vars/theme.yml
   vars:
+    suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
     path:
       - "{{ lookup('env','HOME') }}/.local/bin"
       - "{{ lookup('env','HOME') }}/.asdf/bin"
@@ -29,11 +30,6 @@
     #   set_fact:
     #     expected_value: "playbook_pretask_setfact"
     #   tags: ["testing"]
-
-    - name: Set suffix
-      set_fact:
-        suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
-      tags: ["always"]
 
     - name: Symlink /etc/os-release to /etc/system-release
       file:

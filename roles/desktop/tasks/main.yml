@@ -21,42 +21,49 @@
         use: paru
         name: "{{ packages.desktop }}"
         state: present
+        extra_args: --overwrite '*'
 
     - name: Install browser packages
       aur:
         use: paru
         name: "{{ packages.browser }}"
         state: present
+        extra_args: --overwrite '*'
 
     - name: Install media packages
       aur:
         use: paru
         name: "{{ packages.media }}"
         state: present
+        extra_args: --overwrite '*'
 
     - name: Install development packages
       aur:
         use: paru
         name: "{{ packages.development }}"
         state: present
+        extra_args: --overwrite '*'
 
     - name: Install docs packages
       aur:
         use: paru
         name: "{{ packages.docs }}"
         state: present
+        extra_args: --overwrite '*'
 
     - name: Install python packages
       aur:
         use: paru
         name: "{{ packages.python }}"
         state: present
+        extra_args: --overwrite '*'
 
     - name: Install utility packages
       aur:
         use: paru
         name: "{{ packages.utility }}"
         state: present
+        extra_args: --overwrite '*'
 
   become: False
   tags: ['packages']
