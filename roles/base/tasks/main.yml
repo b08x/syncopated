@@ -53,6 +53,22 @@
     file: zram.yml
   tags: ['zram']
 
+- name: Set video modules in mkinitcpio
+  template:
+    src: etc/mkinitcpio.conf.j2
+    dest: /etc/mkinitcpio.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+  register: mkinitcpio_conf
+  tags: ['mkinitcpio']
+
+- name: use shell to do stuff
+  shell: mkinitcpio -P
+  when: mkinitcpio_conf.changed
+  tags: ['mkinitcpio']
+
 - import_tasks:
     file: grub.yml
   tags: ['grub']
