@@ -29,7 +29,7 @@ Architecture = x86_64 x86_64_v3
 Architecture = auto
 {% endif %}
 # Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
-#IgnorePkg   =
+IgnorePkg   = ncurses
 #IgnoreGroup =
 
 #NoUpgrade   =
@@ -74,29 +74,6 @@ Server = https://arch.osamc.de/$repo/$arch
 [endeavouros]
 SigLevel = PackageRequired
 Include = /etc/pacman.d/endeavouros-mirrorlist
-{% endif %}
-
-{% if ansible_facts['hostname'] == 'lapbot' %}
-# cachyos repos
-{% if architecture == 'x86-64-v3' %}
-[cachyos-v3]
-Include = /etc/pacman.d/cachyos-v3-mirrorlist
-[cachyos-core-v3]
-Include = /etc/pacman.d/cachyos-v3-mirrorlist
-[cachyos-extra-v3]
-Include = /etc/pacman.d/cachyos-v3-mirrorlist
-{% else %}
-#<disabled_v3>[cachyos-v3]
-#<disabled_v3>Include = /etc/pacman.d/cachyos-v3-mirrorlist
-
-#<disabled_v3>[cachyos-core-v3]
-#<disabled_v3>Include = /etc/pacman.d/cachyos-v3-mirrorlist
-
-#<disabled_v3>[cachyos-extra-v3]
-#<disabled_v3>Include = /etc/pacman.d/cachyos-v3-mirrorlist
-{% endif %}
-[cachyos]
-Include = /etc/pacman.d/cachyos-mirrorlist
 {% endif %}
 
 [core]

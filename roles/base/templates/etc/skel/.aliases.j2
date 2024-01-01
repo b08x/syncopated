@@ -19,14 +19,14 @@ alias mv="mv -iv"
 alias df='df -h'
 
 # use exa for directory listing
-alias ll="eza --sort=ext --long --level=2 --icons"
-alias ls="eza -h --group-directories-first -g --icons"
-alias llh="eza --sort=ext --long -a --level=2 --icons"
-alias lltrah="eza --sort=ext --long -a --level=2 --icons -s modified"
+alias ll="eza --sort=ext --long --level=2 --icons auto"
+alias ls="eza -h --group-directories-first -g --icons auto"
+alias llh="eza --sort=ext --long -a --level=2 --icons auto"
+alias lltrah="eza --sort=ext --long -a --level=2 --icons auto -s modified"
 
 # if available use bat instead of cat
 if [ -x "$(command -v bat)" ]; then
-  alias cat="bat --theme 'Solarized (dark)' -p"
+  alias cat="bat --theme 'Monokai Extended' -p"
 fi
 
 # mlocate
@@ -110,6 +110,7 @@ alias login="kitty +kitten ssh"
 alias mocp="mocp -T /usr/share/moc/themes/green_theme"
 
 alias jekyll="bundle exec jekyll"
+alias rake="bundle exec rake"
 
 alias lib="cd $HOME/Library"
 
