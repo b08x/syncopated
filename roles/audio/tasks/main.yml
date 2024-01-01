@@ -11,7 +11,7 @@
     name: "{{ packages.codecs }}"
     state: present
   become: False
-  tags: ['packages']
+  tags: ["packages"]
 
 - name: Ensure root directories exist
   file:
@@ -33,7 +33,11 @@
     dest: "{{ user.home }}/.config/autostart/JackTrip.desktop"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
-    mode: '0644'
+    mode: "0644"
     backup: yes
-    validate: 'dex -d %s'
+    validate: "dex -d %s"
   when: jacktrip.server.args != '' or jacktrip.client.args != ''
+
+- import_tasks:
+    file: lsmi.yml
+  tags: ["lsmi", "midi"]
