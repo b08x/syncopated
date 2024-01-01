@@ -28,6 +28,12 @@
         name: "{{ packages.browser }}"
         state: present
 
+    - name: Install media packages
+      aur:
+        use: paru
+        name: "{{ packages.media }}"
+        state: present
+
     - name: Install development packages
       aur:
         use: paru
@@ -140,8 +146,8 @@
 
 - name: Set barrier server config
   copy:
-    src: home/.config/Debauchee/soundbot.conf
-    dest: "{{ user.home }}/.config/Debauchee/soundbot.conf"
+    src: home/.config/Debauchee/{{ ansible_hostname }}.conf
+    dest: "{{ user.home }}/.config/Debauchee/{{ ansible_hostname }}.conf"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
     mode: '0644'
