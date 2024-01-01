@@ -27,16 +27,16 @@
     #     version: 0.4.14
     #   check_mode: no
 
-    - name: install chromadb log config
-      copy:
-        src: files/chromadb/log_config.yml
-        dest: "{{ data }}/chromadb/log_config.yml"
-        mode: '0644'
-        backup: True
+    # - name: install chromadb log config
+    #   copy:
+    #     src: files/chromadb/log_config.yml
+    #     dest: "{{ data }}/chromadb/log_config.yml"
+    #     mode: '0644'
+    #     backup: True
 
     - name: install chroma docker-compose template
       template:
-        src: templates/docker/chromadb/{{ item }}.j2
+        src: ../templates/docker/chromadb/{{ item }}.j2
         dest: "{{ data }}/chromadb/{{ item }}"
         mode: '0644'
         backup: True
