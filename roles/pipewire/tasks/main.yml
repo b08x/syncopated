@@ -56,4 +56,6 @@
       ignore_errors: "{{ ansible_check_mode }}"
       tags: ['packages']
 
-  when: desktop.audio == 'jack'
+  when:
+    - initialInstall|default(false)|bool == True
+    - desktop.audio == 'jack'

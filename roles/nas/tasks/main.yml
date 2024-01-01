@@ -4,6 +4,10 @@
     file: nfs.yml
   tags: ['nfs']
 
+- import_tasks:
+    file: samba.yml
+  tags: ['samba']
+
 # - import_tasks:
 #     file: rsyncd.yml
 #   when: rsyncd_host|bool

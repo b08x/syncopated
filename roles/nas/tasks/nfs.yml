@@ -84,16 +84,9 @@
             - '32769'
             - '32803'
 
-          # notify: reload ufw
-
       when: ansible_os_family == 'MX' or ansible_os_family == 'Debian'
 
   ignore_errors: "{{ ansible_check_mode }}"
-
-#TODO:
-# - name: check if shares are mounted, if so skip these tasks
-# check mounts
-
 
 - name: Ensure the exported folder already exists
   file:
