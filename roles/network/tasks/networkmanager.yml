@@ -20,6 +20,14 @@
     dest: "/etc/NetworkManager/conf.d/20-connectivity.conf"
     owner: root
 
+- name: Prevent NetworkManager from creating default wired connection
+  copy:
+    content: |
+      [main]
+      no-auto-default=*
+    dest: "/etc/NetworkManager/NetworkManager.conf"
+    owner: root
+
 - name: Enable and start networkmanager
   systemd:
     name: NetworkManager
