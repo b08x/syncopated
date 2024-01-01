@@ -87,6 +87,11 @@ network:
       method4: manual
 
 host:
+  kernel:
+    - linux
+    - linux-headers
+    - linux-lts
+    - linux-lts-headers
   xorg:
     video:
     # intel:

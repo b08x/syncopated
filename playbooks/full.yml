@@ -22,7 +22,7 @@
   pre_tasks:
     - name: show expected_value
       debug:
-        var: ansible_facts["lsb"]["id"]
+        var: ansible_facts["date_time"]["epoch"]
       tags: ['always']
 
     # - name: Set expected_value

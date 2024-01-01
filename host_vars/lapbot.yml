@@ -10,22 +10,22 @@ autologin: True
 
 bluetooth: True
 
-share:
-  nfs:
-    parent: ""
-    exports: []
+# share:
+#   nfs:
+#     parent: ""
+#     exports: []
 
 app:
   install:
-    reaper: True
+    reaper: False
     pulsar: True
     vscode: True
     vamp: True
-    mixxx: True
+    mixxx: False
     annotator: True
-    soniclineup: True
+    soniclineup: False
     touchosc: True
-    tony: True
+    tony: False
 
 
 docker:

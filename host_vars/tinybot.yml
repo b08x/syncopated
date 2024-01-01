@@ -22,6 +22,10 @@ app:
     touchosc: True
     tony: True
 
+cpupower:
+  governor: performance
+  perf_bias: 0
+
 docker:
   service: "enabled"
   storage: /var/lib/docker
@@ -51,7 +55,7 @@ x:
 i3:
   autostart: "default"
     # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
-  tray_output: "HDMI-1"
+  tray_output: "DP-2"
   assignments: "default"
   workspaces:
     - "$ws1 output HDMI-1"
@@ -75,7 +79,9 @@ network:
       mac: 68:1d:ef:2a:ac:47
       ip4: 192.168.41.43/24
       gw4: 192.168.41.1
-      dns4: 192.168.41.41, 192.168.41.1
+      dns4:
+        - 192.168.41.41
+        - 192.168.41.1
       dns4_search: syncopated.net
       autoconnect: True
       state: present

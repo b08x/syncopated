@@ -31,13 +31,13 @@
         suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
       tags: ["always"]
 
-    - name: Set permissions on /srv
-      file:
-        path: /srv
-        state: directory
-        owner: root
-        group: devops
-        mode: g+s
+    # - name: Set permissions on /srv
+    #   file:
+    #     path: "{{ user.home }}/LLMOS"
+    #     state: directory
+    #     owner:
+    #     group: devops
+    #     mode: g+s
 
   roles:
 

@@ -53,8 +53,8 @@ qmidinet:
 
 reaper:
   url: "https://www.reaper.fm/files/7.x/"
-  file: reaper702_linux_x86_64.tar.xz
-  version: v7.02
+  file: reaper707_linux_x86_64.tar.xz
+  version: v7.07
 
 scala:
   url: "http://www.huygens-fokker.org/software/"
