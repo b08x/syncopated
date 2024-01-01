@@ -74,6 +74,11 @@ packages:
   desktop:
     # - obs-rtspserver
     # - pgmodeler
+    - mediamtx
+    - gvfs-smb
+    - gedit
+    - tldr
+    - iotop
     - archlinux-xdg-menu
     - ascii-image-converter
     - asciiquarium-transparent-git
@@ -95,6 +100,7 @@ packages:
     - paruz
     - patat-bin
     - pgvector
+    - redshift
     - rofi
     - sampler
     - sd
@@ -127,9 +133,12 @@ packages:
     - code-marketplace
     - devdocs-desktop
     - git
+    - git-lfs
     - gitflow-avh
     - gitflow-zshcompletion-avh
     - github-cli
+    - gitui
+    - gource
     - gtksourceview3
     - gtksourceview4
     - gtkspell3
@@ -150,20 +159,33 @@ packages:
     - sonic-pi-git
     - supercollider
   docs:
+    - hspell
+    - libvoikko
+    - nuspell
     - gnuplot
     - highlight
     - html2md
     - odt2txt
     - open-chinese-fonts
+    - pandoc-cli
     - pdf2htmlex-appimage
     - pdfjs
     - perl-image-exiftool
     - pod2man
     - poppler
     - qpdf
+    - qpdfview
     - termpdf.py-git
+    - texlive-basic
     - texlive-bin
     - texlive-coffee-stains
+    - texlive-doc
+    - texlive-fontsrecommended
+    - texlive-latex
+    - texlive-latexextra
+    - texlive-latexrecommended
+    - texlive-pictures
+    - texlive-xetex
   editors:
     - aubio
     - audacity
@@ -171,6 +193,7 @@ packages:
     - midieditor
     - ocenaudio-bin
     - polyphone
+    - bitwig-studio
   fonts:
     - adobe-source-han-sans-cn-fonts
     - adobe-source-han-sans-jp-fonts
@@ -241,11 +264,11 @@ packages:
   loopers:
     - sooperlooper-git
   media:
-    - cpod-appimage
+    # - cpod-appimage
     - darktable
     - epson-inkjet-printer-escpr2
     - feh
-    - ffmpeg4.4
+    # - ffmpeg4.4
     - ffmpegthumbnailer
     - gimp
     - gpick
@@ -253,7 +276,6 @@ packages:
     - imagemagick
     - imv
     - mediainfo
-    - mediamtx
     - mpv
     - mpv-plugin-excerpt-git
     - nitrogen-git
@@ -282,6 +304,7 @@ packages:
     - pipewire-pulse
     - wireplumber
   plugins:
+    - carla
     - calf
     - caps-lv2-git
     - chromaprint
@@ -402,10 +425,6 @@ packages:
     - fd
     - figlet
     - fontforge
-    - git-lfs
-    - github-cli
-    - gitui
-    - gource
     - guake
     - gum
     - highlight
@@ -420,8 +439,6 @@ packages:
     - lnav
     - lynx
     - mediainfo
-    - most
-    - mpv
     - mupdf-tools
     - ncdu
     - neofetch
@@ -482,12 +499,14 @@ packages:
     - jc
     - lnav
     - most
+    - mtr
     - neovim
     - net-tools
     - nodejs
     - npm
     - ranger
     - ripgrep-all
+    - socat
     - zoxide
   utils:
     - aspell-en
