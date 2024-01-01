@@ -2,7 +2,11 @@ export UU_ORDER="$UU_ORDER:~/.zshrc"
 # Path to your oh-my-zsh installation.
 export ZSH="/usr/local/share/oh-my-zsh"
 
+{% if ansible_facts['hostname'] == 'tinybot' %}
+ZSH_THEME="af-magic"
+{% else %}
 ZSH_THEME="kphoen"
+{% endif %}
 
 CASE_SENSITIVE="true"
 ENABLE_CORRECTION="false"
@@ -16,7 +20,7 @@ ZSH_CUSTOM="/usr/local/share/zsh"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #consider adding common-aliases, copybuffer
-plugins=(ansible bundler docker-compose copypath fd fzf ripgrep zsh-navigation-tools ruby history systemd web-search)
+plugins=(asdf ansible bundler docker-compose copypath fd fzf ripgrep zsh-navigation-tools ruby history systemd web-search)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -134,3 +138,12 @@ TERMCMD="$TERMINAL"
 [ -n "$DISPLAY" ] && export BROWSER="{{ desktop.browser }}" || export BROWSER=links
 
 eval "$(zoxide init zsh)"
+
+{% if ansible_facts['hostname'] == 'ninjabot' %}
+# bun completions
+[ -s "/home/b08x/.bun/_bun" ] && source "/home/b08x/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+{% endif %}
