@@ -7,7 +7,12 @@ GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3 nvidia-drm.mod
 {% else %}
 GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3'
 {% endif %}
+{% if ansible_facts['hostname'] == 'tinybot' %}
+GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0 i915.enable_dc=0"
+{% else %}
 GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M quiet net.ifnames=0 biosdevname=0"
+{% endif %}
+
 
 # Preload both GPT and MBR modules so that they are not missed
 GRUB_PRELOAD_MODULES="part_gpt part_msdos"
