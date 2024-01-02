@@ -1,4 +1,4 @@
-{% if ansible_facts['hostname'] == 'ninjabot' %}
+{% if inventory_hostname == 'ninjabot' %}
 Section "Device"
     Identifier     "NVIDIA Graphics"
     Driver         "nvidia"
@@ -13,7 +13,7 @@ Section "Device"
     Option      "TearFree" "true"
 EndSection
 {% endif %}
-{% if ansible_facts['hostname'] == 'tinybot' %}
+{% if inventory_hostname == 'tinybot' %}
 Section "Device"
     Identifier  "Intel Graphics"
     Driver      "modesetting"
@@ -21,7 +21,7 @@ Section "Device"
     Option      "DRI"   "3"
 EndSection
 {% endif %}
-{% if ansible_facts['hostname'] == 'soundbot' %}
+{% if inventory_hostname == 'soundbot' %}
 Section "Device"
     Identifier  "Intel Graphics"
     Driver      "modesetting"
@@ -29,7 +29,7 @@ Section "Device"
     Option      "DRI"   "3"
 EndSection
 {% endif %}
-{% if ansible_facts['hostname'] == 'lapbot' %}
+{% if inventory_hostname == 'lapbot' %}
 Section "Device"
     Identifier  "Intel Graphics"
     Driver      "modesetting"

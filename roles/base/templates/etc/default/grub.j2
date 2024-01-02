@@ -2,12 +2,12 @@
 GRUB_DEFAULT='saved'
 GRUB_TIMEOUT='5'
 GRUB_DISTRIBUTOR='Archlabs - Syncopated'
-{% if ansible_facts['hostname'] == 'ninjabot' %}
+{% if inventory_hostname == 'ninjabot' %}
 GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3 nvidia-drm.modeset=1'
 {% else %}
 GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3'
 {% endif %}
-{% if ansible_facts['hostname'] == 'tinybot' %}
+{% if inventory_hostname == 'tinybot' %}
 GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0 i915.enable_dc=0"
 {% else %}
 GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M quiet net.ifnames=0 biosdevname=0"
