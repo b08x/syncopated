@@ -1,5 +1,5 @@
 {
-{% if ansible_facts['hostname'] == 'ninjabot' %}
+{% if inventory_hostname == 'ninjabot' %}
   "runtimes": {
     "nvidia": {
       "path": "nvidia-container-runtime",

@@ -10,3 +10,13 @@ packages:
     - neovim
     - ranger
     - systemd-timesyncd
+  ruby:
+    - cmake
+    - g++
+    - git
+    - libgit2-devel
+    - openssl-devel
+    - postgresql-devel
+    - ruby-devel
+    - rubygem-psych
+    - rubygems

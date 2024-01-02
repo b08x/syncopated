@@ -1,6 +1,16 @@
 ---
 
 packages:
+  ruby:
+    - cmake
+    - libgit2-dev
+    - libopenslide-dev
+    - libssl-dev
+    - libvips-dev
+    - libyaml-dev
+    - openssl
+    - postgresql-server-dev-13
+    - ruby-dev
   desktop:
     - dmenu
     - dunst

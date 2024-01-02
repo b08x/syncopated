@@ -27,7 +27,7 @@
       - "--omit-dir-times"
       - "--progress"
       - "--itemize-changes"
-      # - "--chown=root:root"
+      - "--delete"
       - "--backup"
       - "--suffix={{ suffix }}"
   ignore_errors: "{{ ansible_check_mode }}"

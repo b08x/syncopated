@@ -1,5 +1,5 @@
 [global]
-{% if ansible_hostname == 'ninjabot' %}
+{% if inventory_hostname == 'ninjabot' %}
     font = {{ font.primary.name }} 14
 {% else %}
     font = {{ font.primary.name }} 14
