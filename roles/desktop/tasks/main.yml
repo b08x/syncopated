@@ -132,8 +132,8 @@
 
 - name: Set picom config
   template:
-    src: "etc/skel/.config/picom/picom.conf.j2"
-    dest: "{{ user.home }}/.config/picom/picom.conf"
+    src: "etc/skel/.config/picom.conf.j2"
+    dest: "{{ user.home }}/.config/picom.conf"
     owner: root
     group: root
     mode: "0644"
@@ -169,6 +169,7 @@
     checksum: yes
     perms: no
     rsync_opts:
+      - "--delete"
       - "--update"
       - "--progress"
       - "--itemize-changes"

@@ -120,13 +120,17 @@ $exec_always xrdb -load ~/.Xresources
 $exec "/usr/share/i3/scripts/i3autolayout.py"
 {% endif %}
 
-
 {% if i3.autostart != 'default' %}
 {% for a in i3.autostart %}
 $exec {{ a }}
 {% endfor %}
 {% endif %}
 
+$exec_always nitrogen --restore
+
 $exec "dex -a -s /etc/xdg/autostart/:~/.config/autostart/"
+
+### placed here as for some reason did not execute in .xprofile
+$exec pactl -- set-sink-volume 0 55%
 
 $exec_always "reload-sxhkd.sh"

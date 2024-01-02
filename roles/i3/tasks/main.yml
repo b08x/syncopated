@@ -63,12 +63,12 @@
       register: wmconfig
       with_items:
         - .config/i3/config
-        - .config/i3/window_behavior
         - .config/i3/modes/resize
         - .config/i3/keybindings
         - .config/i3/appearance
-        - .config/i3/window_assignments
-        - .config/i3/autostart
+        # - .config/i3/window_behavior        
+        # - .config/i3/window_assignments
+        # - .config/i3/autostart
 
     - name: Set i3status-rs configuration
       template:

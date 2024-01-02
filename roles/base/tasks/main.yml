@@ -53,20 +53,24 @@
     file: zram.yml
   tags: ['zram']
 
-- name: Set video modules in mkinitcpio
-  template:
-    src: etc/mkinitcpio.conf.j2
-    dest: /etc/mkinitcpio.conf
-    owner: root
-    group: root
-    mode: '0644'
-    backup: yes
-  register: mkinitcpio_conf
-  tags: ['mkinitcpio']
+- block:
+    - name: Set video modules in mkinitcpio
+      template:
+        src: etc/mkinitcpio.conf.j2
+        dest: /etc/mkinitcpio.conf
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+      register: mkinitcpio_conf
 
-- name: use shell to do stuff
-  shell: mkinitcpio -P
-  when: mkinitcpio_conf.changed
+
+    - name: Re-create ramdisk if config changed
+      shell: mkinitcpio -P
+      when: mkinitcpio_conf.changed
+
+  # when: ansible_facts["lsb"]["id"] != 'EndeavourOS'
+  when: inventory_hostname != 'soundbot'
   tags: ['mkinitcpio']
 
 - import_tasks:

@@ -4,7 +4,7 @@ An exercise in configuration management. Intended to serve as an IaC framework f
 
 The repository contains Ansible roles, playbooks, and modules to help configure and manage Linux hosts that are part of an audio production workflow.
 
-## directory index
+## Directory Index
 
 | Path                      | Content                                     |     |
 | :------------------------ | :------------------------------------------ | --- |
@@ -42,7 +42,7 @@ vars/{{ distro }}/packages.yml - package lists
 
 var/stheme.yml - theme variables
 
-### role variables
+### Role Variables
 
 #### defaults/main.yml
 
@@ -59,6 +59,13 @@ var/stheme.yml - theme variables
 -   Role variables take precedence over role defaults. If the same variable is defined in both role defaults and role variables, the value from role variables will be used.
 
 -   Role variables allow users to customize the role without modifying the role's default behavior.
+
+### Using Tags
+
+```bash
+ansible-playbook -i inventory.ini playbooks/full.yml --tags $TAGS --limit $HOSTNAME
+```
+
 
 # demo
 

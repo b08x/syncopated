@@ -101,6 +101,7 @@ packages:
     - patat-bin
     - pgvector
     - redshift
+    - geoclue
     - rofi
     - sampler
     - sd
@@ -167,7 +168,6 @@ packages:
     - html2md
     - odt2txt
     - open-chinese-fonts
-    - pandoc-cli
     - pdf2htmlex-appimage
     - pdfjs
     - perl-image-exiftool
@@ -176,6 +176,8 @@ packages:
     - qpdf
     - qpdfview
     - termpdf.py-git
+  texlive:
+    - pandoc-cli
     - texlive-basic
     - texlive-bin
     - texlive-coffee-stains
@@ -186,6 +188,7 @@ packages:
     - texlive-latexrecommended
     - texlive-pictures
     - texlive-xetex
+    - texlive-fontsextra
   editors:
     - aubio
     - audacity

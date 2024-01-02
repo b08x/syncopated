@@ -37,6 +37,7 @@
     method4: "{{ item.value.method4 }}"
     wifi:
       mac-address: "{{ item.value.mac }}"
+      assigned-mac-address: "{{ item.value.assigned_mac }}"
     ssid: "{{ item.value.ssid }}"
     wifi_sec:
       key-mgmt: "{{ item.value.wifi_sec.key_mgmt }}"
