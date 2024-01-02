@@ -1,7 +1,7 @@
 ---
 # tasks file for greetd
 
-- name: Starting greetd tasks
+- name: Greetd Tasks
   debug:
     msg: "Starting greetd tasks"
 

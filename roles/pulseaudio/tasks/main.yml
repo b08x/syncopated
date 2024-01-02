@@ -1,14 +1,17 @@
 ---
 # tasks file for pulseaudio
 
-- name: Starting pulseaudio tasks
+- name: Pulseaudio Tasks
   debug:
     msg: "Starting pulseaudio tasks"
 
 - name: Install pulseaudio packages
-  shell: "{{ package_install_command }} {{ packages.pulseaudio|join(' ') }}"
+  aur:
+    use: paru
+    name: "{{ packages.pulseaudio }}"
+    state: present
   become: False
-  tags: ["packages"]
+  tags: ['packages']
 
 - name: Ensure pulseaudio directories exist
   file:
@@ -25,9 +28,9 @@
 - name: Update pulseaudio configs
   copy:
     src: "etc/pulse/{{ item }}"
-    dest: "/etc/skel/.config/pulse/{{ item }}"
-    owner: root
-    group: root
+    dest: "{{ user.home }}/.config/pulse/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
     mode: "0644"
     backup: yes
   with_items:
@@ -49,6 +52,7 @@
             - bluez-utils
             - pulseaudio-bluetooth
           become: False
+          when: ansible_distribution == 'Archlinux'
 
       tags: ["packages"]
 

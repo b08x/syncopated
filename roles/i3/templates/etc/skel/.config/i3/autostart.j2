@@ -11,7 +11,9 @@
 
 $exec_always xrdb -load ~/.Xresources
 
+{% if inventory_hostname != 'tinybot' %}
 $exec "/usr/share/i3/scripts/i3autolayout.py"
+{% endif %}
 
 {% if i3.autostart != 'default' %}
 {% for a in i3.autostart %}

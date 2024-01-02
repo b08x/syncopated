@@ -5,7 +5,7 @@
     filter:
       - 'ansible_processor'
 
-- name: Starting desktop tasks
+- name: Desktop Tasks
   debug:
     msg: "Starting desktop tasks"
   register: expected_value
@@ -17,34 +17,53 @@
 
 - block:
     - name: Install desktop packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.desktop|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.desktop }}"
+        state: present
+        extra_args: --overwrite '*'
 
     - name: Install browser packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.browser|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.browser }}"
+        state: present
+        extra_args: --overwrite '*'
+
+    - name: Install media packages
+      aur:
+        use: paru
+        name: "{{ packages.media }}"
+        state: present
+        extra_args: --overwrite '*'
 
     - name: Install development packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.development|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.development }}"
+        state: present
+        extra_args: --overwrite '*'
 
-    - name: Install doc packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.docs|join(' ') }}"
+    - name: Install docs packages
+      aur:
+        use: paru
+        name: "{{ packages.docs }}"
+        state: present
+        extra_args: --overwrite '*'
 
     - name: Install python packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.python|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.python }}"
+        state: present
+        extra_args: --overwrite '*'
 
     - name: Install utility packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.utils|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.utility }}"
+        state: present
+        extra_args: --overwrite '*'
 
   become: False
   tags: ['packages']
@@ -65,29 +84,18 @@
   tags: ['autologin']
   when: autologin|default(false)|bool == True
 
-- name: Import xorg role
-  import_role:
-    name: xorg
-  tags: ['xorg']
-  when: desktop.wm == 'i3'
-
-- name: Import i3 role
-  import_role:
-    name: i3
-  tags: ['i3']
-  when: desktop.wm == 'i3'
-
-- name: Import sway role
-  import_role:
-    name: sway
-  tags: ['sway']
-  when: desktop.wm == 'sway'
-
-- name: Import gnome role
-  import_role:
-    name: gnome
-  tags: ['gnome']
-  when: desktop.wm == 'gnome'
+#NOTETHIS: these can be used in a seperate playbook
+# - name: Import sway role
+#   import_role:
+#     name: sway
+#   tags: ['sway']
+#   when: desktop.wm == 'sway'
+#
+# - name: Import gnome role
+#   import_role:
+#     name: gnome
+#   tags: ['gnome']
+#   when: desktop.wm == 'gnome'
 
 # if this file does not exist, lightdm will fail to start
 - name: Set dmrc to selected window manager
@@ -115,7 +123,7 @@
 - name: Set dunst config
   template:
     src: "etc/skel/.config/dunst/dunstrc.j2"
-    dest: "/etc/skel/.config/dunst/dunstrc"
+    dest: "{{ user.home }}/.config/dunst/dunstrc"
     owner: root
     group: root
     mode: "0644"
@@ -124,56 +132,16 @@
 
 - name: Set picom config
   template:
-    src: "etc/skel/.config/picom/picom.conf.j2"
-    dest: "/etc/skel/.config/picom/picom.conf"
+    src: "etc/skel/.config/picom.conf.j2"
+    dest: "{{ user.home }}/.config/picom.conf"
     owner: root
     group: root
     mode: "0644"
     backup: yes
   tags: ["profile", "picom"]
 
-- name: Ensure folders for barrier configs exist
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-  with_items:
-    - "{{ user.home }}/.config/Debauchee"
-    - "{{ user.home }}/.config/autostart"
-  tags: ['barrier']
-
-- name: Set barrier server config
-  copy:
-    src: home/.config/Debauchee/soundbot.conf
-    dest: "{{ user.home }}/.config/Debauchee/soundbot.conf"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-    backup: yes
-  when: desktop.barrier.server is defined
-  tags: ['barrier']
-
-- name: Set barrier server autostart
-  template:
-    src: "home/.config/autostart/barrier-server.desktop.j2"
-    dest: "{{ user.home }}/.config/autostart/barrier-server.desktop"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-    backup: True
-  when: desktop.barrier.server is defined
-  tags: ['barrier']
-
-- name: Set barrier client autostart
-  template:
-    src: "home/.config/autostart/barrier-client.desktop.j2"
-    dest: "{{ user.home }}/.config/autostart/barrier-client.desktop"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-    backup: True
-  when: desktop.barrier.client is defined
+- import_tasks:
+    file: barrier.yml
   tags: ['barrier']
 
 - name: Install Thunar actions
@@ -201,6 +169,7 @@
     checksum: yes
     perms: no
     rsync_opts:
+      - "--delete"
       - "--update"
       - "--progress"
       - "--itemize-changes"

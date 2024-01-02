@@ -1,0 +1,268 @@
+---
+
+packages:
+  ruby:
+    - cmake
+    - libgit2-dev
+    - libopenslide-dev
+    - libssl-dev
+    - libvips-dev
+    - libyaml-dev
+    - openssl
+    - postgresql-server-dev-13
+    - ruby-dev
+  desktop:
+    - dmenu
+    - dunst
+    - feh
+    - fonts-dejavu
+    - fonts-liberation
+    - grsync
+    - i3
+    - lightdm
+    - nitrogen
+    - numix-icon-theme-circle
+    - picom
+    - polybar
+    - python3-i3ipc
+    - qt5ct
+    - rofi
+    - thunar
+    - ttf-bitstream-vera
+    - wmctrl
+    - x11-utils
+    - x11-xserver-utils
+    - x11vnc
+    - xbindkeys
+    - xbindkeys-config
+    - xfonts-75dpi
+    - xfonts-100dpi
+    - xfonts-utils
+  alsa:
+    - a2jmidid
+    - alsa-tools
+    - alsa-utils
+  jack:
+    - jack-capture
+    - jack-tools
+    - jackd
+    - jackd2
+    - libjack-jackd2-0
+    - libjack-jackd2-dev
+  pulseaudio:
+    - pavucontrol
+    - pulseaudio-module-jack
+  applications:
+    - aj-snapshot
+    - fmit
+    - helm
+    - hydrogen
+    - jaaa
+    - jack-keyboard
+    - jalv
+    - japa
+    - jconvolver
+    - ladspa-sdk
+    - libasound2-dev
+    - libaubio5
+    - libaubio-dev
+    - mpg123
+    - polyphone
+    - qmidiarp
+    - qmidinet
+    - sc3-plugins
+    - sc3-plugins-server
+    - sndio-tools
+    - sonic-visualiser
+    - sooperlooper
+    - sox
+    - supercollider
+    - vmpk
+    - wavpack
+    - zita-ajbridge
+    - zita-alsa-pcmi-utils
+    - zita-lrx
+    - zita-mu1
+    - zita-rev1
+  plugins:
+    - ams-lv2
+    - calf-plugins
+    - caps-lv2
+    - carla
+    - distrho-plugin-ports-vst
+    - guitarix
+    - ir.lv2
+    - lilv-utils
+    - lsp-plugins
+    - luftikus
+    - noise-repellent
+    - sherlock.lv2
+    - swh-lv2
+    - x42-plugins
+  terminal:
+    # - alacritty
+    - aria2
+    # - asciiquarium-transparent-git
+    - atool
+    - bash-completion
+    - bat
+    # - bottom
+    # - btop
+    - calibre
+    # - djvulibre
+    - elinks
+    # - eza
+    - fd
+    - figlet
+    - fontforge
+    - git-lfs
+    # - github-cli
+    # - gitui
+    - gource
+    - guake
+    # - gum
+    - highlight
+    - htop
+    - imagemagick
+    - jq
+    - jupyter-nbconvert
+    - kitty
+    # - kitty-shell-integration
+    - kitty-terminfo
+    - links
+    - lnav
+    - lynx
+    - mediainfo
+    - most
+    - mpv
+    - mupdf-tools
+    - ncdu
+    - neofetch
+    # - neovim-symlinks
+    - nvtop
+    - odt2txt
+    - openscad
+    # - perl-image-exiftool
+    - python3-pygments
+    - python3-ueberzug
+    # - python-pillow
+    - ranger
+    - ripgrep
+    # - ripgrep-all
+    - rsync
+    - rxvt-unicode
+    - smartmontools
+    # - termdown
+    - terminator
+    - terminology
+    - tilda
+    - transmission-cli
+    - tree
+    - v4l-utils
+    - w3m
+    - wget
+    - xterm
+    - yadm
+    - zsh
+  software_props:
+    - software-properties-common
+    - apt-transport-https
+    - gpgv
+  kernel:
+    - dkms
+    - linux-image-rt-amd64
+  base:
+    - autofs
+    - avahi-daemon
+    - bash-completion
+    - build-essential
+    - cargo
+    - cmake
+    - cmake-curses-gui
+    - curl
+    - debian-keyring
+    - erlang
+    - erlang-base
+    - erlang-dev
+    - erlang-tools
+    - exa
+    - fakeroot
+    - fonts-liberation
+    - fzf
+    - g++-10-multilib
+    - git
+    - git-flow
+    - git-lfs
+    - highlight
+    - htop
+    - hunspell
+    - iftop
+    - intltool
+    - iotop
+    - itstool
+    - laptop-mode-tools
+    - libblocksruntime0
+    - libbluray2
+    - libcurl4-openssl-dev
+    - libfaad2
+    - libfftw3-dev
+    - libgio3.0-cil-dev
+    - libgme0
+    - libgtkmm-2.4-dev
+    - libgtksourceview-3.0-common
+    - liblo-tools
+    - libncurses6
+    - libopus0
+    - libqt5concurrent5
+    - libqt5core5a
+    - libqt5gui5
+    - libqt5network5
+    - libqt5opengl5
+    - libqt5printsupport5
+    - libqt5svg5
+    - libqt5svg5-dev
+    - libqt5widgets5
+    - librtaudio6
+    - librtmidi5
+    - librtmidi-dev
+    - libsamplerate0
+    - libsamplerate0-dev
+    - libssl-dev
+    - libxcb-cursor-dev
+    - libxcb-keysyms1-dev
+    - libxcb-util-dev
+    - libxcb-xkb-dev
+    - libxkbcommon-dev
+    - libxkbcommon-x11-dev
+    - libzip4
+    - lnav
+    - lsof
+    - mlocate
+    - most
+    - net-tools
+    - nfs-common
+    - numlockx
+    - portaudio19-dev
+    - printer-driver-escpr
+    - python3-matplotlib
+    - python3-numpy
+    - python3-pyqt5.qtopengl
+    - python3-rdflib
+    - python3-scipy
+    - qt5-style-kvantum
+    - qtbase5-dev
+    - qttools5-dev-tools
+    - ranger
+    - rsync
+    - ruby-dev
+    - sudo
+    - terminator
+    - tmux
+    - tuned-gtk
+    - unrar-free
+    - unzip
+    - wakeonlan
+    - wkhtmltopdf
+    - wordnet
+    - xterm
+    - zsh

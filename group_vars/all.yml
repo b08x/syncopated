@@ -9,7 +9,7 @@ user:
   uid: 1000
   gid: 1000
   home: /home/b08x
-  shell: /usr/bin/zsh
+  shell: zsh
   secondary_groups: "input,video,audio"
   realname: Robert Pannick
   sudoers: True

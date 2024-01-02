@@ -1,6 +1,6 @@
 ---
 # tasks file for xorg
-- name: Starting xorg tasks
+- name: Xorg Tasks
   debug:
     msg: "Starting xorg tasks"
 
@@ -11,7 +11,6 @@
         name: "{{ packages.xorg }}"
         state: present
       become: False
-      when: ansible_distribution == 'Archlinux'
 
     - name: Install host specific xorg packages
       aur:
@@ -20,7 +19,6 @@
         state: present
       become: False
       when:
-        - ansible_distribution == 'Archlinux'
         - host.xorg.video is defined
 
   tags: ["packages"]
@@ -38,9 +36,9 @@
 - name: Disable vblank
   copy:
     src: etc/skel/.drirc
-    dest: /etc/skel/.drirc
-    owner: root
-    group: root
+    dest: "{{ user.home }}/.drirc"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
     mode: '0644'
     backup: yes
   tags: ["video"]
@@ -48,9 +46,9 @@
 - name: Install xorg configs
   template:
     src: "etc/skel/{{ item }}.j2"
-    dest: "/etc/skel/{{ item }}"
-    owner: root
-    group: root
+    dest: "{{ user.home }}/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
     mode: "0644"
     backup: yes
   with_items:
@@ -63,7 +61,7 @@
 
 - name: Ensure .xinitrc is executable
   file:
-    path: "/etc/skel/.xinitrc"
+    path: "{{ user.home }}/.xinitrc"
     mode: "0755"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['env', 'profile']

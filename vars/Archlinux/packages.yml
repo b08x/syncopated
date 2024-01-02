@@ -74,6 +74,12 @@ packages:
   desktop:
     # - obs-rtspserver
     # - pgmodeler
+    - mediamtx
+    - gvfs-smb
+    - gedit
+    - tldr
+    - iotop
+    - archlinux-xdg-menu
     - ascii-image-converter
     - asciiquarium-transparent-git
     - cbonsai
@@ -94,6 +100,8 @@ packages:
     - paruz
     - patat-bin
     - pgvector
+    - redshift
+    - geoclue
     - rofi
     - sampler
     - sd
@@ -118,23 +126,20 @@ packages:
     - xclip
     - xdot
     - zenity
-  dev:
-    - bipscript
-    - bipscript-ide
-    - bluetooth-autoconnect
-    - rtaudio
-    - sc3-plugins
-    - sonic-pi-git
-    - supercollider
   development:
     - bash-language-server
     - beautysh
+    - bipscript
+    - bipscript-ide
     - code-marketplace
     - devdocs-desktop
     - git
+    - git-lfs
     - gitflow-avh
     - gitflow-zshcompletion-avh
     - github-cli
+    - gitui
+    - gource
     - gtksourceview3
     - gtksourceview4
     - gtkspell3
@@ -150,7 +155,14 @@ packages:
     - npm
     - nyan-lang-git
     - obsidian
+    - rtaudio
+    - sc3-plugins
+    - sonic-pi-git
+    - supercollider
   docs:
+    - hspell
+    - libvoikko
+    - nuspell
     - gnuplot
     - highlight
     - html2md
@@ -162,9 +174,21 @@ packages:
     - pod2man
     - poppler
     - qpdf
+    - qpdfview
     - termpdf.py-git
+  texlive:
+    - pandoc-cli
+    - texlive-basic
     - texlive-bin
     - texlive-coffee-stains
+    - texlive-doc
+    - texlive-fontsrecommended
+    - texlive-latex
+    - texlive-latexextra
+    - texlive-latexrecommended
+    - texlive-pictures
+    - texlive-xetex
+    - texlive-fontsextra
   editors:
     - aubio
     - audacity
@@ -172,6 +196,7 @@ packages:
     - midieditor
     - ocenaudio-bin
     - polyphone
+    - bitwig-studio
   fonts:
     - adobe-source-han-sans-cn-fonts
     - adobe-source-han-sans-jp-fonts
@@ -242,11 +267,11 @@ packages:
   loopers:
     - sooperlooper-git
   media:
-    - cpod-appimage
+    # - cpod-appimage
     - darktable
     - epson-inkjet-printer-escpr2
     - feh
-    - ffmpeg4.4
+    # - ffmpeg4.4
     - ffmpegthumbnailer
     - gimp
     - gpick
@@ -254,7 +279,6 @@ packages:
     - imagemagick
     - imv
     - mediainfo
-    - mediamtx
     - mpv
     - mpv-plugin-excerpt-git
     - nitrogen-git
@@ -273,16 +297,17 @@ packages:
     - sendmidi
     - vmpk
   pipewire:
-    - libwireplumber
-    - wireplumber
     - gst-plugin-pipewire
-    - libpipewire
+    # - libpipewire
+    # - libwireplumber
     - pipewire
     - pipewire-alsa
     - pipewire-audio
     - pipewire-jack
     - pipewire-pulse
+    - wireplumber
   plugins:
+    - carla
     - calf
     - caps-lv2-git
     - chromaprint
@@ -321,7 +346,6 @@ packages:
     - pamixer
     - pavucontrol
     - pulseaudio-alsa
-    - pulseaudio-bluetooth
     - pulseaudio-jack
     - pulsemixer
   python:
@@ -351,6 +375,14 @@ packages:
     - qt6-multimedia
     - qt6-tools
     - qt6ct
+  ruby:
+    - cmake
+    - libgit2
+    - libvips
+    - openslide
+    - openssl
+    - postgresql-libs
+    - ruby-psych
   samplers:
     - linuxsampler
     - mixxx
@@ -404,10 +436,6 @@ packages:
     - fd
     - figlet
     - fontforge
-    - git-lfs
-    - github-cli
-    - gitui
-    - gource
     - guake
     - gum
     - highlight
@@ -422,8 +450,6 @@ packages:
     - lnav
     - lynx
     - mediainfo
-    - most
-    - mpv
     - mupdf-tools
     - ncdu
     - neofetch
@@ -484,12 +510,14 @@ packages:
     - jc
     - lnav
     - most
+    - mtr
     - neovim
     - net-tools
     - nodejs
     - npm
     - ranger
     - ripgrep-all
+    - socat
     - zoxide
   utils:
     - aspell-en

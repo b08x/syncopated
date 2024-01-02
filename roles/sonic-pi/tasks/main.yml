@@ -1,7 +1,7 @@
 ---
 # tasks file for sonic-pi
 
-- name: Starting Sonic-Pi tasks
+- name: Sonic-Pi Tasks
   debug:
     msg: "Starting Sonic-Pi tasks"
 

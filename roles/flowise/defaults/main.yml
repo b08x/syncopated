@@ -4,11 +4,11 @@
 flowise:
   repo: https://github.com/FlowiseAI/Flowise.git
   version: flowise@1.3.8
-  path: "/srv/flowise"
+  path: "{{ user.home }}/LLMOS/flowise"
   image: flowiseai/flowise
   container_name: flowise
   volumes:
-    - host: /data/flowise-latest
+    - host: "{{ user.home }}/LLMOS/flowise/docker/data"
       container: /root/.flowise
   ports:
     - host: 3002

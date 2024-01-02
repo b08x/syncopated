@@ -1,7 +1,7 @@
 ---
 # tasks file for wayland
 
-- name: Starting wayland tasks
+- name: Wayland Tasks
   debug:
     msg: "Starting wayland tasks"
 

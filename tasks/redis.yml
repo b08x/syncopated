@@ -7,7 +7,7 @@
     group: devops
     mode: g+s
   with_items:
-    - "{{ data }}/redis/local-data"
+    - "{{ user.home }}/LLMOS/redis/data"
   become: True
 
 - name: "pull redis/redis-stack:latest"
@@ -32,6 +32,6 @@
     # env:
       # REDIS_ARGS: "--requirepass mypassword"
     volumes:
-      - "{{ data }}/redis/local-data:/data"
+      - "{{ user.home }}/LLMOS/redis/data:/data"
     detach: yes
   tags: ['container']

@@ -23,6 +23,7 @@
     - oomox-soundbot_icons.tar.xz
     - ArchLabs-Dark.tar.gz
     - ArchLabs-Light.tar.gz
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Update the icon cache
   command: bash -lc "gtk-update-icon-cache"

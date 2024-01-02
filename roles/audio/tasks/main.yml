@@ -1,12 +1,15 @@
 ---
 # tasks file for audio
 
-- name: Starting audio tasks
+- name: Audio Tasks
   debug:
     msg: "Starting audio tasks"
 
-- name: Install audio codec packages
-  shell: "{{ package_install_command }} {{ packages.codecs|join(' ') }}"
+- name: Install codecs packages
+  aur:
+    use: paru
+    name: "{{ packages.codecs }}"
+    state: present
   become: False
   tags: ["packages"]
 
@@ -30,7 +33,11 @@
     dest: "{{ user.home }}/.config/autostart/JackTrip.desktop"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
-    mode: '0644'
+    mode: "0644"
     backup: yes
-    validate: 'dex -d %s'
+    validate: "dex -d %s"
   when: jacktrip.server.args != '' or jacktrip.client.args != ''
+
+- import_tasks:
+    file: lsmi.yml
+  tags: ["lsmi", "midi"]

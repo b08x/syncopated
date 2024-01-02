@@ -8,7 +8,7 @@
 - name: Update pulseaudio configs
   copy:
     src: "etc/pulse/{{ item }}"
-    dest: "/etc/skel/.config/pulse/{{ item }}"
+    dest: "{{ user.home }}/.config/pulse/{{ item }}"
     owner: root
     group: root
     mode: '0644'

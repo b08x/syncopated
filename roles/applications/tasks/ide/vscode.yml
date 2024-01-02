@@ -16,6 +16,8 @@
         use: auto
         name: code
         state: present
+      register: vscode_install
+      when: ansible_distribution == 'Archlinux'
 
     - name: Check currently installed extensions
       shell: code --list-extensions
@@ -31,7 +33,9 @@
       shell: "code --install-extension {{ item }}"
       with_items:
         - "{{ _extensions }}"
-      when: _extensions | length > 0
+      when:
+        - vscode_install.changed
+        - _extensions | length > 0
 
   rescue:
     - name: Handle installation failure

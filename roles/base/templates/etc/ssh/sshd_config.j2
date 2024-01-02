@@ -54,7 +54,7 @@ AuthorizedKeysFile	.ssh/authorized_keys
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-{% if ansible_facts['hostname'] == 'bender' %}
+{% if inventory_hostname == 'bender' %}
 PasswordAuthentication yes
 {% else %}
 PasswordAuthentication no

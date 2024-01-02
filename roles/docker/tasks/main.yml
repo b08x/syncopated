@@ -1,7 +1,7 @@
 ---
 # tasks file for docker
 
-- name: Starting docker tasks
+- name: Docker Tasks
   debug:
     msg: "Starting docker tasks"
 
@@ -43,6 +43,24 @@
     state: directory
     owner: root
     group: root
+
+- name: Ensure group "docker" exists
+  group:
+    name: docker
+    state: present
+
+#TODO: add failed_when logic
+- name: Add user to docker group
+  user:
+    name: "{{ item.name  }}"
+    groups: docker
+    append: yes
+  with_items:
+    - "{{ users }}"
+  check_mode: yes
+  # register: dockergroup
+  # failed_when: "not 'Group docker does not exist' in dockergroup.msg"
+  tags: ['groups']
 
 - import_tasks:
     file: setup.yml

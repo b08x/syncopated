@@ -8,3 +8,8 @@ ECASOUND=ecasound
 LADSPA_PATH="/usr/lib/ladspa"
 LADSPA_RDF_PATH="/usr/share/ladspa/rdf"
 VAMP_PATH="/usr/local/share/vamp"
+
+QT_QPA_PLATFORMTHEME=qt5ct
+#QT_STYLE_OVERRIDE=kvantum
+#BROWSER=firefox
+#EDITOR=nano

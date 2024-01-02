@@ -17,6 +17,7 @@
         name: pulsar-bin
         state: present
       register: install_pulsar
+      when: ansible_distribution == 'Archlinux'
 
     - name: Check currently installed extensions
       shell: "pulsar -p ls |awk -F ' ' '{print $2}'|awk -F '@' '{print $1}'"
@@ -32,8 +33,9 @@
       shell: pulsar -p install {{ item }}
       with_items:
         - "{{ _packages }}"
-      when: _packages | length > 0
-      # when: install_pulsar.changed
+      when:
+        - install_pulsar.changed
+        - _packages | length > 0
 
   become: False
-  when: current_version.stdout != desired_version.stdout
+  # when: current_version.stdout != desired_version.stdout

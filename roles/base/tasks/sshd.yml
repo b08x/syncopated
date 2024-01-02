@@ -13,3 +13,21 @@
     state: restarted
     enabled: True
   when: sshd_config.changed
+
+- name: Adjust gnome-keyring-service file to include ssh and gpg
+  copy:
+    src: usr/lib/systemd/user/gnome-keyring-daemon.service
+    dest: /usr/lib/systemd/user/gnome-keyring-daemon.service
+    mode: '0644'
+    backup: yes
+  register: keyringservice
+  tags: ['gnome-keyring']
+
+- name: Enable gnome-keyring service
+  systemd:
+    name: gnome-keyring-daemon
+    enabled: yes
+    scope: user
+  become_user: "{{ user.name }}"
+  when: keyringservice.changed
+  tags: ['gnome-keyring']

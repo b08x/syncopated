@@ -5,7 +5,8 @@ expected_value: "groupvars_workstation"
 bluetooth: True
 
 desktop:
-  wm: i3
+  dm: False
+  wm: "i3"
   terminal: "kitty"
   terminal_alt: "alacritty"
   browser: "google-chrome-stable"

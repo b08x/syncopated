@@ -1,7 +1,7 @@
 ---
 # tasks file for i3
 
-- name: Starting i3 tasks
+- name: i3 Tasks
   debug:
     msg: "Starting i3 tasks"
 
@@ -10,7 +10,10 @@
     msg: "{{ i3 }}"
 
 - name: Install i3 packages
-  shell: "{{ package_install_command }} {{ packages.i3 | join(' ') }}"
+  aur:
+    use: paru
+    name: "{{ packages.i3 }}"
+    state: present
   become: False
   tags: ['packages']
 
@@ -52,27 +55,27 @@
     - name: Set i3 configuration
       template:
         src: "etc/skel/{{ item }}.j2"
-        dest: "/etc/skel/{{ item }}"
-        owner: root
-        group: root
+        dest: "{{ user.home }}/{{ item }}"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
         mode: '0644'
         backup: yes
       register: wmconfig
       with_items:
         - .config/i3/config
-        - .config/i3/window_behavior
         - .config/i3/modes/resize
         - .config/i3/keybindings
         - .config/i3/appearance
-        - .config/i3/window_assignments
-        - .config/i3/autostart
+        # - .config/i3/window_behavior        
+        # - .config/i3/window_assignments
+        # - .config/i3/autostart
 
     - name: Set i3status-rs configuration
       template:
         src: "etc/skel/{{ item }}.j2"
-        dest: "/etc/skel/{{ item }}"
-        owner: root
-        group: root
+        dest: "{{ user.home }}/{{ item }}"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
         mode: '0644'
         backup: yes
       register: wmconfig
@@ -81,3 +84,28 @@
         - .config/i3status-rust/themes/syncopated.toml
 
   tags: ['profile']
+
+- name: Synchronize templates - rofi
+  template:
+    src: "etc/skel/{{ item }}.j2"
+    dest: "{{ user.home }}/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: preserve
+    backup: yes
+  with_items:
+    - .config/rofi/config.rasi
+    - .config/rofi/gruvbox-common.rasi
+    - .config/rofi/gruvbox-dark-hard.rasi
+    - .config/rofi/colors/onedark.rasi
+    - .config/rofi/scripts/launcher_main.sh
+    - .config/rofi/scripts/launcher_t1.sh
+    - .config/rofi/scripts/launcher_t4.sh
+    - .config/rofi/launchers/type-1/shared/colors.rasi
+    - .config/rofi/launchers/type-1/shared/fonts.rasi
+    - .config/rofi/launchers/type-1/style-8.rasi
+    - .config/rofi/launchers/type-1/style-10.rasi
+    - .config/rofi/launchers/type-4/shared/colors.rasi
+    - .config/rofi/launchers/type-4/shared/fonts.rasi
+    - .config/rofi/launchers/type-4/style-6.rasi
+  tags: ['profile', 'rofi', 'menus']

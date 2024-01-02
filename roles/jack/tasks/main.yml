@@ -1,22 +1,24 @@
 # tasks file for jack
 
-- name: Starting jack tasks
+- name: Jack Tasks
   debug:
     msg: "Starting jack tasks"
 
-# - name: Remove jack1
-#   pacman:
-#     name: jack
-#     state: absent
-#     force: yes
-#     extra_args: --noconfirm
-#   ignore_errors: True
-#   tags: ['packages']
+- name: Remove jack1
+  pacman:
+    name: jack
+    state: absent
+    force: yes
+    extra_args: --noconfirm
+  ignore_errors: True
+  tags: ['packages']
 
-- name: Install jack2 packages
-  shell: "{{ package_install_command }} {{ packages.jack|join(' ') }}"
+- name: Install jack packages
+  aur:
+    use: paru
+    name: "{{ packages.jack }}"
+    state: present
   become: False
-  ignore_errors: "{{ ansible_check_mode }}"
   tags: ['packages']
 
 - name: Create environment file for jack_control.service
@@ -62,7 +64,7 @@
     jack_control dps midi-driver {{ jack_control.dps.mididriver }}
     jack_control dps monitor {{ jack_control.dps.monitor }}
   environment:
-    DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/{{ user.uid }}/bus"
+    DBUS_SESSION_BUS_ADDRESS: "{{ lookup('env','DBUS_SESSION_BUS_ADDRESS') }}"
   register: result
   changed_when: result.rc != 0
   become: False

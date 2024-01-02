@@ -10,7 +10,7 @@
 - name: Install sxhkd keybindings
   template:
     src: "etc/skel/.config/sxhkd/sxhkdrc.j2"
-    dest: "/etc/skel/.config/sxhkd/sxhkdrc"
+    dest: "{{ user.home }}/.config/sxhkd/sxhkdrc"
     owner: root
     group: root
     mode: "0644"

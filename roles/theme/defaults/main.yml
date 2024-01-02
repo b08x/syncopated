@@ -1,15 +1,15 @@
 ---
 
 # The default directory permission mode when creating directories using `theme_directory_definitions`
-theme_directory_default_mode: "0755"
+theme_directory_default_mode: '0750'
 
 # The default directory owner when creating directories using `theme_directory_definitions`
-theme_directory_default_owner: root
+theme_directory_default_owner: "{{ user.name }}"
 
 # The default directory group when creating directories using `theme_directory_definitions`
-theme_directory_default_group: root
+theme_directory_default_group: "{{ user.group }}"
 
-theme_directory_default_location: "/etc/skel"
+theme_directory_default_location: "{{ user.home }}"
 
 theme_directory_default_recurse: False
 

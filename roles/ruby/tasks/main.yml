@@ -1,39 +1,31 @@
 ---
 # tasks file for ruby
-- name: Starting ruby tasks
+- name: Ruby Tasks
   debug:
     msg: "Starting ruby tasks"
 
 - block:
+
+    - name: Install system ruby packages
+      apt:
+        name: "{{ packages.ruby }}"
+        state: present
+      when: ansible_distribution == 'Debian'
+
     - name: Install system ruby packages
       dnf:
-        name: "{{ item }}"
+        name: "{{ packages.ruby }}"
         state: present
         update_cache: yes
-      loop:
-        - cmake
-        - g++
-        - git
-        - libgit2-devel
-        - openssl-devel
-        - postgresql-devel
-        - ruby-devel
-        - rubygem-psych
-        - rubygems
       when: ansible_distribution == 'AlmaLinux'
 
     - name: Install system ruby packages
       pacman:
-        name: "{{ item }}"
+        name: "{{ packages.ruby }}"
         state: present
-        force: yes
+        force: True
         extra_args: --noconfirm --overwrite '*'
-      loop:
-        - cmake
-        - libgit2
-        - openssl
-        - postgresql-libs
-        - ruby-psych
+        update_cache: True
       when: ansible_distribution == 'Archlinux'
 
   tags: ['packages']
@@ -55,11 +47,11 @@
     dest: "{{ user.home }}/.gemrc"
     owner: "{{ user.name }}"
 
-- name: Set --no-user-install in /etc/.gemrc
+- name: Set --no-user-install in /etc/gemrc
   copy:
     content: |
       gem: --user-install
-    dest: "/etc/.gemrc"
+    dest: "/etc/gemrc"
     owner: root
 
 - import_tasks:

@@ -1,11 +1,14 @@
 ---
 # tasks file for alsa
-- name: Starting alsa tasks
+- name: Alsa Tasks
   debug:
     msg: "Starting alsa tasks"
 
 - name: Install alsa packages
-  shell: "{{ package_install_command }} {{ packages.alsa|join(' ') }}"
+  aur:
+    use: paru
+    name: "{{ packages.alsa }}"
+    state: present
   become: False
   tags: ['packages']
 

@@ -37,24 +37,13 @@
   tags: ['sysctl']
 
 - block:
-
-    - block:
-        - name: Install Tuned
-          aur:
-            use: paru
-            name: tuned
-            state: present
-            extra_args: "--overwrite '*'"
-          become: False
-          when: ansible_distribution == 'Archlinux'
-
-        - name: Install Tuned
-          dnf:
-            name: tuned
-            state: present
-            update_cache: yes
-          when: ansible_distribution == 'AlmaLinux'
-
+    - name: Install Tuned
+      aur:
+        use: paru
+        name: tuned
+        state: present
+        extra_args: "--overwrite '*'"
+      become: False
       tags: ['packages']
 
     - name: Enable tuned service
@@ -84,6 +73,7 @@
       register: tuned_profile
       changed_when: tuned_profile.rc != 0
       when: tuned_service.state == 'started'
+      ignore_errors: "{{ ansible_check_mode }}"
 
     # - name: print tuned_service
     #   debug:
@@ -94,22 +84,12 @@
 
 
 - block:
-    - block:
-        - name: Install rtirq & rtkit
-          aur:
-            use: auto
-            name: "rtkit,rtirq"
-            state: present
-          become: False
-          when: ansible_distribution == 'Archlinux'
-
-        - name: Install rtkit
-          dnf:
-            name: rtkit
-            state: present
-            update_cache: yes
-          when: ansible_distribution == 'AlmaLinux'
-
+    - name: Install rtirq & rtkit
+      aur:
+        use: auto
+        name: "rtkit,rtirq"
+        state: present
+      become: False
       tags: ['packages']
 
     - name: Set rtirq defaults
@@ -147,22 +127,12 @@
 
 - block:
 
-    - block:
-        - name: Install cpupower
-          aur:
-            use: auto
-            name: cpupower
-            state: present
-          become: False
-          when: ansible_distribution == 'Archlinux'
-
-        - name: Install kernel-tools(cpupower)
-          dnf:
-            name: kernel-tools
-            state: present
-            update_cache: yes
-          when: ansible_distribution == 'AlmaLinux'
-
+    - name: Install cpupower
+      aur:
+        use: auto
+        name: cpupower
+        state: present
+      become: False
       tags: ['packages']
 
     - name: Set cpucpower defaults

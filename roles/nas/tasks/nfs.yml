@@ -38,29 +38,55 @@
         - nfs-idmapd
         - rpcbind
 
-    - name: Permit traffic to rpcbind
-      firewalld:
-        port: "{{ item }}"
-        permanent: yes
-        state: enabled
-      with_items:
-        - 111/tcp
-        - 111/udp
-        - 662/tcp
-        - 662/udp
-        - 892/tcp
-        - 892/udp
-        - 2049/tcp
-        - 32769/udp
-        - 32803/tcp
-        - 40418/udp
-      register: fw_nfs
+    - block:
+        - name: Permit traffic to rpcbind
+          firewalld:
+            port: "{{ item }}"
+            permanent: yes
+            state: enabled
+          with_items:
+            - 111/tcp
+            - 111/udp
+            - 662/tcp
+            - 662/udp
+            - 892/tcp
+            - 892/udp
+            - 2049/tcp
+            - 32769/udp
+            - 32803/tcp
+            - 40418/udp
+          register: fw_nfs
+
+      when: ansible_distribution == 'Archlinux'
+
+    - block:
+        - name: Permit tcp traffic to rpcbind
+          community.general.ufw:
+            rule: allow
+            port: "{{ item }}"
+            proto: tcp
+          with_items:
+            - '111'
+            - '662'
+            - '892'
+            - '2049'
+            - '32803'
+
+        - name: Permit udp traffic to rpcbind
+          community.general.ufw:
+            rule: allow
+            port: "{{ item }}"
+            proto: udp
+          with_items:
+            - '111'
+            - '662'
+            - '892'
+            - '32769'
+            - '32803'
+
+      when: ansible_os_family == 'MX' or ansible_os_family == 'Debian'
 
   ignore_errors: "{{ ansible_check_mode }}"
-
-#TODO:
-# - name: check if shares are mounted, if so skip these tasks
-# check mounts
 
 - name: Ensure the exported folder already exists
   file:

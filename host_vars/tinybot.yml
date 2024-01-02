@@ -22,57 +22,79 @@ app:
     touchosc: True
     tony: True
 
+cpupower:
+  governor: performance
+  perf_bias: 0
+
 docker:
   service: "enabled"
   storage: /var/lib/docker
   nvidia: False
 
 desktop:
+  dm: False
   wm: i3
   terminal: "kitty"
   terminal_alt: "alacritty"
   browser: "google-chrome-stable"
   audio: "jack"
+  # barrier:
+  #   client:
+  #     name: tinybot
+  #     server: "[soundbot]:24800"
   barrier:
-    client:
+    server:
       name: tinybot
-      server: "[soundbot]:24800"
+      address: '[tinybot]:24800'
+      config: "{{ user.home }}/.config/Debauchee/tinybot.conf"
 
 x:
   autostart:
-    - xrandr --output HDMI-1 --auto
+    - bash ~/.screenlayout/tinybot.sh
 
 i3:
-  autostart:
-    - "ray-daemon --session-root ~/NetworkSessions -p 7777"
-  tray_output: "HDMI-1"
+  autostart: "default"
+    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+  tray_output: "DP-2"
   assignments: "default"
-  workspaces: "default"
+  workspaces:
+    - "$ws1 output HDMI-1"
+    - "$ws2 output HDMI-1"
+    - "$ws3 output HDMI-1"
+    - "$ws4 output HDMI-1"
+    - "$ws5 output DP-2"
+    - "$ws6 output DP-2"
+    - "$ws7 output DP-2"
+    - "$ws8 output DP-2"
+    - "$ws9 output DP-2"
+    - "$ws10 output DP-2"
   keybindings: "default"
 
-network:
-  interfaces:
-    eth0:
-      type: ethernet
-      ifname: eth0
-      conn_name: eth0
-      mac: 68:1d:ef:2a:ac:47
-      ip4: 192.168.41.26/24
-      gw4: 192.168.41.1
-      dns4: 192.168.41.41, 192.168.41.1
-      dns4_search: syncopated.net
-      autoconnect: True
-      state: present
-      method4: manual
-    eth1:
-      type: ethernet
-      ifname: eth1
-      conn_name: audio
-      mac: 68:1d:ef:2a:b4:03
-      ip4: 192.168.36.2/24
-      autoconnect: True
-      state: present
-      method4: manual
+# network:
+#   interfaces:
+#     eth1:
+#       type: ethernet
+#       ifname: eth1
+#       conn_name: eth1
+#       mac: 68:1d:ef:2a:ac:47
+#       ip4: 192.168.41.43/24
+#       gw4: 192.168.41.1
+#       dns4:
+#         - 192.168.41.41
+#         - 192.168.41.1
+#       dns4_search: syncopated.net
+#       autoconnect: True
+#       state: present
+#       method4: manual
+#     eth0:
+#       type: ethernet
+#       ifname: eth0
+#       conn_name: audio
+#       mac: 68:1d:ef:2a:b4:03
+#       ip4: 192.168.36.2/24
+#       autoconnect: True
+#       state: present
+#       method4: manual
 
 #     wlan0:
 #       type: wifi

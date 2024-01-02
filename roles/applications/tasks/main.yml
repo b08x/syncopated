@@ -1,64 +1,69 @@
 ---
 
-- name: Starting applications role tasks
+- name: Applications Tasks
   debug:
     msg: "Starting applications role tasks"
 
 - block:
     - name: Install ambisonics packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.ambisonics|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.ambisonics }}"
+        state: present
 
     - name: Install analysis packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.analysis|join(' ') }}"
-
-    - name: Install dev packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.dev|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.analysis }}"
+        state: present
 
     - name: Install editors packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.editors|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.editors }}"
+        state: present
 
     - name: Install loopers packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.loopers|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.loopers }}"
+        state: present
 
     - name: Install midi packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.midi|join(' ') }}"
+      aur:
+        use: paru
+        name: "{{ packages.midi }}"
+        state: present
 
-    - name: Install plugin packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.plugins|join(' ') }}"
+    - name: Install plugins packages
+      aur:
+        use: paru
+        name: "{{ packages.plugins }}"
+        state: present
 
-    - name: Install sampler packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.samplers|join(' ') }}"
+    - name: Install samplers packages
+      aur:
+        use: paru
+        name: "{{ packages.samplers }}"
+        state: present
 
-    - name: Install sequencer packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.sequencers|join(' ') }}"
+    - name: Install sequencers packages
+      aur:
+        use: paru
+        name: "{{ packages.sequencers }}"
+        state: present
 
-    - name: Install synth packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.synths|join(' ') }}"
+    - name: Install synths packages
+      aur:
+        use: paru
+        name: "{{ packages.synths }}"
+        state: present
 
-    - name: Install tool packages
-      shell: "{{ package_install_command }} {{ item }}"
-      with_items:
-        - "{{ packages.tools|join(' ') }}"
+    - name: Install tools packages
+      aur:
+        use: paru
+        name: "{{ packages.tools }}"
+        state: present
 
   become: False
   tags: ['packages']

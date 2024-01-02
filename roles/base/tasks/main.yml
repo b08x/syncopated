@@ -5,7 +5,7 @@
 #     msg: "{{ expected_value }}"
 #   tags: ['testing']
 
-- name: Starting base tasks
+- name: Base Tasks
   debug:
     msg: "Starting base tasks"
   register: expected_value
@@ -14,6 +14,10 @@
 #   debug:
 #     msg: "{{ expected_value }}"
 #   tags: ['testing']
+
+- import_tasks:
+    file: sudoers.yml
+  tags: ['sudoers']
 
 - name: Ensure root directories exist
   file:
@@ -38,10 +42,6 @@
   tags: ['sshd']
 
 - import_tasks:
-    file: sudoers.yml
-  tags: ['sudoers']
-
-- import_tasks:
     file: repos.yml
   tags: ['repo', 'packages']
 
@@ -53,6 +53,26 @@
     file: zram.yml
   tags: ['zram']
 
+- block:
+    - name: Set video modules in mkinitcpio
+      template:
+        src: etc/mkinitcpio.conf.j2
+        dest: /etc/mkinitcpio.conf
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+      register: mkinitcpio_conf
+
+
+    - name: Re-create ramdisk if config changed
+      shell: mkinitcpio -P
+      when: mkinitcpio_conf.changed
+
+  # when: ansible_facts["lsb"]["id"] != 'EndeavourOS'
+  when: inventory_hostname != 'soundbot'
+  tags: ['mkinitcpio']
+
 - import_tasks:
     file: grub.yml
   tags: ['grub']
@@ -61,6 +81,20 @@
     file: autofs.yml
   tags: ['autofs']
 
-- import_tasks:
-    file: scripts.yml
-  tags: ['scripts']
+- name: Install utility scripts
+  synchronize:
+    src: usr/local/bin/
+    dest: /usr/local/bin/
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--backup"
+      - "--suffix={{ suffix }}"
+      - "--chmod=0755"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: ['always']
