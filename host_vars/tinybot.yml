@@ -72,7 +72,7 @@ i3:
 
 network:
   interfaces:
-    enp3s0:
+    eth1:
       type: ethernet
       ifname: eth1
       conn_name: eth1
@@ -86,7 +86,7 @@ network:
       autoconnect: True
       state: present
       method4: manual
-    enp2s0:
+    eth0:
       type: ethernet
       ifname: eth0
       conn_name: audio

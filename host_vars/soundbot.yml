@@ -64,7 +64,7 @@ i3:
 
 network:
   interfaces:
-    enp0s20f0u1u4:
+    eth2:
       type: ethernet
       ifname: eth2
       conn_name: audio
@@ -73,11 +73,11 @@ network:
       autoconnect: True
       state: present
       method4: manual
-    enp13s0u1:
+    eth1:
       type: ethernet
-      ifname: eth0
-      conn_name: eth0
-      mac: 00:50:b6:91:fc:40
+      ifname: eth1
+      conn_name: eth1
+      mac: 00:50:b6:91:fc:4d
       ip4: 192.168.41.42/24
       gw4: 192.168.41.1
       dns4:

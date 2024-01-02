@@ -60,32 +60,32 @@ i3:
 
 network:
   interfaces:
-    enp2s0:
+    eth0:
       type: ethernet
-      ifname: enp2s0
-      conn_name: enp2s0
+      ifname: eth0
+      conn_name: eth0
       mac: 58:8a:5a:38:fb:22
       autoconnect: False
       state: present
       method4: disabled
-    enp0s20f0u1:
-      type: ethernet
-      ifname: enp0s20f0u1
-      conn_name: audio
-      mac: f0:1d:bc:f2:63:99
-      ip4: 192.168.36.5
-      autoconnect: True
-      state: present
-      method4: manual
-    wlan0:
-      type: wifi
-      ifname: wlan0
-      conn_name: wlan0
-      mac: 66:a1:53:c9:7b:e5
-      ssid: invisiblemagic
-      autoconnect: False
-      state: present
-      method4: disabled
+    # enp0s20f0u1:
+    #   type: ethernet
+    #   ifname: enp0s20f0u1
+    #   conn_name: audio
+    #   mac: f0:1d:bc:f2:63:99
+    #   ip4: 192.168.36.5
+    #   autoconnect: True
+    #   state: present
+    #   method4: manual
+    # wlan0:
+    #   type: wifi
+    #   ifname: wlan0
+    #   conn_name: wlan0
+    #   mac: 66:a1:53:c9:7b:e5
+    #   ssid: invisiblemagic
+    #   autoconnect: False
+    #   state: present
+    #   method4: disabled
     wlan1:
       type: wifi
       ifname: wlan1
