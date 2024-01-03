@@ -27,4 +27,4 @@
       systemd:
         daemon_reload: true
 
-  when: ansible_distribution != 'Debian'
+  when: distribution != 'Debian'

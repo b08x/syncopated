@@ -8,7 +8,7 @@
         enabled: yes
 
     - name: Permit traffic to common services
-      ansible.posix.firewalld:
+      firewalld:
         service: "{{ item }}"
         state: enabled
         permanent: yes
@@ -20,7 +20,7 @@
       tags: ['nfs', 'ntp', 'rsyncd', 'ssh']
 
     - name: Permit traffic to jacktrip, barrier and qmidinet
-      ansible.posix.firewalld:
+      firewalld:
         port: "{{ item }}"
         state: enabled
         permanent: yes

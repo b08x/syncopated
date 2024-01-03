@@ -124,9 +124,9 @@
   template:
     src: "etc/skel/.config/dunst/dunstrc.j2"
     dest: "{{ user.home }}/.config/dunst/dunstrc"
-    owner: root
-    group: root
-    mode: "0644"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
     backup: yes
   tags: ["profile", "dunst"]
 
@@ -134,9 +134,9 @@
   template:
     src: "etc/skel/.config/picom.conf.j2"
     dest: "{{ user.home }}/.config/picom.conf"
-    owner: root
-    group: root
-    mode: "0644"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
     backup: yes
   tags: ["profile", "picom"]
 

@@ -9,7 +9,7 @@
         extra_args: --break-system-packages
       with_items:
         - psycopg2
-      when: ansible_distribution == 'Archlinux'
+      when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
 
     - name: Install psycopg2 module
       pip:
@@ -18,7 +18,7 @@
         state: present
       with_items:
         - psycopg2
-      when: ansible_distribution == 'Fedora'
+      when: distribution == 'Fedora'
 
   tags: ["packages"]
 
@@ -27,7 +27,7 @@
     name: postgresql-server-devel
     state: present
     update_cache: yes
-  when: ansible_distribution == 'Fedora'
+  when: distribution == 'Fedora'
   tags: ["packages"]
 
 - name: Ensure pgvector data directory exists

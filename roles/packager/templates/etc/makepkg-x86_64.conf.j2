@@ -114,11 +114,11 @@ DBGSRCDIR="/usr/src/debug"
 # Default: put built package and cached source in build directory
 #
 #-- Destination: specify a fixed directory where all packages will be placed
-PKGDEST=/srv/repo/{{ ansible_distribution }}/packages
+PKGDEST=/srv/repo/{{ distribution }}/packages
 #-- Source cache: specify a fixed directory where source files will be cached
-SRCDEST=/srv/repo/{{ ansible_distribution }}/packages/src/cache
+SRCDEST=/srv/repo/{{ distribution }}/packages/src/cache
 #-- Source packages: specify a fixed directory where all src packages will be placed
-SRCPKGDEST=/srv/repo/{{ ansible_distribution }}/packages/src
+SRCPKGDEST=/srv/repo/{{ distribution }}/packages/src
 #-- Log files: specify a fixed directory where all log files will be placed
 LOGDEST={{ packager.workspace }}/archlinux/pkgbuids/makepkglogs
 #-- Packager: name/email of the person or organization building packages

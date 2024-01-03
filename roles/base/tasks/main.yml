@@ -70,7 +70,7 @@
       when: mkinitcpio_conf.changed
 
   # when: ansible_facts["lsb"]["id"] != 'EndeavourOS'
-  when: ansible_distribution != 'EndeavourOS'
+  when: distribution != 'EndeavourOS'
   tags: ['mkinitcpio']
 
 - import_tasks:

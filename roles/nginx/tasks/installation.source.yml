@@ -10,7 +10,7 @@
     - "@Development Tools"
     - pcre2-devel
     - pcre-devel
-  when: ansible_distribution == 'Fedora'
+  when: distribution == 'Fedora'
 
 - name: install nginx dependencies
   pacman:
@@ -23,7 +23,7 @@
     - git
     - pcre
     - pcre2
-  when: ansible_distribution == 'Archlinux'
+  when: distribution == 'Archlinux'
 
 - name: create nginx group
   group:

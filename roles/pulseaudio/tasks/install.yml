@@ -44,6 +44,12 @@
         dest: /etc/pulse/default.pa.d/bluetooth.pa
         mode: '0644'
 
+    - name: Enabled bluetooth service
+      service:
+        name: bluetooth
+        state: started
+        enabled: True
+
   when: use_bluetooth|bool
   notify: restart pulseaudio
   tags: ['bluetooth']
