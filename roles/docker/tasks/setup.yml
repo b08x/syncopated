@@ -25,7 +25,7 @@
             dest: /etc/profile.d/compose.sh
             mode: '0644'
 
-      when: ansible_distribution == 'AlmaLinux'
+      when: ansible_distribution == 'Fedora'
 
     - name: Install docker packages
       aur:

@@ -33,7 +33,7 @@
       with_items:
         - docker
         - docker-compose
-      when: ansible_distribution == 'AlmaLinux'
+      when: ansible_distribution == 'Fedora'
 
   tags: ['packages']
 

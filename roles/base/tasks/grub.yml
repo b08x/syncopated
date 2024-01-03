@@ -25,7 +25,7 @@
     grub_mkconfig_command: >-
       {% set grub_command_map = {
         'Debian': 'update-grub',
-        'AlmaLinux': 'grub2-mkconfig -o /boot/efi/EFI/almalinux/grub.cfg\ngrub2-mkconfig -o /boot/grub2/grub.cfg',
+        'Fedora': 'grub2-mkconfig -o /boot/efi/EFI/Fedora/grub.cfg\ngrub2-mkconfig -o /boot/grub2/grub.cfg',
         'Archlinux': 'grub-mkconfig -o /boot/grub/grub.cfg'
       } %}
 

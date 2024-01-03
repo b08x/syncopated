@@ -70,7 +70,7 @@
       when: mkinitcpio_conf.changed
 
   # when: ansible_facts["lsb"]["id"] != 'EndeavourOS'
-  when: inventory_hostname != 'soundbot'
+  when: ansible_distribution != 'EndeavourOS'
   tags: ['mkinitcpio']
 
 - import_tasks:
@@ -83,8 +83,8 @@
 
 - name: Install utility scripts
   synchronize:
-    src: usr/local/bin/
-    dest: /usr/local/bin/
+    src: usr/local/bin
+    dest: /usr/local
     recursive: yes
     mode: push
     delete: no
@@ -97,4 +97,4 @@
       - "--suffix={{ suffix }}"
       - "--chmod=0755"
   ignore_errors: "{{ ansible_check_mode }}"
-  tags: ['always']
+  tags: ['utils']

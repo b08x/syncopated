@@ -20,7 +20,7 @@
     name: deadbeef-static
     state: present
     update_cache: yes
-  when: ansible_distribution == 'AlmaLinux'
+  when: ansible_distribution == 'Fedora'
   tags: ['packages']
 
 - name: Create deadbeef config and plugin folders

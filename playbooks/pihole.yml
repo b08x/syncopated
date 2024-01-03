@@ -1,0 +1,43 @@
+---
+- hosts: pihole
+  tags: ['pihole']
+  become: True
+  gather_subset:
+    - hardware
+    - network
+  # vars_files:
+  #   - ../vars/Archlinux/packages.yml
+  #   - ../vars/theme.yml
+  vars:
+    path:
+      - "{{ lookup('env','HOME') }}/.local/bin"
+      - "{{ lookup('env','HOME') }}/.asdf/bin"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+    PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
+    ZSH: "/usr/share/oh-my-zsh"
+    DISPLAY: ":0"
+
+  pre_tasks:
+    - name: show expected_value
+      debug:
+        var: ansible_facts["date_time"]["epoch"]
+      tags: ['always']
+      # the task will run if `check_mode` to 'no'
+    - name: Register timestamp
+      shell: 'date +"%Y%m%d_%H%M%S"'
+      register: timestamp
+      check_mode: no
+      tags: ['always']
+
+    - name: Set suffix
+      set_fact:
+        suffix: "{{ timestamp.stdout_lines[0] }}"
+      tags: ['always']
+
+  roles:
+    - role: docker
+      tags: ["docker"]
+
+
+docker network create -d macvlan -o parent=eno1 \\n--subnet 192.168.41.0/24 --gateway 192.168.41.1 \\n--ip-range 192.168.41.40/28 \\n--aux-address 'host=192.168.41.40' \\nmacvlan0

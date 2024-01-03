@@ -434,7 +434,7 @@ function handle_exit() {
 	# If output directory is specified, create a text file with the accumulated text in the specified directory
 	if [ -n "$OUTPUT_DIR" ]; then
 		timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-		echo "$accumulated_text" >"$OUTPUT_DIR/transcription_$timestamp.txt"
+		echo "$accumulated_text" >"$OUTPUT_DIR/$timestamp.md"
 	fi
 
 	# Copy the accumulated text to the clipboard

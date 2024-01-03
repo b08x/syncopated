@@ -17,7 +17,7 @@
         name: "{{ packages.ruby }}"
         state: present
         update_cache: yes
-      when: ansible_distribution == 'AlmaLinux'
+      when: ansible_distribution == 'Fedora'
 
     - name: Install system ruby packages
       pacman:

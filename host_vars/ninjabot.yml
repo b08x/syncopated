@@ -25,7 +25,7 @@ app:
 docker:
   service: 'enabled'
   storage: /var/lib/docker
-  nvidia: False
+  nvidia: True
 
 desktop:
   dm: False

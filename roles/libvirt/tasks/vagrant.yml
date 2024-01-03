@@ -28,7 +28,7 @@
         state: present
         update_cache: yes
 
-  when: ansible_distribution == 'AlmaLinux'
+  when: ansible_distribution == 'Fedora'
   tags: ['packages']
 
 - block:

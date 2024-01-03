@@ -47,8 +47,8 @@ LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 LTOFLAGS="-flto=auto"
 RUSTFLAGS="-C opt-level=3 -C target-cpu=native"
 #-- Make Flags: change this for DistCC/SMP systems
-MAKEFLAGS="-j{{ ansible_processor_cores }}"
-NINJAFLAGS="-j{{ ansible_processor_cores }}"
+MAKEFLAGS="-j$((`nproc`-1))"
+NINJAFLAGS="-j$((`nproc`-1))"
 #-- Debugging flags
 DEBUG_CFLAGS="-g"
 DEBUG_CXXFLAGS="$DEBUG_CFLAGS"

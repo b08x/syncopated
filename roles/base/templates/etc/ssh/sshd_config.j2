@@ -124,7 +124,7 @@ AcceptEnv LANG LC_*
 Subsystem	sftp	/usr/lib/ssh/sftp-server
 {% endif %}
 
-{% if ansible_distribution == 'AlmaLinux' %}
+{% if ansible_distribution == 'Fedora' %}
 Subsystem	sftp	/usr/libexec/openssh/sftp-server
 {% endif %}
 {% if ansible_os_family == 'MX' %}
