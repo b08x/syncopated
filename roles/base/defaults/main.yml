@@ -20,3 +20,8 @@ root_directory_definitions:
   - dest: /etc/xdg
 
 expected_value: "role_base_defaults"
+
+video:
+  nvidia: False
+  intel: False
+  ati: False

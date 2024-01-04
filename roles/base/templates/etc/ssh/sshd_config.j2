@@ -106,7 +106,7 @@ PrintMotd no
 {% if distribution == 'Fedora' %}
 #PidFile /var/run/sshd.pid
 {% endif %}
-{% if ansible_os_family == 'MX' %}
+{% if distribution == 'MX' %}
 #PidFile /var/run/sshd.pid
 {% endif %}
 #MaxStartups 10:30:100
@@ -131,7 +131,7 @@ Subsystem	sftp	/usr/lib/ssh/sftp-server
 {% if distribution == 'Fedora' %}
 Subsystem	sftp	/usr/libexec/openssh/sftp-server
 {% endif %}
-{% if ansible_os_family == 'MX' %}
+{% if distribution == 'MX' %}
 Subsystem	sftp	/usr/lib/openssh/sftp-server
 {% endif %}
 # Example of overriding settings on a per-user basis
