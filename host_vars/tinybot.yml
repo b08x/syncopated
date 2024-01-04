@@ -26,6 +26,9 @@ cpupower:
   governor: performance
   perf_bias: 0
 
+tuned:
+  profile: powersave
+
 docker:
   service: "enabled"
   storage: /var/lib/docker

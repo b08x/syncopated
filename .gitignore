@@ -13,3 +13,4 @@ docs/example/playbooks/vars/Archlinux-i3.yml
 .obsidian/
 galaxy_cache/
 galaxy_token
+docs/build/

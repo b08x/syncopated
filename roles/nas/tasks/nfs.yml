@@ -84,7 +84,7 @@
             - '32769'
             - '32803'
 
-      when: ansible_os_family == 'MX' or ansible_os_family == 'Debian'
+      when: distribution == 'MX' or distribution == 'Debian'
 
   ignore_errors: "{{ ansible_check_mode }}"
 

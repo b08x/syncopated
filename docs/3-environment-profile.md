@@ -1,10 +1,11 @@
+# Environment Profile
 
 ## global envrionment
 
 * `/etc/profile` initializes variables for login shells _only_.
 * *
 
-Templates that comprise a user profile are used in several roles. 
+Templates that comprise a user profile are used in several roles.
 
 ## [bash](roles/bash/README.md)
 
