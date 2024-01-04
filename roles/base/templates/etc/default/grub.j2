@@ -8,7 +8,8 @@ GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3 nvidia-drm.mod
 GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3'
 {% endif %}
 {% if inventory_hostname == 'tinybot' %}
-GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0 i915.enable_dc=0"
+# GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0 i915.enable_dc=0"
+GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0"
 {% else %}
 GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M quiet net.ifnames=0 biosdevname=0"
 {% endif %}

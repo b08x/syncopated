@@ -14,7 +14,7 @@ galaxy_info:
     - name: ArchLinux
       versions:
         - all
-    #- name: AlmaLinux
+    #- name: Fedora
     #  versions:
     #    - "9.3"
     #- name: Fedora

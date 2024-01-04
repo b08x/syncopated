@@ -49,7 +49,7 @@
           });
         dest: "/etc/polkit-1/rules.d/49-nopasswd_global.rules"
         mode: '0644'
-      when: ansible_os_family == 'Archlinux' or ansible_distribution == 'Fedora'
+      when: distribution == 'Archlinux' or distribution == 'Fedora'
 
     - name: Set NOPASSWD for user in polkit
       copy:
@@ -60,4 +60,4 @@
           ResultActive=yes
         dest: "/etc/polkit-1/localauthority/50-local.d/admin_group.pkla"
         mode: '0644'
-      when: ansible_os_family == 'MX' or ansible_os_family == 'Debian'
+      when: distribution == 'MX' or distribution == 'Debian'

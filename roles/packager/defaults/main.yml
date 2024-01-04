@@ -6,8 +6,8 @@ repos:
     src_packages: "/srv/repo/archlinux/packages/src"
     x86_64: "/srv/repo/archlinux/packages/x86-64"
     x86_64_v3: "/srv/repo/archlinux/packages/x86-64_v3"
-  almalinux:
-    packages: "/srv/repo/almalinux/packages"
-    src_packages: "/srv/repo/almalinux/packages/src"
-    x86_64: "/srv/repo/almalinux/packages/x86-64"
-    x86_64_v3: "/srv/repo/almalinux/packages/x86-64_v3"
+  Fedora:
+    packages: "/srv/repo/Fedora/packages"
+    src_packages: "/srv/repo/Fedora/packages/src"
+    x86_64: "/srv/repo/Fedora/packages/x86-64"
+    x86_64_v3: "/srv/repo/Fedora/packages/x86-64_v3"

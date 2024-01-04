@@ -8,7 +8,7 @@
         enabled: yes
 
     - name: Permit traffic to common services
-      ansible.posix.firewalld:
+      firewalld:
         service: "{{ item }}"
         state: enabled
         permanent: yes
@@ -20,7 +20,7 @@
       tags: ['nfs', 'ntp', 'rsyncd', 'ssh']
 
     - name: Permit traffic to jacktrip, barrier and qmidinet
-      ansible.posix.firewalld:
+      firewalld:
         port: "{{ item }}"
         state: enabled
         permanent: yes
@@ -46,7 +46,7 @@
       notify: reload firewalld
 
   ignore_errors: "{{ ansible_check_mode }}"
-  when: ansible_distribution == 'Archlinux' or ansible_distribution == 'AlmaLinux'
+  when: ansible_distribution == 'Archlinux' or ansible_distribution == 'Fedora'
 
 
 # Hello. Can you refactor this Ansible task?
@@ -100,5 +100,5 @@
         - '55311'
       notify: reload ufw
 
-  when: ansible_os_family == 'MX' or ansible_os_family == 'Debian'
+  when: distribution == 'MX' or distribution == 'Debian'
   ignore_errors: "{{ ansible_check_mode }}"

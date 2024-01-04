@@ -100,13 +100,13 @@ PrintMotd no
 #ClientAliveInterval 0
 #ClientAliveCountMax 3
 #UseDNS no
-{% if ansible_distribution == 'Archlinux' %}
+{% if distribution == 'Archlinux' %}
 #PidFile /run/sshd.pid
 {% endif %}
-{% if ansible_distribution == 'Fedora' %}
+{% if distribution == 'Fedora' %}
 #PidFile /var/run/sshd.pid
 {% endif %}
-{% if ansible_os_family == 'MX' %}
+{% if distribution == 'MX' %}
 #PidFile /var/run/sshd.pid
 {% endif %}
 #MaxStartups 10:30:100
@@ -120,14 +120,18 @@ PrintMotd no
 AcceptEnv LANG LC_*
 
 # override default of no subsystems
-{% if ansible_distribution == 'Archlinux' %}
+{% if distribution == 'Archlinux' %}
+Subsystem	sftp	/usr/lib/ssh/sftp-server
+{% else %}
+{% if distribution == 'EndeavourOS' %}
 Subsystem	sftp	/usr/lib/ssh/sftp-server
 {% endif %}
+{% endif %}
 
-{% if ansible_distribution == 'AlmaLinux' %}
+{% if distribution == 'Fedora' %}
 Subsystem	sftp	/usr/libexec/openssh/sftp-server
 {% endif %}
-{% if ansible_os_family == 'MX' %}
+{% if distribution == 'MX' %}
 Subsystem	sftp	/usr/lib/openssh/sftp-server
 {% endif %}
 # Example of overriding settings on a per-user basis

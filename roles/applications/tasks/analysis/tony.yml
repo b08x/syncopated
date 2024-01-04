@@ -1,10 +1,19 @@
 ---
+#TODO: There is an aur PKGBUILD for this
 
 - name: Check if Tony is already installed
   stat:
     path: /usr/local/bin/tony
   register: result
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Install libxcrypt-compat
+  pacman:
+    name: libxcrypt-compat
+    state: present
+    force: yes
+    extra_args: --noconfirm
+  tags: ['packages']
 
 - block:
     - name: Fetch Tony

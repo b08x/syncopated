@@ -75,7 +75,7 @@ CLI::UI::Frame.open('{{*}} {{bold:a}}', color: :green) do
     puts "select tags to run..."
     CLI::UI::Frame.open('{{?}} c', color: :cyan) do
 
-      @distro = CLI::UI.ask('Select Distro', options: %w(AlmaLinux Archlinux))
+      @distro = CLI::UI.ask('Select Distro', options: %w(Fedora Archlinux))
 
     end
 

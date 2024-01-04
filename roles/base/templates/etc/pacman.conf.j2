@@ -14,7 +14,7 @@
 #CacheDir    = /var/cache/pacman/pkg/
 #LogFile     = /var/log/pacman.log
 #GPGDir      = /etc/pacman.d/gnupg/
-{% if ansible_facts["lsb"]["id"] == 'EndeavourOS' %}
+{% if distribution == 'EndeavourOS' %}
 HoldPkg     = pacman glibc dracut kernel-install-for-dracut eos-dracut
 {% else %}
 HoldPkg     = pacman glibc
@@ -70,7 +70,7 @@ Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64/
 [proaudio]
 Server = https://arch.osamc.de/$repo/$arch
 
-{% if ansible_facts["lsb"]["id"] == 'EndeavourOS' %}
+{% if distribution == 'EndeavourOS' %}
 [endeavouros]
 SigLevel = PackageRequired
 Include = /etc/pacman.d/endeavouros-mirrorlist

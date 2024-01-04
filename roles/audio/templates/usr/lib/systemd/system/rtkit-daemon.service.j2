@@ -20,17 +20,25 @@ Description=RealtimeKit Scheduling Policy Service
 
 [Service]
 EnvironmentFile=/etc/rtkit.conf
-{% if ansible_distribution == "Archlinux" %}
+{% if distribution == "Archlinux" %}
+ExecStart=/usr/lib/rtkit-daemon $ARG1 $ARG2 $ARG3 $ARG4
+{% else %}
+{% if distribution == "EndeavourOS" %}
 ExecStart=/usr/lib/rtkit-daemon $ARG1 $ARG2 $ARG3 $ARG4
 {% endif %}
-{% if ansible_distribution == "AlmaLinux" %}
+{% endif %}
+{% if distribution == "Fedora" %}
 ExecStart=/usr/libexec/rtkit-daemon $ARG1 $ARG2 $ARG3 $ARG4
 {% endif %}
 Type=dbus
 BusName=org.freedesktop.RealtimeKit1
 NotifyAccess=main
-{% if ansible_distribution == "Archlinux" %}
+{% if distribution == "Archlinux" %}
 CapabilityBoundingSet=CAP_SYS_NICE CAP_DAC_READ_SEARCH CAP_SYS_CHROOT CAP_SETGID CAP_SETUID
+{% else %}
+{% if distribution == "EndeavourOS" %}
+CapabilityBoundingSet=CAP_SYS_NICE CAP_DAC_READ_SEARCH CAP_SYS_CHROOT CAP_SETGID CAP_SETUID
+{% endif %}
 {% endif %}
 PrivateNetwork=yes
 

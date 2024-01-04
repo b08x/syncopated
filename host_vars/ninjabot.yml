@@ -25,7 +25,10 @@ app:
 docker:
   service: 'enabled'
   storage: /var/lib/docker
-  nvidia: False
+  nvidia: True
+
+tuned:
+  profile: powersave
 
 desktop:
   dm: False
@@ -85,6 +88,11 @@ i3:
 #       autoconnect: True
 #       state: present
 #       method4: manual
+
+video:
+  nvidia: True
+  intel: True
+  ati: False
 
 host:
   kernel:

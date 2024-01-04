@@ -66,7 +66,7 @@ case $DISTRO in
     pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger \
     nodejs npm yadm --overwrite '*'
 		;;
-	Fedora|AlmaLinux)
+	Fedora|Fedora)
 		echo '[charm]
 		name=Charm
 		baseurl=https://repo.charm.sh/yum/

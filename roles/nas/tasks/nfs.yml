@@ -57,7 +57,7 @@
             - 40418/udp
           register: fw_nfs
 
-      when: ansible_distribution == 'Archlinux'
+      when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
 
     - block:
         - name: Permit tcp traffic to rpcbind
@@ -84,7 +84,7 @@
             - '32769'
             - '32803'
 
-      when: ansible_os_family == 'MX' or ansible_os_family == 'Debian'
+      when: distribution == 'MX' or distribution == 'Debian'
 
   ignore_errors: "{{ ansible_check_mode }}"
 

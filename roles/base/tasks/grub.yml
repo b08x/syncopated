@@ -5,7 +5,7 @@
 #   unarchive:
 #     src: files/usr/share/grub/starfield.tar.gz
 #     dest: "/usr/share/grub/themes"
-#   when: ansible_distribution == 'Archlinux'
+#   when: distribution == 'Archlinux'
 
 - name: Set kernel cmdline params in grub
   template:
@@ -25,8 +25,8 @@
     grub_mkconfig_command: >-
       {% set grub_command_map = {
         'Debian': 'update-grub',
-        'AlmaLinux': 'grub2-mkconfig -o /boot/efi/EFI/almalinux/grub.cfg\ngrub2-mkconfig -o /boot/grub2/grub.cfg',
+        'Fedora': 'grub2-mkconfig -o /boot/efi/EFI/Fedora/grub.cfg\ngrub2-mkconfig -o /boot/grub2/grub.cfg',
         'Archlinux': 'grub-mkconfig -o /boot/grub/grub.cfg'
       } %}
 
-      {{ grub_command_map.get(ansible_distribution, '# Unsupported distribution') }}
+      {{ grub_command_map.get(distribution, '# Unsupported distribution') }}

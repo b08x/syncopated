@@ -30,9 +30,6 @@ xset -b
 
 numlockx on
 
-# move to xdg autostart
-# /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-
 {% if x.autostart != 'default' %}
 {% for program in x.autostart %}
 {{ program }}
@@ -41,8 +38,3 @@ numlockx on
 {% endif %}
 
 [[ -f "$HOME/.asound.state" ]] && alsactl restore -f "$HOME/.asound.state"
-
-picom -b
-nm-applet &
-redshift-gtk &
-dunst &

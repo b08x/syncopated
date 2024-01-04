@@ -32,7 +32,7 @@
     recurse: True
   with_items:
     - archlinux/pkgbuids
-    - almalinux/specs
+    - Fedora/specs
 
 
 
@@ -59,13 +59,13 @@
     mode: "2775"
     recurse: True
   with_items:
-    - "{{ repos.almalinux.packages }}"
-    - "{{ repos.almalinux.src_packages }}"
-    - "{{ repos.almalinux.x86_64 }}"
-    - "{{ repos.almalinux.x86_64_v3 }}"
+    - "{{ repos.Fedora.packages }}"
+    - "{{ repos.Fedora.src_packages }}"
+    - "{{ repos.Fedora.x86_64 }}"
+    - "{{ repos.Fedora.x86_64_v3 }}"
 
 
 - name: Load distro tasks
   import_tasks:
     file: Archlinux.yml
-  when: ansible_distribution == 'Archlinux'
+  when: distribution == 'Archlinux'

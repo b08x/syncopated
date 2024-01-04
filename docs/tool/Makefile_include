@@ -1,0 +1,49 @@
+# NOTE This variable has to bedefined in the including file:
+#TOOL_DIR = tool
+
+OUT_DIR = build
+RESOURCES = $(TOOL_DIR)/template images
+MKDIR_P = mkdir -p
+
+# Targets not producing a file with their name
+.PHONY: all pdf html dist clean
+
+all:: pdf html
+
+pdf:: roles/*.md *.md
+	pandoc roles/*.md *.md \
+		-f gfm \
+		-V linkcolor:blue \
+		--pdf-engine=xelatex \
+		--number-sections \
+		--table-of-contents \
+		--metadata title="SyncopatedIaC" \
+		--metadata title-prefix="The User Manual" \
+		--metadata subtitle="The User Manual" \
+		--template $(TOOL_DIR)/template/eisvogel.tex \
+		--metadata titlepage="True" \
+		-o SyncopatedIaC.pdf
+
+html:: roles/*.md *.md
+	pandoc roles/*.md *.md \
+		-f gfm \
+		--number-sections \
+		--table-of-contents \
+		--toc-depth=2 \
+		--katex \
+		--metadata title="SyncopatedIaC" \
+		--template $(TOOL_DIR)/template/mdbook.html \
+		--metadata titlepage="True" \
+		--metadata date="`date -u '+%Y-%m-%d'`" \
+		-o SyncopatedIaC.html
+
+dist:: all
+	${MKDIR_P} ${OUT_DIR}
+	cp -r ${RESOURCES} ${OUT_DIR}/
+	mv SyncopatedIaC.pdf ${OUT_DIR}/
+	mv SyncopatedIaC.html ${OUT_DIR}/index.html
+
+clean::
+	rm -f SyncopatedIaC.pdf
+	rm -f SyncopatedIaC.html
+	rm -rf ${OUT_DIR}
