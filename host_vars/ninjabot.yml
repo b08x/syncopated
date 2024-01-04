@@ -27,6 +27,9 @@ docker:
   storage: /var/lib/docker
   nvidia: True
 
+tuned:
+  profile: powersave
+
 desktop:
   dm: False
   wm: i3
@@ -85,6 +88,11 @@ i3:
 #       autoconnect: True
 #       state: present
 #       method4: manual
+
+video:
+  nvidia: True
+  intel: True
+  ati: False
 
 host:
   kernel:

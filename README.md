@@ -63,7 +63,9 @@ var/stheme.yml - theme variables
 ### Using Tags
 
 ```bash
+
 ansible-playbook -i inventory.ini playbooks/full.yml --tags $TAGS --limit $HOSTNAME
+
 ```
 
 

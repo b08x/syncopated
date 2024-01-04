@@ -4,6 +4,11 @@ expected_value: "groupvars_workstation"
 
 bluetooth: True
 
+video:
+  nvidia: False
+  intel: False
+  ati: False
+
 desktop:
   dm: False
   wm: "i3"
