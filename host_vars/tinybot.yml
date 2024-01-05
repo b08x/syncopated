@@ -58,19 +58,9 @@ x:
 i3:
   autostart: "default"
     # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
-  tray_output: "DP-2"
+  tray_output: "primary"
   assignments: "default"
-  workspaces:
-    - "$ws1 output HDMI-1"
-    - "$ws2 output HDMI-1"
-    - "$ws3 output HDMI-1"
-    - "$ws4 output HDMI-1"
-    - "$ws5 output DP-2"
-    - "$ws6 output DP-2"
-    - "$ws7 output DP-2"
-    - "$ws8 output DP-2"
-    - "$ws9 output DP-2"
-    - "$ws10 output DP-2"
+  workspaces:  "default"
   keybindings: "default"
 
 # network:

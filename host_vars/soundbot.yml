@@ -1,6 +1,9 @@
 ---
-
 autologin: True
+
+login:
+  auto: True
+  lightdm: False
 
 bluetooth: True
 
@@ -23,9 +26,16 @@ app:
     tony: True
 
 docker:
-  service: 'enabled'
+  service: "enabled"
   storage: /var/lib/docker
   nvidia: False
+
+cpupower:
+  governor: performance
+  perf_bias: 0
+
+tuned:
+  profile: powersave  
 
 desktop:
   dm: False
@@ -37,29 +47,30 @@ desktop:
   barrier:
     client:
       name: soundbot
-      server: '[tinybot]:24800'
+      server: "[tinybot]:24800"
 
 x:
   autostart:
     - bash ~/.screenlayout/soundbot.sh
 
 i3:
-  autostart: 'default'
+  autostart:
+    "default"
     # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
-  tray_output: 'primary'
-  assignments: 'default'
-  workspaces: 'default'
-    # - "$ws1 output DP1-2"
-    # - "$ws2 output DP1-2"
-    # - "$ws3 output DP1-2"
-    # - "$ws4 output DP1-1"
-    # - "$ws5 output DP1-1"
-    # - "$ws6 output DP1-1"
-    # - "$ws7 output DP1-1"
-    # - "$ws8 output eDP1"
-    # - "$ws9 output eDP1"
-    # - "$ws10 output eDP1"
-  keybindings: 'default'
+  tray_output: "primary"
+  assignments: "default"
+  workspaces:
+    - "$ws1 output DP-1-1"
+    - "$ws2 output DP-1-1"
+    - "$ws3 output DP-1-1"
+    - "$ws4 output DP-1-1"
+    - "$ws5 output DP-1-1"
+    - "$ws6 output DP-1-1"
+    - "$ws7 output DP-1-1"
+    - "$ws8 output eDP-1"
+    - "$ws9 output eDP-1"
+    - "$ws10 output eDP-1"
+  keybindings: "default"
 
 # network:
 #   interfaces:
@@ -98,7 +109,7 @@ i3:
 host:
   xorg:
     video:
-    # intel:
+      # intel:
       - intel-gpu-tools
       - intel-media-driver
       - intel-ucode
@@ -109,7 +120,7 @@ host:
       - vulkan-icd-loader
       - vulkan-intel
       - xf86-video-intel
-    # opengl:
+      # opengl:
       - libva-utils
       - libvdpau-va-gl
       - libva-mesa-driver
@@ -117,6 +128,6 @@ host:
       - mesa-utils
       - mesa-vdpau
       - vdpauinfo
-    # opencl:
+      # opencl:
       - opencl-clover-mesa
       - opencl-rusticl-mesa

@@ -5,7 +5,7 @@ expected_value: "basedir_varsTheme"
 
 gtk:
   theme:
-    name: ArchLabs-Dark
+    name: oomox-soundbot
     icons: oomox-soundbot
     cursor: ArchLabs-Dark
 kvantum: KvGnomeDark

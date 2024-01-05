@@ -43,12 +43,12 @@ desktop:
       server: '[tinybot]:24800'
 
 x:
-  autostart: "default"
-    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+  autostart:
+    - bash ~/.screenlayout/ninjabot.sh
 
 i3:
   autostart: 'default'
-  tray_output: 'DVI-I-1'
+  tray_output: 'DVI-D-0'
   assignments: 'default'
   workspaces:
     - "$ws1 output DVI-I-1"
