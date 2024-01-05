@@ -1,5 +1,10 @@
 {% if inventory_hostname == 'soundbot' %}
+file://{{ user.home }}/Recordings
+file://{{ user.home }}/Recordings/Video
+file://{{ user.home }}/Recordings/Audio
+file://{{ user.home }}/Public
 file://{{ user.home }}/Public/Archive
+file://{{ user.home }}/Public/Desktop
 file://{{ user.home }}/Public/Documents
 file://{{ user.home }}/Public/Downloads
 file://{{ user.home }}/Public/Library
@@ -8,23 +13,16 @@ file://{{ user.home }}/Public/Pictures
 file://{{ user.home }}/Public/Recordings
 file://{{ user.home }}/Public/Sessions
 file://{{ user.home }}/Public/Videos
-{% else %}
-{% if inventory_hostname == 'tinybot' %}
-file://{{ user.home }}/LLMOS
-file://{{ user.home }}/Workspace
-file://{{ user.home }}/Public/Archive
-file://{{ user.home }}/Public/Documents
-file://{{ user.home }}/Public/Downloads
-file://{{ user.home }}/Public/Library
-file://{{ user.home }}/Public/Music
-file://{{ user.home }}/Public/Pictures
-file://{{ user.home }}/Public/Recordings
-file://{{ user.home }}/Public/Sessions
-file://{{ user.home }}/Public/Videos
+file://{{ user.home }}/Public/Workspace
 {% else %}
 file://{{ user.home }}/LLMOS
 file://{{ user.home }}/Workspace
+file://{{ user.home }}/Recordings
+file://{{ user.home }}/Recordings/Video
+file://{{ user.home }}/Recordings/Audio
+file://{{ user.home }}/Public
 file://{{ user.home }}/Public/Archive
+file://{{ user.home }}/Public/Desktop
 file://{{ user.home }}/Public/Documents
 file://{{ user.home }}/Public/Downloads
 file://{{ user.home }}/Public/Library
@@ -33,5 +31,5 @@ file://{{ user.home }}/Public/Pictures
 file://{{ user.home }}/Public/Recordings
 file://{{ user.home }}/Public/Sessions
 file://{{ user.home }}/Public/Videos
-{% endif %}
+file://{{ user.home }}/Public/Workspace
 {% endif %}

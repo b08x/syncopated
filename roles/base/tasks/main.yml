@@ -69,8 +69,8 @@
     rsync_opts:
       - "--update"
       - "--omit-dir-times"
-      # - "--backup"
-      # - "--suffix={{ suffix }}~"
+      - "--backup"
+      - "--suffix={{ suffix }}"
       - "--chmod=0755"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['utils']
