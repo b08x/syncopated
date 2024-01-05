@@ -1,0 +1,19 @@
+---
+# tasks file for shell
+
+- name: Set user shell
+  user:
+    name: "{{ item.name }}"
+    shell: "{{ item.shell }}"
+  with_items: "{{ users }}"
+  tags: ['profile']
+
+- name: Import bash role
+  import_role:
+    name: bash
+  tags: ['shell', 'profile']
+
+- name: Import zsh role
+  import_role:
+    name: zsh
+  tags: ['shell', 'profile']

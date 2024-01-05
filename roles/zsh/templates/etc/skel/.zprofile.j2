@@ -12,20 +12,19 @@ fi
 
 export -U PATH
 
-# export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
-# export GPG_TTY="$TTY"
-#
-# if [[ $(id -u) -ne 0 ]]; then
-#   systemctl --user import-environment GPG_TTY SSH_AUTH_SOCK
-# 	dbus-update-activation-environment --all
-# fi
-#
-# if ! pgrep -a "keyring" >/dev/null; then
-# 	echo "starting gnome-keyring from .zprofile???"
-# 	eval "$(/usr/bin/gnome-keyring-daemon --replace --daemonize --components=pkcs11,secrets,ssh,gpg)"
-# fi
-#
-# export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
+export GPG_TTY="$TTY"
+
+if [[ $(id -u) -ne 0 ]]; then
+   systemctl --user import-environment GPG_TTY SSH_AUTH_SOCK
+	dbus-update-activation-environment --all
+fi
+
+if ! pgrep -a "keyring" >/dev/null; then
+	eval "$(/usr/bin/gnome-keyring-daemon --replace --daemonize --components=pkcs11,secrets,ssh,gpg)"
+fi
+
+export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 
 {% if desktop.dm == False %}
 
