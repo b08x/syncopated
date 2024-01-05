@@ -3,3 +3,8 @@
 
 x:
   autostart: 'default'
+
+video:
+  nvidia: False
+  intel: False
+  ati: False

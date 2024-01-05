@@ -49,26 +49,6 @@
     file: zram.yml
   tags: ['zram']
 
-- block:
-    - name: Set video modules in mkinitcpio
-      template:
-        src: etc/mkinitcpio.conf.j2
-        dest: /etc/mkinitcpio.conf
-        owner: root
-        group: root
-        mode: '0644'
-        backup: yes
-      register: mkinitcpio_conf
-
-
-    - name: Re-create ramdisk if config changed
-      shell: mkinitcpio -P
-      when: mkinitcpio_conf.changed
-
-  # when: ansible_facts["lsb"]["id"] != 'EndeavourOS'
-  when: distribution != 'EndeavourOS'
-  tags: ['mkinitcpio']
-
 - import_tasks:
     file: grub.yml
   tags: ['grub']
@@ -83,14 +63,14 @@
     dest: /usr/local
     recursive: yes
     mode: push
-    delete: no
+    delete: False
     checksum: yes
     perms: no
     rsync_opts:
       - "--update"
       - "--omit-dir-times"
-      - "--backup"
-      - "--suffix={{ suffix }}"
+      # - "--backup"
+      # - "--suffix={{ suffix }}~"
       - "--chmod=0755"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['utils']

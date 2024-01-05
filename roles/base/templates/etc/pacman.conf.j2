@@ -2,18 +2,7 @@
 # /etc/pacman.conf
 #
 # See the pacman.conf(5) manpage for option and repository directives
-
-#
-# GENERAL OPTIONS
-#
 [options]
-# The following paths are commented out with their default values listed.
-# If you wish to use different paths, uncomment and update the paths.
-#RootDir     = /
-#DBPath      = /var/lib/pacman/
-#CacheDir    = /var/cache/pacman/pkg/
-#LogFile     = /var/log/pacman.log
-#GPGDir      = /etc/pacman.d/gnupg/
 {% if distribution == 'EndeavourOS' %}
 HoldPkg     = pacman glibc dracut kernel-install-for-dracut eos-dracut
 {% else %}
@@ -29,20 +18,20 @@ Architecture = x86_64 x86_64_v3
 Architecture = auto
 {% endif %}
 # Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
-IgnorePkg   = ncurses
+{% if inventory_hostname == 'ninjabot' %}
+IgnorePkg = ncurses lib32-ncurses
+{% else %}
+IgnorePkg = ncurses
+{% endif %}
 #IgnoreGroup =
 
-#NoUpgrade   =
-#NoExtract   =
-
-# Misc options
 #UseSyslog
 Color
 ILoveCandy
 #TotalDownload
 CheckSpace
 #VerbosePkgLists
-ParallelDownloads = 5
+ParallelDownloads = 10
 
 # By default, pacman accepts packages signed by keys that its local keyring
 # trusts (see pacman-key and its man page), as well as unsigned packages.
@@ -98,5 +87,3 @@ Server = https://pub-7d84e047b852442a86fd6d7feb1ff2cd.r2.dev/$repo/$arch
 Server = https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
 Server = https://github.com/ArchLabs/$repo/raw/master/$arch
 Server = https://sourceforge.net/projects/archlabs-repo/files/$repo/$arch
-
-# vim:ft=config

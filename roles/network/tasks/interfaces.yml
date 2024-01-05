@@ -2,8 +2,44 @@
 
 - name: Print host network vars
   debug:
-    msg: "print {{ item }}"
+    msg: "{{ item.value.ifname }}"
   with_dict: "{{ network.interfaces }}"
+  tags: ['udev']
+
+# - name: Set udev rules for wired NIC names
+#   template:
+#     src: etc/udev/rules.d/10-network.rules.j2
+#     dest: /etc/udev/rules.d/10-network.rules
+#     owner: root
+#     group: root
+#     mode: '0644'
+#     backup: yes
+#   with_items: "{{ network.interfaces }}"
+#   # when: item.value.type == 'ethernet' or item.value.type == 'wifi'
+#   tags: ['udev']
+
+# - name: Set udev rule to set network interface names
+#   copy:
+#     content: |
+#       SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="{{ item.value.ifname }}", NAME="{{ item.value.mac }}"
+#     dest: "/etc/udev/rules.d/10-network.rules"
+#     owner: root
+#   with_dict: "{{ network.interfaces }}"
+#   tags: ['udev']
+
+# - name: Set udev rules for wireless NIC names
+#   template:
+#     src: etc/udev/rules.d/10-network.rules.j2
+#     dest: /etc/udev/rules.d/10-network.rules
+#     owner: root
+#     group: root
+#     mode: '0644'
+#     backup: yes
+#   with_dict: "{{ network.interfaces }}"
+#   when:
+#     - item.value.type == 'wifi'
+#     - item.value.method4 != 'disabled'
+#   tags: ['udev']
 
 - name: Add ethernet device
   community.general.nmcli:
@@ -24,7 +60,7 @@
     - item.value.conn_name == item.value.ifname
     - item.value.method4 != 'disabled'
 
-- name: Add wifi device
+- name: Add static wifi device
   community.general.nmcli:
     type: "{{ item.value.type }}"
     ifname: "{{ item.value.ifname }}"
@@ -37,11 +73,33 @@
     method4: "{{ item.value.method4 }}"
     wifi:
       mac-address: "{{ item.value.mac }}"
-      assigned-mac-address: "{{ item.value.assigned_mac }}"
+      cloned-mac-address: "{{ item.value.assigned_address }}"
     ssid: "{{ item.value.ssid }}"
-    wifi_sec:
-      key-mgmt: "{{ item.value.wifi_sec.key_mgmt }}"
-      psk: "{{ item.value.wifi_sec.psk }}"
+    # wifi_sec:
+    #   key-mgmt: "{{ item.value.wifi_sec.key_mgmt }}"
+    #   psk: "{{ item.value.wifi_sec.psk }}"
+  with_dict: "{{ network.interfaces }}"
+  when:
+    - item.value.type == 'wifi'
+    - item.value.method4 != 'disabled'
+    - item.value.ip4 is defined
+  tags: ['wireless']
+
+- name: Add dhcp wifi device
+  community.general.nmcli:
+    type: "{{ item.value.type }}"
+    ifname: "{{ item.value.ifname }}"
+    conn_name: "{{ item.value.conn_name }}"
+    autoconnect: "{{ item.value.autoconnect }}"
+    state: "{{ item.value.state }}"
+    method4: "{{ item.value.method4 }}"
+    wifi:
+      mac-address: "{{ item.value.mac }}"
+      cloned-mac-address: "{{ item.value.assigned_address }}"
+    ssid: "{{ item.value.ssid }}"
+    # wifi_sec:
+    #   key-mgmt: "{{ item.value.wifi_sec.key_mgmt }}"
+    #   psk: "{{ item.value.wifi_sec.psk }}"
   with_dict: "{{ network.interfaces }}"
   when:
     - item.value.type == 'wifi'
