@@ -34,10 +34,6 @@
   tags: ['env', 'profile']
 
 - import_tasks:
-    file: xdg.yml
-  tags: ['xdg', 'profile']
-
-- import_tasks:
     file: sshd.yml
   tags: ['sshd']
 

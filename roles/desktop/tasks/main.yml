@@ -108,12 +108,8 @@
     mode: '0644'
 
 - import_tasks:
-    file: sxhkd.yml
-  tags: ['sxhkd', 'keybindings']
-
-- import_tasks:
-    file: inputRemapper.yml
-  tags: ['inputRemapper', 'keybindings']
+    file: input-remapper.yml
+  tags: ['input-remapper', 'keybindings']
 
 - import_tasks:
     file: menu.yml

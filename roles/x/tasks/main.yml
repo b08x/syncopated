@@ -5,22 +5,20 @@
     msg: "Starting xorg tasks"
 
 - block:
-    - name: Install xorg packages
+    - name: Install system xorg packages
       aur:
         use: paru
         name: "{{ packages.xorg }}"
         state: present
-      become: False
 
     - name: Install host specific xorg packages
       aur:
         use: paru
         name: "{{ host.xorg.video }}"
         state: present
-      become: False
-      when:
-        - host.xorg.video is defined
+      when: host.xorg.video is defined
 
+  become: False
   tags: ["packages"]
 
 - name: Set xorg.conf
@@ -65,3 +63,18 @@
     mode: "0755"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['env', 'profile']
+
+- name: Ensure user belongs to audio group
+  user:
+    name: "{{ item.name }}"
+    groups: "video"
+    append: yes
+  with_items: "{{ users }}"
+
+- import_tasks:
+    file: sxhkd.yml
+  tags: ['sxhkd', 'keybindings']
+
+- import_tasks:
+    file: xdg.yml
+  tags: ['xdg', 'profile']
