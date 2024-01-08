@@ -57,6 +57,7 @@
         name: "{{ packages.texlive }}"
         state: present
         extra_args: --overwrite '*'
+      when: pkgs__texlive|default(false)|bool == True
       tags: ['texlive']
 
     - name: Install python packages
