@@ -7,6 +7,17 @@
     file: firewall.yml
   tags: ['firewall']
 
+# https://gitlab.com/klaasjan/vagrant-ansible/-/blob/master/ansible/roles/configure_network/tasks/main.yml?ref_type=heads
+
+# - name: Setup udev for network devices
+#   replace:
+#     dest: /etc/udev/rules.d/10-network.rules
+#     regexp: 'ATTR.*{{ item.ifname }}'
+#     replace: 'ATTR{address}=="{{ item.mac|lower }}", ATTR{type}=="1", NAME="{{ item.ifname }}'
+#   with_items: "{{ network_interfaces }}"
+#   when: network_interfaces is defined
+#   notify: Reload udev rules
+
 - import_tasks:
     file: networkmanager.yml
   tags: ['networkmanager']
@@ -15,5 +26,5 @@
     file: ntp.yml
   tags: ['ntp']
 
-#TODO: set interface config for .36 network cards betweeen soundbot|ninjabot
+# TODO: set interface config for .36 network cards betweeen soundbot|ninjabot
 # - include_tasks: interfaces.yml

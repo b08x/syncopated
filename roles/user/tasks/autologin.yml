@@ -15,3 +15,12 @@
     group: root
     mode: '0644'
     backup: yes
+
+- name: "Get current systemd default"
+  command: "systemctl get-default"
+  changed_when: false
+  register: systemdefault
+
+- name: "Set default to graphical target"
+  command: "systemctl set-default multi-user.target"
+  when: "'multi-user' not in systemdefault.stdout"

@@ -26,3 +26,10 @@
 #   with_items: "{{ users }}"
 #   delegate_to: "{{ inventory_hostname }}"
 #   tags: ['always', 'env', 'profile']
+
+# dotfiles
+
+- import_tasks:
+    file: autologin.yml
+  tags: ['autologin']
+  when: autologin|default(false)|bool == True

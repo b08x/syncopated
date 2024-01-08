@@ -51,6 +51,14 @@
         state: present
         extra_args: --overwrite '*'
 
+    - name: Install texlive packages
+      aur:
+        use: paru
+        name: "{{ packages.texlive }}"
+        state: present
+        extra_args: --overwrite '*'
+      tags: ['texlive']
+
     - name: Install python packages
       aur:
         use: paru
@@ -79,10 +87,7 @@
   with_items: "{{ desktop_directory_definitions }}"
   check_mode: no
 
-- import_tasks:
-    file: autologin.yml
-  tags: ['autologin']
-  when: autologin|default(false)|bool == True
+
 
 #NOTETHIS: these can be used in a seperate playbook
 # - name: Import sway role

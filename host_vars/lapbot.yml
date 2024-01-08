@@ -61,45 +61,44 @@ i3:
   workspaces: 'default'
   keybindings: 'default'
 
-network:
-  interfaces:
-    eth0:
-      type: ethernet
-      ifname: eth0
-      conn_name: eth0
-      mac: 58:8a:5a:38:fb:22
-      autoconnect: False
-      state: present
-      method4: disabled
-    wlan0:
-      type: wifi
-      ifname: wlan0
-      conn_name: wlan0
-      mac: 66:a1:53:c9:7b:e5
-      assigned_address: c0:25:e9:74:cd:96
-      ssid: visiblemagic
-      autoconnect: False
-      state: present
-      method4: disabled
-    wlan1:
-      type: wifi
-      ifname: wlan1
-      conn_name: visiblemagic
-      mac: c0:25:e9:74:cd:96
-      assigned_address: c0:25:e9:74:cd:96
-      ssid: invisiblemagic
-      # wifi_sec:
-      #   key_mgmt: wpa-psk
-      #   psk: "{{ wifi_key }}"
-      ip4: 192.168.41.4/24
-      gw4: 192.168.41.1
-      dns4:
-        - 192.168.41.41
-        - 192.168.41.1
-      dns4_search: syncopated.net
-      autoconnect: False
-      state: present
-      method4: manual
+network_interfaces:
+  - device: eth0
+    type: ethernet
+    ifname: eth0
+    conn_name: eth0
+    mac: 58:8a:5a:38:fb:22
+    autoconnect: False
+    state: present
+    method4: disabled
+  - device: wlan0
+    type: wifi
+    ifname: wlan0
+    conn_name: wlan0
+    mac: 66:a1:53:c9:7b:e5
+    assigned_address: c0:25:e9:74:cd:96
+    ssid: visiblemagic
+    autoconnect: False
+    state: present
+    method4: disabled
+  - device: wlan1
+    type: wifi
+    ifname: wlan1
+    conn_name: visiblemagic
+    mac: c0:25:e9:74:cd:96
+    assigned_address: c0:25:e9:74:cd:96
+    ssid: invisiblemagic
+    # wifi_sec:
+    #   key_mgmt: wpa-psk
+    #   psk: "{{ wifi_key }}"
+    ip4: 192.168.41.4/24
+    gw4: 192.168.41.1
+    dns4:
+      - 192.168.41.41
+      - 192.168.41.1
+    dns4_search: syncopated.net
+    autoconnect: False
+    state: present
+    method4: manual
 
 host:
   kernel:
