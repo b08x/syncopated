@@ -1,33 +1,85 @@
 version: '3.1'
 
 services:
-    flowise:
-        image: flowiseai/flowise
-        restart: always
-        environment:
-            - PUID=1000
-            - PGID=1000
-            - PORT=${PORT}
-            - PASSPHRASE=${PASSPHRASE}
-            - FLOWISE_USERNAME=${FLOWISE_USERNAME}
-            - FLOWISE_PASSWORD=${FLOWISE_PASSWORD}
-            - DEBUG=${DEBUG}
-            - DATABASE_PATH=${DATABASE_PATH}
-            - APIKEY_PATH=${APIKEY_PATH}
-            - SECRETKEY_PATH=${SECRETKEY_PATH}
-            - LOG_LEVEL=${LOG_LEVEL}
-            - LOG_PATH=${LOG_PATH}
-            - EXECUTION_MODE=${EXECUTION_MODE}
-        ports:
-            - '${PORT}:${PORT}'
-        volumes:
-            - /data/flowise:/root/.flowise
-            - /data/flowise/output:/data/output
-        networks:
-            - net
-        command: /bin/sh -c "sleep 3; flowise start"
+  flowise:
+    image: flowiseai/flowise
+    restart: always
+    environment:
+        - PUID=1000
+        - PGID=1000
+        - PORT=${PORT}
+        - PASSPHRASE=${PASSPHRASE}
+        - FLOWISE_USERNAME=${FLOWISE_USERNAME}
+        - FLOWISE_PASSWORD=${FLOWISE_PASSWORD}
+        - DEBUG=${DEBUG}
+        - DATABASE_PATH=${DATABASE_PATH}
+        - APIKEY_PATH=${APIKEY_PATH}
+        - SECRETKEY_PATH=${SECRETKEY_PATH}
+        - LOG_LEVEL=${LOG_LEVEL}
+        - LOG_PATH=${LOG_PATH}
+        - EXECUTION_MODE=${EXECUTION_MODE}
+    ports:
+        - '${PORT}:${PORT}'
+    volumes:
+        - /data/flowise:/root/.flowise
+        - /data/flowise/output:/data/output
+    command: /bin/sh -c "sleep 3; flowise start"
+    networks:
+      network:
+        ipv4_address: 10.5.0.3
+  chromadb:
+    image: ghcr.io/chroma-core/chroma:latest
+    volumes:
+      - chroma_persistent_folder:/chroma/chroma/
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - IS_PERSISTENT=TRUE
+    ports:
+      - 8000:8000
+    networks:
+      network:
+        ipv4_address: 10.5.0.4
+  redis:
+    image: redis/redis-stack:latest
+    environment:
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - "{{ user.home }}/LLMOS/redis/data:/data"
+    ports:
+      - 6379:6379
+      - 8081:8081
+    networks:
+      network:
+        ipv4_address: 10.5.0.5
+  postgres:
+    image: ankane/pgvector
+    environment:
+      PUID: 1000
+      PGID: 1000
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+      POSTGRES_DB: monadic
+      POSTGRES_USER: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - "{{ user.home }}/pgvector/local-data:/data"
+      - "{{ user.home }}/pgvector/pgdata:/var/lib/postgresql/data"
+    networks:
+      network:
+        ipv4_address: 10.5.0.6
+
+volumes:
+  chroma_persistent_folder:
+    driver: local
+  backups:
+    driver: local
 
 networks:
-    net:
-      name: chromadb_net
-      external: true
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1

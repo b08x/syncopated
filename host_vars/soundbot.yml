@@ -57,7 +57,7 @@ i3:
   autostart:
     "default"
     # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
-  tray_output: "primary"
+  tray_output: "eDP-1"
   assignments: "default"
   workspaces:
     - "$ws1 output HDMI-1"
