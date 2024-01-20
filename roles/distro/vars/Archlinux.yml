@@ -2,4 +2,4 @@
 ---
 
 repos:
-  # chaotic: False
+  chaotic: False

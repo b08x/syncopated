@@ -10,6 +10,9 @@ share:
     exports:
       - Videos
 
+repos:
+  chaotic: True
+
 app:
   install:
     reaper: True

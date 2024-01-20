@@ -5,7 +5,9 @@ subtitle:
 
 # Introduction
 
-Hello.
+An exercise in Linux Desktop Configuration Management. Intended to serve as an IaC framework for a small lab or studio.
+
+The project contains customized Ansible roles, playbooks, and modules to help optimize the  configuration Linux hosts that are used in an audio production workflow.
 
 ## Project Overview
 
