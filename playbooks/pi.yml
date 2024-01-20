@@ -1,12 +1,12 @@
 ---
-- hosts: all
-  tags: ["workstation"]
+- hosts: pi
+  tags: ["pi"]
   become: True
   gather_subset:
     - hardware
     - network
   vars_files:
-    - ../vars/Archlinux/packages.yml
+    - ../vars/Raspberry/packages.yml
     - ../vars/theme.yml
   vars:
     # suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
@@ -32,10 +32,10 @@
       check_mode: no
       tags: ["always"]
 
-    # - name: show expected_value
-    #   debug:
-    #     var: timestamp
-    #   tags: ['always']
+    - name: show expected_value
+      debug:
+        var: users
+      tags: ['always']
 
     - name: Set suffix
       set_fact:
@@ -60,7 +60,7 @@
 
     - name: Set admin group name
       set_fact:
-        admin_group: wheel
+        admin_group: sudo
       tags: ["always"]
 
     - name: Check -march support
@@ -137,9 +137,6 @@
     #   tags: ['testing']
 
   roles:
-    - role: distro
-      tags: ["distro"]
-
     - role: base
       tags: ["base"]
 

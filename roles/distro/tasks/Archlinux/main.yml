@@ -1,0 +1,10 @@
+---
+
+#setup repositories
+
+- import_tasks:
+    file: repos.yml
+
+- import_tasks:
+    file: chaotic.yml
+  when: repos.chaotic is defined

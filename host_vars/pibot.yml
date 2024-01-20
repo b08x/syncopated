@@ -1,0 +1,31 @@
+---
+
+distribution: Raspberry
+
+autologin: True
+
+bluetooth: True
+
+# share:
+#   nfs:
+#     parent: "{{ user.home }}"
+#     exports:
+#       - LLMOS
+
+desktop:
+  dm: False
+  wm: i3
+  terminal: "xterm"
+  terminal_alt: "xterm"
+  browser: "google-chrome-stable"
+  audio: "jack"
+
+user:
+  name: pi
+  group: pi
+  uid: 1000
+  gid: 1000
+  home: /home/pi
+  shell: zsh
+  secondary_groups: "input,video,audio"
+  sudoers: True

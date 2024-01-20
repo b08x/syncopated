@@ -1,6 +1,6 @@
 html{
   display: flex;
-  flex-flow: row nowrap;  
+  flex-flow: row nowrap;
   justify-content: center;
   align-content: center;
   align-items: center;
@@ -37,6 +37,15 @@ body {
   display: flex;
   flex-direction: column;
   width: 150px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  width: 42rem;
+  padding: 1rem;
+  margin: 2rem;
+  color: #16af45;
 }
 
 .bookmark {
@@ -167,4 +176,11 @@ div.bookmarks.mus a:hover {
 
 div.bookmarks.art a:hover {
   color: #FF62CE;
+}
+
+div.bookmarks.stuff  {
+  margin: 1rem;
+  a:hover {
+    color: #62deff;
+  }
 }

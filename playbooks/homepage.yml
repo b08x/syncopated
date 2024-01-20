@@ -57,3 +57,9 @@
         group: "{{ user.group }}"
         mode: '0664'
         backup: False
+
+  post_tasks:
+    - name: Cleanup old backup files
+      script: "/usr/local/bin/cleanup.sh"
+      when: cleanup is defined
+      tags: ["cleanup"]

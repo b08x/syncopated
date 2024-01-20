@@ -38,10 +38,6 @@
   tags: ['sshd']
 
 - import_tasks:
-    file: repos.yml
-  tags: ['repo', 'packages']
-
-- import_tasks:
     file: updatedb.yml
   tags: ['updatedb']
 
