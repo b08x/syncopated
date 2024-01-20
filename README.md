@@ -41,8 +41,4 @@ ansible-playbook -i inventory.ini playbooks/full.yml --tags $TAGS --limit $HOSTN
 
 #TODO:
 
-- [ ] [distrobox](https://github.com/89luca89/distrobox)
-
-- [ ] [vagrant](https://github.com/hashicorp/vagrant)
-
 - [ ] yadm

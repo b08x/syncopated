@@ -1,0 +1,5 @@
+---
+# tasks file for roles/distro
+
+- import_tasks:
+    file: "{{ distribution }}/main.yml"

@@ -35,35 +35,34 @@ desktop:
   audio: "jack"
 
 
-network:
-  interfaces:
-    eno1:
-      type: ethernet
-      ifname: eno1
-      conn_name: eno1
-      mac: b8:ca:3a:94:51:ca
-      ip4: 192.168.41.2
-      gw4: 192.168.41.1
-      dns4: 192.168.41.41
-      dns4_search: syncopated.net
-      autoconnect: True
-      state: present
-      method4: manual
-    enp2s0f0:
-      type: ethernet
-      ifname: enp2s0f0
-      conn_name: audio
-      mac: 00:1b:21:87:e8:ba
-      ip4: 192.168.36.4
-      autoconnect: True
-      state: present
-      method4: manual
-    enp2s0f1:
-      type: ethernet
-      ifname: enp2s0f1
-      conn_name: audio
-      mac: 00:1b:21:87:e8:bb
-      ip4: 192.168.36.5
-      autoconnect: True
-      state: present
-      method4: manual
+network_interfaces:
+  - device: eno1
+    type: ethernet
+    ifname: eno1
+    conn_name: eno1
+    mac: b8:ca:3a:94:51:ca
+    ip4: 192.168.41.2
+    gw4: 192.168.41.1
+    dns4: 192.168.41.41
+    dns4_search: syncopated.net
+    autoconnect: True
+    state: present
+    method4: manual
+  - device: enp2s0f0
+    type: ethernet
+    ifname: enp2s0f0
+    conn_name: audio
+    mac: 00:1b:21:87:e8:ba
+    ip4: 192.168.36.4
+    autoconnect: True
+    state: present
+    method4: manual
+  - device: enp2s0f1
+    type: ethernet
+    ifname: enp2s0f1
+    conn_name: audio
+    mac: 00:1b:21:87:e8:bb
+    ip4: 192.168.36.5
+    autoconnect: True
+    state: present
+    method4: manual

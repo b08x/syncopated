@@ -5,7 +5,8 @@
     - block:
         - name: Add Docker repository
           shell: |
-            yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+            yum-config-manager --add-repo \
+            https://download.docker.com/linux/centos/docker-ce.repo
           register: result
 
         - name: Install Docker packages

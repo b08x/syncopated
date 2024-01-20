@@ -1,0 +1,6 @@
+---
+
+#setup repositories
+
+- import_tasks:
+    file: repos.yml

@@ -1,5 +1,11 @@
 ---
 
+# tasks file for desktop
+- name: Collect only selected facts
+  setup:
+    filter:
+      - 'ansible_system_vendor'
+
 - name: Ensure user belongs to audio group
   user:
     name: "{{ item.name }}"

@@ -1,6 +1,6 @@
 ---
-- hosts: workstation
-  tags: ['workstation']
+- hosts: all
+  tags: ["workstation"]
   become: True
   gather_subset:
     - hardware
@@ -23,14 +23,14 @@
     - name: show expected_value
       debug:
         var: ansible_facts["date_time"]["epoch"]
-      tags: ['always']
+      tags: ["always"]
 
       # the task will run if `check_mode` to 'no'
     - name: Register timestamp
-      shell: 'date +"%Y%m%d_%H%M%S"'
+      shell: "date +'%s.%Y-%m-%d@%H:%M:%S~'"
       register: timestamp
       check_mode: no
-      tags: ['always']
+      tags: ["always"]
 
     # - name: show expected_value
     #   debug:
@@ -40,7 +40,8 @@
     - name: Set suffix
       set_fact:
         suffix: "{{ timestamp.stdout_lines[0] }}"
-      tags: ['always']
+      tags: ["always"]
+
     # - name: Set expected_value
     #   set_fact:
     #     expected_value: "playbook_pretask_setfact"
@@ -112,12 +113,12 @@
           when:
             - not keys.stat.exists
             - newInstall is defined
-          tags: ['keys']
+          tags: ["keys"]
 
       ignore_errors: "{{ ansible_check_mode }}"
       vars:
         expected_value: "playbook_pre_task_blockVar"
-      tags: ['testing']
+      tags: ["testing"]
 
     # - block:
     #
@@ -136,8 +137,14 @@
     #   tags: ['testing']
 
   roles:
+    - role: distro
+      tags: ["distro"]
+
     - role: base
       tags: ["base"]
+
+    - role: shell
+      tags: ["shell"]
 
     - role: terminal
       tags: ["terminal"]
@@ -149,10 +156,10 @@
       tags: ["ruby"]
 
     - role: docker
-      tags: ['docker']
+      tags: ["docker"]
 
     - role: libvirt
-      tags: ['libvirt']
+      tags: ["libvirt"]
 
     - role: alsa
       tags: ["alsa", "audio"]
@@ -172,20 +179,23 @@
     - role: theme
       tags: ["theme"]
 
-    - role: xorg
-      tags: ["xorg"]
+    - role: user
+      tags: ["user"]
+
+    - role: x
+      tags: ["x"]
 
     - role: i3
       tags: ["i3"]
 
-    - role: desktop
-      tags: ['desktop']
+    - role: lightdm
+      tags: ["lightdm"]
 
-    # - role: user
-    #   tags: ["user"]
+    - role: desktop
+      tags: ["desktop"]
 
     - role: applications
-      tags: ['applications']
+      tags: ["applications"]
 
   # tasks:
   #

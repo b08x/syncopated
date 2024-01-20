@@ -261,7 +261,7 @@ packages:
     - jacktrip
     - njconnect
   kvantum:
-    - kvantum-theme-nordic-git
+    # - kvantum-theme-nordic-git
     # - kvantum-qt5
     - kvantum-theme-matcha
   loopers:

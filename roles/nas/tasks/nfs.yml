@@ -55,7 +55,7 @@
             - 32769/udp
             - 32803/tcp
             - 40418/udp
-          register: fw_nfs
+          notify: reload firewalld
 
       when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
 
