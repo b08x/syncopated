@@ -421,19 +421,17 @@ packages:
     - helm-synth-standalone
     - helm-synth-vst
   terminal:
+    - mcfly
     - alacritty
     - aria2
     - asciiquarium-transparent-git
     - atool
     - bash-completion
-    - bat
     - bottom
     - btop
     - calibre
     - djvulibre
     - elinks
-    - eza
-    - fd
     - figlet
     - fontforge
     - guake
@@ -499,9 +497,14 @@ packages:
     - sox
     - tuned
   utility:
+    - gping
     - aria2
+    - bat
+    - git-delta
     - barrier
     - fd
+    - dust
+    - duf
     - firewalld
     - gnome-keyring
     - htop

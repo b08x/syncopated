@@ -128,7 +128,7 @@ host:
       - nvidia-470xx-utils
       - nvidia-container-runtime
       - nvidia-container-toolkit
-      - nvidia-docker
+      # - nvidia-docker
       - nvidia-docker-compose
     # opengl:
       - libva-utils

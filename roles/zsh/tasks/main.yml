@@ -27,9 +27,6 @@
       - "--omit-dir-times"
       - "--progress"
       - "--itemize-changes"
-      - "--delete"
-      - "--backup"
-      - "--suffix={{ suffix }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['env', 'profile']
 
