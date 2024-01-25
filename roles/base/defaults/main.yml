@@ -23,3 +23,4 @@ expected_value: "role_base_defaults"
 
 repos:
   chaotic: False
+  syncopated: False

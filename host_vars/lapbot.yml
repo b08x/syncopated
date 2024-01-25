@@ -12,6 +12,7 @@ bluetooth: True
 
 repos:
   chaotic: True
+  syncopated: False
 
 # share:
 #   nfs:
@@ -21,8 +22,8 @@ repos:
 app:
   install:
     reaper: False
-    pulsar: True
-    vscode: True
+    pulsar: False
+    vscode: False
     vamp: True
     mixxx: False
     annotator: True

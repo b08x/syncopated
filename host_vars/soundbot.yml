@@ -7,6 +7,10 @@ login:
 
 bluetooth: True
 
+repos:
+  chaotic: False
+  syncopated: True
+
 share:
   nfs:
     parent: "{{ user.home }}"
@@ -16,8 +20,8 @@ share:
 app:
   install:
     reaper: True
-    pulsar: True
-    vscode: True
+    pulsar: False
+    vscode: False
     vamp: True
     mixxx: True
     annotator: True
@@ -25,17 +29,17 @@ app:
     touchosc: True
     tony: True
 
-docker:
-  service: "enabled"
-  storage: /var/lib/docker
-  nvidia: False
-
 cpupower:
   governor: performance
   perf_bias: 0
 
 tuned:
   profile: powersave
+
+docker:
+  service: "enabled"
+  storage: /var/lib/docker
+  nvidia: False
 
 desktop:
   dm: False
@@ -45,9 +49,10 @@ desktop:
   browser: "google-chrome-stable"
   audio: "jack"
   barrier:
-    client:
+    server:
       name: soundbot
-      server: "[tinybot]:24800"
+      address: '[soundbot]:24800'
+      config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
 
 x:
   autostart:
@@ -57,53 +62,53 @@ i3:
   autostart:
     "default"
     # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
-  tray_output: "eDP-1"
+  tray_output: "primary"
   assignments: "default"
   workspaces:
-    - "$ws1 output HDMI-1"
-    - "$ws2 output HDMI-1"
-    - "$ws3 output HDMI-1"
-    - "$ws4 output HDMI-1"
-    - "$ws5 output HDMI-1"
-    - "$ws6 output HDMI-1"
-    - "$ws7 output HDMI-1"
-    - "$ws8 output eDP-1"
-    - "$ws9 output eDP-1"
-    - "$ws10 output eDP-1"
+    - "$ws1 output eDP-1"
+    - "$ws2 output eDP-1"
+    - "$ws3 output eDP-1"
+    - "$ws4 output DP-1-2"
+    - "$ws5 output DP-1-2"
+    - "$ws6 output DP-1-2"
+    - "$ws7 output DP-1-2"
+    - "$ws8 output DP-1-2"
+    - "$ws9 output DP-1-2"
+    - "$ws10 output DP-1-2"
   keybindings: "default"
 
-network_interfaces:
-  - device: eth0
-    type: ethernet
-    ifname: eth0
-    conn_name: eth0
-    mac: 54:ee:75:fd:46:30
-    autoconnect: False
-    state: present
-    method4: auto
-  - device: eth1
-    type: ethernet
-    ifname: eth1
-    conn_name: eth1
-    mac: 00:50:b6:91:fc:4d
-    ip4: 192.168.41.42/24
-    gw4: 192.168.41.1
-    dns4:
-      - 192.168.41.41
-      - 192.168.41.1
-    dns4_search: syncopated.net
-    autoconnect: True
-    state: present
-    method4: manual
-  - device: eth2
-    type: ethernet
-    ifname: eth2
-    conn_name: audio
-    mac: 00:e0:4d:78:b7:7c
-    ip4: 192.168.36.1/24
-    autoconnect: True
-    state: present
-    method4: manual
+# network_interfaces:
+#   - device: eth0
+#     type: ethernet
+#     ifname: eth0
+#     conn_name: eth0
+#     mac: 54:ee:75:fd:46:30
+#     autoconnect: False
+#     state: present
+#     method4: auto
+#   - device: eth1
+#     type: ethernet
+#     ifname: eth1
+#     conn_name: eth1
+#     mac: 00:50:b6:91:fc:4d
+#     ip4: 192.168.41.42/24
+#     gw4: 192.168.41.1
+#     dns4:
+#       - 192.168.41.41
+#       - 192.168.41.1
+#     dns4_search: syncopated.net
+#     autoconnect: True
+#     state: present
+#     method4: manual
+#   - device: eth2
+#     type: ethernet
+#     ifname: eth2
+#     conn_name: audio
+#     mac: 00:e0:4d:78:b7:7c
+#     ip4: 192.168.36.1/24
+#     autoconnect: True
+#     state: present
+#     method4: manual
 
 host:
   xorg:

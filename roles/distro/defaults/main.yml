@@ -1,4 +1,8 @@
 ---
 # defaults file for roles/distro
 
-admin_group: 
+admin_group:
+
+repos:
+  chaotic: False
+  syncopated: True

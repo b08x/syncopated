@@ -5,7 +5,6 @@
     path: "/usr/local/bin/lsmi-keyhack"
   register: result
   ignore_errors: "{{ ansible_check_mode }}"
-  tags: ['packages']
 
 - block:
     - name: Extract lsmi.tar.gz

@@ -32,10 +32,10 @@
       check_mode: no
       tags: ["always"]
 
-    # - name: show expected_value
-    #   debug:
-    #     var: timestamp
-    #   tags: ['always']
+    - name: show expected_value
+      debug:
+        var: distribution
+      tags: ['always']
 
     - name: Set suffix
       set_fact:

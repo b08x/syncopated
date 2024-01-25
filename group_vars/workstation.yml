@@ -28,6 +28,8 @@ i3:
   workspaces: 'default'
   keybindings: 'default'
 
+vscode_install: False
+
 intranet:
   group:
     bookmarks:
