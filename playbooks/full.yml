@@ -18,8 +18,9 @@
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
     ZSH: "/usr/share/oh-my-zsh"
     DISPLAY: ":0"
-
+# variables from vars_files are available starting here...
   pre_tasks:
+
     - name: show expected_value
       debug:
         var: ansible_facts["date_time"]["epoch"]
@@ -203,11 +204,11 @@
   #     debug:
   #       msg: "{{ package_install_command }}"
 
-  # post_tasks:
-  #   - name: Cleanup old backup files
-  #     script: "/usr/local/bin/cleanup.sh"
-  #     when: cleanup is defined
-  #     tags: ["cleanup"]
+  post_tasks:
+    - name: Cleanup old backup files
+      script: "/usr/local/bin/cleanup.sh"
+      when: cleanup is defined
+      tags: ["cleanup"]
 
   #     # Reset is not implemented local connection
   #     - name: Reboot host

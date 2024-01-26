@@ -39,7 +39,7 @@ SigLevel    = Required DatabaseOptional
 LocalFileSigLevel = Optional
 #RemoteFileSigLevel = Required
 
-{% if repos.syncopated == True %}
+{% if repos.syncopated|bool %}
 {% if architecture == 'x86-64-v3' %}
 [syncopated-v3]
 SigLevel = Optional TrustAll
