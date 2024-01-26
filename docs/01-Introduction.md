@@ -37,7 +37,7 @@ The project contains customized Ansible roles, playbooks, and modules to help op
 
 ## Project Overview
 
-The "SyncopatedIac" project is an Infrastructure as Code (IaC) framework that leverages Ansible to configure and maintain Linux-based hosts for audio production workflows. It encompasses a collection of roles which articulate the desired state of the infrastructure, encompassing software packages, services, and configurations essential for an optimal audio production environment.
+The "SyncopatedIac" project is an Infrastructure as Code (IaC) framework that 
 
 You can create playbooks that define the desired settings for each application, such as audio preferences, plugin configurations, or project templates. By using Ansible, you can easily apply these configurations across multiple machines, ensuring consistency and reducing manual effort.
 

@@ -1,5 +1,23 @@
 #!/usr/bin/env bash
 
+# The purpose of the package_names.sh script is to query the Repology API and retrieve metadata about software packages/projects.
+
+# Specifically, it allows filtering packages based on different criteria and retrieving details via API calls to Repology.org.
+
+# Some key things the script allows:
+
+# Searching for packages by name or description substring
+# Filtering by maintainer
+# Filtering by category
+# Checking which repositories a package is present or absent in
+# Filtering by number of repositories or repository families a package belongs to
+# Checking if a package is up-to-date or outdated in different repositories
+# Retrieving full details for a single package by its name
+# This allows programmatically interrogating Repology's package database to find packages that match certain criteria, like unique/outdated packages in specific repositories.
+
+# The output is formatted as JSON which makes it easy to parse and consume in other scripts/programs.
+
+# So in summary, the package_names.sh script provides a wrapper and CLI interface to make API queries to the Repology database to retrieve packaged metadata according to different filtering options. This enables automated discovery and auditing of packages.
 
 # Supported filters are:
 #

@@ -1,38 +1,35 @@
-Role Name
-=========
+# x
 
-A brief description of the role goes here.
+The "x" role handles tasks related to configuring the X Window System environment. Some key things about its structure and content:
 
-Requirements
-------------
+Files - Contains templates for X configuration files like xorg.conf
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Tasks - Main tasks are in tasks/main.yml, includes are used to split logic
 
-Role Variables
---------------
+Templates - templates/ renders config files from variable input
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Vars - Variables for package names, drivers, configs
 
-Dependencies
-------------
+Defaults - Default var values for things like video card, driver
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Common tasks include:
 
-Example Playbook
-----------------
+Installing Xorg server and driver packages for GPU (i.e. nvidia, amd, intel)
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Generating xorg.conf files from templates
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Setting environmental variables
 
-License
--------
+Configuring display managers like LightDM, SDDM
 
-BSD
+Managing X services - enabling, starting X at boot
 
-Author Information
-------------------
+Configuring input devices
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Installing X utilities like xrandr, arandr
+
+Window manager agnostic - supports many WMs
+
+This allows playbook authors to declaratively configure the full X system, GPU drivers and window managers while reusing common tasks. Vars allow flexibility per target based on hardware.
+
+The role provides an Ansible-driven approach to repeatably deploy visual environments at scale. Its structure, defaults and parameters promote modularity, extensibility and deployability.

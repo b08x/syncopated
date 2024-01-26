@@ -1,38 +1,31 @@
-Role Name
-=========
+# desktop
 
-A brief description of the role goes here.
+The desktop role handlestasks related to configuring the desktop environment, window manager and general applications.
 
-Requirements
-------------
+Some key aspects it manages:
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Structure is standard with tasks, defaults, vars folders.
 
-Role Variables
---------------
+Installs base desktop packages like gnome, kde, xfce based on {{desktop.wm}} value.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Installs browser, media, development dependent packages.
 
-Dependencies
-------------
+Creates configuration directories for apps like dunst, picom, sxhkd etc.
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Generates config files from templates - i3, dunstrc, picom etc.
 
-Example Playbook
-----------------
+Manages DM/Login - sets .dmrc, enables automatic login.
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Configures WM - i3, sway related tasks are imported conditionally.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Handles input methods - input-remapper tasks.
 
-License
--------
+Configures menu, thunar files, bindings - menu.yml, sxhkd.yml
 
-BSD
+Sets xdg autostart apps, dunst, updates desktop db.
 
-Author Information
-------------------
+Barrier role for multi-machine desktop - configs, services.
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Key goal is a fully configured and customized desktop environment including window manager, applications and preferences. Reusable across different *buntu/Arch systems.
+
+Main files involved are tasks/main.yml, calls to other subdomain task files, and Jinja template config file generation.
