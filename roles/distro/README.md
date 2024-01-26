@@ -1,38 +1,20 @@
-Role Name
-=========
+# distro
 
-A brief description of the role goes here.
+# What are the tasks and configurations performed by the "distro" role?
+The distro role does not define any tasks itself. It conditionally imports the tasks from the Archlinux/main.yml file if the distribution is Archlinux or EndeavourOS. No other tasks are defined.
 
-Requirements
-------------
+# What variables are used by the "distro" role and where are they declared?
+The only variables defined for the distro role are:
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+distribution - OS distribution name defined elsewhere
+admin_group - Default admin group defined in /syncopatedIaC/roles/distro/defaults/main.yml
+repos - Lists of repos to enable defined in /syncopatedIaC/roles/distro/defaults/main.yml
 
-Role Variables
---------------
+# What functionality does the "distro" role provide?
+The distro role provides a means to partition functionality specific to Linux distributions in a generic way.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+It allows defining distribution-specific tasks, variables and handlers by importing them conditionally based on the distribution variable.
 
-Dependencies
-------------
+For Archlinux systems, it provides the functionality defined in the imported Archlinux/main.yml tasks file. But other distro tasks could also be added similarly.
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+So in summary, it provides a way to abstract out distribution-specific configuration and installation steps while keeping common roles and variables defined separately.
