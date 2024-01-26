@@ -204,11 +204,11 @@
   #     debug:
   #       msg: "{{ package_install_command }}"
 
-  # post_tasks:
-  #   - name: Cleanup old backup files
-  #     script: "/usr/local/bin/cleanup.sh"
-  #     when: cleanup is defined
-  #     tags: ["cleanup"]
+  post_tasks:
+    - name: Cleanup old backup files
+      script: "/usr/local/bin/cleanup.sh"
+      when: cleanup is defined
+      tags: ["cleanup"]
 
   #     # Reset is not implemented local connection
   #     - name: Reboot host
