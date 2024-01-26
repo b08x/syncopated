@@ -14,6 +14,7 @@
     owner: root
     group: root
     recurse: True
+  register: iconsdir
 
 - name: Extract soundbot theme icons into /usr/local/share/icons
   unarchive:
@@ -24,9 +25,11 @@
     - ArchLabs-Dark.tar.gz
     - ArchLabs-Light.tar.gz
   ignore_errors: "{{ ansible_check_mode }}"
+  when: iconsdir.changed
 
 - name: Update the icon cache
   command: bash -lc "gtk-update-icon-cache"
   register: icon_cache
   changed_when: icon_cache.rc !=0
+  when: iconsdir.changed
   tags: ['icons']

@@ -46,6 +46,7 @@
     owner: root
     group: root
     recurse: True
+  register: themesdir
 
 - name: Extract themes into /usr/local/share/themes
   unarchive:
@@ -56,10 +57,11 @@
    - ArchLabs-Dark.tar.gz
    - ArchLabs-Light.tar.gz
   ignore_errors: "{{ ansible_check_mode }}"
+  when: themesdir.changed
 
 - name: Install gtk configurations
   template:
-    src: "etc/skel/{{ item }}.j2"
+    src: "home/{{ item }}.j2"
     dest: "{{ user.home }}/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
@@ -75,7 +77,7 @@
 
 - name: Install qt configurations
   template:
-    src: "etc/skel/{{ item }}.j2"
+    src: "home/{{ item }}.j2"
     dest: "{{ user.home }}/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"

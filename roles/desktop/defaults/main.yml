@@ -38,4 +38,4 @@ desktop_directory_definitions:
   - dest: ".config/sxhkd"
   - dest: ".zsh"
   - dest: ".config/qutebrowser"
-  - dest: ".config/zim"
+  - dest: ".config/redshift"

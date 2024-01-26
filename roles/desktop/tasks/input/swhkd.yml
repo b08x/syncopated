@@ -25,7 +25,7 @@
 
 - name: Install swhkd keybindings
   template:
-    src: "etc/skel/.config/swhkd/swhkdrc.j2"
+    src: "home/.config/swhkd/swhkdrc.j2"
     dest: "{{ user.home }}/.config/swhkd/swhkdrc"
     owner: root
     group: root

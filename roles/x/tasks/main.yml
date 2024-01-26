@@ -33,7 +33,7 @@
 
 - name: Disable vblank
   copy:
-    src: etc/skel/.drirc
+    src: home/.drirc
     dest: "{{ user.home }}/.drirc"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
@@ -43,7 +43,7 @@
 
 - name: Install xorg configs
   template:
-    src: "etc/skel/{{ item }}.j2"
+    src: "home/{{ item }}.j2"
     dest: "{{ user.home }}/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"

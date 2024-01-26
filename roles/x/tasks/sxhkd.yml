@@ -2,14 +2,14 @@
 
 - name: Create sxhkd config folder
   file:
-    path: /etc/skel/.config/sxhkd
+    path: "{{ user.home }}/.config/sxhkd"
     state: directory
-    owner: root
-    group: root
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
 
 - name: Install sxhkd keybindings
   template:
-    src: "etc/skel/.config/sxhkd/sxhkdrc.j2"
+    src: "home/.config/sxhkd/sxhkdrc.j2"
     dest: "{{ user.home }}/.config/sxhkd/sxhkdrc"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"

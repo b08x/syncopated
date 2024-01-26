@@ -5,6 +5,7 @@ tags:
   - ansible
   - linux-audio
 ---
+# an example use case
 
 An operation is ***idempotent*** if doing it once gives you the same end result as doing it over and over again, without anything else changing in between.
 

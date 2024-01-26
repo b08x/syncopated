@@ -24,19 +24,19 @@
   become: False
   tags: ['packages']
 
-- name: Install alacritty template
-  template:
-    src: etc/skel/.config/alacritty/alacritty.yml.j2
-    dest: "{{ user.home }}/.config/alacritty/alacritty.yml"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-    backup: True
-  tags: ['alacritty']
+# - name: Install alacritty template
+#   template:
+#     src: home/.config/alacritty/alacritty.yml.j2
+#     dest: "{{ user.home }}/.config/alacritty/alacritty.yml"
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+#     mode: '0644'
+#     backup: True
+#   tags: ['alacritty']
 
 - name: Install kitty templates
   template:
-    src: "etc/skel/.config/kitty/{{ item }}.j2"
+    src: "home/.config/kitty/{{ item }}.j2"
     dest: "{{ user.home }}/.config/kitty/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"

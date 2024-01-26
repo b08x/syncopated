@@ -54,7 +54,7 @@
 - block:
     - name: Set i3 configuration
       template:
-        src: "etc/skel/{{ item }}.j2"
+        src: "home/{{ item }}.j2"
         dest: "{{ user.home }}/{{ item }}"
         owner: "{{ user.name }}"
         group: "{{ user.group }}"
@@ -72,7 +72,7 @@
 
     - name: Set i3status-rs configuration
       template:
-        src: "etc/skel/{{ item }}.j2"
+        src: "home/{{ item }}.j2"
         dest: "{{ user.home }}/{{ item }}"
         owner: "{{ user.name }}"
         group: "{{ user.group }}"
@@ -87,7 +87,7 @@
 
 - name: Synchronize templates - rofi
   template:
-    src: "etc/skel/{{ item }}.j2"
+    src: "home/{{ item }}.j2"
     dest: "{{ user.home }}/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"

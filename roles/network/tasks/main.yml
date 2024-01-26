@@ -18,9 +18,10 @@
 #   when: network_interfaces is defined
 #   notify: Reload udev rules
 
-- import_tasks:
-    file: networkmanager.yml
-  tags: ['networkmanager']
+#TODO: convert to systemd-networkd
+# - import_tasks:
+#     file: networkmanager.yml
+#   tags: ['networkmanager']
 
 - import_tasks:
     file: ntp.yml

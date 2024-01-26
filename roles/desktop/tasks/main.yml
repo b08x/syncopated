@@ -122,7 +122,7 @@
 #TODO: Add dunst and picom xdg autostart desktop entries
 - name: Set dunst config
   template:
-    src: "etc/skel/.config/dunst/dunstrc.j2"
+    src: "home/.config/dunst/dunstrc.j2"
     dest: "{{ user.home }}/.config/dunst/dunstrc"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
@@ -132,13 +132,23 @@
 
 - name: Set picom config
   template:
-    src: "etc/skel/.config/picom.conf.j2"
+    src: "home/.config/picom.conf.j2"
     dest: "{{ user.home }}/.config/picom.conf"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
     mode: '0644'
     backup: yes
   tags: ["profile", "picom"]
+
+- name: Set redshift config
+  copy:
+    src: home/.config/redshift/redshift.conf
+    dest: "{{ user.home }}/.config/redshift/redshift.conf"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: False
+  tags: ['redshift']
 
 - import_tasks:
     file: barrier.yml
@@ -176,8 +186,6 @@
       - "--exclude='*.*~'"
       - "--omit-dir-times"
       - "--chown=root:root"
-      - "--backup"
-      - "--suffix={{ suffix }}"
 
 - name: Update desktop database
   command: bash -lc "update-desktop-database"

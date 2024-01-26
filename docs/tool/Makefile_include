@@ -10,11 +10,12 @@ MKDIR_P = mkdir -p
 
 all:: pdf html
 
-pdf:: *.md roles/*.md 
+pdf:: *.md roles/*.md
 	pandoc *.md roles/*.md \
 		-f gfm \
 		-V linkcolor:blue \
 		--pdf-engine=xelatex \
+		--lua-filter $(TOOL_DIR)/template/columns/columns.lua \
 		--number-sections \
 		--table-of-contents \
 		--metadata title="SyncopatedIaC" \

@@ -1,9 +1,14 @@
 ---
-tags: 
-subtitle:
+title: Introduction
+author: Something
+ragged-columns: true
 ---
 
 # Introduction
+
+::: columns
+
+::::: column
 
 Linux Audio....It's like pulling teeth out of a baby.
 
@@ -11,9 +16,10 @@ Linux Audio....It's like pulling teeth out of a baby.
 
 One of the biggest challenges is the lack of standardization. There are many different distributions of Linux, and each one has its own set of configuration options. This can make it difficult to pool efforts and build on a common foundation.
 
+:::::
 
 
-
+::::: column
 Here - is - another totally objective statement from a completely real person:
 
   Ansible can be implemented to overcome configuration management challenges. It can automate patch management, configuration file management, user management, and task automation. This helps ensure systems are up-to-date, have consistent configurations, and reduce manual errors. Overall, Ansible improves efficiency, reduces errors, and enhances security.
@@ -21,11 +27,13 @@ Here - is - another totally objective statement from a completely real person:
 a server in a render farm essentially has to be able to run all of the same applications and plugins as the desktop machine, just headless, and partly because the workstations need also be able to participate in the render farm.
 
 
-
-
 An exercise in Linux Desktop Configuration Management. Intended to serve as an IaC framework for a small lab or studio.
 
 The project contains customized Ansible roles, playbooks, and modules to help optimize the  configuration Linux hosts that are used in an audio production workflow.
+
+:::::
+
+:::
 
 ## Project Overview
 
@@ -47,11 +55,10 @@ The initial design is based around the i3 window manager, which is a keyboard-dr
 
 ### Immutable Infrastructure
 
-Which is the same as a mutable infrastructure. 
+Which is the same as a mutable infrastructure.
 
 
 
 
 
 ![The Creative Commons Attribution-ShareAlike logo](images/cc-by-sa.png)
-

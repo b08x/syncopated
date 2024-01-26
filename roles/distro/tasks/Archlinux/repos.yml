@@ -8,6 +8,12 @@
 #   register: syncopated_keys
 #   tags: ['repo']
 
+- name: show expected_value
+  debug:
+    var: packages
+  tags: ['always']
+
+
 - name: Import archaudio repo key
   community.general.pacman_key:
     id: 762AE5DB2B38786364BD81C4B9141BCC62D38EE5

@@ -420,63 +420,63 @@ packages:
     - helm-synth-lv2
     - helm-synth-standalone
     - helm-synth-vst
-  terminal:
-    - mcfly
-    - alacritty
-    - aria2
-    - asciiquarium-transparent-git
-    - atool
-    - bash-completion
-    - bottom
-    - btop
-    - calibre
-    - djvulibre
-    - elinks
-    - figlet
-    - fontforge
-    - guake
-    - gum
-    - highlight
-    - htop
-    - imagemagick
-    - jq
-    - jupyter-nbconvert
-    - kitty
-    - kitty-shell-integration
-    - kitty-terminfo
-    - links
-    - lnav
-    - lynx
-    - mediainfo
-    - mupdf-tools
-    - ncdu
-    - neofetch
-    - neovim-symlinks
-    - nvtop
-    - odt2txt
-    - openscad
-    - perl-image-exiftool
-    - python-pillow
-    - python-pygments
-    - ranger
-    - ripgrep
-    - ripgrep-all
-    - rsync
-    - rxvt-unicode
-    - smartmontools
-    - termdown
-    - terminator
-    - terminology
-    - tilda
-    - transmission-cli
-    - tree
-    - ueberzug
-    - v4l-utils
-    - w3m
-    - wget
-    - xterm
-    - yadm
-    - zsh
+  # terminal:
+  #   - alacritty
+  #   - aria2
+  #   - asciiquarium-transparent-git
+  #   - atool
+  #   - bash-completion
+  #   - bottom
+  #   - btop
+  #   - calibre
+  #   - djvulibre
+  #   - elinks
+  #   - figlet
+  #   - fontforge
+  #   - guake
+  #   - gum
+  #   - highlight
+  #   - htop
+  #   - imagemagick
+  #   - jq
+  #   - jupyter-nbconvert
+  #   - kitty
+  #   - kitty-shell-integration
+  #   - kitty-terminfo
+  #   - links
+  #   - lnav
+  #   - lynx
+  #   - mcfly
+  #   - mediainfo
+  #   - mupdf-tools
+  #   - ncdu
+  #   - neofetch
+  #   - neovim-symlinks
+  #   - nvtop
+  #   - odt2txt
+  #   - openscad
+  #   - perl-image-exiftool
+  #   - python-pillow
+  #   - python-pygments
+  #   - ranger
+  #   - ripgrep
+  #   - ripgrep-all
+  #   - rsync
+  #   - rxvt-unicode
+  #   - smartmontools
+  #   - termdown
+  #   - terminator
+  #   - terminology
+  #   - tilda
+  #   - transmission-cli
+  #   - tree
+  #   - ueberzug
+  #   - v4l-utils
+  #   - w3m
+  #   - wget
+  #   - xterm
+  #   - yadm
+  #   - zsh
   tools:
     - fmit
     - jack-example-tools
@@ -522,6 +522,63 @@ packages:
     - ripgrep-all
     - socat
     - zoxide
+  terminal:
+    # - alacritty
+    - aria2
+    - asciiquarium-transparent-git
+    - atool
+    - bash-completion
+    - bottom
+    - btop
+    - calibre
+    - djvulibre
+    - elinks
+    - figlet
+    - fontforge
+    - guake
+    - gum
+    - highlight
+    - htop
+    - imagemagick
+    - jq
+    - jupyter-nbconvert
+    - kitty
+    - kitty-shell-integration
+    - kitty-terminfo
+    - links
+    - lnav
+    - lynx
+    - mcfly
+    - mediainfo
+    - mupdf-tools
+    - ncdu
+    - neofetch
+    - neovim-symlinks
+    - nvtop
+    - odt2txt
+    - openscad
+    - perl-image-exiftool
+    - python-pillow
+    - python-pygments
+    - ranger
+    - ripgrep
+    - ripgrep-all
+    - rsync
+    - rxvt-unicode
+    - smartmontools
+    - termdown
+    - terminator
+    - terminology
+    - tilda
+    - transmission-cli
+    - tree
+    - ueberzug
+    - v4l-utils
+    - w3m
+    - wget
+    - xterm
+    - yadm
+    - zsh    
   utils:
     - aspell-en
     - barrier

@@ -2,7 +2,7 @@
 
 - name: Install htop and lnav configs
   template:
-    src: "etc/skel/.config/{{ item }}.j2"
+    src: "home/.config/{{ item }}.j2"
     dest: "{{ user.home }}/.config/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
@@ -15,7 +15,7 @@
 
 - name: Install ranger configs
   synchronize:
-    src: etc/skel/.config/ranger/
+    src: home/.config/ranger/
     dest: "{{ user.home }}/.config/ranger/"
     recursive: yes
     mode: push
@@ -28,7 +28,5 @@
       - "--progress"
       - "--itemize-changes"
       # - "--chown={{ user.name }}:{{ user.name }}"
-      - "--backup"
-      - "--suffix={{ suffix }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['ranger']

@@ -50,7 +50,8 @@ intranet:
         url: https://chat.openai.com/
       - name: Perplexity
         url: https://www.perplexity.ai/
-    prompttools:
+      - name: LLM Arena
+        url: https://chat.lmsys.org/        
       - name: Cohere Dashboard
         url: https://dashboard.cohere.com/welcome/login?redirect_uri=%2F
       - name: Google AI Studio
@@ -62,12 +63,13 @@ intranet:
         url: http://ninjabot.syncopated.net:3001
       - name: Flowise
         url: http://ninjabot.syncopated.net:3002
-      - name: LLM Arena
-        url: https://chat.lmsys.org/
+
       - name: LLMStudio
         url: http://ninjabot.syncopated.net
       - name: Langfuse
         url: http://ninjabot.syncopated.net:3000
+      - name: Anything-LLM
+        url: http://ninjabot.syncopated.net:3008
     media:
       - name: Plex
         url: http://ninjabot.syncopated.net:32400/web

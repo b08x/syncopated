@@ -16,7 +16,7 @@ Templates that comprise a user profile are used in several roles.
 
 ## [base](roles/base/README.md)
 ```markdown
-[ base](roles/base/templates/etc/skel)
+[ base](roles/base/templates/home)
 ├── .aliases.j2
 ├── .config
 │   └── environment.d
@@ -26,7 +26,7 @@ Templates that comprise a user profile are used in several roles.
 
 ## [desktop](roles/desktop/README.md)
 ```
-roles/desktop/templates/etc/skel
+roles/desktop/templates/home
 └── .config
     ├── dunst
     │   └── dunstrc.j2
@@ -79,7 +79,7 @@ roles/desktop/templates/etc/skel
 
 ## [i3](roles/i3/README.md)
 ```
-roles/i3/templates/etc/skel
+roles/i3/templates/home
 └── .config
     ├── dunst
     │   └── dunstrc.j2
@@ -102,7 +102,7 @@ roles/i3/templates/etc/skel
 
 ## [terminal](roles/terminal/README.md)
 ```
-roles/terminal/templates/etc/skel
+roles/terminal/templates/home
 └── .config
     ├── alacritty
     │   └── alacritty.yml.j2
@@ -120,7 +120,7 @@ roles/terminal/templates/etc/skel
 
 ## [theme](roles/theme/README.md)
 ```
-roles/theme/templates/etc/skel
+roles/theme/templates/home
 ├── .config
 │   ├── gtk-3.0
 │   │   ├── bookmarks.j2
@@ -143,7 +143,7 @@ roles/theme/templates/etc/skel
 
 ## [xorg](roles/xorg/README.md)
 ```
-roles/xorg/templates/etc/skel
+roles/xorg/templates/home
 ├── .xinitrc.j2
 ├── .xprofile.j2
 ├── .Xresources.j2
@@ -152,7 +152,7 @@ roles/xorg/templates/etc/skel
 
 ## [zsh](roles/zsh/README.md)
 ```
-roles/zsh/templates/etc/skel
+roles/zsh/templates/home
 ├── .zprofile.j2
 ├── .zshenv.j2
 └── .zshrc.j2

@@ -7,11 +7,13 @@
     owner: root
     group: root
     recurse: True
+  register: fontsdir
 
 - name: Extract fonts to /usr/local/share/fonts
   unarchive:
     src: usr/local/share/fonts.tar.gz
     dest: "/usr/local/share/fonts"
+  when: fontsdir.changed
   ignore_errors: "{{ ansible_check_mode }}"
 
 # - name: Install fonts.conf
