@@ -1,0 +1,25 @@
+---
+
+- name: Create sxhkd config folder
+  file:
+    path: "{{ user.home }}/.config/sxhkd"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+
+- name: Install sxhkd keybindings
+  template:
+    src: "home/.config/sxhkd/sxhkdrc.j2"
+    dest: "{{ user.home }}/.config/sxhkd/sxhkdrc"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: yes
+  register: keybindings
+  # notify: Reload i3
+  tags: ["profile", "keybindings"]
+
+- name: Reload sxhkd
+  script: "/usr/local/bin/reload-sxhkd.sh"
+  when: keybindings.changed
+  tags: ["profile", "keybindings"]

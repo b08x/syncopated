@@ -10,6 +10,10 @@ share:
     exports:
       - Videos
 
+repos:
+  chaotic: False
+  syncopated: True
+
 app:
   install:
     reaper: True
@@ -40,15 +44,15 @@ desktop:
   barrier:
     client:
       name: ninjabot
-      server: '[tinybot]:24800'
+      server: '[soundbot]:24800'
 
 x:
-  autostart: "default"
-    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+  autostart:
+    - bash ~/.screenlayout/ninjabot.sh
 
 i3:
   autostart: 'default'
-  tray_output: 'DVI-I-1'
+  tray_output: 'DVI-D-0'
   assignments: 'default'
   workspaces:
     - "$ws1 output DVI-I-1"
@@ -63,31 +67,30 @@ i3:
     - "$ws10 output DVI-D-0"
   keybindings: 'default'
 
-# network:
-#   interfaces:
-#     eth0:
-#       type: ethernet
-#       ifname: eth0
-#       conn_name: eth0
-#       mac: bc:5f:f4:0e:bb:b5
-#       ip4: 192.168.41.44/24
-#       gw4: 192.168.41.1
-#       dns4:
-#         - 192.168.41.41
-#         - 192.168.41.1
-#       dns4_search: syncopated.net
-#       autoconnect: True
-#       state: present
-#       method4: manual
-#     eth1:
-#       type: ethernet
-#       ifname: eth1
-#       conn_name: audio
-#       mac: bc:5f:f4:0e:bb:b3
-#       ip4: 192.168.36.3/32
-#       autoconnect: True
-#       state: present
-#       method4: manual
+# network_interfaces:
+#   - device: eth0
+#     type: ethernet
+#     ifname: eth0
+#     conn_name: eth0
+#     mac: bc:5f:f4:0e:bb:b5
+#     ip4: 192.168.41.44/24
+#     gw4: 192.168.41.1
+#     dns4:
+#       - 192.168.41.41
+#       - 192.168.41.1
+#     dns4_search: syncopated.net
+#     autoconnect: True
+#     state: present
+#     method4: manual
+#   - device: eth1
+#     type: ethernet
+#     ifname: eth1
+#     conn_name: audio
+#     mac: bc:5f:f4:0e:bb:b3
+#     ip4: 192.168.36.3/28
+#     autoconnect: True
+#     state: present
+#     method4: manual
 
 video:
   nvidia: True
@@ -125,7 +128,7 @@ host:
       - nvidia-470xx-utils
       - nvidia-container-runtime
       - nvidia-container-toolkit
-      - nvidia-docker
+      # - nvidia-docker
       - nvidia-docker-compose
     # opengl:
       - libva-utils

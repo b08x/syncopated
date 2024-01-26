@@ -1,9 +1,9 @@
 ---
 # tasks file for bash
 
-- name: Copy bashrc and bash_logout to /etc/skel
+- name: Copy bashrc and bash_logout to /home
   copy:
-    src: "etc/skel/{{ item }}"
+    src: "home/{{ item }}"
     dest: "{{ user.home }}/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"

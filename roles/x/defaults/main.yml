@@ -1,0 +1,10 @@
+---
+# defaults file for xorg
+
+x:
+  autostart: 'default'
+
+video:
+  nvidia: False
+  intel: False
+  ati: False

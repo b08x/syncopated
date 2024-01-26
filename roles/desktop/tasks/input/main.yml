@@ -1,6 +1,6 @@
 ---
 # tasks file for input
 
-- import_tasks:
-    file: swhkd.yml
-  tags: ['swhkd', 'keybindings']
+# - import_tasks:
+#     file: swhkd.yml
+#   tags: ['swhkd', 'keybindings']

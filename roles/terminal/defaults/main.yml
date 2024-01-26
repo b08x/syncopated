@@ -1,6 +1,8 @@
 ---
 # defaults file for terminal
 
+# variables loaded in the playbook vars_files will override anything here if there is a conflict
+
 # The default directory permission mode when creating directories using `terminal_directory_definitions`
 terminal_directory_default_mode: '0750'
 

@@ -1,20 +1,23 @@
 ---
-autologin: False
+autologin: True
 
 bluetooth: True
+
+repos:
+  chaotic: False
+  syncopated: True
 
 share:
   nfs:
     parent: "{{ user.home }}"
     exports:
-      - Workspace
-      - Public
+      - LLMOS
 
 app:
   install:
     reaper: True
-    pulsar: True
-    vscode: True
+    pulsar: False
+    vscode: False
     vamp: True
     mixxx: True
     annotator: True
@@ -41,72 +44,57 @@ desktop:
   terminal_alt: "alacritty"
   browser: "google-chrome-stable"
   audio: "jack"
-  # barrier:
-  #   client:
-  #     name: tinybot
-  #     server: "[soundbot]:24800"
   barrier:
-    server:
+    client:
       name: tinybot
-      address: '[tinybot]:24800'
-      config: "{{ user.home }}/.config/Debauchee/tinybot.conf"
+      server: "[soundbot]:24800"
 
 x:
   autostart:
     - bash ~/.screenlayout/tinybot.sh
 
 i3:
-  autostart: "default"
-    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
-  tray_output: "DP-2"
+  autostart:
+    - "ray-daemon --session-root ~/Public/NetworkSessions -p 7777"
+  tray_output: "primary"
   assignments: "default"
-  workspaces:
-    - "$ws1 output HDMI-1"
-    - "$ws2 output HDMI-1"
-    - "$ws3 output HDMI-1"
-    - "$ws4 output HDMI-1"
-    - "$ws5 output DP-2"
-    - "$ws6 output DP-2"
-    - "$ws7 output DP-2"
-    - "$ws8 output DP-2"
-    - "$ws9 output DP-2"
-    - "$ws10 output DP-2"
+  workspaces:  "default"
   keybindings: "default"
 
-# network:
-#   interfaces:
-#     eth1:
-#       type: ethernet
-#       ifname: eth1
-#       conn_name: eth1
-#       mac: 68:1d:ef:2a:ac:47
-#       ip4: 192.168.41.43/24
-#       gw4: 192.168.41.1
-#       dns4:
-#         - 192.168.41.41
-#         - 192.168.41.1
-#       dns4_search: syncopated.net
-#       autoconnect: True
-#       state: present
-#       method4: manual
-#     eth0:
-#       type: ethernet
-#       ifname: eth0
-#       conn_name: audio
-#       mac: 68:1d:ef:2a:b4:03
-#       ip4: 192.168.36.2/24
-#       autoconnect: True
-#       state: present
-#       method4: manual
+# network_interfaces:
+#   - device: eth0
+#     type: ethernet
+#     ifname: eth0
+#     conn_name: eth0
+#     mac: 68:1d:ef:2a:ac:47
+#     ip4: 192.168.41.43/24
+#     gw4: 192.168.41.1
+#     dns4:
+#       - 192.168.41.41
+#       - 192.168.41.1
+#     dns4_search: syncopated.net
+#     autoconnect: True
+#     state: present
+#     method4: manual
+#   - device: eth1
+#     type: ethernet
+#     ifname: eth1
+#     conn_name: eth1
+#     mac: 68:1d:ef:2a:b4:03
+#     ip4: 192.168.36.2/24
+#     autoconnect: True
+#     state: present
+#     method4: manual
+#   - device: wlan0
+#     type: wifi
+#     ifname: wlan0
+#     conn_name: wlan0
+#     ssid: "invisiblemagic"
+#     mac: c2:03:79:0d:7d:b3
+#     autoconnect: False
+#     state: present
+#     method4: disabled
 
-#     wlan0:
-#       type: wifi
-#       ifname: wlan0
-#       conn_name: wlan0
-#       mac: c2:03:79:0d:7d:b3
-#       autoconnect: False
-#       state: present
-#       method4: disabled
 host:
   xorg:
     video:

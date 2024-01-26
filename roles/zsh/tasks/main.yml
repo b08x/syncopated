@@ -27,9 +27,6 @@
       - "--omit-dir-times"
       - "--progress"
       - "--itemize-changes"
-      - "--delete"
-      - "--backup"
-      - "--suffix={{ suffix }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['env', 'profile']
 
@@ -43,7 +40,7 @@
 
 - name: Set zsh profile configs
   template:
-    src: "etc/skel/{{ item }}.j2"
+    src: "home/{{ item }}.j2"
     dest: "{{ user.home }}/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"

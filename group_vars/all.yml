@@ -32,6 +32,13 @@ users:
     home: /home/b08x
     shell: /usr/bin/zsh
     sudoers: True
+  - name: pi
+    group: pi
+    uid: 1000
+    gid: 1000
+    home: /home/pi
+    shell: /usr/bin/zsh
+    sudoers: True
 
 autofs_client:
   host: bender

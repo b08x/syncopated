@@ -5,24 +5,9 @@
   debug:
     msg: "Starting user tasks"
 
-# - name: Sync /etc/skel with users home
-#   synchronize:
-#     src: /etc/skel/
-#     dest: "{{ item.home }}/"
-#     recursive: yes
-#     mode: push
-#     delete: no
-#     checksum: yes
-#     perms: no
-#     rsync_opts:
-#       - "--update"
-#       - "--progress"
-#       - "--itemize-changes"
-#       - "--exclude='*.*~'"
-#       - "--omit-dir-times"
-#       - "--chown={{ item.name }}:{{ item.group }}"
-#       - "--backup"
-#       - "--suffix={{ suffix }}"
-#   with_items: "{{ users }}"
-#   delegate_to: "{{ inventory_hostname }}"
-#   tags: ['always', 'env', 'profile']
+# dotfiles
+
+- import_tasks:
+    file: autologin.yml
+  tags: ['autologin']
+  when: autologin|default(false)|bool == True

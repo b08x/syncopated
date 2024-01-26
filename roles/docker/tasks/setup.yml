@@ -5,7 +5,8 @@
     - block:
         - name: Add Docker repository
           shell: |
-            yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+            yum-config-manager --add-repo \
+            https://download.docker.com/linux/centos/docker-ce.repo
           register: result
 
         - name: Install Docker packages
@@ -47,7 +48,7 @@
         state: present
         extra_args: "--overwrite '*'"
       loop:
-        - nvidia-docker
+        # - nvidia-docker
         - nvidia-docker-compose
       become: False
       when:
@@ -76,13 +77,13 @@
     group: root
     mode: '0755'
 
-- name: Set docker daemon options
-  template:
-    src: etc/docker/daemon.json.j2
-    dest: /etc/docker/daemon.json
-    owner: root
-    mode: '0644'
-    backup: True
+# - name: Set docker daemon options
+#   template:
+#     src: etc/docker/daemon.json.j2
+#     dest: /etc/docker/daemon.json
+#     owner: root
+#     mode: '0644'
+#     backup: True
 
 - name: Disable overlay redirect
   copy:

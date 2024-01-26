@@ -1,0 +1,6 @@
+---
+# tasks file for roles/distro
+
+- import_tasks:
+    file: "Archlinux/main.yml"
+  when: distribution == 'Archlinux' or distribution == 'EndeavourOS'

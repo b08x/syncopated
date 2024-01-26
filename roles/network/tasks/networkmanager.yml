@@ -12,6 +12,11 @@
     state: stopped
   ignore_errors: True
 
+# - name: Disable dhcpcd service
+#   service:
+#       name: dhcpcd.service
+#       enabled: no
+
 - name: Ensure networkmanager connection check is enabled
   copy:
     content: |
@@ -20,20 +25,18 @@
     dest: "/etc/NetworkManager/conf.d/20-connectivity.conf"
     owner: root
 
-- name: Prevent NetworkManager from creating default wired connection
-  copy:
-    content: |
-      [main]
-      no-auto-default=*
-    dest: "/etc/NetworkManager/NetworkManager.conf"
-    owner: root
-
 - name: Enable and start networkmanager
   systemd:
     name: NetworkManager
     enabled: yes
     state: started
 
+- name: Enable and start NetworkManager dispatcher
+  service:
+      name: NetworkManager-dispatcher.service
+      enabled: yes
+      state: started
+
 - import_tasks:
     file: interfaces.yml
-  when: network.interfaces is defined
+  when: network_interfaces is defined

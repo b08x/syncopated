@@ -82,7 +82,7 @@
 
 - name: Install sway user config
   template:
-    src: etc/skel/.config/sway/config.j2
+    src: home/.config/sway/config.j2
     dest: "{{ user.home }}/.config/sway/config"
     owner: root
     group: root

@@ -10,3 +10,5 @@ firewall:
       mountd: 892
       statd: 662
       rpc: 40418
+
+samba_host: False

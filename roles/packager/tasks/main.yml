@@ -1,4 +1,5 @@
 ---
+
 - name: create devops group
   group:
     name: devops
@@ -22,17 +23,17 @@
   check_mode: no
 
 
-- name: Create packager workspace folder
-  file:
-    path: "{{ packager.workspace }}/{{ item }}"
-    state: directory
-    owner: "{{ packager.name }}"
-    group: devops
-    mode: "2775"
-    recurse: True
-  with_items:
-    - archlinux/pkgbuids
-    - Fedora/specs
+# - name: Create packager workspace folder
+#   file:
+#     path: "{{ packager.workspace }}/{{ item }}"
+#     state: directory
+#     owner: "{{ packager.name }}"
+#     group: devops
+#     mode: "2775"
+#     recurse: True
+#   with_items:
+#     - archlinux/pkgbuids
+#     - Fedora/specs
 
 
 

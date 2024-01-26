@@ -27,3 +27,51 @@ i3:
   assignments: 'default'
   workspaces: 'default'
   keybindings: 'default'
+
+vscode_install: False
+
+intranet:
+  group:
+    bookmarks:
+      - name: hookerbot
+        url: http://hookerbot
+      - name: linkding
+        url: http://bender.syncopated.net:9090/bookmarks
+      - name: pihole
+        url: http://pihole/admin
+      - name: repository
+        url: http://bender.syncopated.net/repo/
+    agents:
+      - name: Bard
+        url: https://bard.google.com/chat
+      - name: Claude
+        url: https://claude.ai/chats
+      - name: OpenAI
+        url: https://chat.openai.com/
+      - name: Perplexity
+        url: https://www.perplexity.ai/
+      - name: LLM Arena
+        url: https://chat.lmsys.org/        
+      - name: Cohere Dashboard
+        url: https://dashboard.cohere.com/welcome/login?redirect_uri=%2F
+      - name: Google AI Studio
+        url: https://makersuite.google.com/app/prompts/new_freeform
+    llmtesting:
+      - name: Agenta
+        url: http://ninjabot.syncopated.net
+      - name: Agnai
+        url: http://ninjabot.syncopated.net:3001
+      - name: Flowise
+        url: http://ninjabot.syncopated.net:3002
+
+      - name: LLMStudio
+        url: http://ninjabot.syncopated.net
+      - name: Langfuse
+        url: http://ninjabot.syncopated.net:3000
+      - name: Anything-LLM
+        url: http://ninjabot.syncopated.net:3008
+    media:
+      - name: Plex
+        url: http://ninjabot.syncopated.net:32400/web
+      - name: QBittorrent
+        url: http://bender.syncopated.net:8080

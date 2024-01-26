@@ -1,1 +1,5 @@
 ---
+
+conn_check:
+    uri: "http://pihole/admin"
+    interval: 120

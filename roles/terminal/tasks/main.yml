@@ -5,28 +5,6 @@
   debug:
     msg: "Starting terminal tasks"
 
-- name: Set user shell
-  user:
-    name: "{{ item.name }}"
-    shell: "{{ item.shell }}"
-  with_items: "{{ users }}"
-  tags: ['profile']
-
-# - name: test expected_value
-#   debug:
-#     msg: "{{ expected_value }}"
-#   tags: ['testing']
-
-- name: Import bash role
-  import_role:
-    name: bash
-  tags: ['shell', 'profile']
-
-- name: Import zsh role
-  import_role:
-    name: zsh
-  tags: ['shell', 'profile']
-
 - name: Ensure terminal directories exist
   file:
     dest: "{{ terminal_directory_default_location }}/{{ item.dest }}"
@@ -46,19 +24,19 @@
   become: False
   tags: ['packages']
 
-- name: Install alacritty template
-  template:
-    src: etc/skel/.config/alacritty/alacritty.yml.j2
-    dest: "{{ user.home }}/.config/alacritty/alacritty.yml"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-    backup: True
-  tags: ['alacritty']
+# - name: Install alacritty template
+#   template:
+#     src: home/.config/alacritty/alacritty.yml.j2
+#     dest: "{{ user.home }}/.config/alacritty/alacritty.yml"
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+#     mode: '0644'
+#     backup: True
+#   tags: ['alacritty']
 
 - name: Install kitty templates
   template:
-    src: "etc/skel/.config/kitty/{{ item }}.j2"
+    src: "home/.config/kitty/{{ item }}.j2"
     dest: "{{ user.home }}/.config/kitty/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
@@ -71,35 +49,6 @@
     - start.conf
   tags: ['kitty']
 
-- name: Install htop and lnav configs
-  template:
-    src: "etc/skel/.config/{{ item }}.j2"
-    dest: "{{ user.home }}/.config/{{ item }}"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-    backup: yes
-  with_items:
-    - 'htop/htoprc'
-    - 'lnav/checklog.lnav'
-  tags: ['htop', 'lnav']
-
-- name: Install ranger configs
-  synchronize:
-    src: etc/skel/.config/ranger/
-    dest: "{{ user.home }}/.config/ranger/"
-    recursive: yes
-    mode: push
-    delete: no
-    checksum: yes
-    perms: no
-    rsync_opts:
-      - "--update"
-      - "--omit-dir-times"
-      - "--progress"
-      - "--itemize-changes"
-      # - "--chown={{ user.name }}:{{ user.name }}"
-      - "--backup"
-      - "--suffix={{ suffix }}"
-  ignore_errors: "{{ ansible_check_mode }}"
-  tags: ['ranger']
+- import_tasks:
+    file: tui.yml
+  tags: ['tui']

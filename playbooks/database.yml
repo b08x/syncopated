@@ -1,5 +1,5 @@
 ---
-- hosts: database
+- hosts: workstation
   become: True
   gather_subset:
     - hardware
@@ -32,15 +32,14 @@
       tags: ["always"]
 
   tasks:
-
     - import_tasks:
         file: ../tasks/redis.yml
-      tags: ['redis']
+      tags: ["redis"]
 
     - import_tasks:
         file: ../tasks/pgvector.yml
-      tags: ['pgvector']
+      tags: ["pgvector"]
 
     - import_tasks:
         file: ../tasks/chromadb.yml
-      tags: ['chromadb']
+      tags: ["chromadb"]
