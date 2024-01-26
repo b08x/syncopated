@@ -1,38 +1,30 @@
-Role Name
-=========
+# audio
 
-A brief description of the role goes here.
+The main tasks performed by the audio role include:
 
-Requirements
-------------
+Installing required audio/codec packages (tag: packages)
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Creating directories for audio configuration files (tag: audio)
 
-Role Variables
---------------
+Configuring real-time tuning settings like rtprio, niceness for audio group (tag: tuning, realtime)
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Installing and configuring Tuned daemon for a real-time profile (tag: tuned)
 
-Dependencies
-------------
+Configuring RT priority and RTKIT tools (tag: rtkit, rtirq)
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Configuring CPU power management using cpupower (tag: cpupower)
 
-Example Playbook
-----------------
+Disabling IRQ balancer service (tag: audio)
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Configuring JackTrip autostart files (tag: jacktrip)
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Adding support for MIDI tool LSMI (tag: lsmi, midi)
 
-License
--------
+It handles all aspects of configuring the system, users and services for professional low-latency audio work.
 
-BSD
+Key files involved are:
 
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+roles/audio/tasks/tuning.yml
+roles/audio/tasks/main.yml
+roles/audio/defaults/main.yml
+The role ensures the system meets real-time requirements for audio applications and protocols like JackTrip through configuring priorities, scheduling algorithms and services.
