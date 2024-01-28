@@ -90,16 +90,6 @@
   tags: ['mixxx']
 
 - import_tasks:
-    file: ide/pulsar.yml
-  when: app.install.pulsar|bool
-  tags: ['pulsar']
-
-- import_tasks:
-    file: ide/vscode.yml
-  when: app.install.vscode|bool
-  tags: ['vscode']
-
-- import_tasks:
     file: analysis/vamp.yml
   when: app.install.vamp|bool
   tags: ['vamp']

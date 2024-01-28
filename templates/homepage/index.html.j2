@@ -85,28 +85,22 @@
         <div class="category">
           <div class="icon"><img src="icons/music.svg" /></div>
           <div class="bookmarks mus">
-            <li><a class="bm" href="https://open.spotify.com/" target="_blank">Spotify</a></li>
-            <li><a class="bm" href="https://thelastdisaster.org/" target="_blank">LDisaster</a></li>
-            <li><a class="bm" href="https://deathgrind.club/" target="_blank">Deathgrind</a></li>
-            <li><a class="bm" href="https://coreradio.ru/" target="_blank">Core Radio</a></li>
-            <li><a class="bm" href="https://blogmg23.blogspot.com/" target="_blank">Mg23</a></li>
+            {% for bookmark in intranet.group.other %}
+            <li><a class="bm" href="{{ bookmark.url }}" target="_blank">{{ bookmark.name }}</a></li>
+            {% endfor %}
           </div>
         </div>
 
         <div class="category">
           <div class="icon"><img src="icons/art.svg" /></div>
           <div class="bookmarks art">
-            <li><a class="bm" href="https://www.behance.net/" target="_blank">Behance</a></li>
-            <li><a class="bm" href="https://www.deviantart.com/" target="_blank">Deviantart</a></li>
-            <li><a class="bm" href="https://www.tumblr.com/dashboard" target="_blank">Tumblr</a></li>
-            <li><a class="bm" href="https://unsplash.com/" target="_blank">Unsplash</a></li>
-            <li><a class="bm" href="https://in.pinterest.com/" target="_blank">Pinterest</a></li>
+            {% for bookmark in intranet.group.internet %}
+            <li><a class="bm" href="{{ bookmark.url }}" target="_blank">{{ bookmark.name }}</a></li>
+            {% endfor %}
           </div>
         </div>
 
       </div>
-
-
 
     </div>
   </body>

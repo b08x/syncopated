@@ -53,20 +53,13 @@
     file: autofs.yml
   tags: ['autofs']
 
-- name: Install utility scripts
-  synchronize:
-    src: usr/local/bin
-    dest: /usr/local
+- name: clone RobotStuff
+  git:
+    repo: https://github.com/b08x/RobotStuff.git
+    dest: "{{ user.home }}/RobotStuff"
     recursive: yes
-    mode: push
-    delete: False
-    checksum: yes
-    perms: no
-    rsync_opts:
-      - "--update"
-      - "--omit-dir-times"
-      - "--backup"
-      - "--suffix={{ suffix }}"
-      - "--chmod=0755"
-  ignore_errors: "{{ ansible_check_mode }}"
-  tags: ['utils']
+    accept_hostkey: yes
+    update: no
+    force: no
+  check_mode: no
+  become: False

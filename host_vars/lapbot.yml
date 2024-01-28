@@ -12,7 +12,7 @@ bluetooth: True
 
 repos:
   chaotic: True
-  syncopated: False
+  syncopated: True
 
 # share:
 #   nfs:

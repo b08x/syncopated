@@ -35,12 +35,16 @@ intranet:
     bookmarks:
       - name: hookerbot
         url: http://hookerbot
-      - name: linkding
-        url: http://bender.syncopated.net:9090/bookmarks
       - name: pihole
         url: http://pihole/admin
-      - name: repository
+      - name: visiblemagic
+        url: http://192.168.41.5
+      - name: linkding bookmarks
+        url: http://bender.syncopated.net:9090/bookmarks
+      - name: local repository
         url: http://bender.syncopated.net/repo/
+      - name: QBittorrent
+        url: http://bender.syncopated.net:8080
     agents:
       - name: Bard
         url: https://bard.google.com/chat
@@ -51,11 +55,13 @@ intranet:
       - name: Perplexity
         url: https://www.perplexity.ai/
       - name: LLM Arena
-        url: https://chat.lmsys.org/        
+        url: https://chat.lmsys.org/
       - name: Cohere Dashboard
         url: https://dashboard.cohere.com/welcome/login?redirect_uri=%2F
       - name: Google AI Studio
         url: https://makersuite.google.com/app/prompts/new_freeform
+      - name: Suno
+        url: https://app.suno.ai/create/
     llmtesting:
       - name: Agenta
         url: http://ninjabot.syncopated.net
@@ -63,7 +69,8 @@ intranet:
         url: http://ninjabot.syncopated.net:3001
       - name: Flowise
         url: http://ninjabot.syncopated.net:3002
-
+      - name: SillyTavern
+        url: http://ninjabot.syncopated.net:8008
       - name: LLMStudio
         url: http://ninjabot.syncopated.net
       - name: Langfuse
@@ -73,5 +80,11 @@ intranet:
     media:
       - name: Plex
         url: http://ninjabot.syncopated.net:32400/web
-      - name: QBittorrent
-        url: http://bender.syncopated.net:8080
+    other:
+      - name: Huggingface
+        url: https://huggingface.co/
+    internet:
+      - name: gmail
+        url: https://gmail.google.com
+      - name: github
+        url: https://github.com

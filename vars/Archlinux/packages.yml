@@ -74,6 +74,7 @@ packages:
   desktop:
     # - obs-rtspserver
     # - pgmodeler
+    - speech-dispatcher
     - mediamtx
     - gvfs-smb
     - gedit
@@ -497,14 +498,10 @@ packages:
     - sox
     - tuned
   utility:
-    - gping
     - aria2
     - bat
-    - git-delta
     - barrier
     - fd
-    - dust
-    - duf
     - firewalld
     - gnome-keyring
     - htop
@@ -523,8 +520,15 @@ packages:
     - socat
     - zoxide
   terminal:
-    # - alacritty
+    - dust
+    - duf
+    - broot
+    - choose
+    - gping
+    - doggo
+    - await
     - aria2
+    - git-delta
     - asciiquarium-transparent-git
     - atool
     - bash-completion
@@ -578,7 +582,7 @@ packages:
     - wget
     - xterm
     - yadm
-    - zsh    
+    - zsh
   utils:
     - aspell-en
     - barrier

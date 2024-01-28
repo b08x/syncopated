@@ -88,6 +88,16 @@
   with_items: "{{ desktop_directory_definitions }}"
   check_mode: no
 
+- import_tasks:
+    file: ide/pulsar.yml
+  when: app.install.pulsar|bool
+  tags: ['pulsar']
+
+- import_tasks:
+    file: ide/vscode.yml
+  when: app.install.vscode|bool
+  tags: ['vscode']
+
 #NOTETHIS: these can be used in a seperate playbook
 # - name: Import sway role
 #   import_role:
