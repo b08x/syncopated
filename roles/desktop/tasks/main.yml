@@ -15,6 +15,17 @@
 #     msg: "{{ expected_value }}"
 #   tags: ['testing']
 
+- name: Ensure desktop directories exist
+  file:
+    dest: "{{ desktop_directory_default_location }}/{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(desktop_directory_default_owner) }}"
+    group: "{{ item.group | default(desktop_directory_default_group) }}"
+    mode: "{{ item.mode | default(desktop_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(desktop_directory_default_recurse) }}"
+  with_items: "{{ desktop_directory_definitions }}"
+  check_mode: no
+
 - block:
     - name: Install desktop packages
       aur:
@@ -76,17 +87,6 @@
 
   become: False
   tags: ['packages']
-
-- name: Ensure desktop directories exist
-  file:
-    dest: "{{ desktop_directory_default_location }}/{{ item.dest }}"
-    state: directory
-    owner: "{{ item.owner | default(desktop_directory_default_owner) }}"
-    group: "{{ item.group | default(desktop_directory_default_group) }}"
-    mode: "{{ item.mode | default(desktop_directory_default_mode) }}"
-    recurse: "{{ item.recurse | default(desktop_directory_default_recurse) }}"
-  with_items: "{{ desktop_directory_definitions }}"
-  check_mode: no
 
 - import_tasks:
     file: ide/pulsar.yml

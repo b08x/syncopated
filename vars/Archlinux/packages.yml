@@ -421,63 +421,6 @@ packages:
     - helm-synth-lv2
     - helm-synth-standalone
     - helm-synth-vst
-  # terminal:
-  #   - alacritty
-  #   - aria2
-  #   - asciiquarium-transparent-git
-  #   - atool
-  #   - bash-completion
-  #   - bottom
-  #   - btop
-  #   - calibre
-  #   - djvulibre
-  #   - elinks
-  #   - figlet
-  #   - fontforge
-  #   - guake
-  #   - gum
-  #   - highlight
-  #   - htop
-  #   - imagemagick
-  #   - jq
-  #   - jupyter-nbconvert
-  #   - kitty
-  #   - kitty-shell-integration
-  #   - kitty-terminfo
-  #   - links
-  #   - lnav
-  #   - lynx
-  #   - mcfly
-  #   - mediainfo
-  #   - mupdf-tools
-  #   - ncdu
-  #   - neofetch
-  #   - neovim-symlinks
-  #   - nvtop
-  #   - odt2txt
-  #   - openscad
-  #   - perl-image-exiftool
-  #   - python-pillow
-  #   - python-pygments
-  #   - ranger
-  #   - ripgrep
-  #   - ripgrep-all
-  #   - rsync
-  #   - rxvt-unicode
-  #   - smartmontools
-  #   - termdown
-  #   - terminator
-  #   - terminology
-  #   - tilda
-  #   - transmission-cli
-  #   - tree
-  #   - ueberzug
-  #   - v4l-utils
-  #   - w3m
-  #   - wget
-  #   - xterm
-  #   - yadm
-  #   - zsh
   tools:
     - fmit
     - jack-example-tools
@@ -520,25 +463,25 @@ packages:
     - socat
     - zoxide
   terminal:
-    - dust
-    - duf
-    - broot
-    - choose
-    - gping
-    - doggo
-    - await
     - aria2
-    - git-delta
     - asciiquarium-transparent-git
     - atool
+    - await
     - bash-completion
     - bottom
+    - broot
     - btop
     - calibre
+    - choose
     - djvulibre
+    - doggo
+    - duf
+    - dust
     - elinks
     - figlet
     - fontforge
+    - git-delta
+    - gping
     - guake
     - gum
     - highlight

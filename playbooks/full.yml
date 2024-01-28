@@ -13,6 +13,7 @@
     path:
       - "{{ lookup('env','HOME') }}/.local/bin"
       - "{{ lookup('env','HOME') }}/.asdf/bin"
+      - "{{ lookup('env','HOME') }}/RobotStuff/bin"
   environment:
     PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
@@ -206,7 +207,7 @@
 
   post_tasks:
     - name: Cleanup old backup files
-      script: "/usr/local/bin/cleanup.sh"
+      script: "cleanup.sh"
       when: cleanup is defined
       tags: ["cleanup"]
 

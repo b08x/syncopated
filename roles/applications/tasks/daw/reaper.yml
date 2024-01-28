@@ -21,7 +21,7 @@
         msg: "{{ if_installed_version }}"
 
     - name: Backup reaper home config
-      shell: /usr/local/bin/backup_reaper.sh
+      shell: backup_reaper.sh
       register: reaper_backup
       become_user: "{{ user.name }}"
       tags: ['backup']

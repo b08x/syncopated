@@ -1,5 +1,4 @@
 ---
-
 # - name: show expected_value
 #   debug:
 #     msg: "{{ expected_value }}"
@@ -17,7 +16,7 @@
 
 - import_tasks:
     file: sudoers.yml
-  tags: ['sudoers']
+  tags: ["sudoers"]
 
 - name: Ensure root directories exist
   file:
@@ -31,27 +30,27 @@
 
 - import_tasks:
     file: environment.yml
-  tags: ['env', 'profile']
+  tags: ["env", "profile"]
 
 - import_tasks:
     file: sshd.yml
-  tags: ['sshd']
+  tags: ["sshd"]
 
 - import_tasks:
     file: updatedb.yml
-  tags: ['updatedb']
+  tags: ["updatedb"]
 
 - import_tasks:
     file: zram.yml
-  tags: ['zram']
+  tags: ["zram"]
 
 - import_tasks:
     file: grub.yml
-  tags: ['grub']
+  tags: ["grub"]
 
 - import_tasks:
     file: autofs.yml
-  tags: ['autofs']
+  tags: ["autofs"]
 
 - name: clone RobotStuff
   git:
@@ -59,7 +58,8 @@
     dest: "{{ user.home }}/RobotStuff"
     recursive: yes
     accept_hostkey: yes
-    update: no
+    update: yes
     force: no
   check_mode: no
   become: False
+  tags: ["robotstuff"]
