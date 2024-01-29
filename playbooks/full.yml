@@ -142,6 +142,9 @@
     - role: distro
       tags: ["distro"]
 
+    - role: user
+      tags: ["user"]
+
     - role: base
       tags: ["base"]
 
@@ -180,9 +183,6 @@
 
     - role: theme
       tags: ["theme"]
-
-    - role: user
-      tags: ["user"]
 
     - role: x
       tags: ["x"]
