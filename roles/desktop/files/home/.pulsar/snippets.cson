@@ -1,0 +1,482 @@
+".source.shell":
+  "ifelse":
+    "prefix": "ifelse"
+    "body": """
+      {% if yadm.$1 == "$2" %}
+      $3
+      {% endif %}
+  """
+  "ifreturn0":
+    "prefix": "ifr"
+    "body": """
+      if [ $? = 0 ]; then
+        $1
+      else
+        $2
+      fi
+  """
+  "gumconfirm":
+    "prefix": "gumc"
+    "body": """
+      gum confirm --selected.background="#ddb31f" --default=yes "$1"
+  """
+  "distrocheck":
+    "prefix": "etcissue"
+    "body": """
+      # Check which distribution is being used
+      if grep -q 'MX' /etc/issue; then
+
+      elif grep -q 'Arch' /etc/issue; then
+
+      else
+        echo "Unsupported distribution!"
+        exit 1
+      fi
+   """
+
+".text.md":
+  "chapter":
+    "prefix": "chapter"
+    "body": """
+      - [$1](./path/$2.md)
+  """
+  "readmeheader":
+    "prefix": "reh"
+    "body": """
+      ### [$1]($2)
+      ```ruby
+      ```
+  """
+  "patat":
+    "prefix": "patat"
+    "body": """
+      patat:
+          wrap: false
+          margins:
+              left: 20
+              right: 20
+              top: 20
+              bottom: 20
+          incrementalLists: true
+          theme:
+            syntaxHighlighting:
+              decVal: [rgb#b3122f]
+            borders: [vividMagenta]
+            definitionTerm: [vividRed]
+            header: [vividGreen]
+            codeBlock: [onDullWhite]
+            imageText: [onDullWhite, vividRed]
+          images:
+            backend: kitty
+          pandocExtensions:
+            - patat_extensions
+            - autolink_bare_uris
+            - emoji
+  """
+
+".source.ruby":
+  "module_function":
+    "prefix": "module_function"
+    "body": """
+      module $1
+        module_function
+
+      end
+  """
+  "maintainer":
+    "prefix": "mai"
+    "body": """
+      # Maintainer: Robert Pannick <rwpannick@gmail.com>
+  """
+  "shebang":
+    "prefix": "shebang"
+    "body": """
+      #!/usr/bin/env ruby
+      # frozen_string_literal: true
+  """
+  "eatme":
+    "prefix": "ea"
+    "body": """
+      same $1
+        thing
+
+      hopefully
+  """
+'.source.ruby.sonic-pi':
+  # Incomplete
+  'in_thread do … end':
+    'prefix': 'in_thread'
+    'body': 'in_thread do\n\t$1\nend'
+  'live_loop do … end':
+    'prefix': 'live_loop'
+    'body': 'live_loop :${1:name} do\n\t$2\nend'
+  'live_loop sync:… do … end':
+    'prefix': 'live_loop sync'
+    'body': 'live_loop :${1:name}, sync: ${2:cue_name} do\n\t$3\nend'
+  'with_synth do ... end':
+    'prefix': 'with_synth'
+    'body': 'with_synth :${1:synth} do\n\t$2\nend'
+  'with_fx do ... end':
+    'prefix': 'with_fx'
+    'body': 'with_fx :${1:fx} ${2:opts} do\n\t$3\nend'
+  'with_synth_defaults do ... end':
+    'prefix': 'with_synth_defaults'
+    'body': 'with_synth_defaults ${1:opts} do\n\t$3\nend'
+  'adsr':
+    'prefix': 'adsr'
+    'body': 'amp: ${1:1.0}, pre_amp: ${2:1.0}, pan: ${3:0}, attack: ${4:1}, decay: ${5:0}, sustain: ${6:1}, release: ${7:0}'
+  'sample':
+    'prefix': 'sample'
+    'body': 'sample SOUNDS, start: ${1:0}, finish: ${2:1}, pitch: ${3:0}, window_size: ${5:0}, rate: ${6:1}, beat_strech: ${7:1}, num_slices: ${8:1}, onset: ${9:1}, on: ${10:1}, slice: ${11:1}, amp: ${12:1}, pan: ${13:0}'
+
+".source.python.jinja":
+  "host_conditional":
+    "prefix": "ifhost"
+    "body": """
+    {% if inventory_hostname == '$1' %}
+    $2
+    {% else %}
+    $3
+    {% endif %}
+    """
+  "group_conditional":
+    "prefix": "ifgroup"
+    "body": """
+    {% if inventory_hostname in groups.get('$1', []) %}
+    $2
+    {% else %}
+    $3
+    {% endif %}
+    """
+  "endif":
+    "prefix": "endif"
+    "body": """
+    {% endif %}
+    """
+  "else":
+    "prefix": "els"
+    "body": """
+    {% else %}
+    """
+  "ifhost":
+    "prefix": "ifh"
+    "body": """
+    {% if ansible_hostname == '$1' %}
+    """
+
+".source.shell.jinja":
+  "host_conditional":
+    "prefix": "ifhost"
+    "body": """
+    {% if inventory_hostname == '$1' %}
+    $2
+    {% else %}
+    $3
+    {% endif %}
+    """
+  "group_conditional":
+    "prefix": "ifgroup"
+    "body": """
+    {% if inventory_hostname in groups.get('$1', []) %}
+    $2
+    {% else %}
+    $3
+    {% endif %}
+    """
+  "endif":
+    "prefix": "endif"
+    "body": """
+    {% endif %}
+    """
+  "else":
+    "prefix": "els"
+    "body": """
+    {% else %}
+    """
+  "ifhost":
+    "prefix": "ifh"
+    "body": """
+    {% if ansible_hostname == '$1' %}
+    """
+
+
+".source.ansible-advanced":
+  "ignore_errors":
+    "prefix": "igerr"
+    "body": """
+      ignore_errors: "{{ ansible_check_mode }}"
+    """
+  "setfact":
+    "prefix": "set"
+    "body": """
+    - name: $1
+      set_fact:
+        $1: "$2"
+    """
+  "pip":
+    "prefix": "pip"
+    "body": """
+    - name: Install $1 module
+      pip:
+        name: $2
+        executable: pip3
+        state: present
+        extra_args: --break-system-packages
+    """
+  "defaultbool":
+    "prefix": "dbool"
+    "body": """
+    when: $1|default(false)|bool == True
+    """
+  "service":
+    "prefix": "serv"
+    "body": """
+    - name: $1
+      service:
+        name: $2
+        state: $3
+        enabled: $4
+    """
+  "block":
+    "prefix": "block"
+    "body": """
+    - block:
+        - name: first task
+          command:
+            args:
+
+      when: "{{ install.$3 }}|bool"
+      tags: [$4]
+    """
+  "stat":
+    "prefix": "stat"
+    "body": """
+    - name: check if $1 is already installed
+      stat:
+        path:
+      register: result
+      ignore_errors: "{{ ansible_check_mode }}"
+    """
+  "importasks":
+    "prefix": "imp"
+    "body": """
+    - import_tasks:
+        file: $1
+      tags: ['$2']
+    """
+  "git_clone":
+    "prefix": "clone"
+    "body": """
+    - name: clone $1 repository
+      git:
+        repo: $2
+        dest: "/tmp/$3"
+        recursive: yes
+        accept_hostkey: yes
+        update: no
+        force: no
+      check_mode: no
+    """
+  "become":
+    "prefix": "bec"
+    "body": """
+    become: True
+    """
+  "become_user":
+    "prefix": "beu"
+    "body": """
+    become_user: $1
+    """
+  "include":
+    "prefix": "inc"
+    "body": """
+    - include: $1.yml
+      tags: ['$2']
+    """
+  "action":
+    "prefix": "pkg"
+    "body": """
+    - name: install these packages
+      action: "{{ ansible_pkg_mgr }} name={{ item }} state=present"
+      with_items:
+        - $1
+    """
+  "packagemanger":
+    "prefix": "pkgmgr"
+    "body": """
+    - name: install $1
+      shell: {{ ansible_pkg_mgr }} -y install {{ install.$2 }}
+      when: "{{ install.$3 }}|bool"
+      tags: [$4]
+    """
+  "apt":
+    "prefix": "apt"
+    "body": """
+    - name: install X package
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - $1
+      tags: [$2]
+    """
+  "pacman":
+    "prefix": "pacman"
+    "body": """
+    - name: install X package
+      pacman:
+        name: "{{ item }}"
+        state: present
+        force: yes
+        extra_args: --noconfirm
+      with_items:
+        - $1
+      tags: [$2]
+  """
+  "aur":
+    "prefix": "aur"
+    "body": """
+    - name: install $1
+      aur:
+        use: auto
+        name: $2
+        state: present
+      with_items:
+        - $2
+      tags: [$3]
+  """
+  "dnf":
+    "prefix": "dnf"
+    "body": """
+    - name: install $1
+      dnf:
+        name: $2
+        state: present
+        update_cache: yes
+      become: True
+      tags: ['$3']
+  """
+  "shell":
+    "prefix": "shell"
+    "body": """
+    - name: use shell to do stuff
+      shell: |
+        $1
+
+      args:
+        chdir: $2
+      tags: [$3]
+  """
+  "getUrl":
+    "prefix": "get_url"
+    "body": """
+    - name: $1
+      get_url:
+        url: $2
+        dest: $3
+        owner: $4
+        group: $5
+        mode: $6
+    """
+  "dir":
+    "prefix": "dir"
+    "body": """
+    - name: $1
+      file:
+        path: $2
+        state: directory
+        owner: $3
+        group: $4
+        recurse: $5
+    """
+  "auxdir":
+    "prefix": "auxdir"
+    "body": """
+        - dest: $1
+          mode: $2
+          owner: $3
+          group: $4
+          recurse: $5
+    """
+  "template":
+    "prefix": "temp"
+    "body": """
+    - name: $1
+      template:
+        src: $2
+        dest: $3
+        owner: $4
+        group: $5
+        mode: $6
+        backup: $7
+        validate: $8
+    """
+  "copy":
+    "prefix": "copy"
+    "body": """
+    - name: $1
+      copy:
+        src: $2
+        dest: $3
+        owner: $4
+        group: $5
+        mode: $6
+        backup: $7
+        directory_mode: $8
+    """
+  "link":
+    "prefix": "link"
+    "body": """
+    - name: $1
+      file:
+        src: /$2
+        dest: /$3
+        state: link
+    """
+  "sync":
+    "prefix": "sync"
+    "body": """
+    - name: sync folder $1
+      synchronize:
+        src: $2
+        dest: $3
+        recursive: yes
+        mode: push
+        delete: no
+        checksum: yes
+        perms: no
+        rsync_opts:
+          - "--update"
+          - "--omit-dir-times"
+          - "--progress"
+          - "--itemize-changes"
+          - "--chown=$4:$5"
+          - "--backup"
+          - "--suffix={{ suffix }}"
+    """
+    "lineinfile":
+      "prefix": "linein"
+      "body": """
+      - name: replace line in file
+        lineinfile:
+          dest: $1
+          regexp: "$2"
+          line: "$3"
+          backrefs: yes
+          backup: yes
+        tags: ['$4']
+    """
+    "blockinfile":
+      "prefix": "blockin"
+      "body": """
+      - name: blockinfile
+        blockinfile:
+          path: $1
+          owner: $2
+          group: $3
+          mode: $4
+          create: yes
+          marker: "### {mark} ANSIBLE MANAGED BLOCK ###"
+          block: |
+            $5
+    """

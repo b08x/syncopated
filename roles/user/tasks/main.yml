@@ -5,9 +5,19 @@
   debug:
     msg: "Starting user tasks"
 
-# dotfiles
+- name: Add user to groups
+  user:
+    name: "{{ user.name }}"
+    groups: "video,audio,input"
+    append: yes
+  tags: ['groups']
 
 - import_tasks:
     file: autologin.yml
   tags: ['autologin']
   when: autologin|default(false)|bool == True
+
+# dotfiles
+- import_tasks:
+    file: cheatsheets.yml
+  tags: ['cheatsheets']

@@ -27,7 +27,6 @@ app:
     touchosc: False
     tony: False
 
-
 baudline:
   url: "https://www.baudline.com"
   file: "baudline_1.08_linux_x86_64.tar.gz"

@@ -64,14 +64,6 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['env', 'profile']
 
-- name: Ensure user belongs to audio group
-  user:
-    name: "{{ item.name }}"
-    groups: "video"
-    append: yes
-  with_items: "{{ users }}"
-  tags: ['user']
-
 - block:
     - name: Set video modules in mkinitcpio
       template:

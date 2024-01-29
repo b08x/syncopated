@@ -28,7 +28,17 @@ i3:
   workspaces: 'default'
   keybindings: 'default'
 
-vscode_install: False
+app:
+  install:
+    pulsar: False
+    vscode: False
+    reaper: False
+    vamp: False
+    mixxx: False
+    annotator: False
+    soniclineup: False
+    touchosc: False
+    tony: False
 
 intranet:
   group:

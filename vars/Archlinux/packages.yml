@@ -74,6 +74,7 @@ packages:
   desktop:
     # - obs-rtspserver
     # - pgmodeler
+    - gksu
     - speech-dispatcher
     - mediamtx
     - gvfs-smb

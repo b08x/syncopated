@@ -90,12 +90,12 @@
 
 - import_tasks:
     file: ide/pulsar.yml
-  when: app.install.pulsar|bool
+  when: app.install.pulsar|default(false)|bool
   tags: ['pulsar']
 
 - import_tasks:
     file: ide/vscode.yml
-  when: app.install.vscode|bool
+  when: app.install.vscode|default(false)|bool
   tags: ['vscode']
 
 #NOTETHIS: these can be used in a seperate playbook
@@ -166,9 +166,10 @@
 
 - name: Install Thunar actions
   copy:
-    src: "files/etc/xdg/Thunar/{{ item }}"
-    dest: "/etc/xdg/Thunar/{{ item }}"
+    src: "home/.config/Thunar/{{ item }}"
+    dest: "{{ user.home }}/.config/Thunar/{{ item }}"
     mode: '0644'
+    backup: yes
   with_items:
     - accels.scm
     - uca.xml

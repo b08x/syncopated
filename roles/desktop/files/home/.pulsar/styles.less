@@ -1,0 +1,554 @@
+atom-text-editor {
+  background-color: #0b0c0d;
+  color: #C3C6C6;
+  font-family: "Hack Nerd Font";
+  // font-size: 16px;
+  .selection .region {
+    background-color: rgba(#ececde, 1);
+  }
+}
+
+// // BACKGROUND OF SELECTED TEXT
+//
+//
+.gutter {
+  max-width: 50%;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  .line-number {
+    background-color: #1a1919;
+    &.cursor-line-no-selection {
+      background-color: inherit;
+      color: #961f1f;
+    }
+  }
+}
+
+.tab-bar {
+   // background: #080808;
+   // height: 3.0rem;
+   border-bottom:  0.25mm dashed #d3d9a7;
+   font-family: "Hack Nerd Font Mono";
+   font-size: 1.25rem;
+}
+
+.tab-bar:not([data-reactid]) .tab .title[data-path]::before {
+  display: none;
+  height: 0.5rem;
+}
+
+.tree-view {
+ background-color: #0C0F11;
+ font-size: 1.25em;
+ font-weight: normal !important;
+}
+
+.tree-view-resizer, atom-text-editor::shadow  {
+  ::-webkit-scrollbar {
+    background-color: #262626;
+
+    &-track {}
+
+    &-thumb {
+      background-color: #c2413d;
+
+      &:window-inactive {
+        background-color: rgb(116, 115, 105);
+      }
+    }
+
+    &-corner {
+      background-color: #262626;
+    }
+  }
+}
+
+// Ansble-Advanced
+.syntax--ansible-advanced {
+  .syntax--name {
+    color: #e0168a;
+  }
+  .syntax--task {
+    color: #a2673d;
+  }
+  .syntax--attribute-name {
+    color: #a23d9b;
+  }
+  .syntax--string.syntax--begin {
+    color: #e01671;
+  }
+  .syntax--string.syntax--end {
+    color: #e01671;
+  }
+  .syntax--string.syntax--unquoted {
+    color: #bab133;
+  }
+  .syntax--string.syntax--quoted {
+    color: #e83030;
+  }
+  .syntax--string {
+    // color: #2a9ad1;
+  }
+  .syntax--variable.syntax--other {
+    color: #a2a2a2;
+  }
+  .syntax--boolean {
+    color: #f6117f;
+  }
+  .syntax--keyword.syntax--other {
+    color: #217bd7;
+  }
+  .syntax--constant.syntax--language {
+    color: #883de7;
+  }
+  .syntax--constant.syntax--character {
+    color: #134a05;
+  }
+  .syntax--keyword.syntax--control {
+    color: #d4c5dd;
+  }
+  // .syntax--punctuation {
+  //   color: #ed2ace;
+  // }
+}
+
+
+
+// // // //////////////
+// // // // Markdown //
+// // // //////////////
+.syntax--md {
+   color: #dadada;
+   // font-family: mononoki Nerd Font mono;
+   // font-size: 1.0125em;
+
+  .syntax--unordered {
+    color: #17b5c4;
+  }
+
+  .syntax--ordered {
+    color: #861a94;
+  }
+
+  .syntax--hyperlink {
+    color: #cdc228;
+  }
+
+  .syntax--heading-1 {
+    color: #dec522;
+    font-weight: 900;
+  }
+
+  .syntax--heading-2 {
+    color: #ac4ec3;
+    font-weight: 900;
+  }
+
+  .syntax--heading-3 {
+    color: #fc5858;
+    font-weight: 900;
+  }
+
+  .syntax--heading-4 {
+    color: #fc589d;
+    font-weight: 900;
+  }
+
+}
+//
+//
+// // // //////////////
+// // // // XML //
+// // // //////////////
+.syntax--xml {
+  color: #ffffff;
+
+  &.syntax--entity {
+    color: #169f05;
+
+    &.syntax--name {
+      color: #b8cd4f;
+      font-weight: 400;
+    }
+  }
+
+  &.syntax--punctuation.syntax--definition {
+    color: #8815e2;
+  }
+
+  &.syntax--variable {
+    color: #3450c7;
+  }
+
+  &.syntax--string {
+    color: #33a38f;
+    font-weight: 400;
+
+  }
+}
+
+// // // //////////////
+// // // // Shell //
+// // // //////////////
+.syntax--shell {
+  color: #339a02;
+  font-weight: 500;
+
+  .syntax--element {
+    color: #6f6464;
+  }
+
+  .syntax--variable {
+    color: #c73434;
+  }
+
+  .syntax--name.syntax--function {
+    color: #c4c9d2;
+    font-weight: 400;
+
+  }
+  .syntax--parameter.syntax--function {
+    color: #adadad;
+  }
+
+  .syntax--string {
+    color: #24c7c7;
+    font-weight: 400;
+  }
+
+  .syntax--keyword {
+    color: #f2ff00;
+      &.syntax--control {
+        color: #e77c2f;
+      }
+   }
+}
+//
+//
+// // // //////////////
+// // // // Ruby //////
+// // // //////////////
+.syntax--ruby {
+  color: #5ac407;
+
+  .syntax--punctuation {
+    color: #e2e;
+  }
+
+  .syntax--numeric {
+    color: #69e62e;
+  }
+
+  .syntax--punctuation.syntax--definition.syntax--string,{
+    color: #C3C6C6;
+  }
+
+  .syntax--string {
+    color: #a5d443;
+    font-size: 0.95em;
+    font-family: mononoki NFM;
+    &.syntax--quoted {
+      &.syntax--double { color: #ccd2d2; }
+      &.syntax--single { color: #8c8782; }
+    }
+  }
+
+  .syntax--name.syntax--function {
+    // color: #9632dd;
+    font-weight: 500;
+  }
+
+  .syntax--variable {
+    color: #dd2ab0;
+
+    &.syntax--constant {
+      color: #dd9b39;
+    }
+    &.syntax--global {
+      color: #1d961a;
+    }
+  }
+
+  .syntax--entity {
+    color: inherit;
+      &.syntax--name {
+        &.syntax--class, &.syntax--type.syntax--class {
+          color:  #9c9698;
+        }
+      }
+  }
+
+  .syntax--keyword {
+      // color: #e4e218;
+      // color: #cdc22a;
+   }
+
+
+ .syntax--variable.syntax--parameter {
+   color: #e6dada;
+   font-style: italic;
+   opacity: 0.8;
+ }
+
+   .syntax--constant.syntax--other.syntax--symbol > .syntax--punctuation {
+     color: #2e77cd;
+   }
+   //
+   .syntax--constant.syntax--other.syntax--hashkey {
+     color: #ee23a3;
+   }
+
+   // .syntax--comment, .syntax--punctuation.syntax--definition.syntax--comment {
+   //   color: #747182;
+   // }
+   //
+   //
+   //  .syntax--keyword.syntax--other.syntax--special-method.syntax--ruby.syntax--sonic-pi {
+   //     color: #db6363;
+   //  }
+
+
+}
+
+// Yaml
+.syntax--yaml {
+  // color: #2a4ddf;
+
+  .syntax--name {
+    color: #cbbd41;
+    // font-size: 1.025em;
+    // font-variant: small-caps;
+  }
+
+  .syntax--comment {
+    color: #535355;
+  }
+  .syntax--string.syntax--begin {
+    color: #b51c7c;
+    font-weight: 900;
+  }
+  .syntax--string.syntax--end {
+    color: #b51c7c;
+    font-weight: 900;
+  }
+  .syntax--string.syntax--quoted {
+    color: #126c4e;
+    font-weight: 600;
+  }
+  .syntax--string {
+    // color: #0987c4;
+    color: #9e9d9d;
+    // font-weight: 600;
+    // font-size: 14px;
+  }
+  .syntax--boolean {
+    color: #11c6f6;
+  }
+  .syntax--constant {
+    color: #35c112;
+  }
+  .syntax--keyword {
+    color: #9518e2;
+  }
+  .syntax--brace {
+    color: inherit;
+  }
+}
+//
+// // // //////////////
+// // // // Squirrel //
+// // // //////////////
+// // // .syntax--nut {
+// // //   color: #2e8b23;
+// // //
+// // //   .syntax--variable {
+// // //     color: #D1E014;
+// // //     // opacity: 0.8;
+// // //   }
+// // //
+// // //   .syntax--variable.syntax--constant {
+// // //     color: #ba8601;
+// // //     // opacity: 0.8;
+// // //   }
+// // //
+// // //   .syntax--string.syntax--begin {
+// // //     color: #db1ad9;
+// // //   }
+// // //
+// // //   .syntax--string.syntax--end {
+// // //     color: #db1ad9;
+// // //   }
+// // //
+// // //   .syntax--variable.syntax--other.syntax--readwrite.syntax--global {
+// // //     color: #1460e0;
+// // //     // font-weight: lighter;
+// // //   }
+// // //
+// // //   .syntax--constant.syntax--other.syntax--symbol {
+// // //     color: #7070d7;
+// // //   }
+// // //
+// // //   .syntax--name.syntax--function {
+// // //     color: #0768a7;
+// // //     font-weight: 500;
+// // //   }
+// // //
+// // //   .syntax--parameter.syntax--function {
+// // //     color: #7268e9;
+// // //     // font-family: Nimbus Mono PS;
+// // //     opacity: 0.8;
+// // //   }
+// // //
+// // //   .syntax--string {
+// // //     color: #96363C;
+// // //   }
+// // //
+// // //   .syntax--name.syntax--class {
+// // //     color: #014658;
+// // //
+// // //   }
+// // //
+// // //   .syntax--keyword {
+// // //     color: #DC1840;
+// // //       &.syntax--control {
+// // //         color: #ba8601;
+// // //       }
+// // //    }
+// // // }
+// // //
+// //
+//
+// //
+// //
+// //
+// //
+// // //
+//
+// // //
+// Ansble-Advanced
+.syntax--ansible {
+  .syntax--name {
+    color: #e01677;
+  }
+  .syntax--task {
+    color: #a2673d;
+  }
+  .syntax--string.syntax--begin {
+    color: #e01671;
+  }
+  .syntax--string.syntax--end {
+    color: #e01671;
+  }
+  .syntax--string.syntax--unquoted {
+    color: #3379ba;
+  }
+  .syntax--string.syntax--quoted {
+    color: #86e830;
+  }
+  .syntax--string {
+    color: #19db5e;
+  }
+  .syntax--boolean {
+    color: #f6117f;
+  }
+
+  .syntax--constant.syntax--language {
+    color: #415cec;
+  }
+  .syntax--constant.syntax--character {
+    color: #134a05;
+  }
+  .syntax--keyword.syntax--control {
+    color: #3880df;
+  }
+  .syntax--punctuation {
+    color: #554c54;
+  }
+}
+
+
+
+.sytax--shell-jinja {
+  color: #ede6e6;
+}
+
+.syntax--jinja {
+    color: #13e4d8;
+    font-weight: 500;
+
+    .syntax--string {
+      color: #a87d0c;
+    }
+    .syntax--variable {
+      color: #c78c34;
+    }
+    .syntax--text {
+       color: #ebb616;
+     }
+
+    .syntax--keyword {
+      color: #9bba33;
+    }
+
+     .syntax--name.syntax--function {
+       color: #dbc21a;
+       font-weight: 400;
+
+     }
+     .syntax--parameter.syntax--function {
+       color: #4e47a1;
+     }
+
+    .syntax--comment.syntax--generic-config {
+      color: #6f6464;
+    }
+
+    .syntax--other.syntax--jinja {
+      color: #df5899;
+    }
+
+    .syntax--quoted.syntax--jinja {
+      color: #1969c7;
+    }
+    .syntax--quote-syntax.syntax--double--jinja {
+        color: #77113d;
+    }
+
+}
+// // // //text
+// // // .syntax--text {
+// // //    color: #ebb616;
+// // //
+// // //   .syntax--paragraph {
+// // //     color: #eb1696;
+// // //   }
+// // //
+// // //   .syntax--unordered {
+// // //     color: #177e19;
+// // //   }
+// // //
+// // //   .syntax--ordered {
+// // //     color: #3e40f4;
+// // //   }
+// // //
+// // //   .syntax--underline.syntax--link {
+// // //     color: #446b12;
+// // //   }
+// // //
+// // //   .syntax--hyperlink {
+// // //     color: #cdc228;
+// // //   }
+// // //
+// // //   .syntax--heading-1 {
+// // //     color: #b6361f;
+// // //   }
+// // //
+// // //   .syntax--heading-2 {
+// // //     color: #833a95;
+// // //   }
+// // //
+// // //   .syntax--heading-3 {
+// // //     color: #91953a;
+// // //   }
+// // //
+// // // }

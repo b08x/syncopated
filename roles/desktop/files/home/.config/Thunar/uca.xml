@@ -5,24 +5,19 @@
 	<name>Open Terminal Here</name>
 	<submenu></submenu>
 	<unique-id>1640763842500001-1</unique-id>
-	<command>alacritty --working-directory %f</command>
+	<command>kitty --working-directory %d</command>
 	<description>Open a terminal in the current directory.</description>
 	<range></range>
 	<patterns>*</patterns>
 	<startup-notify/>
 	<directories/>
-	<audio-files/>
-	<image-files/>
-	<other-files/>
-	<text-files/>
-	<video-files/>
 </action>
 <action>
 	<icon>terminator</icon>
 	<name>Open Root Terminal Here</name>
 	<submenu></submenu>
 	<unique-id>1640763842500039-2</unique-id>
-	<command>sudo -i /usr/bin/terminator --working-directory %d</command>
+	<command>gksu kitty %f</command>
 	<description>Open a Root terminal in the current directory.</description>
 	<range></range>
 	<patterns>*</patterns>
@@ -30,27 +25,11 @@
 	<directories/>
 </action>
 <action>
-	<icon>angrysearch</icon>
-	<name>Search For Text within Folder</name>
-	<submenu></submenu>
-	<unique-id>1640771708379034-1</unique-id>
-	<command>terminator /usr/local/bin/rga-fzf %f</command>
-	<description>find files containing specified text using rga and fzf</description>
-	<range></range>
-	<patterns>*</patterns>
-	<directories/>
-	<audio-files/>
-	<image-files/>
-	<other-files/>
-	<text-files/>
-	<video-files/>
-</action>
-<action>
-	<icon>Thunar</icon>
+	<icon>org.xfce.thunar</icon>
 	<name>Open Folder as Root</name>
 	<submenu></submenu>
 	<unique-id>1640763842500060-3</unique-id>
-	<command>sudo thunar %f</command>
+	<command>gksu Thunar %f</command>
 	<description>Open the current directory with Root permissions.</description>
 	<range></range>
 	<patterns>*</patterns>
@@ -61,7 +40,7 @@
 	<name>Edit Text as Root</name>
 	<submenu></submenu>
 	<unique-id>1640763842500080-4</unique-id>
-	<command>sudo mousepad %f</command>
+	<command>gksu gedit %f</command>
 	<description>Open selected text file with Root permissions.</description>
 	<range></range>
 	<patterns>*</patterns>
@@ -363,5 +342,16 @@
 	<range></range>
 	<patterns>*.PDF;*.pdf</patterns>
 	<other-files/>
+</action>
+<action>
+	<icon>application-ascii</icon>
+	<name>ascii-image-converter</name>
+	<submenu></submenu>
+	<unique-id>1706493947136144-1</unique-id>
+	<command>kitty -e ascii-image-converter -f -n -C -m &quot; =^^^ssssda...&quot; --save-img . %f</command>
+	<description></description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<image-files/>
 </action>
 </actions>
