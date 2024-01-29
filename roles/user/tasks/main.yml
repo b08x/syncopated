@@ -12,12 +12,21 @@
     append: yes
   tags: ['groups']
 
-- import_tasks:
-    file: autologin.yml
-  tags: ['autologin']
-  when: autologin|default(false)|bool == True
+# - import_tasks:
+#     file: autologin.yml
+#   tags: ['autologin']
+#   when: autologin|default(false)|bool == True
 
 # dotfiles
+- name: Install .gitconfig
+  template:
+    src: home/.gitconfig
+    dest: "{{ user.home }}/.gitconfig"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+  tags: ['dots']
+
 - import_tasks:
     file: cheatsheets.yml
   tags: ['cheatsheets']
