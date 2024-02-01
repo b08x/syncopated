@@ -6,10 +6,6 @@ if [ -d $HOME/.cargo/bin ]; then
   PATH="$PATH:$HOME/.cargo/bin"
 fi
 
-if [ -d $HOME/RobotStuff/bin ]; then
-  PATH="$PATH:$HOME/RobotStuff/bin"
-fi
-
 export -U PATH
 
 export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh

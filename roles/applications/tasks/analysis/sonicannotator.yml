@@ -1,6 +1,6 @@
 ---
 
-- name: Check if Sonic-Snnotator is already installed
+- name: Check if Sonic-Annotator is already installed
   stat:
     path: /usr/local/bin/sonic-annotator
   register: sonicannotator

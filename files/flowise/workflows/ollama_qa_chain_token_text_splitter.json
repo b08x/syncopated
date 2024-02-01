@@ -1,0 +1,1105 @@
+{
+  "nodes": [
+    {
+      "width": 300,
+      "height": 482,
+      "id": "conversationalRetrievalQAChain_0",
+      "position": {
+        "x": 2035.3258504886276,
+        "y": 862.159352092995
+      },
+      "type": "customNode",
+      "data": {
+        "id": "conversationalRetrievalQAChain_0",
+        "label": "Conversational Retrieval QA Chain",
+        "version": 2,
+        "name": "conversationalRetrievalQAChain",
+        "type": "ConversationalRetrievalQAChain",
+        "baseClasses": [
+          "ConversationalRetrievalQAChain",
+          "BaseChain",
+          "Runnable"
+        ],
+        "category": "Chains",
+        "description": "Document QA - built on RetrievalQAChain to provide a chat history component",
+        "inputParams": [
+          {
+            "label": "Return Source Documents",
+            "name": "returnSourceDocuments",
+            "type": "boolean",
+            "optional": true,
+            "id": "conversationalRetrievalQAChain_0-input-returnSourceDocuments-boolean"
+          },
+          {
+            "label": "Rephrase Prompt",
+            "name": "rephrasePrompt",
+            "type": "string",
+            "description": "Using previous chat history, rephrase question into a standalone question",
+            "warning": "Prompt must include input variables: {chat_history} and {question}",
+            "rows": 4,
+            "additionalParams": true,
+            "optional": true,
+            "default": "Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.\n\nChat History:\n{chat_history}\nFollow Up Input: {question}\nStandalone Question:",
+            "id": "conversationalRetrievalQAChain_0-input-rephrasePrompt-string"
+          },
+          {
+            "label": "Response Prompt",
+            "name": "responsePrompt",
+            "type": "string",
+            "description": "Taking the rephrased question, search for answer from the provided context",
+            "warning": "Prompt must include input variable: {context}",
+            "rows": 4,
+            "additionalParams": true,
+            "optional": true,
+            "default": "You are a helpful assistant. Using the provided context, answer the user's question to the best of your ability using the resources provided.\nIf there is nothing in the context relevant to the question at hand, just say \"Hmm, I'm not sure.\" Don't try to make up an answer.\n------------\n{context}\n------------\nREMEMBER: If there is no relevant information within the context, just say \"Hmm, I'm not sure.\" Don't try to make up an answer.",
+            "id": "conversationalRetrievalQAChain_0-input-responsePrompt-string"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Chat Model",
+            "name": "model",
+            "type": "BaseChatModel",
+            "id": "conversationalRetrievalQAChain_0-input-model-BaseChatModel"
+          },
+          {
+            "label": "Vector Store Retriever",
+            "name": "vectorStoreRetriever",
+            "type": "BaseRetriever",
+            "id": "conversationalRetrievalQAChain_0-input-vectorStoreRetriever-BaseRetriever"
+          },
+          {
+            "label": "Memory",
+            "name": "memory",
+            "type": "BaseMemory",
+            "optional": true,
+            "description": "If left empty, a default BufferMemory will be used",
+            "id": "conversationalRetrievalQAChain_0-input-memory-BaseMemory"
+          }
+        ],
+        "inputs": {
+          "model": "{{chatOllama_0.data.instance}}",
+          "vectorStoreRetriever": "{{chroma_0.data.instance}}",
+          "memory": "{{RedisBackedChatMemory_0.data.instance}}",
+          "rephrasePrompt": "Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.\n\nChat History:\n{chat_history}\nFollow Up Input: {question}\nStandalone Question:",
+          "responsePrompt": "You are a helpful assistant. Using the provided context, answer the user's question to the best of your ability using the resources provided.\nIf there is nothing in the context relevant to the question at hand, just say \"Hmm, I'm not sure.\" Don't try to make up an answer.\n------------\n{context}\n------------\nREMEMBER: If there is no relevant information within the context, just say \"Hmm, I'm not sure.\" Don't try to make up an answer."
+        },
+        "outputAnchors": [
+          {
+            "id": "conversationalRetrievalQAChain_0-output-conversationalRetrievalQAChain-ConversationalRetrievalQAChain|BaseChain|Runnable",
+            "name": "conversationalRetrievalQAChain",
+            "label": "ConversationalRetrievalQAChain",
+            "type": "ConversationalRetrievalQAChain | BaseChain | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "positionAbsolute": {
+        "x": 2035.3258504886276,
+        "y": 862.159352092995
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "width": 300,
+      "height": 580,
+      "id": "chatOllama_0",
+      "position": {
+        "x": 1642.1550249572635,
+        "y": -406.23101703810516
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatOllama_0",
+        "label": "ChatOllama",
+        "version": 2,
+        "name": "chatOllama",
+        "type": "ChatOllama",
+        "baseClasses": [
+          "ChatOllama",
+          "SimpleChatModel",
+          "BaseChatModel",
+          "BaseLanguageModel",
+          "Runnable"
+        ],
+        "category": "Chat Models",
+        "description": "Chat completion using open-source LLM on Ollama",
+        "inputParams": [
+          {
+            "label": "Base URL",
+            "name": "baseUrl",
+            "type": "string",
+            "default": "http://localhost:11434",
+            "id": "chatOllama_0-input-baseUrl-string"
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "string",
+            "placeholder": "llama2",
+            "id": "chatOllama_0-input-modelName-string"
+          },
+          {
+            "label": "Temperature",
+            "name": "temperature",
+            "type": "number",
+            "description": "The temperature of the model. Increasing the temperature will make the model answer more creatively. (Default: 0.8). Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 0.1,
+            "default": 0.9,
+            "optional": true,
+            "id": "chatOllama_0-input-temperature-number"
+          },
+          {
+            "label": "Top P",
+            "name": "topP",
+            "type": "number",
+            "description": "Works together with top-k. A higher value (e.g., 0.95) will lead to more diverse text, while a lower value (e.g., 0.5) will generate more focused and conservative text. (Default: 0.9). Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-topP-number"
+          },
+          {
+            "label": "Top K",
+            "name": "topK",
+            "type": "number",
+            "description": "Reduces the probability of generating nonsense. A higher value (e.g. 100) will give more diverse answers, while a lower value (e.g. 10) will be more conservative. (Default: 40). Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-topK-number"
+          },
+          {
+            "label": "Mirostat",
+            "name": "mirostat",
+            "type": "number",
+            "description": "Enable Mirostat sampling for controlling perplexity. (default: 0, 0 = disabled, 1 = Mirostat, 2 = Mirostat 2.0). Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-mirostat-number"
+          },
+          {
+            "label": "Mirostat ETA",
+            "name": "mirostatEta",
+            "type": "number",
+            "description": "Influences how quickly the algorithm responds to feedback from the generated text. A lower learning rate will result in slower adjustments, while a higher learning rate will make the algorithm more responsive. (Default: 0.1) Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-mirostatEta-number"
+          },
+          {
+            "label": "Mirostat TAU",
+            "name": "mirostatTau",
+            "type": "number",
+            "description": "Controls the balance between coherence and diversity of the output. A lower value will result in more focused and coherent text. (Default: 5.0) Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-mirostatTau-number"
+          },
+          {
+            "label": "Context Window Size",
+            "name": "numCtx",
+            "type": "number",
+            "description": "Sets the size of the context window used to generate the next token. (Default: 2048) Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-numCtx-number"
+          },
+          {
+            "label": "Number of GQA groups",
+            "name": "numGqa",
+            "type": "number",
+            "description": "The number of GQA groups in the transformer layer. Required for some models, for example it is 8 for llama2:70b. Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-numGqa-number"
+          },
+          {
+            "label": "Number of GPU",
+            "name": "numGpu",
+            "type": "number",
+            "description": "The number of layers to send to the GPU(s). On macOS it defaults to 1 to enable metal support, 0 to disable. Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-numGpu-number"
+          },
+          {
+            "label": "Number of Thread",
+            "name": "numThread",
+            "type": "number",
+            "description": "Sets the number of threads to use during computation. By default, Ollama will detect this for optimal performance. It is recommended to set this value to the number of physical CPU cores your system has (as opposed to the logical number of cores). Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-numThread-number"
+          },
+          {
+            "label": "Repeat Last N",
+            "name": "repeatLastN",
+            "type": "number",
+            "description": "Sets how far back for the model to look back to prevent repetition. (Default: 64, 0 = disabled, -1 = num_ctx). Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-repeatLastN-number"
+          },
+          {
+            "label": "Repeat Penalty",
+            "name": "repeatPenalty",
+            "type": "number",
+            "description": "Sets how strongly to penalize repetitions. A higher value (e.g., 1.5) will penalize repetitions more strongly, while a lower value (e.g., 0.9) will be more lenient. (Default: 1.1). Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-repeatPenalty-number"
+          },
+          {
+            "label": "Stop Sequence",
+            "name": "stop",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "AI assistant:",
+            "description": "Sets the stop sequences to use. Use comma to seperate different sequences. Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-stop-string"
+          },
+          {
+            "label": "Tail Free Sampling",
+            "name": "tfsZ",
+            "type": "number",
+            "description": "Tail free sampling is used to reduce the impact of less probable tokens from the output. A higher value (e.g., 2.0) will reduce the impact more, while a value of 1.0 disables this setting. (Default: 1). Refer to <a target=\"_blank\" href=\"https://github.com/jmorganca/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values\">docs</a> for more details",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatOllama_0-input-tfsZ-number"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Cache",
+            "name": "cache",
+            "type": "BaseCache",
+            "optional": true,
+            "id": "chatOllama_0-input-cache-BaseCache"
+          }
+        ],
+        "inputs": {
+          "cache": "{{redisCache_0.data.instance}}",
+          "baseUrl": "http://tinybot.syncopated.net:11434",
+          "modelName": "openhermes2.5-mistral:7b-q4_K_M",
+          "temperature": "0.6",
+          "topP": "",
+          "topK": "20",
+          "mirostat": "",
+          "mirostatEta": "",
+          "mirostatTau": "",
+          "numCtx": "",
+          "numGqa": "",
+          "numGpu": "0",
+          "numThread": "",
+          "repeatLastN": "",
+          "repeatPenalty": "",
+          "stop": "",
+          "tfsZ": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "chatOllama_0-output-chatOllama-ChatOllama|SimpleChatModel|BaseChatModel|BaseLanguageModel|Runnable",
+            "name": "chatOllama",
+            "label": "ChatOllama",
+            "type": "ChatOllama | SimpleChatModel | BaseChatModel | BaseLanguageModel | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1642.1550249572635,
+        "y": -406.23101703810516
+      },
+      "dragging": false
+    },
+    {
+      "width": 300,
+      "height": 656,
+      "id": "chroma_0",
+      "position": {
+        "x": 1154.987099453304,
+        "y": 331.2988376607747
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chroma_0",
+        "label": "Chroma",
+        "version": 1,
+        "name": "chroma",
+        "type": "Chroma",
+        "baseClasses": [
+          "Chroma",
+          "VectorStoreRetriever",
+          "BaseRetriever"
+        ],
+        "category": "Vector Stores",
+        "description": "Upsert embedded data and perform similarity search upon query using Chroma, an open-source embedding database",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "description": "Only needed if you have chroma on cloud services with X-Api-key",
+            "optional": true,
+            "credentialNames": [
+              "chromaApi"
+            ],
+            "id": "chroma_0-input-credential-credential"
+          },
+          {
+            "label": "Collection Name",
+            "name": "collectionName",
+            "type": "string",
+            "id": "chroma_0-input-collectionName-string"
+          },
+          {
+            "label": "Chroma URL",
+            "name": "chromaURL",
+            "type": "string",
+            "optional": true,
+            "id": "chroma_0-input-chromaURL-string"
+          },
+          {
+            "label": "Chroma Metadata Filter",
+            "name": "chromaMetadataFilter",
+            "type": "json",
+            "optional": true,
+            "additionalParams": true,
+            "id": "chroma_0-input-chromaMetadataFilter-json"
+          },
+          {
+            "label": "Top K",
+            "name": "topK",
+            "description": "Number of top results to fetch. Default to 4",
+            "placeholder": "4",
+            "type": "number",
+            "additionalParams": true,
+            "optional": true,
+            "id": "chroma_0-input-topK-number"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Document",
+            "name": "document",
+            "type": "Document",
+            "list": true,
+            "optional": true,
+            "id": "chroma_0-input-document-Document"
+          },
+          {
+            "label": "Embeddings",
+            "name": "embeddings",
+            "type": "Embeddings",
+            "id": "chroma_0-input-embeddings-Embeddings"
+          }
+        ],
+        "inputs": {
+          "document": [
+            "{{pdfFile_0.data.instance}}"
+          ],
+          "embeddings": "{{redisEmbeddingsCache_0.data.instance}}",
+          "collectionName": "repos",
+          "chromaURL": "http://ninjabot.syncopated.net:8000",
+          "chromaMetadataFilter": "",
+          "topK": ""
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "options": [
+              {
+                "id": "chroma_0-output-retriever-Chroma|VectorStoreRetriever|BaseRetriever",
+                "name": "retriever",
+                "label": "Chroma Retriever",
+                "type": "Chroma | VectorStoreRetriever | BaseRetriever"
+              },
+              {
+                "id": "chroma_0-output-vectorStore-Chroma|VectorStore",
+                "name": "vectorStore",
+                "label": "Chroma Vector Store",
+                "type": "Chroma | VectorStore"
+              }
+            ],
+            "default": "retriever"
+          }
+        ],
+        "outputs": {
+          "output": "retriever"
+        },
+        "selected": false
+      },
+      "positionAbsolute": {
+        "x": 1154.987099453304,
+        "y": 331.2988376607747
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "width": 300,
+      "height": 382,
+      "id": "redisEmbeddingsCache_0",
+      "position": {
+        "x": 399.3935891128725,
+        "y": 553.894433578642
+      },
+      "type": "customNode",
+      "data": {
+        "id": "redisEmbeddingsCache_0",
+        "label": "Redis Embeddings Cache",
+        "version": 1,
+        "name": "redisEmbeddingsCache",
+        "type": "RedisEmbeddingsCache",
+        "baseClasses": [
+          "RedisEmbeddingsCache",
+          "Embeddings"
+        ],
+        "category": "Cache",
+        "description": "Cache generated Embeddings in Redis to avoid needing to recompute them.",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "optional": true,
+            "credentialNames": [
+              "redisCacheApi",
+              "redisCacheUrlApi"
+            ],
+            "id": "redisEmbeddingsCache_0-input-credential-credential"
+          },
+          {
+            "label": "Time to Live (ms)",
+            "name": "ttl",
+            "type": "number",
+            "step": 10,
+            "default": 3600,
+            "optional": true,
+            "additionalParams": true,
+            "id": "redisEmbeddingsCache_0-input-ttl-number"
+          },
+          {
+            "label": "Namespace",
+            "name": "namespace",
+            "type": "string",
+            "optional": true,
+            "additionalParams": true,
+            "id": "redisEmbeddingsCache_0-input-namespace-string"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Embeddings",
+            "name": "embeddings",
+            "type": "Embeddings",
+            "id": "redisEmbeddingsCache_0-input-embeddings-Embeddings"
+          }
+        ],
+        "inputs": {
+          "embeddings": "{{huggingFaceInferenceEmbeddings_0.data.instance}}",
+          "ttl": 3600,
+          "namespace": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "redisEmbeddingsCache_0-output-redisEmbeddingsCache-RedisEmbeddingsCache|Embeddings",
+            "name": "redisEmbeddingsCache",
+            "label": "RedisEmbeddingsCache",
+            "type": "RedisEmbeddingsCache | Embeddings"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 399.3935891128725,
+        "y": 553.894433578642
+      }
+    },
+    {
+      "width": 300,
+      "height": 331,
+      "id": "redisCache_0",
+      "position": {
+        "x": 966.5291289547391,
+        "y": -846.3025555941381
+      },
+      "type": "customNode",
+      "data": {
+        "id": "redisCache_0",
+        "label": "Redis Cache",
+        "version": 1,
+        "name": "redisCache",
+        "type": "RedisCache",
+        "baseClasses": [
+          "RedisCache",
+          "BaseCache"
+        ],
+        "category": "Cache",
+        "description": "Cache LLM response in Redis, useful for sharing cache across multiple processes or servers",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "optional": true,
+            "credentialNames": [
+              "redisCacheApi",
+              "redisCacheUrlApi"
+            ],
+            "id": "redisCache_0-input-credential-credential"
+          },
+          {
+            "label": "Time to Live (ms)",
+            "name": "ttl",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "redisCache_0-input-ttl-number"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "ttl": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "redisCache_0-output-redisCache-RedisCache|BaseCache",
+            "name": "redisCache",
+            "label": "RedisCache",
+            "type": "RedisCache | BaseCache"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 966.5291289547391,
+        "y": -846.3025555941381
+      },
+      "dragging": false
+    },
+    {
+      "width": 300,
+      "height": 331,
+      "id": "RedisBackedChatMemory_0",
+      "position": {
+        "x": 565.7009193096279,
+        "y": 1230.6376053122976
+      },
+      "type": "customNode",
+      "data": {
+        "id": "RedisBackedChatMemory_0",
+        "label": "Redis-Backed Chat Memory",
+        "version": 2,
+        "name": "RedisBackedChatMemory",
+        "type": "RedisBackedChatMemory",
+        "baseClasses": [
+          "RedisBackedChatMemory",
+          "BaseChatMemory",
+          "BaseMemory"
+        ],
+        "category": "Memory",
+        "description": "Summarizes the conversation and stores the memory in Redis server",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "optional": true,
+            "credentialNames": [
+              "redisCacheApi",
+              "redisCacheUrlApi"
+            ],
+            "id": "RedisBackedChatMemory_0-input-credential-credential"
+          },
+          {
+            "label": "Session Id",
+            "name": "sessionId",
+            "type": "string",
+            "description": "If not specified, a random id will be used. Learn <a target=\"_blank\" href=\"https://docs.flowiseai.com/memory/long-term-memory#ui-and-embedded-chat\">more</a>",
+            "default": "",
+            "additionalParams": true,
+            "optional": true,
+            "id": "RedisBackedChatMemory_0-input-sessionId-string"
+          },
+          {
+            "label": "Session Timeouts",
+            "name": "sessionTTL",
+            "type": "number",
+            "description": "Omit this parameter to make sessions never expire",
+            "additionalParams": true,
+            "optional": true,
+            "id": "RedisBackedChatMemory_0-input-sessionTTL-number"
+          },
+          {
+            "label": "Memory Key",
+            "name": "memoryKey",
+            "type": "string",
+            "default": "chat_history",
+            "additionalParams": true,
+            "id": "RedisBackedChatMemory_0-input-memoryKey-string"
+          },
+          {
+            "label": "Window Size",
+            "name": "windowSize",
+            "type": "number",
+            "description": "Window of size k to surface the last k back-and-forth to use as memory.",
+            "additionalParams": true,
+            "optional": true,
+            "id": "RedisBackedChatMemory_0-input-windowSize-number"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "sessionId": "",
+          "sessionTTL": "",
+          "memoryKey": "chat_history",
+          "windowSize": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "RedisBackedChatMemory_0-output-RedisBackedChatMemory-RedisBackedChatMemory|BaseChatMemory|BaseMemory",
+            "name": "RedisBackedChatMemory",
+            "label": "RedisBackedChatMemory",
+            "type": "RedisBackedChatMemory | BaseChatMemory | BaseMemory"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 565.7009193096279,
+        "y": 1230.6376053122976
+      },
+      "dragging": false
+    },
+    {
+      "width": 300,
+      "height": 474,
+      "id": "tokenTextSplitter_0",
+      "position": {
+        "x": -270.12600695847675,
+        "y": -1048.3906393839397
+      },
+      "type": "customNode",
+      "data": {
+        "id": "tokenTextSplitter_0",
+        "label": "Token Text Splitter",
+        "version": 1,
+        "name": "tokenTextSplitter",
+        "type": "TokenTextSplitter",
+        "baseClasses": [
+          "TokenTextSplitter",
+          "TextSplitter",
+          "BaseDocumentTransformer",
+          "Runnable"
+        ],
+        "category": "Text Splitters",
+        "description": "Splits a raw text string by first converting the text into BPE tokens, then split these tokens into chunks and convert the tokens within a single chunk back into text.",
+        "inputParams": [
+          {
+            "label": "Encoding Name",
+            "name": "encodingName",
+            "type": "options",
+            "options": [
+              {
+                "label": "gpt2",
+                "name": "gpt2"
+              },
+              {
+                "label": "r50k_base",
+                "name": "r50k_base"
+              },
+              {
+                "label": "p50k_base",
+                "name": "p50k_base"
+              },
+              {
+                "label": "p50k_edit",
+                "name": "p50k_edit"
+              },
+              {
+                "label": "cl100k_base",
+                "name": "cl100k_base"
+              }
+            ],
+            "default": "gpt2",
+            "id": "tokenTextSplitter_0-input-encodingName-options"
+          },
+          {
+            "label": "Chunk Size",
+            "name": "chunkSize",
+            "type": "number",
+            "default": 1000,
+            "optional": true,
+            "id": "tokenTextSplitter_0-input-chunkSize-number"
+          },
+          {
+            "label": "Chunk Overlap",
+            "name": "chunkOverlap",
+            "type": "number",
+            "optional": true,
+            "id": "tokenTextSplitter_0-input-chunkOverlap-number"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "encodingName": "cl100k_base",
+          "chunkSize": "256",
+          "chunkOverlap": "50"
+        },
+        "outputAnchors": [
+          {
+            "id": "tokenTextSplitter_0-output-tokenTextSplitter-TokenTextSplitter|TextSplitter|BaseDocumentTransformer|Runnable",
+            "name": "tokenTextSplitter",
+            "label": "TokenTextSplitter",
+            "type": "TokenTextSplitter | TextSplitter | BaseDocumentTransformer | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": -270.12600695847675,
+        "y": -1048.3906393839397
+      }
+    },
+    {
+      "width": 300,
+      "height": 476,
+      "id": "huggingFaceInferenceEmbeddings_0",
+      "position": {
+        "x": -299.68764651848596,
+        "y": 307.1729352640656
+      },
+      "type": "customNode",
+      "data": {
+        "id": "huggingFaceInferenceEmbeddings_0",
+        "label": "HuggingFace Inference Embeddings",
+        "version": 1,
+        "name": "huggingFaceInferenceEmbeddings",
+        "type": "HuggingFaceInferenceEmbeddings",
+        "baseClasses": [
+          "HuggingFaceInferenceEmbeddings",
+          "Embeddings"
+        ],
+        "category": "Embeddings",
+        "description": "HuggingFace Inference API to generate embeddings for a given text",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "huggingFaceApi"
+            ],
+            "id": "huggingFaceInferenceEmbeddings_0-input-credential-credential"
+          },
+          {
+            "label": "Model",
+            "name": "modelName",
+            "type": "string",
+            "description": "If using own inference endpoint, leave this blank",
+            "placeholder": "sentence-transformers/distilbert-base-nli-mean-tokens",
+            "optional": true,
+            "id": "huggingFaceInferenceEmbeddings_0-input-modelName-string"
+          },
+          {
+            "label": "Endpoint",
+            "name": "endpoint",
+            "type": "string",
+            "placeholder": "https://xyz.eu-west-1.aws.endpoints.huggingface.cloud/sentence-transformers/all-MiniLM-L6-v2",
+            "description": "Using your own inference endpoint",
+            "optional": true,
+            "id": "huggingFaceInferenceEmbeddings_0-input-endpoint-string"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "modelName": "sentence-transformers/all-MiniLM-L6-v2",
+          "endpoint": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "huggingFaceInferenceEmbeddings_0-output-huggingFaceInferenceEmbeddings-HuggingFaceInferenceEmbeddings|Embeddings",
+            "name": "huggingFaceInferenceEmbeddings",
+            "label": "HuggingFaceInferenceEmbeddings",
+            "type": "HuggingFaceInferenceEmbeddings | Embeddings"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": -299.68764651848596,
+        "y": 307.1729352640656
+      },
+      "dragging": false
+    },
+    {
+      "width": 300,
+      "height": 547,
+      "id": "pdfFile_0",
+      "position": {
+        "x": 293.4787766013545,
+        "y": -596.8968989308567
+      },
+      "type": "customNode",
+      "data": {
+        "id": "pdfFile_0",
+        "label": "Pdf File",
+        "version": 1,
+        "name": "pdfFile",
+        "type": "Document",
+        "baseClasses": [
+          "Document"
+        ],
+        "category": "Document Loaders",
+        "description": "Load data from PDF files",
+        "inputParams": [
+          {
+            "label": "Pdf File",
+            "name": "pdfFile",
+            "type": "file",
+            "fileType": ".pdf",
+            "id": "pdfFile_0-input-pdfFile-file"
+          },
+          {
+            "label": "Usage",
+            "name": "usage",
+            "type": "options",
+            "options": [
+              {
+                "label": "One document per page",
+                "name": "perPage"
+              },
+              {
+                "label": "One document per file",
+                "name": "perFile"
+              }
+            ],
+            "default": "perPage",
+            "id": "pdfFile_0-input-usage-options"
+          },
+          {
+            "label": "Use Legacy Build",
+            "name": "legacyBuild",
+            "type": "boolean",
+            "optional": true,
+            "additionalParams": true,
+            "id": "pdfFile_0-input-legacyBuild-boolean"
+          },
+          {
+            "label": "Metadata",
+            "name": "metadata",
+            "type": "json",
+            "optional": true,
+            "additionalParams": true,
+            "id": "pdfFile_0-input-metadata-json"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Text Splitter",
+            "name": "textSplitter",
+            "type": "TextSplitter",
+            "optional": true,
+            "id": "pdfFile_0-input-textSplitter-TextSplitter"
+          }
+        ],
+        "inputs": {
+          "textSplitter": "{{tokenTextSplitter_0.data.instance}}",
+          "usage": "perPage",
+          "legacyBuild": "",
+          "metadata": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "pdfFile_0-output-pdfFile-Document",
+            "name": "pdfFile",
+            "label": "Document",
+            "type": "Document"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 293.4787766013545,
+        "y": -596.8968989308567
+      }
+    },
+    {
+      "width": 300,
+      "height": 431,
+      "id": "recursiveCharacterTextSplitter_0",
+      "position": {
+        "x": -428.9373811112726,
+        "y": -482.8241750686832
+      },
+      "type": "customNode",
+      "data": {
+        "id": "recursiveCharacterTextSplitter_0",
+        "label": "Recursive Character Text Splitter",
+        "version": 2,
+        "name": "recursiveCharacterTextSplitter",
+        "type": "RecursiveCharacterTextSplitter",
+        "baseClasses": [
+          "RecursiveCharacterTextSplitter",
+          "TextSplitter",
+          "BaseDocumentTransformer",
+          "Runnable"
+        ],
+        "category": "Text Splitters",
+        "description": "Split documents recursively by different characters - starting with \"\\n\\n\", then \"\\n\", then \" \"",
+        "inputParams": [
+          {
+            "label": "Chunk Size",
+            "name": "chunkSize",
+            "type": "number",
+            "default": 1000,
+            "optional": true,
+            "id": "recursiveCharacterTextSplitter_0-input-chunkSize-number"
+          },
+          {
+            "label": "Chunk Overlap",
+            "name": "chunkOverlap",
+            "type": "number",
+            "optional": true,
+            "id": "recursiveCharacterTextSplitter_0-input-chunkOverlap-number"
+          },
+          {
+            "label": "Custom Separators",
+            "name": "separators",
+            "type": "string",
+            "rows": 4,
+            "description": "Array of custom separators to determine when to split the text, will override the default separators",
+            "placeholder": "[\"|\", \"##\", \">\", \"-\"]",
+            "additionalParams": true,
+            "optional": true,
+            "id": "recursiveCharacterTextSplitter_0-input-separators-string"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "chunkSize": "256",
+          "chunkOverlap": "50",
+          "separators": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "recursiveCharacterTextSplitter_0-output-recursiveCharacterTextSplitter-RecursiveCharacterTextSplitter|TextSplitter|BaseDocumentTransformer|Runnable",
+            "name": "recursiveCharacterTextSplitter",
+            "label": "RecursiveCharacterTextSplitter",
+            "type": "RecursiveCharacterTextSplitter | TextSplitter | BaseDocumentTransformer | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": -428.9373811112726,
+        "y": -482.8241750686832
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "chatOllama_0",
+      "sourceHandle": "chatOllama_0-output-chatOllama-ChatOllama|SimpleChatModel|BaseChatModel|BaseLanguageModel|Runnable",
+      "target": "conversationalRetrievalQAChain_0",
+      "targetHandle": "conversationalRetrievalQAChain_0-input-model-BaseChatModel",
+      "type": "buttonedge",
+      "id": "chatOllama_0-chatOllama_0-output-chatOllama-ChatOllama|SimpleChatModel|BaseChatModel|BaseLanguageModel|Runnable-conversationalRetrievalQAChain_0-conversationalRetrievalQAChain_0-input-model-BaseChatModel"
+    },
+    {
+      "source": "chroma_0",
+      "sourceHandle": "chroma_0-output-retriever-Chroma|VectorStoreRetriever|BaseRetriever",
+      "target": "conversationalRetrievalQAChain_0",
+      "targetHandle": "conversationalRetrievalQAChain_0-input-vectorStoreRetriever-BaseRetriever",
+      "type": "buttonedge",
+      "id": "chroma_0-chroma_0-output-retriever-Chroma|VectorStoreRetriever|BaseRetriever-conversationalRetrievalQAChain_0-conversationalRetrievalQAChain_0-input-vectorStoreRetriever-BaseRetriever"
+    },
+    {
+      "source": "redisEmbeddingsCache_0",
+      "sourceHandle": "redisEmbeddingsCache_0-output-redisEmbeddingsCache-RedisEmbeddingsCache|Embeddings",
+      "target": "chroma_0",
+      "targetHandle": "chroma_0-input-embeddings-Embeddings",
+      "type": "buttonedge",
+      "id": "redisEmbeddingsCache_0-redisEmbeddingsCache_0-output-redisEmbeddingsCache-RedisEmbeddingsCache|Embeddings-chroma_0-chroma_0-input-embeddings-Embeddings"
+    },
+    {
+      "source": "RedisBackedChatMemory_0",
+      "sourceHandle": "RedisBackedChatMemory_0-output-RedisBackedChatMemory-RedisBackedChatMemory|BaseChatMemory|BaseMemory",
+      "target": "conversationalRetrievalQAChain_0",
+      "targetHandle": "conversationalRetrievalQAChain_0-input-memory-BaseMemory",
+      "type": "buttonedge",
+      "id": "RedisBackedChatMemory_0-RedisBackedChatMemory_0-output-RedisBackedChatMemory-RedisBackedChatMemory|BaseChatMemory|BaseMemory-conversationalRetrievalQAChain_0-conversationalRetrievalQAChain_0-input-memory-BaseMemory"
+    },
+    {
+      "source": "redisCache_0",
+      "sourceHandle": "redisCache_0-output-redisCache-RedisCache|BaseCache",
+      "target": "chatOllama_0",
+      "targetHandle": "chatOllama_0-input-cache-BaseCache",
+      "type": "buttonedge",
+      "id": "redisCache_0-redisCache_0-output-redisCache-RedisCache|BaseCache-chatOllama_0-chatOllama_0-input-cache-BaseCache"
+    },
+    {
+      "source": "huggingFaceInferenceEmbeddings_0",
+      "sourceHandle": "huggingFaceInferenceEmbeddings_0-output-huggingFaceInferenceEmbeddings-HuggingFaceInferenceEmbeddings|Embeddings",
+      "target": "redisEmbeddingsCache_0",
+      "targetHandle": "redisEmbeddingsCache_0-input-embeddings-Embeddings",
+      "type": "buttonedge",
+      "id": "huggingFaceInferenceEmbeddings_0-huggingFaceInferenceEmbeddings_0-output-huggingFaceInferenceEmbeddings-HuggingFaceInferenceEmbeddings|Embeddings-redisEmbeddingsCache_0-redisEmbeddingsCache_0-input-embeddings-Embeddings"
+    },
+    {
+      "source": "tokenTextSplitter_0",
+      "sourceHandle": "tokenTextSplitter_0-output-tokenTextSplitter-TokenTextSplitter|TextSplitter|BaseDocumentTransformer|Runnable",
+      "target": "pdfFile_0",
+      "targetHandle": "pdfFile_0-input-textSplitter-TextSplitter",
+      "type": "buttonedge",
+      "id": "tokenTextSplitter_0-tokenTextSplitter_0-output-tokenTextSplitter-TokenTextSplitter|TextSplitter|BaseDocumentTransformer|Runnable-pdfFile_0-pdfFile_0-input-textSplitter-TextSplitter"
+    },
+    {
+      "source": "pdfFile_0",
+      "sourceHandle": "pdfFile_0-output-pdfFile-Document",
+      "target": "chroma_0",
+      "targetHandle": "chroma_0-input-document-Document",
+      "type": "buttonedge",
+      "id": "pdfFile_0-pdfFile_0-output-pdfFile-Document-chroma_0-chroma_0-input-document-Document"
+    }
+  ]
+}

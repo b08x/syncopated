@@ -7,11 +7,11 @@ repos:
   chaotic: False
   syncopated: True
 
-share:
-  nfs:
-    parent: "{{ user.home }}"
-    exports:
-      - LLMOS
+# share:
+#   nfs:
+#     parent: "{{ user.home }}"
+#     exports:
+#       - LLMOS
 
 app:
   install:
@@ -55,7 +55,7 @@ x:
 
 i3:
   autostart:
-    - "ray-daemon --session-root ~/Public/NetworkSessions -p 7777"
+    - "ray-daemon --session-root ~/NetworkSessions -p 7777"
   tray_output: "primary"
   assignments: "default"
   workspaces:  "default"

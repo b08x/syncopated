@@ -11,11 +11,11 @@ repos:
   chaotic: False
   syncopated: True
 
-share:
-  nfs:
-    parent: "{{ user.home }}"
-    exports:
-      - Public
+# share:
+#   nfs:
+#     parent: "{{ user.home }}"
+#     exports:
+#       - Public
 
 app:
   install:

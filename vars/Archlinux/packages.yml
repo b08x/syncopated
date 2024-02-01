@@ -1,5 +1,41 @@
 ---
 
+# alsa: audio role 
+# ambisonics: audio role
+# analysis: audio role 
+# audio: audio role 
+# browser: desktop role 
+# codecs: audio role
+# cursors: desktop role 
+# desktop: desktop role 
+# development: desktop role 
+# docs: desktop role 
+# fonts: desktop role
+# gtk3: desktop role 
+# i3: desktop role
+# icons: desktop role 
+# jack: audio role 
+# kvantum: desktop role 
+# loopers: audio role 
+# media: desktop role 
+# midi: audio role 
+# pipewire: audio role 
+# plugins: audio role 
+# pulseaudio: audio role 
+# python: desktop role 
+# qt5: desktop role 
+# qt6: desktop role 
+# ruby: ruby role 
+# samplers: audio role 
+# sequencers: audio role 
+# sway: desktop role 
+# synths: audio role 
+# terminal: terminal role 
+# themes: desktop role 
+# tools: audio role 
+# utility: desktop role 
+# xorg: x role
+
 packages:
   alsa:
     - a2jmidid

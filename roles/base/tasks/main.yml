@@ -51,15 +51,3 @@
 - import_tasks:
     file: autofs.yml
   tags: ["autofs"]
-
-- name: clone RobotStuff
-  git:
-    repo: https://github.com/b08x/RobotStuff.git
-    dest: "{{ user.home }}/RobotStuff"
-    recursive: yes
-    accept_hostkey: yes
-    update: yes
-    force: no
-  check_mode: no
-  become: False
-  tags: ["robotstuff"]
