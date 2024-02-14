@@ -8,10 +8,10 @@ control + Menu
   wmfocus
 
 XF86AudioRecord
-  urxvt -name scriber -e whisper-stream -s 2.0 -p ~/Workspace/Notebooks/Obsidian/Notebook/Daily
+  kitty --name scriber -e dictation.sh
 
 super + XF86AudioRecord
-  urxvt -name scriber -e whisper-stream -o
+  urxvt --name scriber -e dictation.sh
 
 Menu
   ~/.config/rofi/scripts/launcher_t1.sh

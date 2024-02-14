@@ -1,35 +1,24 @@
-{% if inventory_hostname == 'soundbot' %}
-file://{{ user.home }}/Recordings
-file://{{ user.home }}/Recordings/Video
-file://{{ user.home }}/Recordings/Audio
-file://{{ user.home }}/Public
-file://{{ user.home }}/Archive
-file://{{ user.home }}/Desktop
+{% if inventory_hostname == 'tinybot' %}
+file:///mnt/soundbot
+file:///mnt/bender
+file://{{ user.home }}/Workspace/Archive
+file://{{ user.home }}/Workspace
 file://{{ user.home }}/Documents
 file://{{ user.home }}/Downloads
 file://{{ user.home }}/Library
-file://{{ user.home }}/Music
 file://{{ user.home }}/Pictures
 file://{{ user.home }}/Recordings
 file://{{ user.home }}/Sessions
 file://{{ user.home }}/Videos
-file://{{ user.home }}/Workspace
 {% else %}
-file://{{ user.home }}/LLMOS
+file:///mnt/bender
+file://{{ user.home }}/Workspace/Archive
 file://{{ user.home }}/Workspace
-file://{{ user.home }}/Recordings
-file://{{ user.home }}/Recordings/Video
-file://{{ user.home }}/Recordings/Audio
-file://{{ user.home }}/Public
-file://{{ user.home }}/Archive
-file://{{ user.home }}/Desktop
 file://{{ user.home }}/Documents
 file://{{ user.home }}/Downloads
 file://{{ user.home }}/Library
-file://{{ user.home }}/Music
 file://{{ user.home }}/Pictures
 file://{{ user.home }}/Recordings
 file://{{ user.home }}/Sessions
 file://{{ user.home }}/Videos
-file://{{ user.home }}/Workspace
 {% endif %}

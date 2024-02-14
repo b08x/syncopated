@@ -7,6 +7,7 @@
 - **/.git/
 - **/.ray-snapshots/
 - **/.obsidian/plugins/text-extractor/
+- Library/.Trash-1000/
 - LLMOS/ollama/
 - Workspace/stuff/Obsidian_Playground/
 - Workspace/syncopatedRepo/builds/
