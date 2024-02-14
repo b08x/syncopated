@@ -216,6 +216,10 @@ atom-text-editor {
     font-weight: 400;
   }
 
+  .syntax--comment, .syntax--punctuation.syntax--definition.syntax--comment {
+   color: #747182;
+  }
+
   .syntax--keyword {
     color: #f2ff00;
       &.syntax--control {
@@ -223,13 +227,14 @@ atom-text-editor {
       }
    }
 }
+
 //
 //
 // // // //////////////
 // // // // Ruby //////
 // // // //////////////
 .syntax--ruby {
-  color: #5ac407;
+  color: #bd880d;
 
   .syntax--punctuation {
     color: #e2e;
@@ -238,6 +243,10 @@ atom-text-editor {
   .syntax--numeric {
     color: #69e62e;
   }
+
+  .syntax--constant {
+      color: #9E2642;
+    }
 
   .syntax--punctuation.syntax--definition.syntax--string,{
     color: #C3C6C6;
@@ -248,24 +257,24 @@ atom-text-editor {
     font-size: 0.95em;
     font-family: mononoki NFM;
     &.syntax--quoted {
-      &.syntax--double { color: #ccd2d2; }
-      &.syntax--single { color: #8c8782; }
+      &.syntax--double { color: #18cbcb; }
+      &.syntax--single { color: #18a0cb; }
     }
   }
 
   .syntax--name.syntax--function {
-    // color: #9632dd;
+    color: #dd2ab0;
     font-weight: 500;
   }
 
   .syntax--variable {
-    color: #dd2ab0;
+    color: #b4b4b4;
 
     &.syntax--constant {
       color: #dd9b39;
     }
     &.syntax--global {
-      color: #1d961a;
+      color: #2af925;
     }
   }
 

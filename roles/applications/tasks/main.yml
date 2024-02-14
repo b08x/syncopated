@@ -16,6 +16,16 @@
   check_mode: no
   tags: ['profile']
 
+- import_tasks:
+    file: ide/pulsar.yml
+  when: app.install.pulsar|default(false)|bool
+  tags: ['pulsar']
+
+- import_tasks:
+    file: ide/vscode.yml
+  when: app.install.vscode|default(false)|bool
+  tags: ['vscode']
+
 - block:
     - name: Install ambisonics packages
       aur:
