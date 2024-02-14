@@ -7,3 +7,19 @@
     state: present
   become: False
   tags: ['packages']
+
+- name: Sync input presets folder
+  synchronize:
+    src: home/.config/input-remapper-2/presets/
+    dest: "{{ user.home }}/.config/input-remapper-2/presets/"
+    recursive: yes
+    mode: push
+    delete: yes
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--progress"
+      - "--itemize-changes"
+      - "--chown={{ user.name }}:{{ user.group }}"

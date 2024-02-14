@@ -93,6 +93,8 @@ intranet:
     other:
       - name: Huggingface
         url: https://huggingface.co/
+      - name: LLaVA Large Language and Vision Assistant
+        url: https://llava.hliu.cc/
     internet:
       - name: gmail
         url: https://gmail.google.com

@@ -20,7 +20,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "repeat(\n\t1,\n\tkey(XF86RotateWindows)\n).key(s)",
+        "output_symbol": "Return",
         "mapping_type": "key_macro"
     },
     {
@@ -32,7 +32,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "Super_L + XF86AudioRecord",
+        "output_symbol": "Control_L + v",
         "mapping_type": "key_macro"
     },
     {

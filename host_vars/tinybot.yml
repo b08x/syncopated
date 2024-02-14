@@ -7,11 +7,12 @@ repos:
   chaotic: False
   syncopated: True
 
-# share:
-#   nfs:
-#     parent: "{{ user.home }}"
-#     exports:
-#       - LLMOS
+share:
+  nfs:
+    parent: "{{ user.home }}"
+    exports:
+      - Recordings
+      - Sessions
 
 app:
   install:
@@ -54,8 +55,8 @@ x:
     - bash ~/.screenlayout/tinybot.sh
 
 i3:
-  autostart:
-    - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+  autostart: "default"
+    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
   tray_output: "primary"
   assignments: "default"
   workspaces:  "default"
