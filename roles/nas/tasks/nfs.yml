@@ -1,4 +1,11 @@
 ---
+- name: Create exports folder
+  file:
+    path: /srv/exports
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: "2775"
 
 - block:
     - name: Ensure group nobody exists
@@ -66,11 +73,11 @@
             port: "{{ item }}"
             proto: tcp
           with_items:
-            - '111'
-            - '662'
-            - '892'
-            - '2049'
-            - '32803'
+            - "111"
+            - "662"
+            - "892"
+            - "2049"
+            - "32803"
 
         - name: Permit udp traffic to rpcbind
           community.general.ufw:
@@ -78,11 +85,11 @@
             port: "{{ item }}"
             proto: udp
           with_items:
-            - '111'
-            - '662'
-            - '892'
-            - '32769'
-            - '32803'
+            - "111"
+            - "662"
+            - "892"
+            - "32769"
+            - "32803"
 
       when: distribution == 'MX' or distribution == 'Debian'
 
@@ -94,7 +101,6 @@
     state: directory
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
-    mode: g+s
   with_items:
     - "{{ share.nfs.exports }}"
 
@@ -104,7 +110,6 @@
     state: directory
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
-    recurse: True
   with_items:
     - "{{ share.nfs.exports }}"
 

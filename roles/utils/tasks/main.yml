@@ -43,4 +43,3 @@
     mode: '0644'
   with_items:
     - .backup_exclude.txt
-    - .backup_include.txt

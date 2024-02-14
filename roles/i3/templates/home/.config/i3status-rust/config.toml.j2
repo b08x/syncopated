@@ -19,10 +19,10 @@ weather_sun = " "
 weather_thunder = " "
 cogs = " "
 
-[[block]]
-block = "custom"
-command = "{{ user.home }}/.local/bin/openai_usage.rb"
-interval = 300
+#[[block]]
+#block = "custom"
+#command = "{{ user.home }}/.local/bin/openai_usage.rb"
+#interval = 300
 
 [[block]]
 block = "menu"
@@ -75,16 +75,16 @@ cmd = "{{ desktop.terminal_alt }} --class 'htop' --title 'htop' -e htop"
 # button = "left"
 # cmd = "<command>"
 
-[[block]]
-block = "custom"
-command = "curl 'https://wttr.in/?format=1' -s | xargs"
-interval = 300
-[[block.click]]
-button = "left"
-cmd = "{{ desktop.terminal }} --class 'weather' --hold -e wthrr"
-[[block.click]]
-button = "right"
-cmd = "{{ desktop.terminal }} --class 'weather' --hold -e wthrr -f w"
+# [[block]]
+# block = "custom"
+# command = "curl 'https://wttr.in/?format=1' -s | xargs"
+# interval = 300
+# [[block.click]]
+# button = "left"
+# cmd = "{{ desktop.terminal }} --class 'weather' --hold -e wthrr"
+# [[block.click]]
+# button = "right"
+# cmd = "{{ desktop.terminal }} --class 'weather' --hold -e wthrr -f w"
 
 [[block]]
 block = "time"

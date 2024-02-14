@@ -17,6 +17,14 @@
         state: present
       become: False
 
+    - name: Install syncopated-theme
+      aur:
+        use: paru
+        name: syncopated-theme
+        state: present
+        extra_args: "--overwrite '*'"
+      become: False
+
   tags: ['packages']
 
 - name: Ensure theme directories exist
@@ -31,33 +39,33 @@
   check_mode: no
   tags: ['profile']
 
-- import_tasks:
-    file: fonts.yml
-  tags: ['fonts']
-
-- import_tasks:
-    file: icons.yml
-  tags: ['icons']
-
-- name: Ensure /usr/local/share themes exists
-  file:
-    path: /usr/local/share/themes
-    state: directory
-    owner: root
-    group: root
-    recurse: True
-  register: themesdir
-
-- name: Extract themes into /usr/local/share/themes
-  unarchive:
-    src: "usr/local/share/themes/{{ item }}"
-    dest: "/usr/local/share/themes"
-  with_items:
-   - oomox-soundbot.tar.xz
-   - ArchLabs-Dark.tar.gz
-   - ArchLabs-Light.tar.gz
-  ignore_errors: "{{ ansible_check_mode }}"
-  when: themesdir.changed
+# - import_tasks:
+#     file: fonts.yml
+#   tags: ['fonts']
+#
+# - import_tasks:
+#     file: icons.yml
+#   tags: ['icons']
+#
+# - name: Ensure /usr/local/share themes exists
+#   file:
+#     path: /usr/local/share/themes
+#     state: directory
+#     owner: root
+#     group: root
+#     recurse: True
+#   register: themesdir
+#
+# - name: Extract themes into /usr/local/share/themes
+#   unarchive:
+#     src: "usr/local/share/themes/{{ item }}"
+#     dest: "/usr/local/share/themes"
+#   with_items:
+#    - oomox-soundbot.tar.xz
+#    - ArchLabs-Dark.tar.gz
+#    - ArchLabs-Light.tar.gz
+#   ignore_errors: "{{ ansible_check_mode }}"
+#   when: themesdir.changed
 
 - name: Install gtk configurations
   template:
@@ -91,23 +99,23 @@
     - '.config/qt6ct/qt6ct.conf'
   tags: ['profile', 'qt']
 
-- name: Create syncopated backgrounds folder
-  file:
-    path: /usr/share/backgrounds/syncopated
-    state: directory
-    mode: '0755'
-    group: "{{ user.group }}"
-
-- name: Install backgrounds
-  synchronize:
-    src: "usr/share/backgrounds/syncopated/"
-    dest: "/usr/share/backgrounds/syncopated/"
-    recursive: yes
-    mode: push
-    delete: no
-    rsync_opts:
-      - "--update"
-      - "--backup"
-      - "--suffix={{ suffix }}"
-  ignore_errors: "{{ ansible_check_mode }}"
-  tags: ['backgrounds']
+# - name: Create syncopated backgrounds folder
+#   file:
+#     path: /usr/share/backgrounds/syncopated
+#     state: directory
+#     mode: '0755'
+#     group: "{{ user.group }}"
+#
+# - name: Install backgrounds
+#   synchronize:
+#     src: "usr/share/backgrounds/syncopated/"
+#     dest: "/usr/share/backgrounds/syncopated/"
+#     recursive: yes
+#     mode: push
+#     delete: no
+#     rsync_opts:
+#       - "--update"
+#       - "--backup"
+#       - "--suffix={{ suffix }}"
+#   ignore_errors: "{{ ansible_check_mode }}"
+#   tags: ['backgrounds']

@@ -14,7 +14,7 @@ theme_directory_default_location: "{{ user.home }}"
 theme_directory_default_recurse: False
 
 theme_directory_definitions:
-  - dest: ".config/fontconfig"
+  # - dest: ".config/fontconfig"
   - dest: ".config/gtk-3.0"
   - dest: ".config/gtk-4.0"
   - dest: ".config/qt5ct"
@@ -22,6 +22,3 @@ theme_directory_definitions:
   - dest: ".config/qt5ct/colors"
   - dest: ".config/qt6ct/colors"
   - dest: ".config/Kvantum"
-  - dest: ".local/share/fonts"
-  - dest: ".themes"
-  - dest: ".icons"
