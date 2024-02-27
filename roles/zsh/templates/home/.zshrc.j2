@@ -152,3 +152,9 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # eval "$(mcfly init zsh)"
 
 [[ -f /usr/share/doc/mcfly/mcfly.zsh ]] && source /usr/share/doc/mcfly/mcfly.zsh
+
+{% if inventory_hostname == 'lapbot' %}
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/home/b08x/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+{% endif %}

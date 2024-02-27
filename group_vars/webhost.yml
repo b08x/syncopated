@@ -1,0 +1,12 @@
+---
+
+nginx_installation_type: "source"
+nginx_module_fancyindex: True
+
+nginx_sites:
+  00_default:
+    - listen 80 default_server
+    - server_name _
+    - root "/usr/share/nginx/html"
+    - index index.html
+    - autoindex on

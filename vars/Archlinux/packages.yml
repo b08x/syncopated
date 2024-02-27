@@ -1,5 +1,41 @@
 ---
 
+# alsa: audio role 
+# ambisonics: audio role
+# analysis: audio role 
+# audio: audio role 
+# browser: desktop role 
+# codecs: audio role
+# cursors: desktop role 
+# desktop: desktop role 
+# development: desktop role 
+# docs: desktop role 
+# fonts: desktop role
+# gtk3: desktop role 
+# i3: desktop role
+# icons: desktop role 
+# jack: audio role 
+# kvantum: desktop role 
+# loopers: audio role 
+# media: desktop role 
+# midi: audio role 
+# pipewire: audio role 
+# plugins: audio role 
+# pulseaudio: audio role 
+# python: desktop role 
+# qt5: desktop role 
+# qt6: desktop role 
+# ruby: ruby role 
+# samplers: audio role 
+# sequencers: audio role 
+# sway: desktop role 
+# synths: audio role 
+# terminal: terminal role 
+# themes: desktop role 
+# tools: audio role 
+# utility: desktop role 
+# xorg: x role
+
 packages:
   alsa:
     - a2jmidid
@@ -74,6 +110,8 @@ packages:
   desktop:
     # - obs-rtspserver
     # - pgmodeler
+    - gksu
+    - speech-dispatcher
     - mediamtx
     - gvfs-smb
     - gedit
@@ -420,63 +458,6 @@ packages:
     - helm-synth-lv2
     - helm-synth-standalone
     - helm-synth-vst
-  # terminal:
-  #   - alacritty
-  #   - aria2
-  #   - asciiquarium-transparent-git
-  #   - atool
-  #   - bash-completion
-  #   - bottom
-  #   - btop
-  #   - calibre
-  #   - djvulibre
-  #   - elinks
-  #   - figlet
-  #   - fontforge
-  #   - guake
-  #   - gum
-  #   - highlight
-  #   - htop
-  #   - imagemagick
-  #   - jq
-  #   - jupyter-nbconvert
-  #   - kitty
-  #   - kitty-shell-integration
-  #   - kitty-terminfo
-  #   - links
-  #   - lnav
-  #   - lynx
-  #   - mcfly
-  #   - mediainfo
-  #   - mupdf-tools
-  #   - ncdu
-  #   - neofetch
-  #   - neovim-symlinks
-  #   - nvtop
-  #   - odt2txt
-  #   - openscad
-  #   - perl-image-exiftool
-  #   - python-pillow
-  #   - python-pygments
-  #   - ranger
-  #   - ripgrep
-  #   - ripgrep-all
-  #   - rsync
-  #   - rxvt-unicode
-  #   - smartmontools
-  #   - termdown
-  #   - terminator
-  #   - terminology
-  #   - tilda
-  #   - transmission-cli
-  #   - tree
-  #   - ueberzug
-  #   - v4l-utils
-  #   - w3m
-  #   - wget
-  #   - xterm
-  #   - yadm
-  #   - zsh
   tools:
     - fmit
     - jack-example-tools
@@ -497,14 +478,10 @@ packages:
     - sox
     - tuned
   utility:
-    - gping
     - aria2
     - bat
-    - git-delta
     - barrier
     - fd
-    - dust
-    - duf
     - firewalld
     - gnome-keyring
     - htop
@@ -523,18 +500,25 @@ packages:
     - socat
     - zoxide
   terminal:
-    # - alacritty
     - aria2
     - asciiquarium-transparent-git
     - atool
+    - await
     - bash-completion
     - bottom
+    - broot
     - btop
     - calibre
+    - choose
     - djvulibre
+    - doggo
+    - duf
+    - dust
     - elinks
     - figlet
     - fontforge
+    - git-delta
+    - gping
     - guake
     - gum
     - highlight
@@ -578,7 +562,7 @@ packages:
     - wget
     - xterm
     - yadm
-    - zsh    
+    - zsh
   utils:
     - aspell-en
     - barrier

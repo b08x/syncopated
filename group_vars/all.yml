@@ -19,12 +19,12 @@ user:
   dots: git@github.com:b08x/dots.git
 
 users:
-  - name: root
-    group: root
-    uid: 0
-    gid: 0
-    home: /root
-    shell: /usr/bin/zsh
+  # - name: root
+  #   group: root
+  #   uid: 0
+  #   gid: 0
+  #   home: /root
+  #   shell: /usr/bin/zsh
   - name: b08x
     group: b08x
     uid: 1000
@@ -32,13 +32,13 @@ users:
     home: /home/b08x
     shell: /usr/bin/zsh
     sudoers: True
-  - name: pi
-    group: pi
-    uid: 1000
-    gid: 1000
-    home: /home/pi
-    shell: /usr/bin/zsh
-    sudoers: True
+  # - name: pi
+  #   group: pi
+  #   uid: 1000
+  #   gid: 1000
+  #   home: /home/pi
+  #   shell: /usr/bin/zsh
+  #   sudoers: True
 
 autofs_client:
   host: bender

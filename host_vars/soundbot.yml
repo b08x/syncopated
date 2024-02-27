@@ -15,13 +15,21 @@ share:
   nfs:
     parent: "{{ user.home }}"
     exports:
-      - Public
+      - Library
+      - Recordings
+      - Sessions
+      - Workspace
+      - Studio
+
+services:
+  mediamtx:
+    enabled: True
 
 app:
   install:
     reaper: True
-    pulsar: False
-    vscode: False
+    pulsar: True
+    vscode: True
     vamp: True
     mixxx: True
     annotator: True
@@ -51,7 +59,7 @@ desktop:
   barrier:
     server:
       name: soundbot
-      address: '[soundbot]:24800'
+      address: "[soundbot]:24800"
       config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
 
 x:

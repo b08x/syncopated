@@ -12,7 +12,7 @@ bluetooth: True
 
 repos:
   chaotic: True
-  syncopated: False
+  syncopated: True
 
 # share:
 #   nfs:
@@ -21,16 +21,14 @@ repos:
 
 app:
   install:
+    pulsar: True
     reaper: False
-    pulsar: False
-    vscode: False
     vamp: True
     mixxx: False
     annotator: True
     soniclineup: False
     touchosc: True
     tony: False
-
 
 docker:
   service: 'enabled'

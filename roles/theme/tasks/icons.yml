@@ -5,7 +5,7 @@
     src: "usr/local/share/pixmaps/"
     dest: "/usr/local/share/pixmaps/"
     directory_mode: yes
-    mode: '644'
+    mode: '0644'
 
 - name: Ensure /usr/local/share icons exists
   file:

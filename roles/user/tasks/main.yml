@@ -5,9 +5,28 @@
   debug:
     msg: "Starting user tasks"
 
+- name: Add user to groups
+  user:
+    name: "{{ user.name }}"
+    groups: "video,audio,input"
+    append: yes
+  tags: ['groups']
+
+# - import_tasks:
+#     file: autologin.yml
+#   tags: ['autologin']
+#   when: autologin|default(false)|bool == True
+
 # dotfiles
+- name: Install .gitconfig
+  template:
+    src: home/.gitconfig
+    dest: "{{ user.home }}/.gitconfig"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+  tags: ['dots']
 
 - import_tasks:
-    file: autologin.yml
-  tags: ['autologin']
-  when: autologin|default(false)|bool == True
+    file: cheatsheets.yml
+  tags: ['cheatsheets']

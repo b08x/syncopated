@@ -7,11 +7,22 @@ super + o ; {g,a,k,v}
 control + Menu
   wmfocus
 
+alt + Next
+  wmfocus
+
+#control + Print
+#control + Break
+
 XF86AudioRecord
-  urxvt -name scriber -e whisper-stream -s 2.0 -p ~/Public/Desktop/Notebook/Daily
+  kitty --name scriber -e dictation.sh
+
+#XF86HomePage
+
+XF86Mail
+  kitty --name scriber -e dictation.sh
 
 super + XF86AudioRecord
-  urxvt -name scriber -e whisper-stream -o
+  urxvt --name scriber -e dictation.sh
 
 Menu
   ~/.config/rofi/scripts/launcher_t1.sh
@@ -19,13 +30,13 @@ Menu
 #super + d
 #  rofi -no-lazy-grab -show drun -modi run,drun,window
 super + d
-  ~/.config/rofi/scripts/launcher_t4.sh
+  ~/.config/rofi/scripts/launcher_t1.sh
 
 super + F5
   {{ desktop.terminal }} --class "htop" -e htop
 
 super + alt + n
-  {{ desktop.terminal }} --class "notepad" -e /usr/local/bin/notepad.sh
+  {{ desktop.terminal }} --class "notepad" -e notepad.sh
 
 F12
   search_web.sh

@@ -11,9 +11,9 @@
 - name: Import bash role
   import_role:
     name: bash
-  tags: ['shell', 'profile']
+  tags: ['bash', 'profile']
 
 - name: Import zsh role
   import_role:
     name: zsh
-  tags: ['shell', 'profile']
+  tags: ['zsh', 'profile']

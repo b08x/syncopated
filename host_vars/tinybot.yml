@@ -11,13 +11,14 @@ share:
   nfs:
     parent: "{{ user.home }}"
     exports:
-      - LLMOS
+      - Recordings
+      - Sessions
 
 app:
   install:
     reaper: True
-    pulsar: False
-    vscode: False
+    pulsar: True
+    vscode: True
     vamp: True
     mixxx: True
     annotator: True
@@ -54,8 +55,8 @@ x:
     - bash ~/.screenlayout/tinybot.sh
 
 i3:
-  autostart:
-    - "ray-daemon --session-root ~/Public/NetworkSessions -p 7777"
+  autostart: "default"
+    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
   tray_output: "primary"
   assignments: "default"
   workspaces:  "default"

@@ -4,6 +4,28 @@
   debug:
     msg: "Starting applications role tasks"
 
+- name: Ensure application directories exist
+  file:
+    dest: "{{ application_directory_default_location }}/{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(application_directory_default_owner) }}"
+    group: "{{ item.group | default(application_directory_default_group) }}"
+    mode: "{{ item.mode | default(application_directory_default_mode) }}"
+    recurse: "{{ item.recurse | default(application_directory_default_recurse) }}"
+  with_items: "{{ application_directory_definitions }}"
+  check_mode: no
+  tags: ['profile']
+
+- import_tasks:
+    file: ide/pulsar.yml
+  when: app.install.pulsar|default(false)|bool
+  tags: ['pulsar']
+
+- import_tasks:
+    file: ide/vscode.yml
+  when: app.install.vscode|default(false)|bool
+  tags: ['vscode']
+
 - block:
     - name: Install ambisonics packages
       aur:
@@ -68,18 +90,6 @@
   become: False
   tags: ['packages']
 
-- name: Ensure application directories exist
-  file:
-    dest: "{{ application_directory_default_location }}/{{ item.dest }}"
-    state: directory
-    owner: "{{ item.owner | default(application_directory_default_owner) }}"
-    group: "{{ item.group | default(application_directory_default_group) }}"
-    mode: "{{ item.mode | default(application_directory_default_mode) }}"
-    recurse: "{{ item.recurse | default(application_directory_default_recurse) }}"
-  with_items: "{{ application_directory_definitions }}"
-  check_mode: no
-  tags: ['profile']
-
 - import_tasks:
     file: media/deadbeef.yml
   tags: ['media', 'deadbeef']
@@ -88,16 +98,6 @@
     file: media/mixxx.yml
   when: app.install.mixxx|bool
   tags: ['mixxx']
-
-- import_tasks:
-    file: ide/pulsar.yml
-  when: app.install.pulsar|bool
-  tags: ['pulsar']
-
-- import_tasks:
-    file: ide/vscode.yml
-  when: app.install.vscode|bool
-  tags: ['vscode']
 
 - import_tasks:
     file: analysis/vamp.yml
@@ -128,3 +128,18 @@
     file: daw/reaper.yml
   when: app.install.reaper|bool
   tags: ['reaper']
+
+- name: Set mediamtx config
+  copy:
+    src: etc/mediamtx/mediamtx.yml
+    dest: /etc/mediamtx/mediamtx.yml
+    backup: True
+  tags: ['mediamtx']
+
+- name: Enable mediamtx service
+  service:
+    name: mediamtx
+    state: stopped
+    enabled: True
+  when: serivces.mediamtx.enabled is defined
+  tags: ['mediamtx']

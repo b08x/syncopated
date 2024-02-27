@@ -2,102 +2,113 @@
 
 - name: Check if TouchOSC is already installed
   stat:
-    path: "{{ item }}"
-  register: existing_file
-  loop:
-    - "/usr/local/bin/TouchOSC"
-    - "/usr/local/bin/TouchOSC_{{ touchosc.version }}"
-  any_errors_fatal: true
+    path: "/usr/local/bin/TouchOSC_{{ touchosc.version }}"
+  register: touchosc_installed
+  changed_when: false
+
+- name: Check if update_TouchOSC variable is defined
+  set_fact:
+    touchosc_update_required: "{{ update_TouchOSC is defined }}"
   changed_when: false
 
 - block:
+    - name: Remove existing TouchOSC version
+      file:
+        path: "/usr/local/bin/TouchOSC_{{ touchosc.version }}"
+        state: absent
+      when: touchosc_installed.stat.exists and touchosc_update_required
+
     - name: Fetch TouchOSC
       get_url:
         url: "{{ touchosc.url }}/{{ touchosc.file }}"
         dest: "/tmp"
 
-    - name: Remove existing symlink and binary file
-      file:
-        path: "{{ item.item }}"
-        state: absent
-        follow: yes
-      when: existing_file.results | selectattr('stat.exists', 'defined') | selectattr('stat.islnk', 'defined') | list | length > 0
-      changed_when: existing_file.results | selectattr('item.stat.exists', 'defined') | list | length > 0
-      loop: "{{ existing_file.results }}"
-
     - name: Extract and install TouchOSC
       shell:
         cmd: |
           unzip -q -o "/tmp/{{ touchosc.file }}" -d "/tmp"
-          mv "/tmp/TouchOSC" "/usr/local/bin/"
-          chmod +x /usr/local/bin/TouchOSC
+          mv "/tmp/TouchOSC" "/usr/local/bin/TouchOSC_{{ touchosc.version }}"
+          chmod +x /usr/local/bin/TouchOSC_{{ touchosc.version }}
       args:
-        creates: "/usr/local/bin/TouchOSC"
+        creates: "/usr/local/bin/TouchOSC_{{ touchosc.version }}"
         executable: /bin/bash
 
-    # - name: create new symlink
-    #   file:
-    #     src: "/usr/local/bin/TouchOSC"
-    #     dest: "/usr/local/bin/TouchOSC_{{ touchosc.version }}"
-    #     state: link
-    #     force: yes
+    - name: create new symlink
+      file:
+        src: "/usr/local/bin/TouchOSC_{{ touchosc.version }}"
+        dest: "/usr/local/bin/TouchOSC"
+        state: link
+        force: yes
 
-  when: not (existing_file.results | selectattr('stat.exists', 'defined') | selectattr('stat.islnk', 'defined') | list | length > 0)
-  # see comments below explaining this conditional.
+    - name: Install desktop entry
+      copy:
+        src: usr/share/applications/TouchOSC.desktop
+        dest: /usr/share/applications/TouchOSC.desktop
+        mode: '644'
+
+  when: not touchosc_installed.stat.exists or touchosc_update_required
   tags: ['touchosc']
-
 
 - name: Check if Protokol is already installed
   stat:
     path: "{{ item }}"
-  register: existing_file
+  register: protokol_installed
   loop:
     - "/usr/local/bin/Protokol"
     - "/usr/local/bin/Protokol_{{ protokol.version }}"
   any_errors_fatal: true
   changed_when: false
 
+- name: Check if update_Protokol variable is defined
+  set_fact:
+    protokol_update_required: "{{ update_Protokol is defined }}"
+  changed_when: false
 
 - block:
-    - name: Fetch Protokol
-      get_url:
-        url: "{{ protokol.url }}/{{ protokol.file }}"
-        dest: "/tmp"
-
     - name: Remove existing symlink and binary file
       file:
         path: "{{ item.item }}"
         state: absent
         follow: yes
-      when: existing_file.results | selectattr('stat.exists', 'defined') | selectattr('stat.islnk', 'defined') | list | length > 0
+      when: existing_file.results | selectattr('stat.exists', 'defined') | selectattr('stat.islnk', 'defined') | list | length > 0 and protokol_update_required
       changed_when: existing_file.results | selectattr('item.stat.exists', 'defined') | list | length > 0
       loop: "{{ existing_file.results }}"
+
+    - name: Fetch Protokol
+      get_url:
+        url: "{{ protokol.url }}/{{ protokol.file }}"
+        dest: "/tmp"
 
     - name: Extract and install Protokol
       shell:
         cmd: |
           unzip -q -o "/tmp/{{ protokol.file }}" -d "/tmp"
-          mv "/tmp/Protokol" "/usr/local/bin/Protokol"
-          chmod +x /usr/local/bin/Protokol
+          mv "/tmp/Protokol" "/usr/local/bin/Protokol_{{ protokol.version }}"
+          chmod +x /usr/local/bin/Protokol_{{ protokol.version }}
       args:
-        creates: "/usr/local/bin/Protokol"
+        creates: "/usr/local/bin/Protokol_{{ protokol.version }}"
         executable: /bin/bash
 
-    # - name: create new symlink
-    #   file:
-    #     src: "/usr/local/bin/Protokol"
-    #     dest: "/usr/local/bin/Protokol_{{ protokol.version }}"
-    #     state: link
-    #     force: yes
+    - name: Create new symlink
+      file:
+        src: "/usr/local/bin/Protokol"
+        dest: "/usr/local/bin/Protokol_{{ touchosc.version }}"
+        state: link
+        force: yes
 
-  when: not (existing_file.results | selectattr('stat.exists', 'defined') | selectattr('stat.islnk', 'defined') | list | length > 0)
+    - name: Install desktop entry
+      copy:
+        src: usr/share/applications/Protokol.desktop
+        dest: /usr/share/applications/Protokol.desktop
+        mode: '644'
+
+  when: not protokol_installed.stat.exists or protokol_update_required
   tags: ['protokol']
 
 - name: Enable avahi service
   systemd:
     name: avahi-daemon
     enabled: yes
-
 
 # existing_file.results: This refers to the result of the stat task,
 # which gathers information about the existence of files/directories specified in the loop parameter.

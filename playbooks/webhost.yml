@@ -1,0 +1,23 @@
+---
+
+- name: setup ngninx host
+  hosts: webhost
+  strategy: free
+  gather_subset:
+    - hardware
+    - network
+  vars:
+    path:
+      - "{{ lookup('env','HOME') }}/.local/bin"
+      - "{{ lookup('env','HOME') }}/.cargo/bin"
+      - "{{ lookup('env','HOME') }}/.local/share/gem/ruby/3.0.0/bin"
+
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+    PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
+    ZSH: "/usr/local/share/oh-my-zsh"
+
+  roles:
+    - role: nginx
+      become: True
+      tags: ['nginx']

@@ -43,19 +43,19 @@ LocalFileSigLevel = Optional
 {% if architecture == 'x86-64-v3' %}
 [syncopated-v3]
 SigLevel = Optional TrustAll
-Server = http://bender.syncopated.net/repo/archlinux/packages/x86_64_v3/
-Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64_v3/
+Server = http://bender.syncopated.net/syncopated/repo/x86_64_v3/
+Server = http://syncopated.hopto.org/syncopated/repo/x86_64_v3/
 {% else %}
 #<disabled_v3 >[syncopated-v3]
 #<disabled_v3 >SigLevel = Optional TrustAll
-#<disabled_v3 >Server = http://bender.syncopated.net/repo/archlinux/packages/x86_64_v3/
-#<disabled_v3 >Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64_v3/
+#<disabled_v3 >Server = http://bender.syncopated.net/syncopated/repo/x86_64_v3/
+#<disabled_v3 >Server = http://syncopated.hopto.org/syncopated/repo/x86_64_v3/
 {% endif %}
 
 [syncopated]
 SigLevel = Optional TrustAll
-Server = http://bender.syncopated.net/repo/archlinux/packages/x86_64/
-Server = http://syncopated.hopto.org/repo/archlinux/packages/x86_64/
+Server = http://bender.syncopated.net/syncopated/repo/x86_64/
+Server = http://syncopated.hopto.org/syncopated/repo/x86_64/
 {% endif %}
 [proaudio]
 Server = https://arch.osamc.de/$repo/$arch
@@ -88,3 +88,8 @@ Server = https://pub-7d84e047b852442a86fd6d7feb1ff2cd.r2.dev/$repo/$arch
 Server = https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
 Server = https://github.com/ArchLabs/$repo/raw/master/$arch
 Server = https://sourceforge.net/projects/archlabs-repo/files/$repo/$arch
+
+{% if repos.chaotic|bool %}
+[chaotic-aur]
+Include = /etc/pacman.d/chaotic-mirrorlist
+{% endif %}

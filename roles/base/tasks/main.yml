@@ -1,5 +1,4 @@
 ---
-
 # - name: show expected_value
 #   debug:
 #     msg: "{{ expected_value }}"
@@ -17,7 +16,7 @@
 
 - import_tasks:
     file: sudoers.yml
-  tags: ['sudoers']
+  tags: ["sudoers"]
 
 - name: Ensure root directories exist
   file:
@@ -31,42 +30,24 @@
 
 - import_tasks:
     file: environment.yml
-  tags: ['env', 'profile']
+  tags: ["env", "profile"]
 
 - import_tasks:
     file: sshd.yml
-  tags: ['sshd']
+  tags: ["sshd"]
 
 - import_tasks:
     file: updatedb.yml
-  tags: ['updatedb']
+  tags: ["updatedb"]
 
 - import_tasks:
     file: zram.yml
-  tags: ['zram']
+  tags: ["zram"]
 
 - import_tasks:
     file: grub.yml
-  tags: ['grub']
+  tags: ["grub"]
 
 - import_tasks:
     file: autofs.yml
-  tags: ['autofs']
-
-- name: Install utility scripts
-  synchronize:
-    src: usr/local/bin
-    dest: /usr/local
-    recursive: yes
-    mode: push
-    delete: False
-    checksum: yes
-    perms: no
-    rsync_opts:
-      - "--update"
-      - "--omit-dir-times"
-      - "--backup"
-      - "--suffix={{ suffix }}"
-      - "--chmod=0755"
-  ignore_errors: "{{ ansible_check_mode }}"
-  tags: ['utils']
+  tags: ["autofs"]

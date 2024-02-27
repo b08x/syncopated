@@ -1,0 +1,148 @@
+"*":
+  "atom-beautify":
+    bash:
+      indent_with_tabs: true
+  "autocomplete-plus":
+    confirmCompletion: "enter"
+  "autocomplete-python":
+    useKite: false
+  "autocomplete-python-jedi":
+    useSnippets: "required"
+  core:
+    disabledPackages: [
+      "language-gfm"
+      "terminal-plus"
+      "markdown-preview-plus"
+      "linter-shellcheck"
+      "linter-ui-default"
+      "x-terminal-reloaded"
+      "linter-ansible-linting"
+      "ruby-solargraph"
+    ]
+    packagesWithKeymapsDisabled: [
+      "ruby-solargraph"
+    ]
+    themes: [
+      "one-dark-ui"
+      "vibrant-ink-ruby"
+    ]
+  editor:
+    fontFamily: "Hack Nerd Font Mono"
+    fontSize: 15
+    preferredLineLength: 120
+    softWrap: true
+    softWrapAtPreferredLineLength: true
+  "exception-reporting":
+    userId: "b1c62473-ec91-42cb-ba59-4523d0d2cbcb"
+  "file-types":
+    "**/Sessions/**/*.rb": "source.ruby.sonic-pi"
+    "**/sway/**/*": "source.shell"
+    "*.conf": "source.shell"
+    "*.j2": "source.python.jinja"
+    "*.rules": "source.shell"
+    "*.spi": "source.ruby.sonic-pi"
+    "*.yml": "source.ansible-advanced"
+    "*.yml.j2": "source.yaml.jinja"
+    ".*.j2": "source.shell.jinja"
+    "docker-compose*.yml": "source.yaml"
+  "format-shell": {}
+  "git-projects-manager":
+    basePath: "~/Workspace"
+  github:
+    automaticCommitMessageWrapping: false
+  "gruvbox-plus-syntax":
+    variant: "No Dimmed Colors"
+  "highlight-colors":
+    highlightCssNamedColors: false
+  linter:
+    disabledProviders: [
+      "ShellCheck"
+    ]
+  "linter-shellcheck":
+    enableNotice: true
+  "linter-ui-default":
+    panelHeight: 519
+  "markdown-preview":
+    useGitHubStyle: true
+  "markdown-preview-enhanced":
+    codeBlockTheme: "monokai.css"
+    enableCriticMarkupSyntax: true
+    enableExtendedTableSyntax: true
+    enableTypographer: true
+    mermaidTheme: "dark"
+    previewTheme: "one-dark.css"
+    revealjsTheme: "serif.css"
+  "markdown-toolbar":
+    position: "bottom"
+    size: "medium"
+  "markdown-writer":
+    fileExtension: ".md"
+    relativeImagePath: true
+    siteEngine: "jekyll"
+    siteImagesDir: "/assets/img/"
+    siteLocalDir: "/home/b08x/Workspace/websites/b08x"
+    sitePostsDir: "_posts/"
+    siteUrl: "https://b08x.github.io"
+    tableAlignment: "left"
+    tableExtraPipes: true
+  "one-dark-ui":
+    stickyHeaders: true
+  "open-terminal-here":
+    command: "kitty"
+  "project-colorize":
+    "/home/b08x/Workspace/gptclients:/home/b08x/Workspace/syncopated/cfgmgmt": "/home/b08x/Workspace/gptclients:/home/b08x/Workspace/syncopated/cfgmgmt"
+    "/home/b08x/Workspace/websites/b08x": "/home/b08x/Workspace/websites/b08x"
+  "project-manager":
+    includeGitRepositories: true
+  "project-plus":
+    newWindow: true
+    projectHome: " /home/Workspace"
+    showPath: true
+  "ruby-solargraph": {}
+  "run-in-terminal":
+    launchdir: "kitty -d \"{working_directory}\""
+    launchfile: "kitty -d \"{working_directory}\" --hold --execute \"{file_path}\" {args}"
+  "seti-syntax":
+    dynamicColor: false
+    themeColor: "Purple"
+  "seti-ui":
+    compactView: true
+    themeColor: "Steel"
+  "spell-check":
+    grammars: [
+      "text.md"
+      "source.asciidoc"
+      "source.gfm"
+      "text.git-commit"
+      "text.plain"
+      "text.plain.null-grammar"
+      "source.rst"
+      "text.restructuredtext"
+    ]
+    locales: [
+      "en-US"
+    ]
+  "terminal-plus":
+    core:
+      autoRunCommand: "--login"
+  "tokamak-terminal":
+    core: {}
+  "tool-bar":
+    fullWidth: false
+    iconSize: "18px"
+    position: "Bottom"
+    visible: false
+  "tool-bar-markdown-writer":
+    critic_markup: true
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  welcome:
+    lastViewedChangeLog: "1.63.2022120804"
+    showChangeLog: false
+    showOnStartup: false
+  "x-terminal-reloaded":
+    spawnPtySettings:
+      cwd: "$PWD"
+".jinja.source.yaml":
+  editor:
+    showIndentGuide: true

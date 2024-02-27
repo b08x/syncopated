@@ -1,0 +1,35 @@
+---
+
+- name: Install cheat
+  aur:
+    use: auto
+    name: cheat
+    state: present
+  become: False
+  tags: ['packages']
+
+- name: Create cheatsheet folder
+  file:
+    path: "{{ user.home }}/.config/cheat"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+
+- name: Install cheat config
+  copy:
+    src: home/.config/cheat/conf.yml
+    dest: "{{ user.home }}/.config/cheat/conf.yml"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+
+- name: Clone cheatsheet repository
+  git:
+    repo: https://github.com/b08x/cheatsheets.git
+    dest: "{{ user.home }}/.config/cheat/cheatsheets"
+    recursive: yes
+    accept_hostkey: yes
+    update: yes
+    force: no
+  check_mode: no
+  become: False

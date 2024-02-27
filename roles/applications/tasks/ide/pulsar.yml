@@ -36,5 +36,18 @@
         - install_pulsar.changed
         - _packages | length > 0
 
+    - name: Install config, snippets and styles
+      copy:
+        src: "home/.pulsar/{{ item }}"
+        dest: "{{ user.home }}/.pulsar/{{ item }}"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
+        mode: '0644'
+        backup: yes
+      with_items:
+        - config.cson
+        - snippets.cson
+        - styles.less
+
   become: False
   # when: current_version.stdout != desired_version.stdout

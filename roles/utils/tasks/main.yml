@@ -1,0 +1,45 @@
+---
+# tasks file for utils
+
+# - name: Remove dir
+#   file:
+#     path: "{{ user.home }}/.local/robotstuff"
+#     state: absent
+#   tags: ['robotstuff']
+
+# - name: Ensure directory structure
+#   file:
+#     path: "{{ user.home }}/.local/{{ item }}"
+#     state: directory
+#     owner: "{{ user.name }}"
+#     group: "{{ user.name }}"
+#     recurse: True
+#   with_items:
+#     - bin
+#     - lib
+
+- name: Push utility scripts and libraries
+  synchronize:
+    src:  home/.local/
+    dest: "{{ user.home }}/.local/"
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--progress"
+      - "--itemize-changes"
+      - "--chown={{ user.name }}:{{ user.group }}"
+
+- name: Push backup exclude file
+  copy:
+    src: "home/{{ item }}"
+    dest: "{{ user.home }}/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: '0644'
+  with_items:
+    - .backup_exclude.txt

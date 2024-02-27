@@ -11,8 +11,9 @@
   vars:
     # suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
     path:
-      - "{{ lookup('env','HOME') }}/.local/bin"
       - "{{ lookup('env','HOME') }}/.asdf/bin"
+      - "{{ lookup('env','HOME') }}/.local/bin"
+      - "{{ lookup('env','HOME') }}/.local/robotstuff/bin"
   environment:
     PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
@@ -20,7 +21,6 @@
     DISPLAY: ":0"
 # variables from vars_files are available starting here...
   pre_tasks:
-
     - name: show expected_value
       debug:
         var: ansible_facts["date_time"]["epoch"]
@@ -138,8 +138,14 @@
     #   tags: ['testing']
 
   roles:
+    - role: utils
+      tags: ["utils"]
+
     - role: distro
       tags: ["distro"]
+
+    - role: user
+      tags: ["user"]
 
     - role: base
       tags: ["base"]
@@ -180,9 +186,6 @@
     - role: theme
       tags: ["theme"]
 
-    - role: user
-      tags: ["user"]
-
     - role: x
       tags: ["x"]
 
@@ -206,7 +209,7 @@
 
   post_tasks:
     - name: Cleanup old backup files
-      script: "/usr/local/bin/cleanup.sh"
+      script: "cleanup.sh"
       when: cleanup is defined
       tags: ["cleanup"]
 
