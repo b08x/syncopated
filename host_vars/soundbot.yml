@@ -21,6 +21,10 @@ share:
       - Workspace
       - Studio
 
+services:
+  mediamtx:
+    enabled: True
+
 app:
   install:
     reaper: True

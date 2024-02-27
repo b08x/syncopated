@@ -128,3 +128,18 @@
     file: daw/reaper.yml
   when: app.install.reaper|bool
   tags: ['reaper']
+
+- name: Set mediamtx config
+  copy:
+    src: etc/mediamtx/mediamtx.yml
+    dest: /etc/mediamtx/mediamtx.yml
+    backup: True
+  tags: ['mediamtx']
+
+- name: Enable mediamtx service
+  service:
+    name: mediamtx
+    state: stopped
+    enabled: True
+  when: serivces.mediamtx.enabled is defined
+  tags: ['mediamtx']

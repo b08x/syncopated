@@ -21,7 +21,6 @@
     DISPLAY: ":0"
 # variables from vars_files are available starting here...
   pre_tasks:
-
     - name: show expected_value
       debug:
         var: ansible_facts["date_time"]["epoch"]
