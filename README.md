@@ -1,4 +1,9 @@
-# syncopatedIaC
+<h1 align="center">
+  <br>
+  <img height="300" src="https://github.com/b08x/syncopatedIaC/blob/development/docs/pixelcrow03.png?raw=true"> <br>
+    SyncopatedIac
+<br>
+</h1>
 
 An exercise in Linux Desktop Configuration Management. Intended to serve as an IaC framework to articulate the desired state of a small lab or studio.
 
