@@ -90,8 +90,8 @@ cmd = "{{ desktop.terminal_alt }} --class 'htop' --title 'htop' -e htop"
 block = "time"
 interval = 30
 [block.format]
-full = " $icon $timestamp.datetime(f:'%a %Y-%m-%d %R', l:en_US) "
-short = " $icon $timestamp.datetime(f:%R) "
+full = " $icon $timestamp.datetime(f:'%a %Y-%m-%d %I:%M %p', l:en_US) "
+short = " $icon $timestamp.datetime(f:'%I:%M %p') "
 [[block.click]]
 button = "left"
 cmd = "uxterm -hold -e cal -s"

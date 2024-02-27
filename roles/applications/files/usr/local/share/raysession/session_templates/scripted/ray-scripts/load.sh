@@ -26,14 +26,30 @@
 #                                                                      #
 ########################################################################
 
-
-
 # script here some actions to run before loading the session.
 bash stop-gvfs.sh
 
 bash disconnect_pulse.sh
 
 sudo cpupower frequency-set --governor performance
+
+if ! pgrep -x "reaper" > /dev/null
+then
+  cd $HOME/Sessions/ #TODO: set to /home/x/Projects
+
+  project=$(zenity --width 800 --height 600 --list --title="reaper projects" \
+    --text="select reaper project to open" --column="project" $(fd -a -e .rpp))
+
+  if [ -z $project ];then
+    i3-msg "exec --no-startup-id reaper -nosplash";sleep 2
+  else
+    i3-msg "exec --no-startup-id reaper -nosplash $project";sleep 2
+  fi
+else
+  systemd-cat -t "load_session" echo "reaper is currently open"
+fi
+
+
 # set this var true if you want all running clients to stop (see top of this file).
 clear_all_clients=false
 

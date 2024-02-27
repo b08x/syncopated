@@ -21,9 +21,11 @@
         msg: "{{ if_installed_version }}"
 
     - name: Backup reaper home config
-      shell: backup_reaper.sh
+      shell: "{{ user.home }}/.local/bin/backup_reaper.sh"
       register: reaper_backup
       become_user: "{{ user.name }}"
+      environment:
+        PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
       tags: ['backup']
 
     - name: Debug msg
