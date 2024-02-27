@@ -50,8 +50,8 @@ qmidinet:
 
 reaper:
   url: "https://www.reaper.fm/files/7.x/"
-  file: reaper707_linux_x86_64.tar.xz
-  version: v7.07
+  file: reaper711_linux_x86_64.tar.xz
+  version: v7.11
 
 scala:
   url: "http://www.huygens-fokker.org/software/"
@@ -72,10 +72,10 @@ tony:
 
 touchosc:
   url: "https://hexler.net/pub/touchosc"
-  file: "touchosc-1.2.3.178-linux-x64.zip"
-  version: 1.2.3.178
+  file: "touchosc-1.2.8.194-linux-x64.zip"
+  version: 1.2.8.194
 
 protokol:
   url: "https://hexler.net/pub/protokol/"
-  file: "protokol-0.5.1.101-linux-x64.zip"
-  version: 0.5.1.101
+  file: "protokol-0.5.4.105-linux-x64.zip"
+  version: 0.5.4.105
