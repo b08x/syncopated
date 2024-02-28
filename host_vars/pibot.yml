@@ -12,8 +12,6 @@ user:
   secondary_groups: "input,video,audio"
   sudoers: True
 
-
-
 bluetooth: True
 
 # share:
@@ -22,10 +20,5 @@ bluetooth: True
 #     exports:
 #       - LLMOS
 
-desktop:
-  dm: False
-  wm: i3
-  terminal: "xterm"
-  terminal_alt: "xterm"
-  browser: "google-chrome-stable"
-  audio: "jack"
+terminal: "xterm"
+terminal_alt: "xterm"

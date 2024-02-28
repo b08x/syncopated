@@ -1,5 +1,11 @@
 ---
 
-x:
-  autostart:
-    - "jacktrip -s -n 4 -q auto -b 24 -D --udprt &"
+expected_value: "groupvars_workstation_daw"
+
+# reaper:
+# vamp:
+# mixxx:
+# annotator:
+# soniclineup:
+# touchosc:
+# tony:

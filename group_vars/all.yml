@@ -32,8 +32,8 @@ lan:
   wireless:
     ssid: invisiblemagic
 
-repos:
-  chaotic: False
-  syncopated: True
+tuned:
+  profile: powersave
 
-autologin:
+docker:
+  storage: /var/lib/docker

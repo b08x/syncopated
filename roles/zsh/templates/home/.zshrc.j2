@@ -130,12 +130,12 @@ useditor() {
 
 if [[ ! -n $EDITOR ]]; then useditor nvim; fi
 
-[ -n "$DISPLAY" ] && export TERM="{{ desktop.terminal }}" || export TERM=xterm
-[ -n "$DISPLAY" ] && export TERMINAL="{{ desktop.terminal }}" || export TERMINAL=xterm
+[ -n "$DISPLAY" ] && export TERM="{{ terminal }}" || export TERM=xterm
+[ -n "$DISPLAY" ] && export TERMINAL="{{ terminal }}" || export TERMINAL=xterm
 
 TERMCMD="$TERMINAL"
 
-[ -n "$DISPLAY" ] && export BROWSER="{{ desktop.browser }}" || export BROWSER=links
+[ -n "$DISPLAY" ] && export BROWSER="{{browser }}" || export BROWSER=links
 
 eval "$(zoxide init zsh)"
 

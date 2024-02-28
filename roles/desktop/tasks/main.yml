@@ -86,20 +86,20 @@
 #   import_role:
 #     name: sway
 #   tags: ['sway']
-#   when: desktop.wm == 'sway'
+#   when: wm == 'sway'
 #
 # - name: Import gnome role
 #   import_role:
 #     name: gnome
 #   tags: ['gnome']
-#   when: desktop.wm == 'gnome'
+#   when: wm == 'gnome'
 
 # if this file does not exist, lightdm will fail to start
 - name: Set dmrc to selected window manager
   copy:
     content: |
       [Desktop]
-      Session={{ desktop.wm }}
+      Session={{wm }}
     dest: "{{ user.home }}/.dmrc"
     owner: "{{ user.name }}"
     mode: '0644'

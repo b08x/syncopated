@@ -12,23 +12,18 @@ share:
   # storage: /var/lib/docker
   # nvidia: True
 
-hardware:
-  graphics: "nvidia"
+nvidia:
 
-tuned:
-  profile: powersave
+terminal_alt: "alacritty"
 
-desktop:
-  dm: False
-  wm: i3
-  terminal: "kitty"
-  terminal_alt: "alacritty"
-  browser: "google-chrome-stable"
-  audio: "jack"
-  barrier:
-    client:
-      name: ninjabot
-      server: '[soundbot]:24800'
+audio: "jack"
+
+browser: "google-chrome-stable"
+
+barrier:
+  client:
+    name: ninjabot
+    server: '[soundbot]:24800'
 
 x:
   autostart:
@@ -75,11 +70,6 @@ i3:
 #     autoconnect: True
 #     state: present
 #     method4: manual
-
-video:
-  nvidia: True
-  intel: True
-  ati: False
 
 host:
   kernel:

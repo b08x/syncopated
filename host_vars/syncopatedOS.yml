@@ -1,7 +1,5 @@
 ---
 
-bluetooth: False
-
 share:
   nfs:
     parent: "{{ user.home }}"
@@ -10,56 +8,31 @@ share:
       - Workspace
       - Desktop
 
-# docker: "host_vars/syncopatedOS.yml"
-
 docker:
   service: True
 
-app:
-  install:
-    reaper: False
-    pulsar: False
-    vscode: False
-    vamp: False
-    mixxx: False
-    annotator: False
-    soniclineup: False
-    touchosc: False
-    tony: False
+terminal_alt: "alacritty"
 
-desktop:
-  dm: False
-  wm: i3
-  terminal: "kitty"
-  terminal_alt: "alacritty"
-  browser: "qutebrowser"
-  audio: "jack"
+browser: "qutebrowser"
 
 x:
   autostart:
     - bash ~/.screenlayout/syncopatedos.sh
 
-i3:
-  autostart: 'default'
-  tray_output: 'default'
-  assignments: 'default'
-  workspaces: 'default'
-  keybindings: 'default'
-
-network:
-  interfaces:
-    eth0:
-      type: ethernet
-      ifname: eth0
-      conn_name: eth0
-      mac: 52:54:00:a0:d7:10
-      ip4: 192.168.122.252
-      gw4: 192.168.122.1
-      dns4: 192.168.122.1
-      dns4_search: syncopated.net
-      autoconnect: True
-      state: present
-      method4: manual
+# network:
+#   interfaces:
+#     eth0:
+#       type: ethernet
+#       ifname: eth0
+#       conn_name: eth0
+#       mac: 52:54:00:a0:d7:10
+#       ip4: 192.168.122.252
+#       gw4: 192.168.122.1
+#       dns4: 192.168.122.1
+#       dns4_search: syncopated.net
+#       autoconnect: True
+#       state: present
+#       method4: manual
 
 jacktrip:
   server:

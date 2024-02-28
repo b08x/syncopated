@@ -29,10 +29,10 @@ block = "menu"
 text = ""
 [[block.items]]
 display = " -&gt;   noteinfo   &lt;-"
-cmd = "{{ desktop.terminal }} --class 'noteinfo' -e noteinfo.rb"
+cmd = "{{terminal }} --class 'noteinfo' -e noteinfo.rb"
 [[block.items]]
 display = " -&gt; brightness &lt;-"
-cmd = "{{ desktop.terminal }} --class 'brightness' -e brightness.rb"
+cmd = "{{terminal }} --class 'brightness' -e brightness.rb"
 #confirm_msg = "Are you sure you want to power off?"
 # [[block.items]]
 # display = " -&gt;  Reboot   &lt;-"
@@ -48,7 +48,7 @@ button = "left"
 cmd = "pavucontrol"
 [[block.click]]
 button = "middle"
-cmd = "{{ desktop.terminal_alt }} --class 'alsamixer' --title 'alsamixer' -e alsamixer -D hw:0"
+cmd = "{{terminal_alt }} --class 'alsamixer' --title 'alsamixer' -e alsamixer -D hw:0"
 
 [[block]]
 block = "load"
@@ -58,18 +58,18 @@ warning = 0.8
 critical = 2.0
 [[block.click]]
 button = "left"
-cmd = "{{ desktop.terminal }} --class 'govna' -e set-govna.sh performance"
+cmd = "{{terminal }} --class 'govna' -e set-govna.sh performance"
 [[block.click]]
 button = "right"
-cmd = "{{ desktop.terminal }} --class 'govna' -e set-govna.sh powersave"
+cmd = "{{terminal }} --class 'govna' -e set-govna.sh powersave"
 [[block.click]]
 button = "middle"
-cmd = "{{ desktop.terminal_alt }} --class 'htop' --title 'htop' -e htop"
+cmd = "{{terminal_alt }} --class 'htop' --title 'htop' -e htop"
 
 # [[block]]
 # block = "custom"
 # format = " \uf0c2 "
-# cycle = ["{{ desktop.terminal }} --class 'govna' -e /usr/local/bin/set-govna.sh performance", "{{ desktop.terminal }} --class 'govna' -e /usr/local/bin/# set-govna.sh powersave"]
+# cycle = ["{{terminal }} --class 'govna' -e /usr/local/bin/set-govna.sh performance", "{{terminal }} --class 'govna' -e /usr/local/bin/# set-govna.sh powersave"]
 # interval = "once"
 # [[block.click]]
 # button = "left"
@@ -81,10 +81,10 @@ cmd = "{{ desktop.terminal_alt }} --class 'htop' --title 'htop' -e htop"
 # interval = 300
 # [[block.click]]
 # button = "left"
-# cmd = "{{ desktop.terminal }} --class 'weather' --hold -e wthrr"
+# cmd = "{{terminal }} --class 'weather' --hold -e wthrr"
 # [[block.click]]
 # button = "right"
-# cmd = "{{ desktop.terminal }} --class 'weather' --hold -e wthrr -f w"
+# cmd = "{{terminal }} --class 'weather' --hold -e wthrr -f w"
 
 [[block]]
 block = "time"

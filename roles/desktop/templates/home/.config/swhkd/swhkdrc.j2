@@ -1,16 +1,16 @@
 # Import another configuration file.
 # NOTE: the path provided must be absolute and not relative such as `~`.
-# include /home/{{ user.name }}/.config/swhkd/swhkd-{{ desktop.wm }}
+# include /home/{{ user.name }}/.config/swhkd/swhkd-{{wm }}
 # include /home/{{ user.name }}/.config/swhkd/swhkd-user
 
-{% if desktop.wm == 'i3' %}
+{% ifwm == 'i3' %}
 Super + x
   xkill
 
 Shift + Print
   maim -s | xclip -selection clipboard -t image/png
 
-{% elif desktop.wm == 'sway' %}
+{% elifwm == 'sway' %}
 
 {% endif %}
 
@@ -24,7 +24,7 @@ Super + d
   ~/.config/rofi/scripts/launcher_t4.sh
 
 Super + f5
-  {{ desktop.terminal }} --class "htop" -e htop
+  {{terminal }} --class "htop" -e htop
 
 f12
   search_web.sh
@@ -36,17 +36,17 @@ Alt + tab
   rofi -no-lazy-grab -show window -modi run,drun,window
 
 Super + home
-  {{ desktop.browser }}
+  {{browser }}
 
 super + shift + home
-{% if desktop.browser == 'google-chrome-stable' %}
-  {{ desktop.browser }} --new-window %U
-{% elif desktop.browser == 'firefox' %}
-  {{ desktop.browser }} --private-window
+{% ifbrowser == 'google-chrome-stable' %}
+  {{browser }} --new-window %U
+{% elifbrowser == 'firefox' %}
+  {{browser }} --private-window
 {% endif %}
 
 Super + kpenter
-  {{ desktop.terminal }} -e ranger
+  {{terminal }} -e ranger
 
 Super + Shift + kpenter
   thunar

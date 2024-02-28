@@ -11,28 +11,17 @@ cpupower:
   governor: performance
   perf_bias: 0
 
-tuned:
-  profile: powersave
-
-desktop:
-  dm: False
-  wm: i3
-  terminal: "kitty"
-  terminal_alt: "alacritty"
-  browser: "google-chrome-stable"
-  audio: "jack"
-  barrier:
-    client:
-      name: tinybot
-      server: "[soundbot]:24800"
+barrier:
+  client:
+    name: tinybot
+    server: "[soundbot]:24800"
 
 x:
   autostart:
     - bash ~/.screenlayout/tinybot.sh
-
+    - "jacktrip -s -n 4 -q auto -b 24 -D --udprt &"
 i3:
   autostart: "default"
-    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
   tray_output: "primary"
   assignments: "default"
   workspaces:  "default"

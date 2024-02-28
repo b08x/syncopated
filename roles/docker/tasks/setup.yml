@@ -77,8 +77,6 @@
       # failed_when: "not 'Destination /usr/lib/systemd/system/docker.service does not exist' in dockerstorage.msg"
       notify: reload systemd daemon
 
-  when: docker.storage is defined
-
 - name: Create docker config directory
   file:
     path: /etc/docker
@@ -106,7 +104,6 @@
 - name: Set docker service preset
   systemd:
     name: docker
-    enabled: "{{ docker.service }}"
+    enabled: True
   # register: dockerservice
   # failed_when: "not 'Could not find the requested service' in dockerservice.msg"
-  when: docker.service is defined

@@ -1,1 +1,8 @@
 ---
+
+terminal: "kitty"
+terminal_alt: "alacritty"
+
+dm: False
+wm: "i3"
+browser: "w3m"

@@ -4,5 +4,4 @@
 # docker: "defaults/main.yml"
 
 docker:
-  service: 'disabled'
   storage: /var/lib/docker

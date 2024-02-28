@@ -18,7 +18,7 @@
     group: "{{ user.group }}"
     mode: '0644'
     backup: yes
-  when: desktop.barrier.server is defined
+  when: barrier.server is defined
 
 - name: Set barrier server autostart
   template:
@@ -28,7 +28,7 @@
     group: "{{ user.group }}"
     mode: '0644'
     backup: True
-  when: desktop.barrier.server is defined
+  when: barrier.server is defined
 
 - name: Set barrier client autostart
   template:
@@ -38,4 +38,4 @@
     group: "{{ user.group }}"
     mode: '0644'
     backup: True
-  when: desktop.barrier.client is defined
+  when: barrier.client is defined

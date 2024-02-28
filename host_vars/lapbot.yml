@@ -8,35 +8,10 @@
 expected_value: "hostvars_lapbot"
 
 bluetooth: True
-
-repos:
-  chaotic: True
-  syncopated: True
-
 # share:
 #   nfs:
 #     parent: ""
 #     exports: []
-
-app:
-  install:
-    pulsar: True
-    reaper: False
-    vamp: True
-    mixxx: False
-    annotator: True
-    soniclineup: False
-    touchosc: True
-    tony: False
-
-
-desktop:
-  dm: False
-  wm: i3
-  terminal: "kitty"
-  terminal_alt: "alacritty"
-  browser: "google-chrome-stable"
-  audio: "jack"
   # barrier:
   #   server:
   #     name: soundbot.syncopated.net
@@ -49,7 +24,6 @@ desktop:
 
 i3:
   autostart: 'default'
-    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
   tray_output: 'primary'
   assignments: 'default'
   workspaces: 'default'

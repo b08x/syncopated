@@ -18,24 +18,18 @@ cpupower:
   governor: performance
   perf_bias: 0
 
-tuned:
-  profile: powersave
-
-terminal:
-  terminal: "kitty"
-  terminal_alt: "alacritty"
+#TODO: this
+# tuned:
+#   profile: powersave
 
 audio: "jack"
 
-desktop:
-  barrier:
-    server:
-      name: soundbot
-      address: "[soundbot]:24800"
-      config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
-  browser: "google-chrome-stable"
-  dm: none
-  wm: i3
+
+barrier:
+  server:
+    name: soundbot
+    address: "[soundbot]:24800"
+    config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
 
 x:
   autostart:
@@ -43,8 +37,7 @@ x:
 
 i3:
   autostart:
-    "default"
-    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+    - "ray-daemon --session-root ~/NetworkSessions -p 7777"
   tray_output: "primary"
   assignments: "default"
   workspaces:

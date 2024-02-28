@@ -1,61 +1,46 @@
 ---
 
-bluetooth: False
-
 share:
   nfs:
     parent: ""
     exports: []
 
-app:
-  install:
-    reaper: False
-    pulsar: False
-    vscode: False
-    vamp: False
-    mixxx: False
-    annotator: False
-    soniclineup: False
-    touchosc: False
-    tony: False
+terminal: "xterm-256color"
+terminal_alt: "xterm-256color"
 
 
-desktop:
-  wm: shell
-  terminal: "xterm-256color"
-  terminal_alt: "xterm-256color"
-  browser: "w3m"
-  audio: "jack"
+wm: shell
+browser: "w3m"
 
-
-network_interfaces:
-  - device: eno1
-    type: ethernet
-    ifname: eno1
-    conn_name: eno1
-    mac: b8:ca:3a:94:51:ca
-    ip4: 192.168.41.2
-    gw4: 192.168.41.1
-    dns4: 192.168.41.41
-    dns4_search: syncopated.net
-    autoconnect: True
-    state: present
-    method4: manual
-  - device: enp2s0f0
-    type: ethernet
-    ifname: enp2s0f0
-    conn_name: audio
-    mac: 00:1b:21:87:e8:ba
-    ip4: 192.168.36.4
-    autoconnect: True
-    state: present
-    method4: manual
-  - device: enp2s0f1
-    type: ethernet
-    ifname: enp2s0f1
-    conn_name: audio
-    mac: 00:1b:21:87:e8:bb
-    ip4: 192.168.36.5
-    autoconnect: True
-    state: present
-    method4: manual
+#
+# network_interfaces:
+#   - device: eno1
+#     type: ethernet
+#     ifname: eno1
+#     conn_name: eno1
+#     mac: b8:ca:3a:94:51:ca
+#     ip4: 192.168.41.2
+#     gw4: 192.168.41.1
+#     dns4: 192.168.41.41
+#     dns4_search: syncopated.net
+#     autoconnect: True
+#     state: present
+#     method4: manual
+#   - device: enp2s0f0
+#     type: ethernet
+#     ifname: enp2s0f0
+#     conn_name: audio
+#     mac: 00:1b:21:87:e8:ba
+#     ip4: 192.168.36.4
+#     autoconnect: True
+#     state: present
+#     method4: manual
+#   - device: enp2s0f1
+#     type: ethernet
+#     ifname: enp2s0f1
+#     conn_name: audio
+#     mac: 00:1b:21:87:e8:bb
+#     ip4: 192.168.36.5
+#     autoconnect: True
+#     state: present
+#     method4: manual
