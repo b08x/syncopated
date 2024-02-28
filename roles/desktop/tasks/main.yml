@@ -19,11 +19,11 @@
   file:
     dest: "{{ desktop_directory_default_location }}/{{ item.dest }}"
     state: directory
-    owner: "{{ item.owner | default(desktop_directory_default_owner) }}"
-    group: "{{ item.group | default(desktop_directory_default_group) }}"
-    mode: "{{ item.mode | default(desktop_directory_default_mode) }}"
-    recurse: "{{ item.recurse | default(desktop_directory_default_recurse) }}"
-  with_items: "{{ desktop_directory_definitions }}"
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+    recurse: "{{ item.recurse | default(false) }}"
+  loop: "{{ desktop_directory_definitions }}"
   check_mode: no
 
 - block:
@@ -52,13 +52,6 @@
       aur:
         use: paru
         name: "{{ packages.development }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install docs packages
-      aur:
-        use: paru
-        name: "{{ packages.docs }}"
         state: present
         extra_args: --overwrite '*'
 
@@ -170,9 +163,20 @@
   become_user: "{{ user.name }}"
   tags: ['thunar']
 
+- name: Set JackTrip autostart entry
+  template:
+    src: home/.config/autostart/JackTrip.desktop.j2
+    dest: "{{ user.home }}/.config/autostart/JackTrip.desktop"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: "0644"
+    backup: yes
+    validate: "dex -d %s"
+  when: jacktrip.server.args != '' or jacktrip.client.args != ''
+
 - name: Set xdg autostart applications
   synchronize:
-    src: etc/xdg/autostart/
+    src: etc/xdg/autostart
     dest: /etc/xdg/autostart/
     recursive: yes
     mode: push

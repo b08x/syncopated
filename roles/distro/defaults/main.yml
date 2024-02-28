@@ -2,7 +2,3 @@
 # defaults file for roles/distro
 
 admin_group: wheel
-
-# repos:
-#   chaotic: False
-#   syncopated: True

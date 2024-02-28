@@ -1,32 +1,11 @@
 ---
 
-autologin: True
-
-bluetooth: False
-
 share:
   nfs:
     parent: /
     exports:
       - backup
       - storage
-
-app:
-  install:
-    reaper: False
-    pulsar: False
-    vscode: False
-    vamp: False
-    mixxx: False
-    annotator: False
-    soniclineup: False
-    touchosc: False
-    tony: False
-
-docker:
-  service: 'enabled'
-  storage: /var/lib/docker
-  nvidia: False
 
 desktop:
   dm: False

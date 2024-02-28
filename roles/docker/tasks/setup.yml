@@ -48,26 +48,36 @@
         state: present
         extra_args: "--overwrite '*'"
       loop:
-        # - nvidia-docker
+        - nvidia-container-toolkit
         - nvidia-docker-compose
       become: False
       when:
         - (distribution == 'Archlinux' or distribution == 'EndeavourOS')
-        - docker.nvidia|bool
+        - nvidia is defined
 
   tags: ['packages']
 
-- name: Set docker storage location
-  lineinfile:
-    path: "/usr/lib/systemd/system/docker.service"
-    regexp: "^ExecStart=/usr/bin/dockerd"
-    line: "ExecStart=/usr/bin/dockerd --data-root {{ docker.storage }} -H fd:// --containerd=/run/containerd/containerd.sock"
-    insertafter: "[Service]"
-    firstmatch: True
-    backup: True
-  # register: dockerstorage
-  # failed_when: "not 'Destination /usr/lib/systemd/system/docker.service does not exist' in dockerstorage.msg"
-  notify: reload systemd daemon
+- block:
+    - name: Ensure docker data directory exists
+      file:
+        path: "{{ docker.storage }}"
+        state: directory
+        owner: root
+        group: root
+
+    - name: Set docker storage location
+      lineinfile:
+        path: "/usr/lib/systemd/system/docker.service"
+        regexp: "^ExecStart=/usr/bin/dockerd"
+        line: "ExecStart=/usr/bin/dockerd --data-root {{ docker.storage }} -H fd:// --containerd=/run/containerd/containerd.sock"
+        insertafter: "[Service]"
+        firstmatch: True
+        backup: True
+      # register: dockerstorage
+      # failed_when: "not 'Destination /usr/lib/systemd/system/docker.service does not exist' in dockerstorage.msg"
+      notify: reload systemd daemon
+
+  when: docker.storage is defined
 
 - name: Create docker config directory
   file:
@@ -96,7 +106,7 @@
 - name: Set docker service preset
   systemd:
     name: docker
-    enabled: True
+    enabled: "{{ docker.service }}"
   # register: dockerservice
   # failed_when: "not 'Could not find the requested service' in dockerservice.msg"
-  when: docker.service == 'enabled'
+  when: docker.service is defined

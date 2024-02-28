@@ -3,7 +3,7 @@ version: '3.1'
 services:
   flowise:
     image: flowiseai/flowise
-    restart: always
+    restart: unless-stopped
     environment:
         - PUID=1000
         - PGID=1000
@@ -32,48 +32,75 @@ services:
     volumes:
       - chroma_persistent_folder:/chroma/chroma/
     environment:
-      - PUID=1000
-      - PGID=1000
-      - IS_PERSISTENT=TRUE
+      - PUID: 1000
+      - PGID: 1000
+      - IS_PERSISTENT: TRUE
     ports:
-      - 8000:8000
+      - "8000:8000"
     networks:
       network:
         ipv4_address: 10.5.0.4
   redis:
     image: redis/redis-stack:latest
+    restart: unless-stopped
     environment:
       PUID: 1000
       PGID: 1000
     volumes:
-      - "{{ user.home }}/LLMOS/redis/data:/data"
+      - redis_data:/data
     ports:
-      - 6379:6379
-      - 8081:8081
+      - "6379:6379"
+      - "8081:8081"
+      - "8001:8001"
     networks:
       network:
         ipv4_address: 10.5.0.5
   postgres:
     image: ankane/pgvector
+    restart: unless-stopped
     environment:
       PUID: 1000
       PGID: 1000
       POSTGRES_HOST_AUTH_METHOD: "trust"
-      POSTGRES_DB: monadic
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
-      - "{{ user.home }}/pgvector/local-data:/data"
-      - "{{ user.home }}/pgvector/pgdata:/var/lib/postgresql/data"
+      - postgresql_local_data:/data
+      - postgresql_data:/var/lib/postgresql/data
     networks:
       network:
         ipv4_address: 10.5.0.6
+  langfuse-server:
+    image: ghcr.io/langfuse/langfuse:latest
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres
+      - NEXTAUTH_SECRET=mysecret
+      - SALT=mysalt
+      - NEXTAUTH_URL=http://localhost:3000
+      - TELEMETRY_ENABLED=${TELEMETRY_ENABLED:-true}
+      - NEXT_PUBLIC_SIGN_UP_DISABLED=${NEXT_PUBLIC_SIGN_UP_DISABLED:-false}
+      - LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES=${LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES:-false}
+    networks:
+      network:
+        ipv4_address: 10.5.0.7
+
 
 volumes:
   chroma_persistent_folder:
     driver: local
-  backups:
+  postgresql_local_data:
+    driver: local
+  postgresql_data:
+    driver: local
+  redis_data:
     driver: local
 
 networks:

@@ -8,10 +8,9 @@
 
 - name: Ensure user belongs to audio group
   user:
-    name: "{{ item.name }}"
+    name: "{{ user.name }}"
     groups: "audio"
     append: yes
-  with_items: "{{ users }}"
 
 - name: Set rtprio, memlock and nice for audio group
   copy:

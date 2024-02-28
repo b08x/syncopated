@@ -1,8 +1,8 @@
 ---
 # defaults file for docker
 
+# docker: "defaults/main.yml"
+
 docker:
+  service: 'disabled'
   storage: /var/lib/docker
-  service:
-    enabled: True
-  nvidia: False

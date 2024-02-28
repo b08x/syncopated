@@ -1,11 +1,12 @@
 ---
 - hosts: all
-  tags: ["workstation"]
+  tags: ["workstation", "setup"]
   become: True
   gather_subset:
     - hardware
     - network
   vars_files:
+    - ../vars/Archlinux/packages.yml
     - ../vars/theme.yml
   vars:
     # suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
@@ -20,10 +21,10 @@
     DISPLAY: ":0"
 # variables from vars_files are available starting here...
   pre_tasks:
-    # - name: show expected_value
-    #   debug:
-    #     var: ansible_facts["date_time"]["epoch"]
-    #   tags: ["always"]
+    - name: show expected_value
+      debug:
+        var: ansible_facts["date_time"]["epoch"]
+      tags: ["always"]
 
       # the task will run if `check_mode` to 'no'
     - name: Register timestamp
@@ -32,10 +33,10 @@
       check_mode: no
       tags: ["always"]
 
-    # - name: show expected_value
-    #   debug:
-    #     var: distribution
-    #   tags: ['always']
+    - name: show expected_value
+      debug:
+        var: distribution
+      tags: ['always']
 
     - name: Set suffix
       set_fact:
@@ -140,11 +141,11 @@
     - role: distro
       tags: ["distro"]
 
-    - role: base
-      tags: ["base"]
-
     - role: user
       tags: ["user"]
+
+    - role: base
+      tags: ["base"]
 
     - role: shell
       tags: ["shell"]
@@ -160,88 +161,3 @@
 
     - role: tools
       tags: ["tools"]
-
-
-
-    - role: docker
-      tags: ["docker"]
-
-    # - role: libvirt
-    #   tags: ["libvirt"]
-
-
-
-
-    - role: alsa
-      tags: ["alsa", "audio"]
-
-    - role: pipewire
-      tags: ["pipewire", "audio"]
-
-    - role: jack
-      tags: ["jack", "audio"]
-
-    - role: pulseaudio
-      tags: ["pulseaudio", "audio"]
-
-    - role: audio
-      tags: ["tuning"]
-
-
-
-
-
-
-    - role: lightdm
-      tags: ["lightdm"]
-
-    - role: x
-      tags: ["x"]
-
-    - role: i3
-      tags: ["i3"]
-
-    - role: desktop
-      tags: ["desktop"]
-
-    - role: theme
-      tags: ["theme"]
-
-    - role: applications
-      tags: ["applications"]
-
-  # tasks:
-  #
-  #   - name: test task
-  #     debug:
-  #       msg: "{{ package_install_command }}"
-
-  post_tasks:
-    - name: Cleanup old backup files
-      script: "cleanup.sh"
-      when: cleanup is defined
-      tags: ["cleanup"]
-
-  #     # Reset is not implemented local connection
-  #     - name: Reboot host
-  #       reboot:
-  #       async: 1
-  #       poll: 0
-  #       ignore_errors: True
-  #       when: reboot is defined
-  #       tags: ['reboot']
-  #
-  #     - name: Wait for host to reboot
-  #       wait_for_connection:
-  #         connect_timeout: 20
-  #         sleep: 5
-  #         delay: 5
-  #         timeout: 120
-  #       when: reboot is defined
-  #       tags: ['reboot']
-  #
-  #     - name: Ensure reboot was successful
-  #       debug:
-  #         msg: "Reboot success!"
-  #       when: reboot is defined
-  #       tags: ['reboot']

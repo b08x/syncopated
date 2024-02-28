@@ -1,35 +1,19 @@
 ---
 
-autologin: True
-
-bluetooth: False
-
 share:
   nfs:
     parent: "{{ user.home }}"
     exports:
       - Videos
 
-repos:
-  chaotic: False
-  syncopated: True
+# TODO: test whether or not this variable will overwrite the defaults with nothing..
+# docker:
+  # service: 'enabled'
+  # storage: /var/lib/docker
+  # nvidia: True
 
-app:
-  install:
-    reaper: True
-    pulsar: False
-    vscode: False
-    vamp: True
-    mixxx: True
-    annotator: True
-    soniclineup: True
-    touchosc: True
-    tony: True
-
-docker:
-  service: 'enabled'
-  storage: /var/lib/docker
-  nvidia: True
+hardware:
+  graphics: "nvidia"
 
 tuned:
   profile: powersave

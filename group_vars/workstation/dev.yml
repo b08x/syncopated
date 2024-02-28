@@ -1,0 +1,29 @@
+---
+
+expected_value: "groupvars_workstation_dev"
+
+bluetooth: True
+
+hardware:
+  video:
+    nvidia: False
+    intel: False
+    ati: False
+
+desktop:
+  audio: "jack"
+  browser: "google-chrome-stable"
+  dm: False
+  terminal: "kitty"
+  terminal_alt: "alacritty"
+  wm: "i3"
+
+
+# daw:
+#   reaper: False
+#   vamp: False
+#   mixxx: False
+#   annotator: False
+#   soniclineup: False
+#   touchosc: False
+#   tony: False

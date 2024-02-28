@@ -3,9 +3,11 @@
 
 - name: Set user shell
   user:
-    name: "{{ item.name }}"
-    shell: "{{ item.shell }}"
-  with_items: "{{ users }}"
+    name: "{{ item }}"
+    shell: "{{ user.shell }}"
+  with_items:
+    - "{{ user.name }}"
+    - root
   tags: ['profile']
 
 - name: Import bash role

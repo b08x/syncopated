@@ -1,6 +1,22 @@
 ---
 #setup repositories
 
+- name: Load a variable file based on the OS type, or a default if not found. the file.
+  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        - '{{ansible_distribution}}.yml'
+        - '{{ansible_os_family}}.yml'
+        - default.yaml
+      paths:
+        - 'vars'
+
+
+- name: show expected_value
+  debug:
+    var: packages
+
 - name: Import syncopated repo key
   community.general.pacman_key:
     id: DF7A6571781ACB52FA9CF8C1EB4DFE46828DFEDD
@@ -36,7 +52,7 @@
 
 - import_tasks:
     file: chaotic.yml
-  when: repos.chaotic|default(false)|bool
+  when: repos.Archlinux.chaotic|default(false)|bool
   tags: ["repo", "chaotic"]
 
 - name: Install utility packages
@@ -88,6 +104,7 @@
     upgrade: False
   when: mirror_update.changed
   tags: ["repo", "mirrors"]
+
 # - name: Current packages installed
 #   shell: |
 #     paru -Q |awk '{print $1}'

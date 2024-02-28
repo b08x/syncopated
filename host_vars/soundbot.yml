@@ -1,15 +1,4 @@
 ---
-autologin: True
-
-login:
-  auto: True
-  lightdm: False
-
-bluetooth: True
-
-repos:
-  chaotic: False
-  syncopated: True
 
 share:
   nfs:
@@ -25,18 +14,6 @@ services:
   mediamtx:
     enabled: True
 
-app:
-  install:
-    reaper: True
-    pulsar: True
-    vscode: True
-    vamp: True
-    mixxx: True
-    annotator: True
-    soniclineup: True
-    touchosc: True
-    tony: True
-
 cpupower:
   governor: performance
   perf_bias: 0
@@ -44,23 +21,21 @@ cpupower:
 tuned:
   profile: powersave
 
-docker:
-  service: "enabled"
-  storage: /var/lib/docker
-  nvidia: False
-
-desktop:
-  dm: False
-  wm: i3
+terminal:
   terminal: "kitty"
   terminal_alt: "alacritty"
-  browser: "google-chrome-stable"
-  audio: "jack"
+
+audio: "jack"
+
+desktop:
   barrier:
     server:
       name: soundbot
       address: "[soundbot]:24800"
       config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
+  browser: "google-chrome-stable"
+  dm: none
+  wm: i3
 
 x:
   autostart:

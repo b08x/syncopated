@@ -1,11 +1,4 @@
 ---
-autologin: True
-
-bluetooth: True
-
-repos:
-  chaotic: False
-  syncopated: True
 
 share:
   nfs:
@@ -14,29 +7,12 @@ share:
       - Recordings
       - Sessions
 
-app:
-  install:
-    reaper: True
-    pulsar: True
-    vscode: True
-    vamp: True
-    mixxx: True
-    annotator: True
-    soniclineup: True
-    touchosc: True
-    tony: True
-
 cpupower:
   governor: performance
   perf_bias: 0
 
 tuned:
   profile: powersave
-
-docker:
-  service: "enabled"
-  storage: /var/lib/docker
-  nvidia: False
 
 desktop:
   dm: False

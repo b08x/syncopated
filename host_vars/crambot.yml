@@ -1,7 +1,5 @@
 ---
 
-autologin: True
-
 bluetooth: False
 
 share:
@@ -20,11 +18,6 @@ app:
     soniclineup: False
     touchosc: False
     tony: False
-
-docker:
-  service: 'enabled'
-  storage: /var/lib/docker
-  nvidia: False
 
 
 desktop:

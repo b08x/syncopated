@@ -5,6 +5,10 @@
   debug:
     msg: "Starting docker tasks"
 
+- name: show expected_value
+  debug:
+    var: docker
+
 # https://discuss.python.org/t/getting-requirements-to-build-wheel-did-not-run-successfully-exit-code-1/30365/2
 - block:
     - name: Echo the pip constraint variable into a file
@@ -37,13 +41,6 @@
 
   tags: ['packages']
 
-- name: Ensure docker data directory exists
-  file:
-    path: "{{ docker.storage }}"
-    state: directory
-    owner: root
-    group: root
-
 - name: Ensure group "docker" exists
   group:
     name: docker
@@ -52,11 +49,9 @@
 #TODO: add failed_when logic
 - name: Add user to docker group
   user:
-    name: "{{ item.name  }}"
+    name: "{{ user.name  }}"
     groups: docker
     append: yes
-  with_items:
-    - "{{ users }}"
   check_mode: yes
   # register: dockergroup
   # failed_when: "not 'Group docker does not exist' in dockergroup.msg"

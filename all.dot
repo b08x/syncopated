@@ -1,0 +1,183 @@
+digraph "all" {
+  rankdir=LR; splines=ortho; ranksep=2;  node [ width=5 style=filled fillcolor=orange background=black ];  edge [ dir=back arrowtail=empty style=dashed ];  bgcolor=darkgray;
+
+  "all" [shape=record label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">all</font>
+  </b></td></tr>
+</table>
+>]
+  "archlabs" [shape=record style=rounded label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">archlabs</font>
+  </b></td></tr>
+<hr/><tr><td><font face="Times New Roman, Bold" point-size="14">ansible_config_file<br/>ansible_connection<br/>ansible_user<br/>app<br/>autofs_client<br/>autologin<br/>bluetooth<br/>desktop<br/>distribution<br/>docker<br/>expected_value<br/>i3<br/>intranet<br/>keyserver<br/>lan<br/>libvirt<br/>user<br/>users<br/>video<br/></font></td></tr></table>
+>]
+  "backend" [shape=record label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">backend</font>
+  </b></td></tr>
+</table>
+>]
+  "bender" [shape=record style=rounded label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">bender</font>
+  </b></td></tr>
+<hr/><tr><td><font face="Times New Roman, Bold" point-size="14">ansible_config_file<br/>ansible_connection<br/>ansible_user<br/>app<br/>autofs_client<br/>autologin<br/>bluetooth<br/>desktop<br/>distribution<br/>docker<br/>expected_value<br/>keyserver<br/>lan<br/>libvirt<br/>nas<br/>network_interfaces<br/>nginx_create_blank_index<br/>pi<br/>share<br/>user<br/>users<br/>webhost<br/></font></td></tr></table>
+>]
+  "crambot" [shape=record style=rounded label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">crambot</font>
+  </b></td></tr>
+<hr/><tr><td><font face="Times New Roman, Bold" point-size="14">ansible_config_file<br/>ansible_connection<br/>ansible_user<br/>app<br/>autofs_client<br/>autologin<br/>bluetooth<br/>desktop<br/>distribution<br/>docker<br/>expected_value<br/>keyserver<br/>lan<br/>libvirt<br/>network_interfaces<br/>share<br/>user<br/>users<br/></font></td></tr></table>
+>]
+  "daw" [shape=record label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">daw</font>
+  </b></td></tr>
+</table>
+>]
+  "dev" [shape=record label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">dev</font>
+  </b></td></tr>
+</table>
+>]
+  "lapbot" [shape=record style=rounded label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">lapbot</font>
+  </b></td></tr>
+<hr/><tr><td><font face="Times New Roman, Bold" point-size="14">ansible_config_file<br/>ansible_connection<br/>ansible_user<br/>app<br/>autofs_client<br/>autologin<br/>bluetooth<br/>desktop<br/>distribution<br/>docker<br/>expected_value<br/>host<br/>i3<br/>intranet<br/>keyserver<br/>lan<br/>libvirt<br/>repos<br/>user<br/>users<br/>video<br/></font></td></tr></table>
+>]
+  "llmops" [shape=record label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">llmops</font>
+  </b></td></tr>
+</table>
+>]
+  "llms" [shape=record label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">llms</font>
+  </b></td></tr>
+</table>
+>]
+  "nas" [shape=record label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">nas</font>
+  </b></td></tr>
+</table>
+>]
+  "ninjabot" [shape=record style=rounded label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">ninjabot</font>
+  </b></td></tr>
+<hr/><tr><td><font face="Times New Roman, Bold" point-size="14">ansible_config_file<br/>ansible_connection<br/>ansible_user<br/>app<br/>autofs_client<br/>autologin<br/>bluetooth<br/>desktop<br/>distribution<br/>docker<br/>expected_value<br/>host<br/>i3<br/>keyserver<br/>lan<br/>libvirt<br/>repos<br/>share<br/>tuned<br/>user<br/>users<br/>video<br/>x<br/></font></td></tr></table>
+>]
+  "pi" [shape=record label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">pi</font>
+  </b></td></tr>
+</table>
+>]
+  "pibot" [shape=record style=rounded label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">pibot</font>
+  </b></td></tr>
+<hr/><tr><td><font face="Times New Roman, Bold" point-size="14">ansible_config_file<br/>ansible_connection<br/>ansible_user<br/>autofs_client<br/>autologin<br/>bluetooth<br/>desktop<br/>distribution<br/>docker<br/>expected_value<br/>keyserver<br/>lan<br/>libvirt<br/>nas<br/>pi<br/>user<br/>users<br/>webhost<br/></font></td></tr></table>
+>]
+  "services" [shape=record label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">services</font>
+  </b></td></tr>
+</table>
+>]
+  "soundbot" [shape=record style=rounded label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">soundbot</font>
+  </b></td></tr>
+<hr/><tr><td><font face="Times New Roman, Bold" point-size="14">ansible_config_file<br/>ansible_connection<br/>ansible_user<br/>app<br/>autofs_client<br/>autologin<br/>bluetooth<br/>cpupower<br/>desktop<br/>distribution<br/>docker<br/>expected_value<br/>host<br/>i3<br/>intranet<br/>keyserver<br/>lan<br/>libvirt<br/>login<br/>repos<br/>services<br/>share<br/>tuned<br/>user<br/>users<br/>video<br/>x<br/></font></td></tr></table>
+>]
+  "syncopated_hopto_org" [shape=record style=rounded label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">syncopated.hopto.org</font>
+  </b></td></tr>
+<hr/><tr><td><font face="Times New Roman, Bold" point-size="14">ansible_config_file<br/>ansible_connection<br/>ansible_user<br/>autofs_client<br/>distribution<br/>docker<br/>expected_value<br/>keyserver<br/>lan<br/>libvirt<br/>nas<br/>nginx_module_fancy_index<br/>pi<br/>remote_user<br/>user<br/>users<br/>webhost<br/></font></td></tr></table>
+>]
+  "syncopatedos" [shape=record style=rounded label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">syncopatedos</font>
+  </b></td></tr>
+<hr/><tr><td><font face="Times New Roman, Bold" point-size="14">ansible_config_file<br/>ansible_connection<br/>ansible_user<br/>app<br/>autofs_client<br/>autologin<br/>bluetooth<br/>desktop<br/>distribution<br/>docker<br/>expected_value<br/>i3<br/>intranet<br/>jacktrip<br/>keyserver<br/>lan<br/>libvirt<br/>network<br/>share<br/>user<br/>users<br/>video<br/>x<br/></font></td></tr></table>
+>]
+  "testing" [shape=record label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">testing</font>
+  </b></td></tr>
+</table>
+>]
+  "tinybot" [shape=record style=rounded label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">tinybot</font>
+  </b></td></tr>
+<hr/><tr><td><font face="Times New Roman, Bold" point-size="14">ansible_config_file<br/>ansible_connection<br/>ansible_user<br/>app<br/>autofs_client<br/>autologin<br/>bluetooth<br/>cpupower<br/>desktop<br/>distribution<br/>docker<br/>expected_value<br/>host<br/>i3<br/>intranet<br/>keyserver<br/>lan<br/>libvirt<br/>repos<br/>share<br/>tuned<br/>user<br/>users<br/>video<br/>x<br/></font></td></tr></table>
+>]
+  "webhost" [shape=record label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">webhost</font>
+  </b></td></tr>
+</table>
+>]
+  "workstation" [shape=record label=<
+<table border="0" cellborder="0">
+  <tr><td><b>
+  <font face="Times New Roman, Bold" point-size="16">workstation</font>
+  </b></td></tr>
+</table>
+>]
+
+  "all" -> "workstation";
+  "all" -> "llmops";
+  "all" -> "services";
+  "backend" -> "ninjabot";
+  "backend" -> "crambot";
+  "daw" -> "soundbot";
+  "daw" -> "tinybot";
+  "dev" -> "lapbot";
+  "dev" -> "soundbot";
+  "llmops" -> "backend";
+  "llmops" -> "llms";
+  "llms" -> "tinybot";
+  "nas" -> "bender";
+  "pi" -> "pibot";
+  "services" -> "webhost";
+  "services" -> "pi";
+  "services" -> "nas";
+  "testing" -> "archlabs";
+  "testing" -> "syncopatedos";
+  "webhost" -> "syncopated_hopto_org";
+  "webhost" -> "bender";
+  "workstation" -> "dev";
+  "workstation" -> "testing";
+  "workstation" -> "daw";
+}

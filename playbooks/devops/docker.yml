@@ -1,0 +1,10 @@
+---
+
+# dev:
+#   docker:
+#     storage: /var/lib/docker
+#     service: "enabled"
+#     nvidia: False
+#
+#   libvirt:
+#     service: "disabled"

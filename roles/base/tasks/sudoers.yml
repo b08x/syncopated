@@ -7,12 +7,11 @@
   lineinfile:
     dest: /etc/sudoers
     regexp: "^Defaults    requiretty"
-    line: "Defaults:{{ item.name }}    !requiretty"
+    line: "Defaults:{{ user.name }}    !requiretty"
     backrefs: yes
     backup: yes
     validate: 'visudo -cf %s'
-  when: item.name != 'root'
-  with_items: "{{ users }}"
+  when: user.name != 'root'
 
 - block:
 
@@ -27,14 +26,11 @@
     - name: Set NOPASSWD for user in sudoers
       lineinfile:
         path: /etc/sudoers.d/99-user
-        line: '{{ item.name }} ALL=(ALL:ALL) NOPASSWD: ALL'
+        line: '{{ user.name }} ALL=(ALL:ALL) NOPASSWD: ALL'
         validate: '/usr/sbin/visudo -cf %s'
         create: yes
         backup: yes
-      when:
-        - item.name != 'root'
-        - item.sudoers|default(false)|bool == True
-      with_items: "{{ users }}"
+      when: user.name != 'root'
 
     - name: Set NOPASSWD for user in polkit
       copy:
@@ -61,3 +57,5 @@
         dest: "/etc/polkit-1/localauthority/50-local.d/admin_group.pkla"
         mode: '0644'
       when: distribution == 'MX' or distribution == 'Debian'
+
+  when: user.sudoers |default(false)|bool == True

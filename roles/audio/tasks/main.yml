@@ -17,27 +17,12 @@
   file:
     dest: "{{ item.dest }}"
     state: directory
-    owner: "{{ item.owner | default(audio_directory_default_owner) }}"
-    group: "{{ item.group | default(audio_directory_default_group) }}"
-    mode: "{{ item.mode | default(audio_directory_default_mode) }}"
-    recurse: "{{ item.recurse | default(audio_directory_default_recurse) }}"
-  with_items: "{{ audio_directory_definitions }}"
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+    recurse: "{{ item.recurse | default(false) }}"
+  loop: "{{ audio_directory_definitions }}"
 
 - import_tasks:
     file: tuning.yml
   tags: ["tuning", "realtime"]
-
-- name: Set JackTrip autostart entry
-  template:
-    src: home/.config/autostart/JackTrip.desktop.j2
-    dest: "{{ user.home }}/.config/autostart/JackTrip.desktop"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: "0644"
-    backup: yes
-    validate: "dex -d %s"
-  when: jacktrip.server.args != '' or jacktrip.client.args != ''
-
-- import_tasks:
-    file: lsmi.yml
-  tags: ["lsmi", "midi"]

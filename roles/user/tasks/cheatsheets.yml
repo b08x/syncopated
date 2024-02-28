@@ -1,11 +1,14 @@
 ---
 
-- name: Install cheat
-  aur:
-    use: auto
-    name: cheat
-    state: present
-  become: False
+- block:
+    - name: Install cheat
+      aur:
+        use: paru
+        name: "aur/cheat"
+        state: present
+      become: False
+
+  when: ansible_os_family == 'Archlinux'
   tags: ['packages']
 
 - name: Create cheatsheet folder

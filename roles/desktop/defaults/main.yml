@@ -23,7 +23,6 @@ desktop_directory_default_location: "{{ user.home }}"
 desktop_directory_default_recurse: False
 
 desktop_directory_definitions:
-  - dest: ".config/autostart"
   - dest: ".config/Debauchee"
   - dest: ".config/Kvantum"
   - dest: ".config/Thunar"
@@ -35,7 +34,7 @@ desktop_directory_definitions:
   - dest: ".config/jgmenu"
   - dest: ".config/nitrogen"
   - dest: ".config/picom"
-  - dest: ".config/sxhkd"
-  - dest: ".zsh"
   - dest: ".config/qutebrowser"
   - dest: ".config/redshift"
+  - dest: ".config/sxhkd"
+  - dest: ".zsh"

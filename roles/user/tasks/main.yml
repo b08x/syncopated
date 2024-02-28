@@ -12,11 +12,6 @@
     append: yes
   tags: ['groups']
 
-# - import_tasks:
-#     file: autologin.yml
-#   tags: ['autologin']
-#   when: autologin|default(false)|bool == True
-
 # dotfiles
 - name: Install .gitconfig
   template:

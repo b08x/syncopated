@@ -1,7 +1,5 @@
 ---
 
-autologin: True
-
 bluetooth: False
 
 share:
@@ -11,6 +9,11 @@ share:
       - Public
       - Workspace
       - Desktop
+
+# docker: "host_vars/syncopatedOS.yml"
+
+docker:
+  service: True
 
 app:
   install:
@@ -24,12 +27,8 @@ app:
     touchosc: False
     tony: False
 
-docker:
-  service: "disabled"
-  storage: /var/lib/docker
-  nvidia: False
-
 desktop:
+  dm: False
   wm: i3
   terminal: "kitty"
   terminal_alt: "alacritty"
@@ -54,7 +53,7 @@ network:
       ifname: eth0
       conn_name: eth0
       mac: 52:54:00:a0:d7:10
-      ip4: 192.168.122.139
+      ip4: 192.168.122.252
       gw4: 192.168.122.1
       dns4: 192.168.122.1
       dns4_search: syncopated.net

@@ -6,7 +6,6 @@
 # role/x/vars/main.yml which will overwrite vars in
 # host_vars/lapbot.yml
 expected_value: "hostvars_lapbot"
-autologin: True
 
 bluetooth: True
 
@@ -30,10 +29,6 @@ app:
     touchosc: True
     tony: False
 
-docker:
-  service: 'enabled'
-  storage: /var/lib/docker
-  nvidia: False
 
 desktop:
   dm: False

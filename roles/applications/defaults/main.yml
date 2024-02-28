@@ -17,16 +17,6 @@ application_directory_definitions:
   - dest: ".sonic-pi/config"
   - dest: ".config/RaySession/session_templates/sound/XXX_SESSION_NAME_XXX.hydrogen"
 
-app:
-  install:
-    reaper: False
-    vamp: False
-    mixxx: False
-    annotator: False
-    soniclineup: False
-    touchosc: False
-    tony: False
-
 baudline:
   url: "https://www.baudline.com"
   file: "baudline_1.08_linux_x86_64.tar.gz"

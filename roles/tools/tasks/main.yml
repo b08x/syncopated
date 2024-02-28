@@ -1,5 +1,5 @@
 ---
-# tasks file for utils
+# tasks file for tools
 
 # - name: Remove dir
 #   file:
