@@ -176,7 +176,7 @@
 
 - name: Set xdg autostart applications
   synchronize:
-    src: etc/xdg/autostart
+    src: etc/xdg/autostart/
     dest: /etc/xdg/autostart/
     recursive: yes
     mode: push

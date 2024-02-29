@@ -32,6 +32,12 @@ lan:
   wireless:
     ssid: invisiblemagic
 
+jacktrip:
+  server:
+    args: ""
+  client:
+    args: ""
+
 tuned:
   profile: powersave
 

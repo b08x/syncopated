@@ -12,11 +12,14 @@
       paths:
         - 'vars'
 
-
 - name: show expected_value
   debug:
     var: packages
 
+# - name: packages
+#   set_fact:
+#     packages: "{{ packages }}"
+#
 - name: Import syncopated repo key
   community.general.pacman_key:
     id: DF7A6571781ACB52FA9CF8C1EB4DFE46828DFEDD
@@ -52,15 +55,15 @@
 
 - import_tasks:
     file: chaotic.yml
-  when: repos.Archlinux.chaotic|default(false)|bool
+  when: repos.chaotic is defined
   tags: ["repo", "chaotic"]
 
-- name: Install utility packages
-  pacman:
-    name: "{{ packages.utility }}"
-    state: present
-    extra_args: --noconfirm --overwrite '*'
-  tags: ["packages"]
+# - name: Install utility packages
+#   pacman:
+#     name: "{{ packages.utility }}"
+#     state: present
+#     extra_args: --noconfirm --overwrite '*'
+#   tags: ["packages"]
 
 - name: Set makepkg to use aria2
   template:
@@ -104,20 +107,6 @@
     upgrade: False
   when: mirror_update.changed
   tags: ["repo", "mirrors"]
-
-# - name: Current packages installed
-#   shell: |
-#     paru -Q |awk '{print $1}'
-#   become: False
-#   register: arch_installed_packages
-#   check_mode: no
-#   tags: ['packages']
-
-# - name: Set packages to be installed
-#   set_fact:
-#     arch_packages: "{{ packages|difference(arch_installed_packages.stdout) }}"
-#   check_mode: no
-#   tags: ['packages']
 
 # - name: install packages
 #   aur:

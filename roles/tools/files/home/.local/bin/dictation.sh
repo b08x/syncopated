@@ -17,7 +17,8 @@ function cleanup() {
 }
 
 function load_mic() {
-        jack_load 'handheld' zalsa_in -i "-d hw:3,0"
+  card=$(cat /proc/asound/cards|grep -E -m1 "PowerMic"|choose 0)
+  jack_load 'handheld' zalsa_in -i "-d hw:${card},0"
 }
 
 function capture2mp3() {
@@ -49,12 +50,13 @@ xsel -cb
 while true; do
         rm -rf $mp3file
 
+        if ! [[ $(jack_lsp | grep handheld) ]]; then
+          load_mic || notify-send -t 5000 -u critical  "mic not connected"
+        fi
+
         if [[ $(jack_lsp | grep handheld) ]]; then
-          jack_capture -f wav -b 24 -c 1 -p 'handheld:capture_1' ${dictations}/${wavfile} && capture2mp3
-        elif ! [[ $(jack_lsp | grep handheld) ]]; then
-						gum confirm "use handheld??" && \
-                load_mic || notify-send -t 5000 -u critical  "cannot load mic"
-            jack_capture -f wav -b 24 -c 1 -p 'handheld:capture_1' ${dictations}/${wavfile} && capture2mp3
+          jack_capture -f wav -b 24 -c 3 -p 'handheld:capture_1' -p 'system:capture_*' ${dictations}/${wavfile} && \
+          sox ${dictations}/${wavfile} ${mp3file} remix 1-3
         else
           jack_capture -f wav -b 24 -c 2 -p 'system:capture_*' ${dictations}/${wavfile} && \
           sox ${dictations}/${wavfile} ${mp3file} remix 1-2

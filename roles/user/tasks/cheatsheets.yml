@@ -26,13 +26,27 @@
     group: "{{ user.group }}"
     mode: '0644'
 
-- name: Clone cheatsheet repository
-  git:
-    repo: https://github.com/b08x/cheatsheets.git
-    dest: "{{ user.home }}/.config/cheat/cheatsheets"
-    recursive: yes
-    accept_hostkey: yes
-    update: yes
-    force: no
-  check_mode: no
-  become: False
+- block:
+    - name: Clone cheatsheet repository
+      git:
+        repo: https://github.com/b08x/cheatsheets.git
+        dest: "{{ user.home }}/.config/cheat/cheatsheets"
+        recursive: yes
+        accept_hostkey: yes
+        update: yes
+        force: no
+      check_mode: no
+      register: clone
+      ignore_errors: "{{ ansible_check_mode }}"
+      failed_when: (clone.msg is defined and not 'Local modifications exist in the destination:' in clone.msg)
+
+  rescue:
+    - name: Handle installation failure
+      debug:
+        var: clone
+
+    - name: Handle installation failure
+      debug:
+        var: ansible_failed_result
+
+  tags: ["dots"]

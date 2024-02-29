@@ -13,17 +13,12 @@
   become: False
   tags: ['packages']
 
-- name: Ensure pulseaudio directories exist
+- name: Create pulseaudio user config folder
   file:
-    dest: "{{ pulse_directory_default_location }}/{{ item.dest }}"
+    path: "{{ user.home }}/.config/pulse"
     state: directory
-    owner: "{{ item.owner | default(pulse_directory_default_owner) }}"
-    group: "{{ item.group | default(pulse_directory_default_group) }}"
-    mode: "{{ item.mode | default(pulse_directory_default_mode) }}"
-    recurse: "{{ item.recurse | default(pulse_directory_default_recurse) }}"
-  with_items: "{{ pulse_directory_definitions }}"
-  check_mode: no
-  tags: ["profile"]
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
 
 - name: Update pulseaudio configs
   copy:
@@ -67,7 +62,7 @@
         dest: /etc/pulse/default.pa.d/bluetooth.pa
         mode: "0644"
 
-  when: bluetooth|bool
+  when: bluetooth is defined
   notify: restart pulseaudio
   tags: ["bluetooth"]
 # - name: Adjust pulseaudio.service file

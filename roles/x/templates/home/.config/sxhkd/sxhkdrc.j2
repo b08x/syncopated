@@ -33,10 +33,10 @@ super + d
   ~/.config/rofi/scripts/launcher_t1.sh
 
 super + F5
-  {{terminal }} --class "htop" -e htop
+  {{ terminal }} --class "htop" -e htop
 
 super + alt + n
-  {{terminal }} --class "notepad" -e notepad.sh
+  {{ terminal }} --class "notepad" -e notepad.sh
 
 F12
   search_web.sh
@@ -85,15 +85,15 @@ super + x
 
 #super + End
 #	terminator
-{% ifbrowser == 'google-chrome-stable' %}
+{% if browser == 'google-chrome-stable' %}
 super + Home
   {{browser }} --disable-gpu %U
 
 super + shift + Home
-  {{browser }} --disable-gpu --incognito %U
+  {{ browser }} --disable-gpu --incognito %U
 {% endif %}
 super + KP_Enter
-  {{terminal }} -e ranger
+  {{ terminal }} -e ranger
 
 super + shift + KP_Enter
   thunar

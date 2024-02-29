@@ -14,11 +14,9 @@ share:
 
 nvidia:
 
-terminal_alt: "alacritty"
-
-audio: "jack"
-
+dm: False
 browser: "google-chrome-stable"
+audio: "jack"
 
 barrier:
   client:

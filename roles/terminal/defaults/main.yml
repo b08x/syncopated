@@ -19,10 +19,6 @@ terminal_directory_default_recurse: False
 terminal_directory_definitions:
   - dest: ".config/alacritty"
   - dest: ".config/terminator"
-  - dest: ".config/ranger"
-  - dest: ".config/ranger/plugins/zoxide"
-  - dest: ".config/htop"
   - dest: ".config/kitty"
-  - dest: ".config/lnav"
   - dest: ".config/tilda"
   - dest: ".guake"

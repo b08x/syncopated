@@ -3,8 +3,12 @@
 admin_group: wheel
 
 repos:
-  chaotic: False
-  syncopated: True
+  syncopated:
+    mirrors:
+      - "http://bender.syncopated.net/syncopated/repo"
+      # - "http://syncopated.hopto.org/syncopated/repo"
+
+IgnorePkg: "ncurses lib32-ncurses gitui"
 
 # alsa: audio role
 # ambisonics: audio role

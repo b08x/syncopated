@@ -162,7 +162,10 @@
   service:
     name: irqbalance
     enabled: False
-  ignore_errors: True
+  ignore_errors: "{{ ansible_check_mode }}"
+  register: irqbalance_service
+  failed_when: (irqbalance_service.msg is defined and not 'Could not find the requested service irqbalance' in irqbalance_service.msg)
+
 
 # - name: Disable ananicy-cpp and bpftune
 #   service:

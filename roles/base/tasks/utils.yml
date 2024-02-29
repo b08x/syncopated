@@ -1,5 +1,15 @@
 ---
 
+- name: Ensure utillity config folders exist
+  file:
+    path: "{{ user.home }}/.config/{{ item }}"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+  loop:
+    - htop
+    - lnav
+
 - name: Install htop and lnav configs
   template:
     src: "home/.config/{{ item }}.j2"
@@ -15,8 +25,8 @@
 
 - name: Install ranger configs
   synchronize:
-    src: home/.config/ranger/
-    dest: "{{ user.home }}/.config/ranger/"
+    src: home/.config/ranger
+    dest: "{{ user.home }}/.config/ranger"
     recursive: yes
     mode: push
     delete: no

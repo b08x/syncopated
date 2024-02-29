@@ -11,6 +11,12 @@ cpupower:
   governor: performance
   perf_bias: 0
 
+terminal: "kitty"
+terminal_alt: "alacritty"
+
+dm: False
+browser: "google-chrome-stable"
+
 barrier:
   client:
     name: tinybot
@@ -19,7 +25,7 @@ barrier:
 x:
   autostart:
     - bash ~/.screenlayout/tinybot.sh
-    - "jacktrip -s -n 4 -q auto -b 24 -D --udprt &"
+    # - "jacktrip -s -n 4 -q auto -b 24 -D --udprt &"
 i3:
   autostart: "default"
   tray_output: "primary"

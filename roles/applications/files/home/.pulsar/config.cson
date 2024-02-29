@@ -28,7 +28,7 @@
     ]
   editor:
     fontFamily: "Hack Nerd Font Mono"
-    fontSize: 15
+    fontSize: 13
     preferredLineLength: 120
     softWrap: true
     softWrapAtPreferredLineLength: true

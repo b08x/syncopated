@@ -24,7 +24,6 @@ cpupower:
 
 audio: "jack"
 
-
 barrier:
   server:
     name: soundbot
