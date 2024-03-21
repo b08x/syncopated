@@ -16,49 +16,49 @@
   loop: "{{ terminal_directory_definitions }}"
   check_mode: no
 
-- name: Install kitty templates
-  template:
-    src: "home/.config/kitty/{{ item }}.j2"
-    dest: "{{ user.home }}/.config/kitty/{{ item }}"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-    backup: True
-  with_items:
-    - kitty.conf
-    - current-theme.conf
-    - open-actions.conf
-    - start.conf
-  tags: ['kitty']
+# - name: Install kitty templates
+#   template:
+#     src: "home/.config/kitty/{{ item }}.j2"
+#     dest: "{{ user.home }}/.config/kitty/{{ item }}"
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+#     mode: '0644'
+#     backup: True
+#   with_items:
+#     - kitty.conf
+#     - current-theme.conf
+#     - open-actions.conf
+#     - start.conf
+#   tags: ['kitty']
 
-- name: Set tilda config
-  template:
-    src: home/.config/tilda/config_0.j2
-    dest: "{{ user.home }}/.config/tilda/config_0"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-  tags: ['tilda']
+# - name: Set tilda config
+#   template:
+#     src: home/.config/tilda/config_0.j2
+#     dest: "{{ user.home }}/.config/tilda/config_0"
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+#     mode: '0644'
+#   tags: ['tilda']
 
-- block:
-  - name: Install guake-utils
-    copy:
-      src: usr/local/bin/guake-utils
-      dest: /usr/local/bin/guake-utils
-      mode: '0755'
-
-  - name: Install guake settings
-    copy:
-      src: home/.guake/guake-settings
-      dest: "{{ user.home }}/.guake/guake-settings"
-      owner: "{{ user.name }}"
-      group: "{{ user.group }}"
-      mode: '0644'
-    register: guakesettings
-
-  - name: Import guake-settings
-    shell: /usr/local/bin/guake-utils import
-    when: guakesettings.changed
-    become: False
-
-  tags: ['guake']
+# - block:
+#   - name: Install guake-utils
+#     copy:
+#       src: usr/local/bin/guake-utils
+#       dest: /usr/local/bin/guake-utils
+#       mode: '0755'
+#
+#   - name: Install guake settings
+#     copy:
+#       src: home/.guake/guake-settings
+#       dest: "{{ user.home }}/.guake/guake-settings"
+#       owner: "{{ user.name }}"
+#       group: "{{ user.group }}"
+#       mode: '0644'
+#     register: guakesettings
+#
+#   - name: Import guake-settings
+#     shell: /usr/local/bin/guake-utils import
+#     when: guakesettings.changed
+#     become: False
+#
+#   tags: ['guake']

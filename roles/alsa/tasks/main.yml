@@ -4,13 +4,6 @@
   debug:
     msg: "Starting alsa tasks"
 
-- name: Install alsa packages
-  aur:
-    use: paru
-    name: "{{ packages.alsa }}"
-    state: present
-  become: False
-  tags: ['packages']
 
 - name: Set alsa card order
   lineinfile:

@@ -7,7 +7,8 @@
     params:
       files:
         - '{{ansible_distribution}}.yml'
-        # - '{{ansible_os_family}}.yml'
+        - '{{ansible_os_family}}.yml'
+        - Archlinux.yml
         - main.yml
       paths:
         - 'vars'

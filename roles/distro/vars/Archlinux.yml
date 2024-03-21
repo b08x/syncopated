@@ -299,6 +299,8 @@ packages:
   icons:
     - matcha-gtk-theme
     - numix-circle-icon-theme-git
+    - mcmojave-circle-icon-theme-git
+    - mojave-gtk-theme
   jack:
     - jack2
     - jack2-dbus

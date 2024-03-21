@@ -43,12 +43,17 @@
     - name: Set expected_value
       set_fact:
         ansible_distribution: "EndeavourOS"
-      when: inventory_hostname == 'soundbot'
+      # when: inventory_hostname == 'soundbot'
       tags: ["always", "testing"]
 
     - name: show expected_value
       debug:
         var: ansible_facts
+      tags: ['always']
+
+    - name: show expected_value
+      debug:
+        var: ansible_distribution
       tags: ['always']
 
     - name: Symlink /etc/os-release to /etc/system-release

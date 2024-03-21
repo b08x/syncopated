@@ -35,9 +35,9 @@
     file: updatedb.yml
   tags: ["updatedb"]
 
-- import_tasks:
-    file: zram.yml
-  tags: ["zram"]
+# - import_tasks:
+#     file: zram.yml
+#   tags: ["zram"]
 
 - import_tasks:
     file: autofs.yml

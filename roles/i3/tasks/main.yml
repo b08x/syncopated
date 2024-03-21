@@ -9,14 +9,6 @@
   debug:
     var: i3
 
-# - name: Install i3 packages
-#   aur:
-#     use: paru
-#     name: "{{ packages.i3 }}"
-#     state: present
-#   become: False
-#   tags: ['packages']
-
 - name: Ensure i3 directories exist
   file:
     dest: "{{ i3_directory_default_location }}/{{ item.dest }}"

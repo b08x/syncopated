@@ -26,60 +26,6 @@
   loop: "{{ desktop_directory_definitions }}"
   check_mode: no
 
-- block:
-    - name: Install desktop packages
-      aur:
-        use: paru
-        name: "{{ packages.desktop }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install browser packages
-      aur:
-        use: paru
-        name: "{{ packages.browser }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install media packages
-      aur:
-        use: paru
-        name: "{{ packages.media }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install development packages
-      aur:
-        use: paru
-        name: "{{ packages.development }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install texlive packages
-      aur:
-        use: paru
-        name: "{{ packages.texlive }}"
-        state: present
-        extra_args: --overwrite '*'
-      when: pkgs__texlive|default(false)|bool == True
-      tags: ['texlive']
-
-    - name: Install python packages
-      aur:
-        use: paru
-        name: "{{ packages.python }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install utility packages
-      aur:
-        use: paru
-        name: "{{ packages.utility }}"
-        state: present
-        extra_args: --overwrite '*'
-
-  become: False
-  tags: ['packages']
 
 #NOTETHIS: these can be used in a seperate playbook
 # - name: Import sway role

@@ -5,14 +5,6 @@
   debug:
     msg: "Starting pulseaudio tasks"
 
-- name: Install pulseaudio packages
-  aur:
-    use: paru
-    name: "{{ packages.pulseaudio }}"
-    state: present
-  become: False
-  tags: ['packages']
-
 - name: Create pulseaudio user config folder
   file:
     path: "{{ user.home }}/.config/pulse"

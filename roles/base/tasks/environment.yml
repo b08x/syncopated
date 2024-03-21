@@ -18,15 +18,15 @@
     mode: '0644'
     backup: yes
 
-- name:  Set .aliases and .profile
-  template:
-    src: "home/{{ item }}.j2"
-    dest: "{{ user.home }}/{{ item }}"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-    backup: True
-  with_items:
-    - .aliases
-    - .profile
-  tags: ['profile']
+# - name:  Set .aliases and .profile
+#   template:
+#     src: "home/{{ item }}.j2"
+#     dest: "{{ user.home }}/{{ item }}"
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+#     mode: '0644'
+#     backup: True
+#   with_items:
+#     - .aliases
+#     - .profile
+#   tags: ['profile']
