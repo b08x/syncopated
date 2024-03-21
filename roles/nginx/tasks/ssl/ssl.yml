@@ -1,7 +1,7 @@
 ---
   - name: Ensure OpenSSL is installed
     yum: name=openssl state=present
-    when: distribution == "RedHat"
+    when: ansible_distribution == "RedHat"
     tags: [ssl-certs,packages]
 
   - name: Ensure ssl folder exist

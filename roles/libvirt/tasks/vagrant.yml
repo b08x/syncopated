@@ -28,7 +28,7 @@
         state: present
         update_cache: yes
 
-  when: distribution == 'Fedora'
+  when: ansible_distribution == 'Fedora'
   tags: ['packages']
 
 - block:
@@ -40,5 +40,5 @@
         force: yes
         extra_args: --noconfirm
 
-  when: distribution == 'Archlinux'
+  when: ansible_distribution == 'Archlinux'
   tags: ['packages']

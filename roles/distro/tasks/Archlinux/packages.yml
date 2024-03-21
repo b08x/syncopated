@@ -1,0 +1,69 @@
+---
+
+- name: Install utility packages
+  pacman:
+    name: "{{ packages.utility }}"
+    state: present
+    extra_args: --noconfirm --overwrite '*'
+  tags: ["utility"]
+
+- block:
+    - name: Install system xorg packages
+      aur:
+        use: paru
+        name: "{{ packages.xorg }}"
+        state: present
+
+    - name: Install host specific xorg packages
+      aur:
+        use: paru
+        name: "{{ host.xorg.video }}"
+        state: present
+      when: host.xorg.video is defined
+
+  become: False
+  tags: ["x"]
+
+- block:
+    - name: Group theme packages to install
+      set_fact:
+        packagesTheme: "{{ packages.icons + packages.cursors + packages.gtk3 + packages.qt5 + packages.qt6 + packages.kvantum + packages.fonts }}"
+
+    - name: Install theme group packages
+      aur:
+        use: paru
+        name: "{{ packagesTheme | flatten(1) }}"
+        state: present
+      become: False
+
+    - name: Install syncopated-theme
+      aur:
+        use: paru
+        name: syncopated-theme
+        state: present
+        extra_args: "--overwrite '*'"
+      become: False
+
+  tags: ['theme']
+
+- block:
+
+    - name: Install terminal packages
+      aur:
+        use: paru
+        name: "{{ packages.terminal }}"
+        state: present
+
+  rescue:
+    - name: Handle installation failure
+      debug:
+        msg: "Failed to install package: {{ item }}"
+      loop: "{{ ansible_failed_result | map(attribute='item') | list }}"
+
+  always:
+    - name: Continue executions
+      debug:
+        msg: "Continuing with playbook execution"
+
+  become: False
+  tags: ['packages']

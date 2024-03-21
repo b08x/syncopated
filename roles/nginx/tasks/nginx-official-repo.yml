@@ -3,8 +3,8 @@
 - name: Ensure RPM official nginx key
   rpm_key: key=http://nginx.org/keys/nginx_signing.key
   environment: "{{ nginx_env }}"
-  when: distribution == 'RedHat'
+  when: ansible_distribution == 'RedHat'
 
 - name: Ensure YUM official nginx repository
   template: src=nginx.repo.j2 dest=/etc/yum.repos.d/nginx.repo
-  when: distribution == 'RedHat'
+  when: ansible_distribution == 'RedHat'

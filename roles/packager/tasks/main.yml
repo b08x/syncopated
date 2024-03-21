@@ -69,4 +69,4 @@
 - name: Load distro tasks
   import_tasks:
     file: Archlinux.yml
-  when: distribution == 'Archlinux'
+  when: ansible_distribution == 'Archlinux'

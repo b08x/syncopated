@@ -16,30 +16,6 @@
   loop: "{{ terminal_directory_definitions }}"
   check_mode: no
 
-- block:
-
-    - name: Install terminal packages
-      aur:
-        use: paru
-        name: "{{ packages.terminal }}"
-        state: present
-
-  rescue:
-    - name: Handle installation failure
-      debug:
-        msg: "Failed to install package: {{ item }}"
-      loop: "{{ ansible_failed_result | map(attribute='item') | list }}"
-
-  always:
-    - name: Continue execution
-      debug:
-        msg: "Continuing with playbook execution"
-
-  become: False
-  when: ansible_os_family == 'Archlinux'
-  tags: ['packages']
-
-
 - name: Install kitty templates
   template:
     src: "home/.config/kitty/{{ item }}.j2"

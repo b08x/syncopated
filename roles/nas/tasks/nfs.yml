@@ -64,7 +64,7 @@
             - 40418/udp
           notify: reload firewalld
 
-      when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
+      when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
 
     - block:
         - name: Permit tcp traffic to rpcbind
@@ -91,7 +91,7 @@
             - "32769"
             - "32803"
 
-      when: distribution == 'MX' or distribution == 'Debian'
+      when: ansible_distribution == 'MX' or ansible_distribution == 'Debian'
 
   ignore_errors: "{{ ansible_check_mode }}"
 

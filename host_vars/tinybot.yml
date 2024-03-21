@@ -30,7 +30,17 @@ i3:
   autostart: "default"
   tray_output: "primary"
   assignments: "default"
-  workspaces:  "default"
+  workspaces:
+    - "$ws1 output DP-2"
+    - "$ws2 output DP-2"
+    - "$ws3 output DP-2"
+    - "$ws4 output DP-2"
+    - "$ws5 output DP-2"
+    - "$ws6 output DP-2"
+    - "$ws7 output HDMI-1"
+    - "$ws8 output HDMI-1"
+    - "$ws9 output HDMI-1"
+    - "$ws10 output HDMI-1"
   keybindings: "default"
 
 # network_interfaces:

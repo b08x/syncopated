@@ -1803,13 +1803,13 @@ $("#svg").ready(function () {
 <!-- role_593616de&#45;&gt;task_655fde30 -->
 <g id="edge_17_role_593616de_task_655fde30" class="edge">
 <title>role_593616de-&gt;task_655fde30</title>
-<g id="a_edge_17_role_593616de_task_655fde30"><a xlink:title="17 [when: distribution != 'Debian']">
+<g id="a_edge_17_role_593616de_task_655fde30"><a xlink:title="17 [when: ansible_distribution != 'Debian']">
 <path fill="none" stroke="#54329a" d="M1075.94,-11642.77C1143,-11647.69 1253.42,-11655.23 1348.74,-11659.07 1964.95,-11683.87 2696.74,-11690.03 3028.83,-11691.56" id="path_edge_17_role_593616de_task_655fde30"/>
 <polygon fill="#54329a" stroke="#54329a" points="3028.46,-11695.06 3038.48,-11691.61 3028.49,-11688.06 3028.46,-11695.06"/>
 </a>
 </g>
-<g id="a_edge_17_role_593616de_task_655fde30-label"><a xlink:title="17 [when: distribution != 'Debian']">
-<text text-anchor="middle" font-family="Times,serif" font-size="14.00" fill="#54329a" dy="-0.2%"><textPath xlink:href="#path_edge_17_role_593616de_task_655fde30" startOffset="1449.8741845331197">17 [when: distribution != 'Debian']</textPath></text>
+<g id="a_edge_17_role_593616de_task_655fde30-label"><a xlink:title="17 [when: ansible_distribution != 'Debian']">
+<text text-anchor="middle" font-family="Times,serif" font-size="14.00" fill="#54329a" dy="-0.2%"><textPath xlink:href="#path_edge_17_role_593616de_task_655fde30" startOffset="1449.8741845331197">17 [when: ansible_distribution != 'Debian']</textPath></text>
 </a>
 </g>
 </g>
@@ -1825,13 +1825,13 @@ $("#svg").ready(function () {
 <!-- role_593616de&#45;&gt;task_e4c91618 -->
 <g id="edge_18_role_593616de_task_e4c91618" class="edge">
 <title>role_593616de-&gt;task_e4c91618</title>
-<g id="a_edge_18_role_593616de_task_e4c91618"><a xlink:title="18 [when: distribution != 'Debian']">
+<g id="a_edge_18_role_593616de_task_e4c91618"><a xlink:title="18 [when: ansible_distribution != 'Debian']">
 <path fill="none" stroke="#54329a" d="M1077.96,-11638.07C1362.62,-11638.07 2526.54,-11638.07 3003.44,-11638.07" id="path_edge_18_role_593616de_task_e4c91618"/>
 <polygon fill="#54329a" stroke="#54329a" points="3003.41,-11641.57 3013.41,-11638.07 3003.41,-11634.57 3003.41,-11641.57"/>
 </a>
 </g>
-<g id="a_edge_18_role_593616de_task_e4c91618-label"><a xlink:title="18 [when: distribution != 'Debian']">
-<text text-anchor="middle" font-family="Times,serif" font-size="14.00" fill="#54329a" dy="-0.2%"><textPath xlink:href="#path_edge_18_role_593616de_task_e4c91618" startOffset="1428.3648">18 [when: distribution != 'Debian']</textPath></text>
+<g id="a_edge_18_role_593616de_task_e4c91618-label"><a xlink:title="18 [when: ansible_distribution != 'Debian']">
+<text text-anchor="middle" font-family="Times,serif" font-size="14.00" fill="#54329a" dy="-0.2%"><textPath xlink:href="#path_edge_18_role_593616de_task_e4c91618" startOffset="1428.3648">18 [when: ansible_distribution != 'Debian']</textPath></text>
 </a>
 </g>
 </g>
@@ -1847,13 +1847,13 @@ $("#svg").ready(function () {
 <!-- role_593616de&#45;&gt;task_95556732 -->
 <g id="edge_19_role_593616de_task_95556732" class="edge">
 <title>role_593616de-&gt;task_95556732</title>
-<g id="a_edge_19_role_593616de_task_95556732"><a xlink:title="19 [when: distribution != 'Debian']">
+<g id="a_edge_19_role_593616de_task_95556732"><a xlink:title="19 [when: ansible_distribution != 'Debian']">
 <path fill="none" stroke="#54329a" d="M1075.94,-11633.31C1143,-11628.32 1253.42,-11620.68 1348.74,-11616.82 1939.11,-11592.87 2635.59,-11586.43 2984.99,-11584.7" id="path_edge_19_role_593616de_task_95556732"/>
 <polygon fill="#54329a" stroke="#54329a" points="2984.76,-11588.2 2994.74,-11584.65 2984.72,-11581.2 2984.76,-11588.2"/>
 </a>
 </g>
-<g id="a_edge_19_role_593616de_task_95556732-label"><a xlink:title="19 [when: distribution != 'Debian']">
-<text text-anchor="middle" font-family="Times,serif" font-size="14.00" fill="#54329a" dy="-0.2%"><textPath xlink:href="#path_edge_19_role_593616de_task_95556732" startOffset="1416.5645170605853">19 [when: distribution != 'Debian']</textPath></text>
+<g id="a_edge_19_role_593616de_task_95556732-label"><a xlink:title="19 [when: ansible_distribution != 'Debian']">
+<text text-anchor="middle" font-family="Times,serif" font-size="14.00" fill="#54329a" dy="-0.2%"><textPath xlink:href="#path_edge_19_role_593616de_task_95556732" startOffset="1416.5645170605853">19 [when: ansible_distribution != 'Debian']</textPath></text>
 </a>
 </g>
 </g>
@@ -1869,13 +1869,13 @@ $("#svg").ready(function () {
 <!-- role_593616de&#45;&gt;task_02920d82 -->
 <g id="edge_20_role_593616de_task_02920d82" class="edge">
 <title>role_593616de-&gt;task_02920d82</title>
-<g id="a_edge_20_role_593616de_task_02920d82"><a xlink:title="20 [when: distribution != 'Debian']">
+<g id="a_edge_20_role_593616de_task_02920d82"><a xlink:title="20 [when: ansible_distribution != 'Debian']">
 <path fill="none" stroke="#54329a" d="M1059.86,-11625.3C1123.77,-11608.04 1244.03,-11578.02 1348.74,-11565.82 1955.96,-11495.06 2682.09,-11509.39 3019.3,-11521.67" id="path_edge_20_role_593616de_task_02920d82"/>
 <polygon fill="#54329a" stroke="#54329a" points="3019.01,-11525.16 3029.13,-11522.03 3019.26,-11518.17 3019.01,-11525.16"/>
 </a>
 </g>
-<g id="a_edge_20_role_593616de_task_02920d82-label"><a xlink:title="20 [when: distribution != 'Debian']">
-<text text-anchor="middle" font-family="Times,serif" font-size="14.00" fill="#54329a" dy="-0.2%"><textPath xlink:href="#path_edge_20_role_593616de_task_02920d82" startOffset="1460.5167562409058">20 [when: distribution != 'Debian']</textPath></text>
+<g id="a_edge_20_role_593616de_task_02920d82-label"><a xlink:title="20 [when: ansible_distribution != 'Debian']">
+<text text-anchor="middle" font-family="Times,serif" font-size="14.00" fill="#54329a" dy="-0.2%"><textPath xlink:href="#path_edge_20_role_593616de_task_02920d82" startOffset="1460.5167562409058">20 [when: ansible_distribution != 'Debian']</textPath></text>
 </a>
 </g>
 </g>
@@ -2947,13 +2947,13 @@ $("#svg").ready(function () {
 <!-- role_91e02cd2&#45;&gt;task_21129fb9 -->
 <g id="edge_11_role_91e02cd2_task_21129fb9" class="edge">
 <title>role_91e02cd2-&gt;task_21129fb9</title>
-<g id="a_edge_11_role_91e02cd2_task_21129fb9"><a xlink:title="11 [when: timesyncd_conf.changed and distribution != 'Debian']">
+<g id="a_edge_11_role_91e02cd2_task_21129fb9"><a xlink:title="11 [when: timesyncd_conf.changed and ansible_distribution != 'Debian']">
 <path fill="none" stroke="#54329a" d="M1030.58,-9109.22C1075.44,-9061.37 1207.25,-8930.72 1348.74,-8884.82 1509.02,-8832.82 2644.45,-8865.12 3058.27,-8878.82" id="path_edge_11_role_91e02cd2_task_21129fb9"/>
 <polygon fill="#54329a" stroke="#54329a" points="3058.08,-8882.31 3068.19,-8879.15 3058.31,-8875.32 3058.08,-8882.31"/>
 </a>
 </g>
-<g id="a_edge_11_role_91e02cd2_task_21129fb9-label"><a xlink:title="11 [when: timesyncd_conf.changed and distribution != 'Debian']">
-<text text-anchor="middle" font-family="Times,serif" font-size="14.00" fill="#54329a" dy="-0.2%"><textPath xlink:href="#path_edge_11_role_91e02cd2_task_21129fb9" startOffset="1537.425183303191">11 [when: timesyncd_conf.changed and distribution != 'Debian']</textPath></text>
+<g id="a_edge_11_role_91e02cd2_task_21129fb9-label"><a xlink:title="11 [when: timesyncd_conf.changed and ansible_distribution != 'Debian']">
+<text text-anchor="middle" font-family="Times,serif" font-size="14.00" fill="#54329a" dy="-0.2%"><textPath xlink:href="#path_edge_11_role_91e02cd2_task_21129fb9" startOffset="1537.425183303191">11 [when: timesyncd_conf.changed and ansible_distribution != 'Debian']</textPath></text>
 </a>
 </g>
 </g>
@@ -5081,13 +5081,13 @@ $("#svg").ready(function () {
 <!-- role_9dd4e461&#45;&gt;task_765d5dec -->
 <g id="edge_17_role_9dd4e461_task_765d5dec" class="edge">
 <title>role_9dd4e461-&gt;task_765d5dec</title>
-<g id="a_edge_17_role_9dd4e461_task_765d5dec"><a xlink:title="17 [when: distribution != 'Debian']">
+<g id="a_edge_17_role_9dd4e461_task_765d5dec"><a xlink:title="17 [when: ansible_distribution != 'Debian']">
 <path fill="none" stroke="#54329a" d="M1022.19,-4033.04C1052.4,-3966.15 1168.69,-3731.6 1348.74,-3646.82 1420.88,-3612.85 2489.47,-3630.86 2973.51,-3640.86" id="path_edge_17_role_9dd4e461_task_765d5dec"/>
 <polygon fill="#54329a" stroke="#54329a" points="2973.25,-3644.35 2983.32,-3641.06 2973.39,-3637.36 2973.25,-3644.35"/>
 </a>
 </g>
-<g id="a_edge_17_role_9dd4e461_task_765d5dec-label"><a xlink:title="17 [when: distribution != 'Debian']">
-<text text-anchor="middle" font-family="Times,serif" font-size="14.00" fill="#54329a" dy="-0.2%"><textPath xlink:href="#path_edge_17_role_9dd4e461_task_765d5dec" startOffset="1592.3769898658916">17 [when: distribution != 'Debian']</textPath></text>
+<g id="a_edge_17_role_9dd4e461_task_765d5dec-label"><a xlink:title="17 [when: ansible_distribution != 'Debian']">
+<text text-anchor="middle" font-family="Times,serif" font-size="14.00" fill="#54329a" dy="-0.2%"><textPath xlink:href="#path_edge_17_role_9dd4e461_task_765d5dec" startOffset="1592.3769898658916">17 [when: ansible_distribution != 'Debian']</textPath></text>
 </a>
 </g>
 </g>

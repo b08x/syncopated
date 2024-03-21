@@ -26,7 +26,7 @@
             dest: /etc/profile.d/compose.sh
             mode: '0644'
 
-      when: distribution == 'Fedora'
+      when: ansible_distribution == 'Fedora'
 
     - name: Install docker packages
       aur:
@@ -39,7 +39,7 @@
         - docker-compose
         - lazydocker-bin
       become: False
-      when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
+      when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
 
     - name: Install docker packages
       aur:
@@ -52,7 +52,7 @@
         - nvidia-docker-compose
       become: False
       when:
-        - (distribution == 'Archlinux' or distribution == 'EndeavourOS')
+        - (ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS')
         - nvidia is defined
 
   tags: ['packages']

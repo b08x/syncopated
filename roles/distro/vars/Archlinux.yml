@@ -6,7 +6,7 @@ repos:
   syncopated:
     mirrors:
       - "http://bender.syncopated.net/syncopated/repo"
-      # - "http://syncopated.hopto.org/syncopated/repo"
+      - "http://syncopated.hopto.org/syncopated/repo"
 
 IgnorePkg: "ncurses lib32-ncurses gitui"
 
@@ -370,7 +370,7 @@ packages:
     - dragonfly-reverb-vst3
     - ecasound
     - fluidsynth
-    - ingen-git
+    # - ingen-git
     - intersect.lv2-git
     - jalv
     - jalv-select-git

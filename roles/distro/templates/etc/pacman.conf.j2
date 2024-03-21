@@ -3,7 +3,7 @@
 #
 # See the pacman.conf(5) manpage for option and repository directives
 [options]
-{% if distribution == 'EndeavourOS' %}
+{% if ansible_distribution == 'EndeavourOS' %}
 HoldPkg     = pacman glibc dracut kernel-install-for-dracut eos-dracut
 {% else %}
 HoldPkg     = pacman glibc
@@ -19,7 +19,7 @@ Architecture = auto
 {% endif %}
 # Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
 {% if IgnorePkg is defined %}
-IgnorePkg = {{ IgnorePkg }}
+IgnorePkg = pacman {{ IgnorePkg }}
 {% else %}
 #IgnorePkg =
 {% endif %}
@@ -63,7 +63,7 @@ Server = {{ mirror }}/$arch
 [proaudio]
 Server = https://arch.osamc.de/$repo/$arch
 
-{% if distribution == 'EndeavourOS' %}
+{% if ansible_distribution == 'EndeavourOS' %}
 [endeavouros]
 SigLevel = PackageRequired
 Include = /etc/pacman.d/endeavouros-mirrorlist

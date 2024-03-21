@@ -16,7 +16,7 @@ backgrounds: /usr/share/backgrounds/syncopated
 font:
   primary:
     name: Hack Nerd Font
-    size: 10
+    size: 12
     hintstyle: hintsfull
   glyphs:
     name: Font Awesome 6 Free Regular
@@ -101,8 +101,8 @@ colors:
     foreground: '#292828'
     background: '#b1701e'
   workspace:
-    background: '#3149a7'
-    border: '#3149a7'
+    background: '#005F89'
+    border: '#005F89'
     text: '#ebdbb2'
   focused:
     border: '#33eb1c'

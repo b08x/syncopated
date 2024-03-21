@@ -3,26 +3,26 @@
 - name: Set autofs config folder
   set_fact:
     _autofs_dir: /etc
-  when: distribution == 'Fedora' or distribution == 'Debian'
+  when: ansible_distribution == 'Fedora' or ansible_distribution == 'Debian'
 
 - name: Set autofs config folder
   set_fact:
     _autofs_dir: /etc/autofs
-  when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
+  when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
 
 - block:
     - name: Install autofs
       apt:
         name: autofs
         state: present
-      when: distribution == 'Debian'
+      when: ansible_distribution == 'Debian'
 
     - name: Install autofs
       dnf:
         name: autofs
         state: present
         update_cache: yes
-      when: distribution == 'Fedora'
+      when: ansible_distribution == 'Fedora'
 
     - name: Install autofs
       aur:
@@ -30,7 +30,7 @@
         name: autofs
         state: present
       become: False
-      when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
+      when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
 
   tags: ['packages']
 

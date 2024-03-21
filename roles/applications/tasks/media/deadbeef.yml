@@ -12,7 +12,7 @@
     name: deadbeef-git
     state: present
   become: False
-  when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
+  when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
   tags: ['packages']
 
 - name: Install deadbeef
@@ -20,7 +20,7 @@
     name: deadbeef-static
     state: present
     update_cache: yes
-  when: distribution == 'Fedora'
+  when: ansible_distribution == 'Fedora'
   tags: ['packages']
 
 - name: Create deadbeef config and plugin folders

@@ -1,6 +1,6 @@
 ## theme ui
 
-font pango:{{ font.primary.name }} 9
+font pango:{{ font.primary.name }} 12
 
 # class             border      bground    text      indicat    child_border
 client.focused  $border-color $bg-color $text-color $indicator $child-border
@@ -54,7 +54,7 @@ bar {
         height 32
 {% else %}
         workspace_min_width 50
-        height 26
+        height 32
 {% endif %}
 
 {% if i3.tray_output != 'default' %}

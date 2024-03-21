@@ -52,7 +52,7 @@ alias netcon="lsof -i"
 alias netlog='sudo journalctl -g "iwd|Network" -f -o json | lnav'
 alias networklogdebug="sudo nmcli general logging level DEBUG domains ALL"
 alias networkloginfo="sudo nmcli general logging level INFO domains ALL"
-alias p="sudo gping -c 16 github.com"
+alias p="gping github.com"
 
 # paru
 alias pfile="paru -Fy"
@@ -124,9 +124,9 @@ alias lib="cd $HOME/Library"
 
 alias an="cd $PLAYBOOKS"
 
-alias dla="yt-dlp -o '(artist)s.%(title)s.%(ext)s' -x --audio-format flac --external-downloader aria2c"
+alias dla="yt-dlp -o '%(title)s.%(ext)s' -x --audio-format wav --external-downloader aria2c"
 
-alias dlv="yt-dlp -o '(artist)s.%(title)s.%(ext)s' -f mp4 --external-downloader aria2c"
+alias dlv="yt-dlp -o '%(title)s.%(ext)s' -f mp4 --external-downloader aria2c"
 
 # open rb file in pry
 alias loadpry='pry -r'

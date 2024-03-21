@@ -29,19 +29,9 @@ x:
 
 i3:
   autostart: 'default'
-  tray_output: 'DVI-D-0'
+  tray_output: 'primary'
   assignments: 'default'
-  workspaces:
-    - "$ws1 output DVI-I-1"
-    - "$ws2 output DVI-I-1"
-    - "$ws3 output DVI-I-1"
-    - "$ws4 output DVI-D-0"
-    - "$ws5 output DVI-D-0"
-    - "$ws6 output DVI-D-0"
-    - "$ws7 output DVI-D-0"
-    - "$ws8 output DVI-D-0"
-    - "$ws9 output DVI-D-0"
-    - "$ws10 output DVI-D-0"
+  workspaces: 'default'
   keybindings: 'default'
 
 # network_interfaces:

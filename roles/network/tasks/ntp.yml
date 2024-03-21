@@ -21,4 +21,4 @@
     hwclock --systohc
   when:
     - timesyncd_conf.changed
-    - distribution != 'Debian'
+    - ansible_distribution != 'Debian'

@@ -41,7 +41,7 @@
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
   become: False
-  when: distribution != 'Debian'
+  when: ansible_distribution != 'Debian'
 
 - name: Remove existing user-dirs.dirs
   file:

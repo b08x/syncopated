@@ -25,8 +25,8 @@
 
 - name: Install ranger configs
   synchronize:
-    src: home/.config/ranger
-    dest: "{{ user.home }}/.config/ranger"
+    src: home/.config/ranger/
+    dest: "{{ user.home }}/.config/ranger/"
     recursive: yes
     mode: push
     delete: no

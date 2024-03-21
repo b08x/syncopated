@@ -47,7 +47,7 @@
             - bluez-utils
             - pulseaudio-bluetooth
           become: False
-          when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
+          when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
 
       tags: ["packages"]
 

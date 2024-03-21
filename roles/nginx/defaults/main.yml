@@ -41,9 +41,9 @@ keep_only_specified: False
 nginx_installation_type: "packages"
 nginx_binary_name: "nginx"
 nginx_service_name: "{{nginx_binary_name}}"
-nginx_conf_dir: "{% if distribution == 'FreeBSD' %}/usr/local/etc/nginx{% else %}/etc/nginx{% endif %}"
+nginx_conf_dir: "{% if ansible_distribution == 'FreeBSD' %}/usr/local/etc/nginx{% else %}/etc/nginx{% endif %}"
 
-nginx_user: "{% if distribution == 'RedHat' or distribution == 'Fedora' %}nginx{% elif distribution == 'Debian' %}www-data{% elif distribution == 'FreeBSD' %}www{% endif %}"
+nginx_user: "{% if ansible_distribution == 'RedHat' or ansible_distribution == 'Fedora' %}nginx{% elif ansible_distribution == 'Debian' %}www-data{% elif ansible_distribution == 'FreeBSD' %}www{% endif %}"
 nginx_group: "{{nginx_user}}"
 
 nginx_pid_file: '/var/run/{{nginx_service_name}}.pid'
@@ -75,7 +75,7 @@ nginx_sites:
   00_default:
     - listen 80 default_server
     - server_name _
-    - root "{% if distribution == 'FreeBSD' %}/usr/local/www/nginx-dist{% else %}/usr/share/nginx/html{% endif %}"
+    - root "{% if ansible_distribution == 'FreeBSD' %}/usr/local/www/nginx-dist{% else %}/usr/share/nginx/html{% endif %}"
     - index index.html
     - autoindex on
 nginx_remove_sites: []

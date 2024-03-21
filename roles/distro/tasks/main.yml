@@ -1,6 +1,18 @@
 ---
 # tasks file for roles/distro
 
+- name: Load a variable file based on the OS type, or a default if not found. the file.
+  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        - '{{ansible_distribution}}.yml'
+        # - '{{ansible_os_family}}.yml'
+        - main.yml
+      paths:
+        - 'vars'
+  tags: ['always']
+
 - block:
     - import_tasks:
         file: "Archlinux/main.yml"
@@ -20,11 +32,4 @@
     #   check_mode: no
     #   tags: ['packages']
 
-    - name: Install utility packages
-      pacman:
-        name: "{{ packages.utility }}"
-        state: present
-        extra_args: --noconfirm --overwrite '*'
-      tags: ["packages"]
-
-  when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
+  when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'

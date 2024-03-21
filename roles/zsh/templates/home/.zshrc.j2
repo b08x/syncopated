@@ -1,4 +1,10 @@
 export UU_ORDER="$UU_ORDER:~/.zshrc"
+
+
+if [ -d $HOME/.bin ]; then
+  PATH="$PATH:$HOME/.bin"
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH="/usr/local/share/oh-my-zsh"
 
@@ -152,6 +158,16 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # eval "$(mcfly init zsh)"
 
 [[ -f /usr/share/doc/mcfly/mcfly.zsh ]] && source /usr/share/doc/mcfly/mcfly.zsh
+
+{% if inventory_hostname == 'lapbot' %}
+# argc-completions
+export ARGC_COMPLETIONS_ROOT="/home/b08x/Workspace/argc-completions"
+export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
+export PATH="$ARGC_COMPLETIONS_ROOT/bin:$PATH"
+# To add completions for only the specified command, modify next line e.g. argc_scripts=( cargo git )
+argc_scripts=( $(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p') )
+source <(argc --argc-completions zsh $argc_scripts)
+{% endif %}
 
 {% if inventory_hostname == 'lapbot' %}
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)

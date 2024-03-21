@@ -1,2 +1,14 @@
 ---
 # handlers file for roles/distro
+
+- name: Update pacman cache
+  pacman:
+    update_cache: True
+    upgrade: False
+
+- name: Update pacman mirrors
+  shell: |
+    reflector --download-timeout 5 --protocol https \
+    --latest 20 --sort rate --score 10 --fastest 8 \
+    --save /etc/pacman.d/mirrorlist
+  ignore_errors: True

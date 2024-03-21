@@ -27,7 +27,7 @@
         - docker-compose
       environment:
         PIP_CONSTRAINT: "/tmp/cython_constraint.txt"
-      when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
+      when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
 
     - name: Install python docker modules
       pip:
@@ -37,7 +37,7 @@
       with_items:
         - docker
         - docker-compose
-      when: distribution == 'Fedora'
+      when: ansible_distribution == 'Fedora'
 
   tags: ['packages']
 

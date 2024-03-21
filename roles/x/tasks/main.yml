@@ -4,23 +4,6 @@
   debug:
     msg: "Starting xorg tasks"
 
-- block:
-    - name: Install system xorg packages
-      aur:
-        use: paru
-        name: "{{ packages.xorg }}"
-        state: present
-
-    - name: Install host specific xorg packages
-      aur:
-        use: paru
-        name: "{{ host.xorg.video }}"
-        state: present
-      when: host.xorg.video is defined
-
-  become: False
-  tags: ["packages"]
-
 - name: Set xorg.conf
   template:
     src: etc/X11/xorg.conf.j2
@@ -89,7 +72,7 @@
       when: mkinitcpio_conf.changed
 
   # when: ansible_facts["lsb"]["id"] != 'EndeavourOS'
-  when: distribution != 'EndeavourOS'
+  when: ansible_distribution != 'EndeavourOS'
   tags: ['mkinitcpio']
 
 - import_tasks:

@@ -10,14 +10,14 @@
       apt:
         name: "{{ packages.ruby }}"
         state: present
-      when: distribution == 'Debian'
+      when: ansible_distribution == 'Debian'
 
     - name: Install system ruby packages
       dnf:
         name: "{{ packages.ruby }}"
         state: present
         update_cache: yes
-      when: distribution == 'Fedora'
+      when: ansible_distribution == 'Fedora'
 
     - name: Install system ruby packages
       pacman:
@@ -26,7 +26,7 @@
         force: True
         extra_args: --noconfirm --overwrite '*'
         update_cache: True
-      when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
+      when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
 
   tags: ['packages']
 
