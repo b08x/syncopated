@@ -6,7 +6,7 @@
     <meta name="generator" content="pandoc" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <meta name="author" content="Something" />
-    <meta name="dcterms.date" content="2024-03-21" />
+    <meta name="dcterms.date" content="2024-03-22" />
     <title>SyncopatedIaC</title>
 
     <link rel="shortcut icon" href="template/favicon.ico">
@@ -235,6 +235,8 @@
             <li><a href="#i3-1" id="toc-i3-1"><span
             class="toc-section-number">13.2</span> i3</a></li>
             </ul></li>
+            <li><a href="#applications" id="toc-applications"><span
+            class="toc-section-number">14</span> Applications</a></li>
             </ul>
         </div>
     </nav>
@@ -271,6 +273,8 @@
 class="header-section-number">1</span> Introduction</h1>
 <p>::: columns</p>
 <p>::::: column</p>
+<p><img src="images/workstation.jpeg"
+alt="The Creative Commons Attribution-ShareAlike logo" /></p>
 <p>Linux Audio....It's like pulling teeth out of a baby.</p>
 <p>"Linux" is a popular operating system for those who enjoy living a
 life of challenge. But it can be difficult to manage desktop
@@ -331,60 +335,13 @@ collaborating on projects, Ansible Collections can help you automate the
 configuration of network settings, synchronization protocols, and audio
 streaming setups. You can create collections that include roles and
 playbooks specific to your networked audio requirements.</p>
-<p>The initial design is based around the i3 window manager, which is a
-keyboard-driven window manager. While roles are in place to support
-other environments like GNOME or XFCE, additional modifications would be
-required in the future to fully support those desktops.</p>
-<h3 data-number="1.1.1" id="immutable-infrastructure"><span
-class="header-section-number">1.1.1</span> Immutable Infrastructure</h3>
-<p>Which is the same as a mutable infrastructure.</p>
-<p><img src="images/cc-by-sa.png"
-alt="The Creative Commons Attribution-ShareAlike logo" /></p>
-<hr />
-<p>The configuration management issues related to the Linux operating
-system in the VFX industry include a lack of standardization and
-alignment on compatible distributions, making it difficult to pool
-efforts and build on a common foundation. There is also a need for the
-community to come together and share knowledge to create a repository of
-configuration guides, best practices, and tutorials. This will help
-ensure the future of Linux as a sustainable platform for studio
-workstations and provide the best artist experience on professional
-graphics workstations.</p>
-<blockquote>
-<p>[!ai]+ AI</p>
-<p>Linux is a popular operating system for the VFX industry, but it can
-be difficult to manage and configure. There are a number of
-configuration management issues that need to be addressed in order to
-make Linux a more sustainable platform for studio workstations. One of
-the biggest challenges is the lack of standardization. There are many
-different distributions of Linux, and each one has its own set of
-configuration options. This can make it difficult to pool efforts and
-build on a common foundation. Another challenge is the need for
-community collaboration. There is a lack of resources available to help
-VFX artists and professionals manage and configure Linux workstations.
-This can lead to frustration and wasted time. To address these
-challenges, the VFX industry needs to come together and create a
-repository of configuration guides, best practices, and tutorials. This
-will help ensure the future of Linux as a sustainable platform for
-studio workstations and provide the best artist experience on
-professional graphics workstations. The following are some specific
-steps that can be taken to address the configuration management issues
-related to Linux in the VFX industry:</p>
-<ol type="1">
-<li>Create a standard configuration for Linux workstations. This would
-include a set of recommended packages, settings, and tools.</li>
-<li>Develop a configuration management system for Linux workstations.
-This would allow users to easily manage and update the configuration of
-their workstations.</li>
-<li>Create a community of Linux users in the VFX industry. This would
-provide a forum for users to share knowledge and best practices.</li>
-<li>Develop training materials for Linux users in the VFX industry. This
-would help users to learn how to use Linux effectively. By taking these
-steps, the VFX industry can make Linux a more sustainable platform for
-studio workstations and provide the best artist experience on
-professional graphics workstations.</li>
-</ol>
-</blockquote>
+<p>The initial design focuses on the i3 window manager, renowned for its
+efficiency and keyboard-driven operation. While existing roles support
+alternative environments like GNOME or XFCE, future enhancements are
+anticipated to extend comprehensive support to these desktops.</p>
+<p>The setup playbook gets you started with a minimal yet functional
+desktop environment (like i3), essential utilities, and development
+tools. Freely expand and tailor it to your unique requirements.</p>
 <h1 data-number="2" id="the-variables-and-where-to-set-them"><span
 class="header-section-number">2</span> The Variables and Where To Set
 Them</h1>
@@ -1435,6 +1392,10 @@ standardized environment. This establishes a common baseline.</p>
 task files for each subdomain.</p>
 <h2 data-number="13.2" id="i3-1"><span
 class="header-section-number">13.2</span> i3</h2>
+<h4 data-number="13.2.0.1"
+id="initial-design-and-environment-support"><span
+class="header-section-number">13.2.0.1</span> Initial Design and
+Environment Support:</h4>
 <p>The i3 role contains configuration related to installing and setting
 up the i3 window manager.</p>
 <p>The role directory follows the standard structure:</p>
@@ -1464,6 +1425,71 @@ repeatable way. This includes package installation, configuration
 generation and ongoing service management.</p>
 <p>The role is self-contained to focus specifically on i3 tasks while
 following best practices for role structure and documentation.</p>
+<h1 data-number="14" id="applications"><span
+class="header-section-number">14</span> Applications</h1>
+<p>This section describes some of the specialized audio tools and
+utilities you can easily include in your setup using this playbook:</p>
+<ul>
+<li><p><strong>baudline (Signal Analyzer)</strong>: A powerful,
+real-time frequency spectrum analyzer and signal viewer. Indispensable
+for troubleshooting audio issues, visualizing frequency content, and
+analyzing incoming audio. (<a
+href="https://www.baudline.com"><span>https://www.baudline.com</span></a>)</p></li>
+<li><p><strong>jacktrip (Network Audio Streaming)</strong>: Enables
+low-latency, uncompressed audio transmission over standard networks.
+Collaborate remotely in real time, bridge multiple studios, or connect
+hardware devices over long distances. (<a
+href="https://github.com/jacktrip/jacktrip.git"><span>https://github.com/jacktrip/jacktrip.git</span></a>)</p></li>
+<li><p><strong>ocenaudio (Cross-Platform Audio Editing)</strong>: A
+streamlined yet versatile audio editor well-suited for quick editing
+tasks, batch processing, and manipulating audio files for multimedia
+projects. (<a
+href="https://www.ocenaudio.com"><span>https://www.ocenaudio.com</span></a>)</p></li>
+<li><p><strong>Patchage (Graphical Patchbay)</strong>: Easily connect
+audio and MIDI software together using a flexible, drag-and-drop
+interface. Experiment, try out different routing ideas, or manage
+complex signal flows in large projects. (<a
+href="https://gitlab.com/drobilla/patchage.git"><span>https://gitlab.com/drobilla/patchage.git</span></a>)</p></li>
+<li><p><strong>Polyphone (Modular Sound Font Editor)</strong>: Create
+and edit your own sample-based virtual instruments using the .SFZ sound
+font format. Ideal for crafting custom sounds, sampling hardware, or
+building unique virtual instruments. (<a
+href="https://github.com/davy7125/polyphone.git"><span>https://github.com/davy7125/polyphone.git</span></a>)</p></li>
+<li><p><strong>qmidinet (MIDI Network Router/Hub)</strong>: Manipulate
+and route MIDI signals within your setup. Create virtual MIDI
+connections, filter events, or use MIDI over the network for wireless
+control or connecting multiple machines. (<a
+href="https://github.com/rncbc/qmidinet.git"><span>https://github.com/rncbc/qmidinet.git</span></a>)</p></li>
+<li><p><strong>REAPER (Digital Audio Workstation)</strong>: A
+full-featured DAW favored for its efficiency, flexible routing
+capabilities, and deep customization options. Ideal for professional
+recording, mixing, and mastering. (<a
+href="https://www.reaper.fm"><span>https://www.reaper.fm</span></a>)</p></li>
+<li><p><strong>Scala (Microtonal Tuning Software)</strong>: Explore the
+world beyond standard 12-tone equal temperament. Create custom scales,
+re-tune MIDI instruments, or analyze tuning systems. (<a
+href="http://www.huygens-fokker.org/software/"><span>http://www.huygens-fokker.org/software/</span></a>)</p></li>
+<li><p><strong>SWAMI (MIDI CC Automation)</strong>: Create elaborate
+MIDI control change (CC) automation curves, sequences, and LFOs. Control
+software plugins, hardware synthesizers, and automate parameters within
+your DAW. (<a
+href="https://github.com/swami/swami.git"><span>https://github.com/swami/swami.git</span></a>)</p></li>
+<li><p><strong>Tony (Audio Time Stretching/Pitch Shifting)</strong>:
+Manipulate the speed and pitch of audio files independently. Slow down
+samples for transcription, create interesting sonic textures, or adjust
+vocals and instruments without affecting their original tempo. (<a
+href="https://code.soundsoftware.ac.uk/attachments/download/2617"><span>https://code.soundsoftware.ac.uk/attachments/download/2617</span></a>)</p></li>
+<li><p><strong>TouchOSC and Protokol (Mobile Control Surfaces)</strong>:
+Control your DAW, software plugins, or lighting rigs wirelessly using
+custom interfaces. Design layouts with faders, knobs, buttons, and more
+on your tablet or smartphone. (<a
+href="https://hexler.net/pub/touchosc"><span>https://hexler.net/pub/touchosc</span></a>
+and <a
+href="https://hexler.net/pub/protokol/"><span>https://hexler.net/pub/protokol/</span></a>)</p></li>
+</ul>
+<p><strong>Note:</strong> This is just a selection of the vast world of
+Linux audio tools! Customize the playbook to fit your specific workflow
+and creative needs.</p>
                 </main>
 
                 <nav class="nav-wrapper" aria-label="Page navigation">

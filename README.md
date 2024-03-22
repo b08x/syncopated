@@ -5,7 +5,7 @@
 <br>
 </h1>
 
-# SyncopatedIaC: An Audio-Centric Linux Distribution Framework
+# An Audio-Centric Linux Distribution Framework
 
 This project explores Infrastructure as Code (IaC) principles to streamline Linux desktop configuration for audio production.  It aims to demonstrate best practices, promote customization, and facilitate a collaborative, community-driven approach to overcoming workflow challenges in the open-source audio engineering landscape.
 
