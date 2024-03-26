@@ -1,14 +1,11 @@
 ---
 title: Introduction
-author: Something
+author: "It's Like Reading Stereo Instructions"
 ragged-columns: true
 ---
 
 # Introduction
 
-::: columns
-
-::::: column
 
 ![The Creative Commons Attribution-ShareAlike logo](images/workstation.jpeg)
 
