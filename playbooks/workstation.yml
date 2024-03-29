@@ -16,14 +16,14 @@
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
     ZSH: "/usr/share/oh-my-zsh"
     DISPLAY: ":0"
-# variables from vars_files are available starting here...
+  # variables from vars_files are available starting here...
   pre_tasks:
     # - name: show expected_value
     #   debug:
     #     var: ansible_facts["date_time"]["epoch"]
     #   tags: ["always"]
 
-      # the task will run if `check_mode` to 'no'
+    # the task will run if `check_mode` to 'no'
     - name: Register timestamp
       shell: "date +'%s.%Y-%m-%d@%H:%M:%S~'"
       register: timestamp
@@ -49,12 +49,12 @@
     - name: show expected_value
       debug:
         var: ansible_facts
-      tags: ['always']
+      tags: ["always"]
 
     - name: show expected_value
       debug:
         var: ansible_distribution
-      tags: ['always']
+      tags: ["always"]
 
     - name: Symlink /etc/os-release to /etc/system-release
       file:
@@ -146,7 +146,7 @@
     - name: Import Distro Role
       import_role:
         name: distro
-      tags: ['always']
+      tags: ["always"]
 
   roles:
     # - role: distro
@@ -170,19 +170,11 @@
     - role: ruby
       tags: ["ruby"]
 
-    - role: tools
-      tags: ["tools"]
-
-
-
     - role: docker
       tags: ["docker"]
 
     # - role: libvirt
     #   tags: ["libvirt"]
-
-
-
 
     - role: alsa
       tags: ["alsa", "audio"]
@@ -198,11 +190,6 @@
 
     - role: audio
       tags: ["tuning"]
-
-
-
-
-
 
     - role: lightdm
       tags: ["lightdm"]

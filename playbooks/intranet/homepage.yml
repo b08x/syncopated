@@ -1,5 +1,5 @@
 ---
-- hosts: workstation
+- hosts: all
   become: True
   gather_subset:
     - hardware
@@ -60,6 +60,10 @@
             url: "https://llava.hliu.cc/"
           - name: colors-between
             url: "https://hexcolor.co/colors-between"
+          - name: d2 playground
+            url: "https://play.d2lang.com/?script=qlDQtVOo5AIEAAD__w%3D%3D&"
+          - name: llama-parse
+            url: "https://cloud.llamaindex.ai/"
         webtoolsLLM:
           - name: Anthropic Console
             url: "https://console.anthropic.com/"
