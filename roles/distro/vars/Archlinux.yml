@@ -1,12 +1,11 @@
 ---
-
 admin_group: wheel
 
 repos:
   syncopated:
     mirrors:
       - "http://bender.syncopated.net/syncopated/repo"
-      - "http://syncopated.hopto.org/syncopated/repo"
+      #      - "http://syncopated.hopto.org/syncopated/repo"
 
 IgnorePkg: "ncurses lib32-ncurses gitui"
 
@@ -120,13 +119,6 @@ packages:
   desktop:
     # - obs-rtspserver
     # - pgmodeler
-    - gksu
-    - speech-dispatcher
-    - mediamtx
-    - gvfs-smb
-    - gedit
-    - tldr
-    - iotop
     - archlinux-xdg-menu
     - ascii-image-converter
     - asciiquarium-transparent-git
@@ -136,23 +128,34 @@ packages:
     - fuse3
     - fuse-common
     - gconf
+    - gedit
+    - gedit-dark-variant
+    - gedit-markdownpreview-git
+    - gedit-plugins
+    - gedit-smart-home
+    - geoclue
+    - gksu
+    - gvfs-smb
     - hexchat
+    - iotop
     - libaudec
     - libcaca
     - libcyaml
     - lsp-dsp-lib
     - lsparu
     - maim
+    - mediamtx
+    - metagedit-git
     - network-manager-applet
     - octopi
     - paruz
     - patat-bin
     - pgvector
     - redshift
-    - geoclue
     - rofi
     - sampler
     - sd
+    - speech-dispatcher
     - sshpass
     - stunnel
     - sudo
@@ -161,6 +164,7 @@ packages:
     - thunar
     - thunar-archive-plugin
     - thunar-volman
+    - tldr
     - ttf-tw
     - ueberzug
     - unrar

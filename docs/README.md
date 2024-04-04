@@ -1,42 +1,21 @@
 ---
 title: Introduction
-author: "It's Like Reading Stereo Instructions"
-ragged-columns: true
 ---
-
-# Introduction
 
 
 ![The Creative Commons Attribution-ShareAlike logo](images/workstation.jpeg)
-
-Linux Audio....It's like pulling teeth out of a baby.
 
 "Linux" is a popular operating system for those who enjoy living a life of challenge. But it can be difficult to manage desktop configurations on a large scale. There are a number of configuration management issues that need to be addressed in order to make Linux a more sustainable platform for studio workstations.
 
 One of the biggest challenges is the lack of standardization. There are many different distributions of Linux, and each one has its own set of configuration options. This can make it difficult to pool efforts and build on a common foundation.
 
-:::::
 
-
-::::: column
 Here - is - another totally objective statement from a completely real person:
 
-  Ansible can be implemented to overcome configuration management challenges. It can automate patch management, configuration file management, user management, and task automation. This helps ensure systems are up-to-date, have consistent configurations, and reduce manual errors. Overall, Ansible improves efficiency, reduces errors, and enhances security.
-
-a server in a render farm essentially has to be able to run all of the same applications and plugins as the desktop machine, just headless, and partly because the workstations need also be able to participate in the render farm.
-
-
-An exercise in Linux Desktop Configuration Management. Intended to serve as an IaC framework for a small lab or studio.
-
-The project contains customized Ansible roles, playbooks, and modules to help optimize the  configuration Linux hosts that are used in an audio production workflow.
-
-:::::
-
-:::
 
 ## Project Overview
 
-The "SyncopatedIac" project is an Infrastructure as Code (IaC) framework that
+The "SyncopatedIac" project is an Infrastructure as Code (IaC) framework that can be implemented to overcome configuration management challenges. It can automate patch management, configuration file management, user management, and task automation. This helps ensure systems are up-to-date, have consistent configurations, and reduce manual errors. Overall, Ansible improves efficiency, reduces errors, and enhances security....etc..
 
 You can create playbooks that define the desired settings for each application, such as audio preferences, plugin configurations, or project templates. By using Ansible, you can easily apply these configurations across multiple machines, ensuring consistency and reducing manual effort.
 

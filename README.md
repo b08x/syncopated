@@ -25,14 +25,6 @@ While not a production-ready solution in itself, SyncopatedIaC provides a robust
 - **Version Control for Audio Projects:** Track changes and experiment with audio projects using Git. Revert to previous versions, collaborate on sound design, and manage shared plugin/effect configurations.
 - **Specialized Audio Appliances:** Create purpose-built, embedded Linux audio solutions. Think dedicated live mixing systems, network-based audio appliances, or custom recording devices.
 
-## Integration of Ansible and yadm
-
-### Single Workstation
-
-1. **Pre-task: Pull Dotfiles with Ansible:** A playbook starts by fetching your latest dotfiles (managed by yadm) to ensure core customizations are in place before system-wide changes begin.
-2. **System Changes with Ansible:** Ansible proceeds with package installation, system service configuration, applying system-wide tweaks, and potentially deploying application-specific settings.
-3. **Post-task: Commit and Push with yadm:** A final yadm task checks for system-level changes impacting dotfiles. If necessary, it commits and pushes these changes to your repository.
-
 ### Scaling with Multiple Hosts
 
 Adapt the integration for different scenarios. In studios with similar setups, run this process on each machine. For centralized dotfile management, Ansible can execute a "yadm bootstrap" command on each remote host. Carefully consider which dotfiles should be standardized across workstations and which should remain unique to individual users.

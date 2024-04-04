@@ -10,8 +10,8 @@ MKDIR_P = mkdir -p
 
 all:: pdf html
 
-pdf:: *.md roles/*.md
-	pandoc *.md roles/*.md \
+pdf:: README.md *.md roles/*.md
+	pandoc README.md *.md roles/*.md \
 		-f gfm \
 		-V linkcolor:blue \
 		--pdf-engine=xelatex \
@@ -25,8 +25,8 @@ pdf:: *.md roles/*.md
 		--metadata titlepage="True" \
 		-o SyncopatedIaC.pdf
 
-html:: *.md roles/*.md
-	pandoc *.md roles/*.md \
+html:: README.md *.md roles/*.md
+	pandoc README.md *.md roles/*.md \
 		-f gfm \
 		--number-sections \
 		--table-of-contents \

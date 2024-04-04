@@ -68,7 +68,7 @@ The primary audio device is the Intel Alder Lake PCH-P High Definition Audio, ma
 Additionally, the system has two audio servers running concurrently:
 
 1. JACK (version 1.9.22) is active and managed by the root user and processes. It is used in conjunction with a2jmidid, which is also active. JACK provides tools like jack_control and jack_mixer.
-    
+
 2. PulseAudio (version 16.1) is also active and managed by the root user and processes. It is configured with various modules, including pulseaudio-alsa and pulseaudio-jack. Tools associated with PulseAudio include pacat, pactl, pamixer, pavucontrol, and pulsemixer.
 
 ```
@@ -86,6 +86,3 @@ The CPU operates at a base/boost speed of 1900/2100 MHz, with a governor set to 
 Audio is managed by Intel Sunrise Point-LP HD Audio, and additional audio devices include the Lenovo ThinkPad Thunderbolt 3 Dock Audio and Dictaphone PowerMicII-NS. The system uses ALSA for audio, and there are two audio servers, JACK and PulseAudio, running concurrently.
 
 ```
-
-
-For comparison, a proprietary solution that 
