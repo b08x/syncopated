@@ -41,6 +41,7 @@ x:
 
 i3:
   autostart:
+    - "tilda"
     - "ray-daemon --session-root ~/NetworkSessions -p 7777"
     - "/usr/bin/barriers -f --no-tray --debug INFO --name soundbot --disable-crypto --disable-client-cert-checking -c /home/b08x/.config/Debauchee/soundbot.conf --address :24801"
     - "/usr/bin/barrierc -f --no-tray --debug INFO --name soundbot --disable-crypto [tinybot]:24800"
