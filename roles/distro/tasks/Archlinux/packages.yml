@@ -1,199 +1,220 @@
 ---
 
-- name: Install utility packages
-  pacman:
-    name: "{{ packages.utility }}"
+- name: Current packages installed
+  shell: |
+    paru -Q |awk '{print $1}'
+  become: False
+  register: arch_installed_packages
+  check_mode: no
+  tags: ['packages']
+
+- name: install packages
+  aur:
+    use: paru
+    name: "{{ packages|difference(arch_installed_packages.stdout) }}"
     state: present
-    extra_args: --noconfirm --overwrite '*'
-  tags: ["utility"]
+    extra_args: "--overwrite '*'"
+  become: False
+  when: arch_installed_packages | length > 0
+  tags: ['packages']
 
 - block:
-    - name: Install system xorg packages
-      aur:
-        use: paru
-        name: "{{ packages.xorg }}"
-        state: present
+    # - name: Install utility packages
+    #   aur:
+    #     use: paru
+    #     name: "{{ packages.utility|difference(arch_installed_packages.stdout) }}"
+    #     state: present
+    #     extra_args: "--overwrite '*'"
+    #   tags: ["utility"]
+
+    # - name: Install system xorg packages
+    #   aur:
+    #     use: paru
+    #     name: "{{ packages.xorg|difference(arch_installed_packages.stdout) }}"
+    #     state: present
+    #     extra_args: "--overwrite '*'"
 
     - name: Install host specific xorg packages
       aur:
         use: paru
-        name: "{{ host.xorg.video }}"
+        name: "{{ host.xorg.video|difference(arch_installed_packages.stdout) }}"
         state: present
+        extra_args: "--overwrite '*'"
       when: host.xorg.video is defined
 
   become: False
   tags: ["x"]
-
-- block:
-    - name: Group theme packages to install
-      set_fact:
-        packagesTheme: "{{ packages.icons + packages.cursors + packages.gtk3 + packages.qt5 + packages.qt6 + packages.kvantum + packages.fonts }}"
-
-    - name: Install theme group packages
-      aur:
-        use: paru
-        name: "{{ packagesTheme | flatten(1) }}"
-        state: present
-      become: False
-
-    - name: Install syncopated-theme
-      aur:
-        use: paru
-        name: syncopated-theme
-        state: present
-        extra_args: "--overwrite '*'"
-      become: False
-
-  tags: ['theme']
-
-- block:
-
-    - name: Install terminal packages
-      aur:
-        use: paru
-        name: "{{ packages.terminal }}"
-        state: present
-
-  rescue:
-    - name: Handle installation failure
-      debug:
-        msg: "Failed to install package: {{ item }}"
-      loop: "{{ ansible_failed_result | map(attribute='item') | list }}"
-
-  always:
-    - name: Continue executions
-      debug:
-        msg: "Continuing with playbook execution"
-
-  become: False
-  tags: ['packages']
-
-
-- block:
-    - name: Install system ruby packages
-      apt:
-        name: "{{ packages.ruby }}"
-        state: present
-      when: ansible_distribution == 'Debian'
-
-    - name: Install system ruby packages
-      dnf:
-        name: "{{ packages.ruby }}"
-        state: present
-        update_cache: yes
-      when: ansible_distribution == 'Fedora'
-
-    - name: Install system ruby packages
-      pacman:
-        name: "{{ packages.ruby }}"
-        state: present
-        force: True
-        extra_args: --noconfirm --overwrite '*'
-        update_cache: True
-      when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
-
-  tags: ['packages']
-
-- name: Remove jack1
-  pacman:
-    name: jack
-    state: absent
-    force: yes
-    extra_args: --noconfirm
-  ignore_errors: True
-  tags: ['packages']
-
-- name: Install jack packages
-  aur:
-    use: paru
-    name: "{{ packages.jack }}"
-    state: present
-  become: False
-  tags: ['packages']
-
-- name: Install pulseaudio packages
-  aur:
-    use: paru
-    name: "{{ packages.pulseaudio }}"
-    state: present
-  become: False
-  tags: ['packages']
-  
-- name: Install alsa packages
-  aur:
-    use: paru
-    name: "{{ packages.alsa }}"
-    state: present
-  become: False
-  tags: ['packages']
-
-- name: Install codecs packages
-  aur:
-    use: paru
-    name: "{{ packages.codecs }}"
-    state: present
-  become: False
-  tags: ["packages"]
-
-- name: Install i3 packages
-  aur:
-    use: paru
-    name: "{{ packages.i3 }}"
-    state: present
-  become: False
-  tags: ['packages']
-
-- block:
-    - name: Install desktop packages
-      aur:
-        use: paru
-        name: "{{ packages.desktop }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install browser packages
-      aur:
-        use: paru
-        name: "{{ packages.browser }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install media packages
-      aur:
-        use: paru
-        name: "{{ packages.media }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install development packages
-      aur:
-        use: paru
-        name: "{{ packages.development }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install texlive packages
-      aur:
-        use: paru
-        name: "{{ packages.texlive }}"
-        state: present
-        extra_args: --overwrite '*'
-      when: pkgs__texlive|default(false)|bool == True
-      tags: ['texlive']
-
-    - name: Install python packages
-      aur:
-        use: paru
-        name: "{{ packages.python }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install utility packages
-      aur:
-        use: paru
-        name: "{{ packages.utility }}"
-        state: present
-        extra_args: --overwrite '*'
-
-  become: False
-  tags: ['packages']
+#
+# - block:
+#     - name: Group theme packages to install
+#       set_fact:
+#         packagesTheme: "{{ packages.icons + packages.cursors + packages.gtk3 + packages.qt5 + packages.qt6 + packages.kvantum + packages.fonts }}"
+#
+#     - name: Install theme group packages
+#       aur:
+#         use: paru
+#         name: "{{ packagesTheme | flatten(1) | difference(arch_installed_packages.stdout) }}"
+#         state: present
+#         extra_args: "--overwrite '*'"
+#       become: False
+#
+#     - name: Install syncopated-theme
+#       aur:
+#         use: paru
+#         name: syncopated-theme
+#         state: present
+#         extra_args: "--overwrite '*'"
+#       become: False
+#
+#   tags: ['theme']
+#
+# - block:
+#
+#     - name: Install terminal packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.terminal |difference(arch_installed_packages.stdout) }}"
+#         state: present
+#         extra_args: "--overwrite '*'"
+#
+#   rescue:
+#     - name: Handle installation failure
+#       debug:
+#         msg: "Failed to install package: {{ item }}"
+#       loop: "{{ ansible_failed_result | map(attribute='item') | list }}"
+#
+#   always:
+#     - name: Continue executions
+#       debug:
+#         msg: "Continuing with playbook execution"
+#
+#   become: False
+#   tags: ['packages']
+#
+#
+# - block:
+#     - name: Install system ruby packages
+#       apt:
+#         name: "{{ packages.ruby }}"
+#         state: present
+#       when: ansible_distribution == 'Debian'
+#
+#     - name: Install system ruby packages
+#       dnf:
+#         name: "{{ packages.ruby }}"
+#         state: present
+#         update_cache: yes
+#       when: ansible_distribution == 'Fedora'
+#
+#     - name: Install system ruby packages
+#       pacman:
+#         name: "{{ packages.ruby|difference(arch_installed_packages.stdout) }}"
+#         state: present
+#         force: True
+#         extra_args: --noconfirm --overwrite '*'
+#         update_cache: True
+#       when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+#
+#   tags: ['packages']
+#
+# - name: Remove jack1
+#   pacman:
+#     name: jack
+#     state: absent
+#     force: yes
+#     extra_args: --noconfirm
+#   ignore_errors: True
+#   tags: ['packages']
+#
+# - name: Install jack packages
+#   aur:
+#     use: paru
+#     name: "{{ packages.jack|difference(arch_installed_packages.stdout) }}"
+#     state: present
+#     extra_args: "--overwrite '*'"
+#   become: False
+#   tags: ['packages']
+#
+# - name: Install pulseaudio packages
+#   aur:
+#     use: paru
+#     name: "{{ packages.pulseaudio|difference(arch_installed_packages.stdout) }}"
+#     state: present
+#     extra_args: "--overwrite '*'"
+#   become: False
+#   tags: ['packages']
+#
+# - name: Install alsa packages
+#   aur:
+#     use: paru
+#     name: "{{ packages.alsa|difference(arch_installed_packages.stdout) }}"
+#     state: present
+#     extra_args: "--overwrite '*'"
+#   become: False
+#   tags: ['packages']
+#
+# - name: Install codecs packages
+#   aur:
+#     use: paru
+#     name: "{{ packages.codecs|difference(arch_installed_packages.stdout) }}"
+#     state: present
+#     extra_args: "--overwrite '*'"
+#   become: False
+#   tags: ["packages"]
+#
+# - name: Install i3 packages
+#   aur:
+#     use: paru
+#     name: "{{ packages.i3|difference(arch_installed_packages.stdout) }}"
+#     state: present
+#     extra_args: "--overwrite '*'"
+#   become: False
+#   tags: ['packages']
+#
+# - block:
+#     - name: Install desktop packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.desktop|difference(arch_installed_packages.stdout) }}"
+#         state: present
+#         extra_args: --overwrite '*'
+#
+#     - name: Install browser packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.browser|difference(arch_installed_packages.stdout) }}"
+#         state: present
+#         extra_args: --overwrite '*'
+#
+#     - name: Install media packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.media|difference(arch_installed_packages.stdout) }}"
+#         state: present
+#         extra_args: --overwrite '*'
+#
+#     - name: Install development packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.development|difference(arch_installed_packages.stdout) }}"
+#         state: present
+#         extra_args: --overwrite '*'
+#
+#     - name: Install texlive packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.texlive|difference(arch_installed_packages.stdout) }}"
+#         state: present
+#         extra_args: --overwrite '*'
+#       when: pkgs__texlive|default(false)|bool == True
+#       tags: ['texlive']
+#
+#     - name: Install python packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.python|difference(arch_installed_packages.stdout) }}"
+#         state: present
+#         extra_args: --overwrite '*'
+#
+#   become: False
+#   tags: ['packages']

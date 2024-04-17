@@ -27,18 +27,17 @@
         dest: /etc/pacman.conf
         mode: "0644"
         backup: True
-      tags: ["repo", "pacman"]
+      tags: ["pacman"]
 
     - import_tasks:
         file: chaotic.yml
-      when: repos.chaotic is defined
+      when: chaotic is defined
       tags: ["repo", "chaotic"]
 
   # when: "{{ install. }}|bool"
   notify:
     - "Update pacman mirrors"
     - "Update pacman cache"
-  tags: ['repo']
 
 - name: Flush handlers
   meta: flush_handlers
@@ -49,7 +48,7 @@
     dest: /etc/makepkg.conf
     mode: "0644"
     backup: True
-  tags: ["repo"]
+  tags: ["makepkg"]
 
 - import_tasks:
     file: paru.yml
@@ -58,6 +57,7 @@
 
 - import_tasks:
     file: packages.yml
+  tags: ["packages"]
 
 # - name: install packages
 #   aur:

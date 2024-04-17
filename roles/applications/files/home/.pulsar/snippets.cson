@@ -200,7 +200,7 @@
     """
 
 
-".source.ansible-advanced":
+".source.ansible":
   "ignore_errors":
     "prefix": "igerr"
     "body": """

@@ -10,29 +10,29 @@
     _autofs_dir: /etc/autofs
   when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
 
-- block:
-    - name: Install autofs
-      apt:
-        name: autofs
-        state: present
-      when: ansible_distribution == 'Debian'
-
-    - name: Install autofs
-      dnf:
-        name: autofs
-        state: present
-        update_cache: yes
-      when: ansible_distribution == 'Fedora'
-
-    - name: Install autofs
-      aur:
-        use: auto
-        name: autofs
-        state: present
-      become: False
-      when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
-
-  tags: ['packages']
+# - block:
+#     - name: Install autofs
+#       apt:
+#         name: autofs
+#         state: present
+#       when: ansible_distribution == 'Debian'
+#
+#     - name: Install autofs
+#       dnf:
+#         name: autofs
+#         state: present
+#         update_cache: yes
+#       when: ansible_distribution == 'Fedora'
+#
+#     - name: Install autofs
+#       aur:
+#         use: auto
+#         name: autofs
+#         state: present
+#       become: False
+#       when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+#
+#   tags: ['packages']
 
 - block:
     - name: Create mount directory folder if it doesn't already exist

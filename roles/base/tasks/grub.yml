@@ -29,4 +29,4 @@
         'Archlinux': 'grub-mkconfig -o /boot/grub/grub.cfg'
       } %}
 
-      {{ grub_command_map.get(distribution, '# Unsupported distribution') }}
+      {{ grub_command_map.get(ansible_distribution, '# Unsupported distribution') }}

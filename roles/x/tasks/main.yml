@@ -75,9 +75,9 @@
   when: ansible_distribution != 'EndeavourOS'
   tags: ['mkinitcpio']
 
-- import_tasks:
-    file: sxhkd.yml
-  tags: ['sxhkd', 'keybindings']
+# - import_tasks:
+#     file: sxhkd.yml
+#   tags: ['sxhkd', 'keybindings']
 
 - import_tasks:
     file: xdg.yml

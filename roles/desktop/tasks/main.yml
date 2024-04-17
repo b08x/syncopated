@@ -89,10 +89,6 @@
     backup: False
   tags: ['redshift']
 
-- import_tasks:
-    file: barrier.yml
-  tags: ['barrier']
-
 - name: Install Thunar actions
   copy:
     src: "home/.config/Thunar/{{ item }}"

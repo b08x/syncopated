@@ -1,23 +1,23 @@
 ---
 
-- name: Check repository version
-  shell: "paru -Si code | grep -w 'extra/code' | awk '{print $2}' | sed 's/-1$//' | xargs"
-  register: desired_version
-  changed_when: false
-
-- name: Get installed application version
-  shell: "code --version | head -1 |awk '{print $1}'"
-  register: current_version
-  changed_when: false
+# - name: Check repository version
+#   shell: "paru -Si code | grep -w 'extra/code' | awk '{print $2}' | sed 's/-1$//' | xargs"
+#   register: desired_version
+#   changed_when: false
+#
+# - name: Get installed application version
+#   shell: "code --version | head -1 |awk '{print $1}'"
+#   register: current_version
+#   changed_when: false
 
 - block:
-    - name: Install vscode
-      aur:
-        use: auto
-        name: code
-        state: present
-      register: vscode_install
-      tags: ['packages']
+    # - name: Install vscode
+    #   aur:
+    #     use: auto
+    #     name: code
+    #     state: present
+    #   register: vscode_install
+    #   tags: ['packages']
 
     - name: Check currently installed extensions
       shell: code --list-extensions
@@ -33,9 +33,7 @@
       shell: "code --install-extension {{ item }}"
       with_items:
         - "{{ _extensions }}"
-      when:
-        - vscode_install.changed
-        - _extensions | length > 0
+      when: _extensions | length > 0
 
   rescue:
     - name: Handle installation failure

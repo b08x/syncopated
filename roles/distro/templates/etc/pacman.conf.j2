@@ -19,7 +19,7 @@ Architecture = auto
 {% endif %}
 # Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
 {% if IgnorePkg is defined %}
-IgnorePkg = pacman {{ IgnorePkg }}
+IgnorePkg = {{ IgnorePkg }}
 {% else %}
 #IgnorePkg =
 {% endif %}
@@ -42,7 +42,7 @@ LocalFileSigLevel = Optional
 {% if repos.syncopated is defined %}
 {% if architecture == 'x86-64-v3' %}
 [syncopated-v3]
-SigLevel = Optional TrustAll
+SigLevel = Never
 {% for mirror in repos.syncopated.mirrors %}
 Server = {{ mirror }}/x86_64_v3
 {% endfor %}
@@ -54,7 +54,7 @@ Server = {{ mirror }}/x86_64_v3
 {% endif %}
 
 [syncopated]
-SigLevel = Optional TrustAll
+SigLevel = Never
 {% for mirror in repos.syncopated.mirrors %}
 Server = {{ mirror }}/$arch
 {% endfor %}
@@ -92,7 +92,7 @@ Server = https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
 Server = https://github.com/ArchLabs/$repo/raw/master/$arch
 Server = https://sourceforge.net/projects/archlabs-repo/files/$repo/$arch
 
-{% if repos.chaotic is defined %}
+{% if chaoticrepo is defined %}
 [chaotic-aur]
 Include = /etc/pacman.d/chaotic-mirrorlist
 {% endif %}

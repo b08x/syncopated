@@ -50,4 +50,4 @@ repos:
   syncopated:
     mirrors:
       - "http://bender.syncopated.net/syncopated/repo"
-      - "http://syncopated.hopto.org/syncopated/repo"
+      # - "http://syncopated.hopto.org/syncopated/repo"

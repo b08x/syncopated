@@ -27,9 +27,12 @@ cpupower:
 audio: "jack"
 
 barrier:
+  client:
+    name: soundbot
+    server: "[tinybot]:24800"
   server:
     name: soundbot
-    address: "[soundbot]:24800"
+    address: "[soundbot]:24801"
     config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
 
 x:
@@ -39,6 +42,8 @@ x:
 i3:
   autostart:
     - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+    - "/usr/bin/barriers -f --no-tray --debug INFO --name soundbot --disable-crypto --disable-client-cert-checking -c /home/b08x/.config/Debauchee/soundbot.conf --address :24801"
+    - "/usr/bin/barrierc -f --no-tray --debug INFO --name soundbot --disable-crypto [tinybot]:24800"
   tray_output: "primary"
   assignments: "default"
   workspaces:

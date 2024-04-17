@@ -5,8 +5,8 @@ expected_value: "basedir_varsTheme"
 
 gtk:
   theme:
-    name: Mojave-Dark
-    icons: McMojave-circle-red-dark
+    name: oomox-soundbot
+    icons: oomox-soundbot
     cursor: ArchLabs-Dark
 kvantum: KvGnomeDark
 qtstyle: Fusion

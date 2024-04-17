@@ -27,21 +27,21 @@
     - system.pa
 
 - block:
-    - block:
-        - name: Install bluetooth packages
-          aur:
-            use: auto
-            name: "{{ item }}"
-            state: present
-          with_items:
-            - bluetooth-autoconnect
-            - bluez
-            - bluez-utils
-            - pulseaudio-bluetooth
-          become: False
-          when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
-
-      tags: ["packages"]
+    # - block:
+    #     - name: Install bluetooth packages
+    #       aur:
+    #         use: auto
+    #         name: "{{ item }}"
+    #         state: present
+    #       with_items:
+    #         - bluetooth-autoconnect
+    #         - bluez
+    #         - bluez-utils
+    #         - pulseaudio-bluetooth
+    #       become: False
+    #       when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+    #
+    #   tags: ["packages"]
 
     - name: Ensure default.pa.d exists
       file:

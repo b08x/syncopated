@@ -8,7 +8,7 @@
 
 - name: Update pacman mirrors
   shell: |
-    reflector --download-timeout 5 --protocol https \
-    --latest 20 --sort rate --score 10 --fastest 8 \
+    reflector --download-timeout 2 --protocol https \
+    --latest 20 --sort rate --score 15 --fastest 12 \
     --save /etc/pacman.d/mirrorlist
   ignore_errors: True

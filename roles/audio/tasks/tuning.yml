@@ -21,6 +21,7 @@
     dest: "/etc/security/limits.d/99-realtime.conf"
     mode: '0644'
     backup: True
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # It is safe to have this file even if
 # your hardware contains neither device
@@ -42,15 +43,6 @@
   tags: ['sysctl']
 
 - block:
-    - name: Install Tuned
-      aur:
-        use: paru
-        name: tuned
-        state: present
-        extra_args: "--overwrite '*'"
-      become: False
-      tags: ['packages']
-
     - name: Enable tuned service
       systemd:
         name: tuned
@@ -89,14 +81,6 @@
 
 
 - block:
-    - name: Install rtirq & rtkit
-      aur:
-        use: auto
-        name: "rtkit,rtirq"
-        state: present
-      become: False
-      tags: ['packages']
-
     - name: Set rtirq defaults
       copy:
         src: etc/sysconfig/rtirq
@@ -131,15 +115,6 @@
     - "enable rtkit service"
 
 - block:
-
-    - name: Install cpupower
-      aur:
-        use: auto
-        name: cpupower
-        state: present
-      become: False
-      tags: ['packages']
-
     - name: Set cpucpower defaults
       template:
         src: etc/default/cpupower.j2

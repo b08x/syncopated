@@ -11,7 +11,7 @@ GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3'
 # GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0 i915.enable_dc=0"
 GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0"
 {% else %}
-GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M quiet net.ifnames=0 biosdevname=0"
+GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0"
 {% endif %}
 
 
@@ -60,7 +60,7 @@ GRUB_BACKGROUND='/usr/share/backgrounds/syncopated/str_01_05a.png'
 
 # Uncomment to make GRUB remember the last selection. This requires
 # setting 'GRUB_DEFAULT=saved' above.
-#GRUB_SAVEDEFAULT=true
+GRUB_SAVEDEFAULT=true
 
 # Uncomment to disable submenus in boot menu
 GRUB_DISABLE_SUBMENU='false'

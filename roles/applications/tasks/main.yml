@@ -18,18 +18,17 @@
 
 - import_tasks:
     file: dev/pulsar.yml
-  when: pulsar is defined
+  when: install_pulsar is defined
   tags: ['pulsar']
 
 - import_tasks:
     file: dev/vscode.yml
-  when: vscode is defined
+  when: install_vscode is defined
   tags: ['vscode']
-
 
 - import_tasks:
     file: media/deadbeef.yml
-  when: deadbeef is defined
+  when: install_deadbeef is defined
   tags: ['media', 'deadbeef']
 
 - import_tasks:

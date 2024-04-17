@@ -28,8 +28,8 @@
         intranetLLM:
           #   url: "http://ninjabot.syncopated.net"
           # - name: Agenta
-          - name: Agnai
-            url: "http://ninjabot.syncopated.net:3001"
+          - name: Dify
+            url: "http://ninjabot.syncopated.net/apps"
           - name: Anything-LLM
             url: "http://ninjabot.syncopated.net:3008"
           - name: Big-AGI

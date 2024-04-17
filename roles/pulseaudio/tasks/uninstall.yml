@@ -15,10 +15,10 @@
       failed_when: "not 'Could not find the requested service' in servicestat.msg and servicestat.rc != 0"
       ignore_errors: "{{ ansible_check_mode }}"
 
-    - name: Uninstall pulseaudio packages
-      aur:
-        use: paru
-        name: "{{ packages.pulseaudio }}"
-        state: absent
+    # - name: Uninstall pulseaudio packages
+    #   aur:
+    #     use: paru
+    #     name: "{{ packages.pulseaudio }}"
+    #     state: absent
 
   become: False

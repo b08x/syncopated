@@ -1,22 +1,22 @@
 ---
 
-- name: Check repository version
-  shell: "paru -Si pulsar-bin | grep Version | awk '{print $3}' | sed 's/-1$//' | xargs"
-  register: desired_version
-  changed_when: false
-
-- name: Get installed application version
-  shell: "pulsar -v | head -1 | awk -F ':' '{ print $2 }' | xargs"
-  register: current_version
-  changed_when: false
+# - name: Check repository version
+#   shell: "paru -Si pulsar-bin | grep Version | awk '{print $3}' | sed 's/-1$//' | xargs"
+#   register: desired_version
+#   changed_when: false
+#
+# - name: Get installed application version
+#   shell: "pulsar -v | head -1 | awk -F ':' '{ print $2 }' | xargs"
+#   register: current_version
+#   changed_when: false
 
 - block:
-    - name: Install pulsar
-      aur:
-        use: auto
-        name: pulsar-bin
-        state: present
-      register: install_pulsar
+    # - name: Install pulsar
+    #   aur:
+    #     use: auto
+    #     name: pulsar-bin
+    #     state: present
+    #   register: install_pulsar
 
     - name: Check currently installed extensions
       shell: "pulsar -p ls |awk -F ' ' '{print $2}'|awk -F '@' '{print $1}'"
@@ -32,9 +32,7 @@
       shell: pulsar -p install {{ item }}
       with_items:
         - "{{ _packages }}"
-      when:
-        - install_pulsar.changed
-        - _packages | length > 0
+      when: _packages | length > 0
 
     - name: Install config, snippets and styles
       copy:

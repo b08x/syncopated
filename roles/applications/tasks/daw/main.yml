@@ -1,70 +1,69 @@
 ---
 
-
-- block:
-    - name: Install ambisonics packages
-      aur:
-        use: paru
-        name: "{{ packages.ambisonics }}"
-        state: present
-
-    - name: Install analysis packages
-      aur:
-        use: paru
-        name: "{{ packages.analysis }}"
-        state: present
-
-    - name: Install editors packages
-      aur:
-        use: paru
-        name: "{{ packages.editors }}"
-        state: present
-
-    - name: Install loopers packages
-      aur:
-        use: paru
-        name: "{{ packages.loopers }}"
-        state: present
-
-    - name: Install midi packages
-      aur:
-        use: paru
-        name: "{{ packages.midi }}"
-        state: present
-
-    - name: Install plugins packages
-      aur:
-        use: paru
-        name: "{{ packages.plugins }}"
-        state: present
-
-    - name: Install samplers packages
-      aur:
-        use: paru
-        name: "{{ packages.samplers }}"
-        state: present
-
-    - name: Install sequencers packages
-      aur:
-        use: paru
-        name: "{{ packages.sequencers }}"
-        state: present
-
-    - name: Install synths packages
-      aur:
-        use: paru
-        name: "{{ packages.synths }}"
-        state: present
-
-    - name: Install tools packages
-      aur:
-        use: paru
-        name: "{{ packages.tools }}"
-        state: present
-
-
-  become: False
-  tags: ['packages']
+# - block:
+#     - name: Install ambisonics packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.ambisonics }}"
+#         state: present
+#
+#     - name: Install analysis packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.analysis }}"
+#         state: present
+#
+#     - name: Install editors packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.editors }}"
+#         state: present
+#
+#     - name: Install loopers packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.loopers }}"
+#         state: present
+#
+#     - name: Install midi packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.midi }}"
+#         state: present
+#
+#     - name: Install plugins packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.plugins }}"
+#         state: present
+#
+#     - name: Install samplers packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.samplers }}"
+#         state: present
+#
+#     - name: Install sequencers packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.sequencers }}"
+#         state: present
+#
+#     - name: Install synths packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.synths }}"
+#         state: present
+#
+#     - name: Install tools packages
+#       aur:
+#         use: paru
+#         name: "{{ packages.tools }}"
+#         state: present
+#
+#
+#   become: False
+#   tags: ['packages']
 
 
 - import_tasks:

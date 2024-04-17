@@ -20,22 +20,22 @@
     backup: yes
   when: barrier.server is defined
 
-- name: Set barrier server autostart
-  template:
-    src: "home/.config/autostart/barrier-server.desktop.j2"
-    dest: "{{ user.home }}/.config/autostart/barrier-server.desktop"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-    backup: True
-  when: barrier.server is defined
-
-- name: Set barrier client autostart
-  template:
-    src: "home/.config/autostart/barrier-client.desktop.j2"
-    dest: "{{ user.home }}/.config/autostart/barrier-client.desktop"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-    backup: True
-  when: barrier.client is defined
+# - name: Set barrier server autostart
+#   template:
+#     src: "home/.config/autostart/barrier-server.desktop.j2"
+#     dest: "{{ user.home }}/.config/autostart/barrier-server.desktop"
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+#     mode: '0644'
+#     backup: True
+#   when: barrier.server is defined
+#
+# - name: Set barrier client autostart
+#   template:
+#     src: "home/.config/autostart/barrier-client.desktop.j2"
+#     dest: "{{ user.home }}/.config/autostart/barrier-client.desktop"
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+#     mode: '0644'
+#     backup: True
+#   when: barrier.client is defined

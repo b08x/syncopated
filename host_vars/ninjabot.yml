@@ -6,6 +6,7 @@ share:
     exports:
       - Videos
 
+chaoticrepo: True
 # TODO: test whether or not this variable will overwrite the defaults with nothing..
 # docker:
   # service: 'enabled'
@@ -18,17 +19,21 @@ dm: False
 browser: "google-chrome-stable"
 audio: "jack"
 
-barrier:
-  client:
-    name: ninjabot
-    server: '[soundbot]:24800'
-
+# barrier:
+#   client:
+#     name: ninjabot
+#     server: '[tinybot]:24800'
+#   client:
+#     name: ninjabot
+#     server: '[soundbot]:24801'
 x:
   autostart:
     - bash ~/.screenlayout/ninjabot.sh
 
 i3:
-  autostart: 'default'
+  autostart:
+    - /usr/bin/barrierc -f --debug INFO --name ninjabot --disable-crypto [tinybot]:24800
+    - /usr/bin/barrierc -f --no-tray --debug INFO --name ninjabot --disable-crypto [soundbot]:24801
   tray_output: 'primary'
   assignments: 'default'
   workspaces: 'default'

@@ -1,10 +1,7 @@
 ---
-- hosts: all
-  tags: ["workstation"]
+- hosts: desktop
   become: True
-  gather_subset:
-    - hardware
-    - network
+  gather_facts: yes
   vars_files:
     - ../vars/theme.yml
   vars:
@@ -30,6 +27,16 @@
       check_mode: no
       tags: ["always"]
 
+    - setup:
+    - debug:
+        msg: System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}
+      tags: ['always']
+
+    - setup:
+    - debug:
+        msg: System {{ inventory_hostname }} has distro {{ ansible_distribution }}
+      tags: ['always']
+
     # - name: show expected_value
     #   debug:
     #     var: distribution
@@ -40,16 +47,20 @@
         suffix: "{{ timestamp.stdout_lines[0] }}"
       tags: ["always"]
 
+    # - name: Set expected_value
+    #   set_fact:
+    #     ansible_distribution: "EndeavourOS"
+    #   when: inventory_hostname == 'soundbot'
+    #   tags: ["always", "testing"]
     - name: Set expected_value
       set_fact:
-        ansible_distribution: "EndeavourOS"
-      # when: inventory_hostname == 'soundbot'
+        ansible_distribution: "{{ distro }}"
+      when: distro is defined
       tags: ["always", "testing"]
-
-    - name: show expected_value
-      debug:
-        var: ansible_facts
-      tags: ["always"]
+    # - name: show expected_value
+    #   debug:
+    #     var: ansible_facts
+    #   tags: ["always"]
 
     - name: show expected_value
       debug:
@@ -203,11 +214,13 @@
     - role: desktop
       tags: ["desktop"]
 
+    - role: theme
+      tags: ["theme"]
+
     - role: applications
       tags: ["applications"]
 
-    - role: theme
-      tags: ["theme"]
+
 
   # tasks:
   #
