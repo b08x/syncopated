@@ -18,9 +18,6 @@ root_directory_definitions:
   - dest: /etc/pulse/default.pa.d
   - dest: /etc/systemd/timesyncd.conf.d
   - dest: /etc/xdg
+  - dest: /etc/mediamtx
 
 expected_value: "role_base_defaults"
-
-repos:
-  chaotic: False
-  syncopated: False

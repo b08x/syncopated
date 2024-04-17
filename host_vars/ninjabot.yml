@@ -1,70 +1,42 @@
 ---
 
-autologin: True
-
-bluetooth: False
-
 share:
   nfs:
     parent: "{{ user.home }}"
     exports:
       - Videos
 
-repos:
-  chaotic: False
-  syncopated: True
+chaoticrepo: True
+# TODO: test whether or not this variable will overwrite the defaults with nothing..
+# docker:
+  # service: 'enabled'
+  # storage: /var/lib/docker
+  # nvidia: True
 
-app:
-  install:
-    reaper: True
-    pulsar: False
-    vscode: False
-    vamp: True
-    mixxx: True
-    annotator: True
-    soniclineup: True
-    touchosc: True
-    tony: True
+nvidia:
 
-docker:
-  service: 'enabled'
-  storage: /var/lib/docker
-  nvidia: True
+dm: False
+browser: "google-chrome-stable"
+audio: "jack"
 
-tuned:
-  profile: powersave
-
-desktop:
-  dm: False
-  wm: i3
-  terminal: "kitty"
-  terminal_alt: "alacritty"
-  browser: "google-chrome-stable"
-  audio: "jack"
-  barrier:
-    client:
-      name: ninjabot
-      server: '[soundbot]:24800'
-
+# barrier:
+#   client:
+#     name: ninjabot
+#     server: '[tinybot]:24800'
+#   client:
+#     name: ninjabot
+#     server: '[soundbot]:24801'
 x:
   autostart:
     - bash ~/.screenlayout/ninjabot.sh
 
 i3:
-  autostart: 'default'
-  tray_output: 'DVI-D-0'
+  autostart:
+    - /usr/bin/barrierc -f --debug INFO --name ninjabot --disable-crypto [tinybot]:24800
+    - /usr/bin/barrierc -f --no-tray --debug INFO --name ninjabot --disable-crypto [soundbot]:24801
+  tray_output: 'primary'
   assignments: 'default'
-  workspaces:
-    - "$ws1 output DVI-I-1"
-    - "$ws2 output DVI-I-1"
-    - "$ws3 output DVI-I-1"
-    - "$ws4 output DVI-D-0"
-    - "$ws5 output DVI-D-0"
-    - "$ws6 output DVI-D-0"
-    - "$ws7 output DVI-D-0"
-    - "$ws8 output DVI-D-0"
-    - "$ws9 output DVI-D-0"
-    - "$ws10 output DVI-D-0"
+  workspaces: 'default'
   keybindings: 'default'
 
 # network_interfaces:
@@ -91,11 +63,6 @@ i3:
 #     autoconnect: True
 #     state: present
 #     method4: manual
-
-video:
-  nvidia: True
-  intel: True
-  ati: False
 
 host:
   kernel:

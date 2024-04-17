@@ -5,9 +5,6 @@
   debug:
     msg: "Starting pipewire tasks"
 
-- name: Show desktop variables
-  debug:
-    msg: "{{ desktop }}"
 
 - block:
     - name: Stop pipewire service
@@ -58,4 +55,4 @@
 
   when:
     - initialInstall|default(false)|bool == True
-    - desktop.audio == 'jack'
+    - audio == 'jack'

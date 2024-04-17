@@ -4,22 +4,6 @@
   debug:
     msg: "Starting jack tasks"
 
-- name: Remove jack1
-  pacman:
-    name: jack
-    state: absent
-    force: yes
-    extra_args: --noconfirm
-  ignore_errors: True
-  tags: ['packages']
-
-- name: Install jack packages
-  aur:
-    use: paru
-    name: "{{ packages.jack }}"
-    state: present
-  become: False
-  tags: ['packages']
 
 - name: Create environment file for jack_control.service
   copy:

@@ -6,22 +6,23 @@
   register: result
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: Install deadbeef
-  aur:
-    use: auto
-    name: deadbeef-git
-    state: present
-  become: False
-  when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
-  tags: ['packages']
-
-- name: Install deadbeef
-  dnf:
-    name: deadbeef-static
-    state: present
-    update_cache: yes
-  when: distribution == 'Fedora'
-  tags: ['packages']
+# - block:
+#     - name: Install deadbeef
+#       aur:
+#         use: auto
+#         name: deadbeef-git
+#         state: present
+#       become: False
+#       when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+#
+#     - name: Install deadbeef
+#       dnf:
+#         name: deadbeef-static
+#         state: present
+#         update_cache: yes
+#       when: ansible_distribution == 'Fedora'
+#
+#   tags: ['packages']
 
 - name: Create deadbeef config and plugin folders
   file:

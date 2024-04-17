@@ -5,28 +5,6 @@
   debug:
     msg: "Starting theme tasks!"
 
-- block:
-    - name: Group packages to install
-      set_fact:
-        packagesTheme: "{{ packages.icons + packages.cursors + packages.gtk3 + packages.qt5 + packages.qt6 + packages.kvantum + packages.fonts }}"
-
-    - name: Install theme group packages
-      aur:
-        use: paru
-        name: "{{ packagesTheme | flatten(1) }}"
-        state: present
-      become: False
-
-    - name: Install syncopated-theme
-      aur:
-        use: paru
-        name: syncopated-theme
-        state: present
-        extra_args: "--overwrite '*'"
-      become: False
-
-  tags: ['packages']
-
 - name: Ensure theme directories exist
   file:
     dest: "{{ theme_directory_default_location }}/{{ item.dest }}"

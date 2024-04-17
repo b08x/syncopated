@@ -24,14 +24,14 @@
 #   debug:
 #     msg: "{{ servicestat.results[0] }}"
 
-- name: UnInstall pipewire packages
-  shell: "{{ package_uninstall_command }} {{ pipewire.packages|join(' ') }}"
-  become: False
-  register: uninstall
-  changed_when: uninstall.rc == 0
-  failed_when: "'error: failed to prepare transaction' in uninstall.stderr and uninstall.rc != 0"
-
-- name: Install pipewire and wireplumber libs
-  shell: "{{ package_install_command }} libpipewire libwireplumber"
-  become: False
-  ignore_errors: "{{ ansible_check_mode }}"
+# - name: UnInstall pipewire packages
+#   shell: "{{ package_uninstall_command }} {{ pipewire.packages|join(' ') }}"
+#   become: False
+#   register: uninstall
+#   changed_when: uninstall.rc == 0
+#   failed_when: "'error: failed to prepare transaction' in uninstall.stderr and uninstall.rc != 0"
+#
+# - name: Install pipewire and wireplumber libs
+#   shell: "{{ package_install_command }} libpipewire libwireplumber"
+#   become: False
+#   ignore_errors: "{{ ansible_check_mode }}"

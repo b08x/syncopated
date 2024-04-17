@@ -57,3 +57,10 @@ i3_directory_definitions:
   # - dest: ".config/rofi/powermenu/type-5/shared"
   # - dest: ".config/rofi/powermenu/type-6/shared"
   # - dest: ".config/rofi/scripts"
+
+i3:
+  autostart: 'default'
+  assignments: 'default'
+  workspaces: 'default'
+  keybindings: 'default'
+  tray_output: 'primary'

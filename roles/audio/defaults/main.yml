@@ -24,9 +24,3 @@ cpupower:
 
 tuned:
   profile: powersave
-
-jacktrip:
-  server:
-    args: ""
-  client:
-    args: ""

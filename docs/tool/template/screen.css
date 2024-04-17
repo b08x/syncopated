@@ -6,10 +6,10 @@
 }
 
 .light {
-    --bg: hsl(0, 0%, 100%);
-    --fg: #333333;
+    --bg: #091a28;
+    --fg: #519196;
 
-    --sidebar-bg: #fafafa;
+    --sidebar-bg: #091a28;
     --sidebar-fg: #364149;
     --sidebar-non-existant: #aaaaaa;
     --sidebar-active: #008cff;

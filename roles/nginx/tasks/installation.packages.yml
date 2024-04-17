@@ -1,7 +1,7 @@
 ---
 - name: Install the selinux python module
   yum: name=python3-libselinux state=present
-  when: distribution == "RedHat"
+  when: ansible_distribution == "RedHat"
   tags: [packages,nginx]
 
 # this really isn't needed here as we install epel using the common role
@@ -36,5 +36,5 @@
 - name: Install the nginx packages for a rhel based distro that isn't Redhat or Centos
   yum: name={{ item }} state=present
   with_items: "{{ nginx_redhat_pkg }}"
-  when: distribution == "RedHat" and not nginx_is_el|bool
+  when: ansible_distribution == "RedHat" and not nginx_is_el|bool
   tags: [packages,nginx]

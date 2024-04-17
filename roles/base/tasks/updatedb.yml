@@ -1,11 +1,5 @@
 ---
 
-- name: Install mlocate
-  package:
-    name: mlocate
-    state: present
-  tags: ['packages']
-
 - name: Set directories to not be indexed
   template:
     src: etc/updatedb.conf.j2

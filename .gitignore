@@ -14,3 +14,4 @@ docs/example/playbooks/vars/Archlinux-i3.yml
 galaxy_cache/
 galaxy_token
 docs/build/
+hostvars.json

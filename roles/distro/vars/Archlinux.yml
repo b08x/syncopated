@@ -1,6 +1,570 @@
-
 ---
+admin_group: wheel
 
 repos:
-  chaotic: False
-  syncopated: False
+  syncopated:
+    mirrors:
+      - "http://bender.syncopated.net/syncopated/repo"
+      #      - "http://syncopated.hopto.org/syncopated/repo"
+
+IgnorePkg: "ncurses lib32-ncurses gitui"
+
+# alsa: audio role
+# ambisonics: audio role
+# analysis: audio role
+# audio: audio role
+# browser: desktop role
+# codecs: audio role
+# cursors: desktop role
+# desktop: desktop role
+# development: desktop role
+# docs: desktop role
+# fonts: desktop role
+# gtk3: desktop role
+# i3: desktop role
+# icons: desktop role
+# jack: audio role
+# kvantum: desktop role
+# loopers: audio role
+# media: desktop role
+# midi: audio role
+# pipewire: audio role
+# plugins: audio role
+# pulseaudio: audio role
+# python: desktop role
+# qt5: desktop role
+# qt6: desktop role
+# ruby: ruby role
+# samplers: audio role
+# sequencers: audio role
+# sway: desktop role
+# synths: audio role
+# terminal: terminal role
+# themes: desktop role
+# tools: audio role
+# utility: desktop role
+# xorg: x role
+
+packages:
+    # - Catch2
+    # - ambix-o3
+    # - ambix-o5
+    # - antimicrox
+    # - cpod-appimage
+    # - crossguid
+    # - drumrox
+    # - ffmpeg4.4
+    # - flashfocus
+    # - ingen-git
+    # - input-remapper-git
+    # - kissfft
+    # - kvantum-qt5
+    # - kvantum-theme-nordic-git
+    # - linuxsampler-svn
+    # - lnav-git
+    # - mako
+    # - mcfx-o1
+    # - mcfx-o3
+    # - mcfx-o5
+    # - network-manager-applet
+    # - numix-circle-icon-theme-git
+    # - numix-icon-theme-git
+    # - nwg-wrapper
+    # - obs-rtspserver
+    # - pgmodeler
+    # - pipewire
+    # - pipewire-alsa
+    # - pipewire-audio
+    # - pipewire-jack
+    # - pipewire-pulse
+    # - platformfolders
+    # - playerctl
+    # - poweralertd
+    # - raul
+    # - sonic-visualiser-git
+    # - sononym
+    # - swappy
+    # - sway
+    # - swaybg
+    # - swaycwd
+    # - swayr
+    # - sworkstyle
+    # - syncopated-theme
+    # - vital-synth-git
+    # - vst2sdk
+    # - waybar
+    # - wf-recorder
+    # - wireplumber
+    # - wkhtmltopdf-static
+    # - wlsunset
+    # - wofi
+    # - xf86-video-intel
+    - a2jmidid
+    - adobe-source-han-sans-cn-fonts
+    - adobe-source-han-sans-jp-fonts
+    - adobe-source-han-sans-kr-fonts
+    - alsa-card-profiles
+    - alsa-firmware
+    - alsa-lib
+    - alsa-plugins
+    - alsa-tools
+    - alsa-topology-conf
+    - alsa-ucm-conf
+    - alsa-utils
+    - ambdec
+    # - ambix-o1
+    - arandr
+    - arc-icon-theme
+    - archlinux-xdg-menu
+    - aria2
+    - ascii-image-converter
+    # - asciiquarium-transparent-git
+    - aspell-en
+    - atool
+    - aubio
+    - audacity
+    - audiofile
+    - autorandr
+    # - autotiling-rs
+    - await
+    - awesome-terminal-fonts
+    - barrier
+    - bash-completion
+    - bash-language-server
+    - bat
+    - baudline-bin
+    - beautysh
+    # - bipscript
+    # - bipscript-ide
+    - bitwig-studio
+    - bottom
+    - breeze-gtk
+    - broot
+    - btop
+    # - calcurse
+    - calf
+    - calibre
+    - cantarell-fonts
+    - caps-lv2-git
+    - carla
+    - cbonsai
+    - choose
+    - chromaprint
+    - cmake
+    - code-marketplace
+    - darktable
+    - dconf
+    - devdocs-desktop
+    - dex
+    - distrho-ports
+    - distrho-ports-lv2
+    - distrho-ports-vst
+    - distrho-ports-vst3
+    - djvulibre
+    - doggo
+    - dragonfly-reverb
+    - dragonfly-reverb-clap
+    - dragonfly-reverb-lv2
+    - dragonfly-reverb-standalone
+    - dragonfly-reverb-vst
+    - dragonfly-reverb-vst3
+    - duf
+    - dunst
+    - dust
+    - ecasound
+    - elinks
+    - epson-inkjet-printer-escpr2
+    - faac
+    - faad2
+    - fd
+    - feh
+    - ffmpegthumbnailer
+    - fftw
+    - figlet
+    - firewalld
+    - flac
+    - fluidsynth
+    - fmit
+    - fontforge
+    - fsarchiver
+    - fuse3
+    - fuse-common
+    - gconf
+    - gedit
+    - gedit-dark-variant
+    - gedit-markdownpreview-git
+    - gedit-plugins
+    - gedit-smart-home
+    - geoclue
+    - geonkick
+    - geonkick-common
+    - geonkick-lv2
+    - geonkick-standalone
+    - gimp
+    - git
+    - git-delta
+    - git-lfs
+    - gitflow-avh
+    - gitflow-zshcompletion-avh
+    - github-cli
+    - gitui
+    - gksu
+    - gnome-common
+    - gnome-keyring
+    - gnu-free-fonts
+    - gnuplot
+    - google-chrome
+    - gource
+    - gpick
+    - gping
+    - graphicsmagick
+    - grsync
+    - gst-libav
+    - gst-plugin-pipewire
+    - gst-plugins-bad
+    - gst-plugins-bad-libs
+    - gst-plugins-base
+    - gst-plugins-base-libs
+    - gst-plugins-good
+    - gstreamer
+    - gtk3-nocsd
+    - gtk-doc
+    - gtk-engine-murrine
+    - gtk-engines
+    - gtk-update-icon-cache
+    - gtksourceview3
+    - gtksourceview4
+    - gtkspell3
+    - guake
+    - gum
+    - gummi
+    - gvfs-smb
+    - helm-synth
+    - helm-synth-common
+    - helm-synth-lv2
+    - helm-synth-standalone
+    - helm-synth-vst
+    - hexchat
+    - highlight
+    - hspell
+    - html2md
+    - htop
+    - hydrogen-git
+    - i3-wm
+    - i3status-rust
+    - iempluginsuite
+    - imagemagick
+    - imv
+    - inetutils
+    - intersect.lv2-git
+    - inxi
+    - iotop
+    - jaaa
+    - jack2
+    - jack2-dbus
+    - jack-example-tools
+    - jack-keyboard
+    - jack_capture
+    - jack_link
+    - jack_mixer
+    - jack_snapshot
+    - jack_utils
+    - jacktrip
+    - jalv
+    - jalv-select-git
+    - japa
+    - jc
+    - jconvolver
+    - jnoisemeter
+    - jq
+    - jupyter-nbconvert
+    - keepassxc
+    - kitty
+    - kitty-shell-integration
+    - kitty-terminfo
+    - kvantum
+    - kvantum-theme-matcha
+    - ladspa
+    - lame
+    - libaudec
+    - libcaca
+    - libcyaml
+    - libgit2
+    - libpipewire
+    - libvips
+    - libvoikko
+    - libwireplumber
+    - links
+    - linuxsampler
+    - lnav
+    - lsp-dsp-lib
+    - lsparu
+    - lv2-c++-tools
+    - lynx
+    - maim
+    - matcha-gtk-theme
+    - mediainfo
+    - mediamtx
+    - meld
+    - metagedit-git
+    - micro
+    - midieditor
+    - mixxx
+    - mojave-gtk-theme
+    - most
+    - mpv
+    - mpv-plugin-excerpt-git
+    - mtr
+    - mupdf-tools
+    - nano-syntax-highlighting
+    - ncdu
+    - neofetch
+    - neovim
+    - neovim-symlinks
+    - net-tools
+    - network-manager-applet
+    - nitrogen-git
+    - njconnect
+    - nodejs
+    - noise-repellent
+    - non-mixer-lv2-git
+    - non-sequencer
+    - noto-color-emoji-fontconfig
+    - noto-fonts
+    - noto-fonts-cjk
+    - noto-fonts-emoji
+    - npm
+    - numlockx
+    - nuspell
+    - nvtop
+    - nyan-lang-git
+    - obs-studio
+    - obsidian
+    - ocenaudio-bin
+    - octopi
+    - odt2txt
+    - open-chinese-fonts
+    - opendesktop-fonts
+    - openscad
+    - openslide
+    - openssl
+    - opus
+    - opus-tools
+    - opusfile
+    - pamixer
+    - pandoc-cli
+    - paruz
+    - patat-bin
+    - patchage
+    - pavucontrol
+    - pdf2htmlex-appimage
+    - pdfjs
+    - perl-anyevent-i3
+    - perl-image-exiftool
+    # - pgvector
+    - picom
+    - pod2man
+    - polybar
+    - polyphone
+    - poppler
+    - postgresql-libs
+    - pulseaudio-alsa
+    - pulseaudio-jack
+    - pulsemixer
+    - python-adblock
+    - python-chardet
+    - python-conda-package-handling
+    - python-pagelabels
+    - python-pillow
+    - python-pygments
+    - python-pympler
+    - python-setuptools
+    - python-sphinx-intl
+    - python-sphinxcontrib-svg2pdfconverter
+    - qmidinet
+    - qpdf
+    - qpdfview
+    - qsampler
+    - qscintilla-qt5
+    - qt5-base
+    - qt5-declarative
+    - qt5-graphicaleffects
+    - qt5-location
+    - qt5-quickcontrols2
+    - qt5-tools
+    - qt5-x11extras
+    - qt5ct
+    - qt6-base
+    - qt6-declarative
+    - qt6-multimedia
+    - qt6-tools
+    - qt6ct
+    - qutebrowser
+    - radiotray-ng
+    - ranger
+    - raysession-git
+    - redshift
+    - ripgrep
+    - ripgrep-all
+    - rnnoise
+    - rofi
+    - rsync
+    - rtaudio
+    - rtmidi
+    - ruby-psych
+    - rxvt-unicode
+    - sampler
+    - sc3-plugins
+    - scala-music
+    - scala-music-scales
+    - sd
+    - seahorse
+    - sendmidi
+    - shotcut
+    - smartmontools
+    - socat
+    - sonic-pi-git
+    # - sooperlooper-git
+    - sound-gambit
+    - sox
+    - sparta-plugins
+    - speech-dispatcher
+    - sshpass
+    - stunnel
+    - sudo
+    - supercollider
+    - swh-lv2-git
+    - sxhkd
+    - sxiv
+    - sysstat
+    - taglib
+    - tap-plugins-lv2-git
+    - teiler-git
+    - termdown
+    - terminator
+    - terminology
+    - termpdf.py-git
+    - texlive-basic
+    - texlive-bin
+    - texlive-coffee-stains
+    - texlive-doc
+    - texlive-fontsextra
+    - texlive-fontsrecommended
+    - texlive-latex
+    - texlive-latexextra
+    - texlive-latexrecommended
+    - texlive-pictures
+    - texlive-xetex
+    - thunar
+    - thunar-archive-plugin
+    - thunar-volman
+    - tilda
+    - timeshift
+    - tldr
+    - tonespace
+    - transmission-cli
+    - tree
+    - ttf-bitstream-vera
+    - ttf-dejavu
+    - ttf-devicons
+    - ttf-firacode-nerd
+    - ttf-font-awesome
+    - ttf-input
+    - ttf-jetbrains-mono
+    - ttf-liberation
+    - ttf-meslo-nerd
+    - ttf-opensans
+    - ttf-tw
+    - ttf-ubuntu-font-family
+    - tuned
+    - ueberzug
+    - unrar
+    - unzip
+    - v4l-utils
+    - vamp-plugin-sdk
+    - vidcutter
+    - vlc
+    - vmpk
+    - vorbis-tools
+    - w3m
+    - wavpack
+    - wget
+    - wmctrl
+    - wmfocus
+    - wordnet-cli
+    - wordnet-common
+    - wordnet-tk
+    - wthrr-git
+    - x42-plugins
+    - x42-plugins-lv2
+    - x42-plugins-standalone
+    - x264
+    - x265
+    - xarchiver
+    - xclip
+    - xcursor-breeze
+    - xdot
+    - xdotool
+    - xf86-input-libinput
+    - xf86-input-wacom
+    - xf86-video-fbdev
+    - xf86-video-vesa
+    - xkill-shortcut
+    - xob
+    - xorg-bdftopcf
+    - xorg-fonts-alias-75dpi
+    - xorg-fonts-alias-100dpi
+    - xorg-fonts-alias-cyrillic
+    - xorg-fonts-alias-misc
+    - xorg-fonts-misc
+    - xorg-iceauth
+    - xorg-mkfontscale
+    - xorg-server
+    - xorg-sessreg
+    - xorg-setxkbmap
+    - xorg-smproxy
+    - xorg-x11perf
+    - xorg-xauth
+    - xorg-xbacklight
+    - xorg-xcmsdb
+    - xorg-xcursorgen
+    - xorg-xdpyinfo
+    - xorg-xdriinfo
+    - xorg-xev
+    - xorg-xgamma
+    - xorg-xhost
+    - xorg-xinit
+    - xorg-xinput
+    - xorg-xkbcomp
+    - xorg-xkbevd
+    - xorg-xkbutils
+    - xorg-xkill
+    - xorg-xlsatoms
+    - xorg-xlsclients
+    - xorg-xlsfonts
+    - xorg-xmodmap
+    - xorg-xpr
+    - xorg-xprop
+    - xorg-xrandr
+    - xorg-xrdb
+    - xorg-xrefresh
+    - xorg-xset
+    - xorg-xsetroot
+    - xorg-xvinfo
+    - xorg-xwd
+    - xorg-xwininfo
+    - xorg-xwud
+    - xterm
+    - yadm
+    - yt-dlp
+    - zenity
+    - zita-ajbridge
+    - zita-alsa-pcmi
+    - zita-convolver
+    - zita-dpl1
+    - zita-lrx
+    - zita-mu1
+    - zita-resampler
+    - zita-rev1
+    - zoxide
+    - zsh

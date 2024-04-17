@@ -29,3 +29,13 @@
 
 # TODO: set interface config for .36 network cards betweeen soundbot|ninjabot
 # - include_tasks: interfaces.yml
+
+- name: Set hosts files
+  template:
+    src: etc/hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0644'
+    backup: True
+  tags: ['dns']

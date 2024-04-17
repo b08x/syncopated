@@ -6,128 +6,36 @@
 
 - name: Ensure application directories exist
   file:
-    dest: "{{ application_directory_default_location }}/{{ item.dest }}"
+    path: "{{ application_directory_default_location }}/{{ item.dest }}"
     state: directory
-    owner: "{{ item.owner | default(application_directory_default_owner) }}"
-    group: "{{ item.group | default(application_directory_default_group) }}"
-    mode: "{{ item.mode | default(application_directory_default_mode) }}"
-    recurse: "{{ item.recurse | default(application_directory_default_recurse) }}"
-  with_items: "{{ application_directory_definitions }}"
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+    recurse: "{{ item.recurse | default(false) }}"
+  loop: "{{ application_directory_definitions }}"
   check_mode: no
   tags: ['profile']
 
 - import_tasks:
-    file: ide/pulsar.yml
-  when: app.install.pulsar|default(false)|bool
+    file: dev/pulsar.yml
+  when: install_pulsar is defined
   tags: ['pulsar']
 
 - import_tasks:
-    file: ide/vscode.yml
-  when: app.install.vscode|default(false)|bool
+    file: dev/vscode.yml
+  when: install_vscode is defined
   tags: ['vscode']
-
-- block:
-    - name: Install ambisonics packages
-      aur:
-        use: paru
-        name: "{{ packages.ambisonics }}"
-        state: present
-
-    - name: Install analysis packages
-      aur:
-        use: paru
-        name: "{{ packages.analysis }}"
-        state: present
-
-    - name: Install editors packages
-      aur:
-        use: paru
-        name: "{{ packages.editors }}"
-        state: present
-
-    - name: Install loopers packages
-      aur:
-        use: paru
-        name: "{{ packages.loopers }}"
-        state: present
-
-    - name: Install midi packages
-      aur:
-        use: paru
-        name: "{{ packages.midi }}"
-        state: present
-
-    - name: Install plugins packages
-      aur:
-        use: paru
-        name: "{{ packages.plugins }}"
-        state: present
-
-    - name: Install samplers packages
-      aur:
-        use: paru
-        name: "{{ packages.samplers }}"
-        state: present
-
-    - name: Install sequencers packages
-      aur:
-        use: paru
-        name: "{{ packages.sequencers }}"
-        state: present
-
-    - name: Install synths packages
-      aur:
-        use: paru
-        name: "{{ packages.synths }}"
-        state: present
-
-    - name: Install tools packages
-      aur:
-        use: paru
-        name: "{{ packages.tools }}"
-        state: present
-
-  become: False
-  tags: ['packages']
 
 - import_tasks:
     file: media/deadbeef.yml
+  when: install_deadbeef is defined
   tags: ['media', 'deadbeef']
 
 - import_tasks:
     file: media/mixxx.yml
-  when: app.install.mixxx|bool
+  when: mixxx is defined
   tags: ['mixxx']
 
-- import_tasks:
-    file: analysis/vamp.yml
-  when: app.install.vamp|bool
-  tags: ['vamp']
-
-- import_tasks:
-    file: analysis/sonicannotator.yml
-  when: app.install.annotator|bool
-  tags: ['sonicannotator']
-
-- import_tasks:
-    file: analysis/soniclineup.yml
-  when: app.install.soniclineup|bool
-  tags: ['soniclineup']
-
-- import_tasks:
-    file: analysis/tony.yml
-  when: app.install.tony|bool
-  tags: ['tony']
-
-- import_tasks:
-    file: touchosc/main.yml
-  when: app.install.touchosc|bool
-  tags: ['touchosc']
-
-- import_tasks:
-    file: daw/reaper.yml
-  when: app.install.reaper|bool
-  tags: ['reaper']
 
 - name: Set mediamtx config
   copy:

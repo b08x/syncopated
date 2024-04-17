@@ -4,23 +4,6 @@
   debug:
     msg: "Starting xorg tasks"
 
-- block:
-    - name: Install system xorg packages
-      aur:
-        use: paru
-        name: "{{ packages.xorg }}"
-        state: present
-
-    - name: Install host specific xorg packages
-      aur:
-        use: paru
-        name: "{{ host.xorg.video }}"
-        state: present
-      when: host.xorg.video is defined
-
-  become: False
-  tags: ["packages"]
-
 - name: Set xorg.conf
   template:
     src: etc/X11/xorg.conf.j2
@@ -50,19 +33,28 @@
     mode: "0644"
     backup: yes
   with_items:
-    - .xinitrc
     - .xprofile
     - .xserverrc
     - .Xresources
   register: xconfig
+  changed_when: (xconfig.msg is defined and not 'All items completed' in xconfig.msg)
   tags: ['env', 'profile']
 
-- name: Ensure .xinitrc is executable
-  file:
-    path: "{{ user.home }}/.xinitrc"
-    mode: "0755"
-  ignore_errors: "{{ ansible_check_mode }}"
-  tags: ['env', 'profile']
+- name: Install xinitc
+  template:
+    src: home/.xinitrc.j2
+    dest: "{{ user.home }}/.xinitrc"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0755'
+    backup: True
+
+# - name: Ensure .xinitrc is executable
+#   file:
+#     path: "{{ user.home }}/.xinitrc"
+#     mode: "0755"
+#   ignore_errors: "{{ ansible_check_mode }}"
+#   tags: ['env', 'profile']
 
 - block:
     - name: Set video modules in mkinitcpio
@@ -80,12 +72,12 @@
       when: mkinitcpio_conf.changed
 
   # when: ansible_facts["lsb"]["id"] != 'EndeavourOS'
-  when: distribution != 'EndeavourOS'
+  when: ansible_distribution != 'EndeavourOS'
   tags: ['mkinitcpio']
 
-- import_tasks:
-    file: sxhkd.yml
-  tags: ['sxhkd', 'keybindings']
+# - import_tasks:
+#     file: sxhkd.yml
+#   tags: ['sxhkd', 'keybindings']
 
 - import_tasks:
     file: xdg.yml

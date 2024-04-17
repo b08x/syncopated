@@ -1,0 +1,20 @@
+---
+
+expected_value: "groupvars_workstation_dev"
+
+terminal: "kitty"
+terminal_alt: "alacritty"
+
+audio: "jack"
+
+dm: False
+wm: "i3"
+
+browser: "google-chrome-stable"
+# simply just defining the variable will install the thing
+# it will call the task list
+# if desired more variables can defined within the tasks
+# f.e:
+# vscode:
+#   packages:
+#     example_package: 1.0

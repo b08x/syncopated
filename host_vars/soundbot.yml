@@ -1,15 +1,6 @@
 ---
-autologin: True
 
-login:
-  auto: True
-  lightdm: False
-
-bluetooth: True
-
-repos:
-  chaotic: False
-  syncopated: True
+ansible_distribution: EndeavourOS
 
 share:
   nfs:
@@ -25,42 +16,24 @@ services:
   mediamtx:
     enabled: True
 
-app:
-  install:
-    reaper: True
-    pulsar: True
-    vscode: True
-    vamp: True
-    mixxx: True
-    annotator: True
-    soniclineup: True
-    touchosc: True
-    tony: True
-
 cpupower:
   governor: performance
   perf_bias: 0
 
-tuned:
-  profile: powersave
+#TODO: this
+# tuned:
+#   profile: powersave
 
-docker:
-  service: "enabled"
-  storage: /var/lib/docker
-  nvidia: False
+audio: "jack"
 
-desktop:
-  dm: False
-  wm: i3
-  terminal: "kitty"
-  terminal_alt: "alacritty"
-  browser: "google-chrome-stable"
-  audio: "jack"
-  barrier:
-    server:
-      name: soundbot
-      address: "[soundbot]:24800"
-      config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
+barrier:
+  client:
+    name: soundbot
+    server: "[tinybot]:24800"
+  server:
+    name: soundbot
+    address: "[soundbot]:24801"
+    config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
 
 x:
   autostart:
@@ -68,21 +41,23 @@ x:
 
 i3:
   autostart:
-    "default"
-    # - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+    - "tilda"
+    - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+    - "/usr/bin/barriers -f --no-tray --debug INFO --name soundbot --disable-crypto --disable-client-cert-checking -c /home/b08x/.config/Debauchee/soundbot.conf --address :24801"
+    - "/usr/bin/barrierc -f --no-tray --debug INFO --name soundbot --disable-crypto [tinybot]:24800"
   tray_output: "primary"
   assignments: "default"
   workspaces:
     - "$ws1 output eDP-1"
     - "$ws2 output eDP-1"
     - "$ws3 output eDP-1"
-    - "$ws4 output DP-1-2"
-    - "$ws5 output DP-1-2"
-    - "$ws6 output DP-1-2"
-    - "$ws7 output DP-1-2"
-    - "$ws8 output DP-1-2"
-    - "$ws9 output DP-1-2"
-    - "$ws10 output DP-1-2"
+    - "$ws4 output DP-1-1"
+    - "$ws5 output DP-1-1"
+    - "$ws6 output DP-1-1"
+    - "$ws7 output DP-1-1"
+    - "$ws8 output DP-1-1"
+    - "$ws9 output DP-1-1"
+    - "$ws10 output DP-1-1"
   keybindings: "default"
 
 # network_interfaces:

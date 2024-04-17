@@ -28,7 +28,7 @@
       notify: reload firewalld
 
   ignore_errors: "{{ ansible_check_mode }}"
-  when: distribution == 'Archlinux' or distribution == 'Fedora'
+  when: ansible_distribution == 'Archlinux' or ansible_distribution == 'Fedora'
 
 
 # Hello. Can you refactor this Ansible task?
@@ -82,5 +82,5 @@
         - '55311'
       notify: reload ufw
 
-  when: distribution == 'MX' or distribution == 'Debian'
+  when: ansible_distribution == 'MX' or ansible_distribution == 'Debian'
   ignore_errors: "{{ ansible_check_mode }}"

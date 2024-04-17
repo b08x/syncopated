@@ -1,0 +1,16 @@
+---
+
+- hosts: all
+  tags: ["docker"]
+  become: True
+  gather_subset:
+    - hardware
+    - network
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+    PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
+
+  roles:
+
+    - role: docker
+      tags: ["docker"]

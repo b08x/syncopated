@@ -19,6 +19,8 @@ alias mv="mv -iv"
 alias df='df -h'
 
 # use exa for directory listing
+alias br="broot"
+
 alias ll="eza --sort=ext --long --level=2 --icons auto"
 alias ls="eza -h --group-directories-first -g --icons auto"
 alias llh="eza --sort=ext --long -a --level=2 --icons auto"
@@ -42,13 +44,15 @@ alias taillog='sudo journalctl -f -o json | lnav -f ~/.config/lnav/checklog.lnav
 
 # network troubleshooting
 #TODO: convert to function
-alias dig="dig +nocmd +multiline +noall +answer"
+#alias dig="dig +nocmd +multiline +noall +answer"
+alias dig="doggo"
 alias mtr="sudo mtr -t"
+
 alias netcon="lsof -i"
 alias netlog='sudo journalctl -g "iwd|Network" -f -o json | lnav'
 alias networklogdebug="sudo nmcli general logging level DEBUG domains ALL"
 alias networkloginfo="sudo nmcli general logging level INFO domains ALL"
-alias p="sudo ping -c 16 google.com"
+alias p="gping github.com"
 
 # paru
 alias pfile="paru -Fy"
@@ -90,7 +94,11 @@ alias ra="ranger"
 
 # download
 alias dl="aria2c"
+alias curl="curlie"
 
+alias duf="sudo duf"
+alias top="sudo btm --enable_cache_memory --enable_gpu_memory --process_command -n"
+alias du="sudo dust -p -r -x -d 3 -n 80"
 #exit
 alias e="exit"
 
@@ -116,9 +124,9 @@ alias lib="cd $HOME/Library"
 
 alias an="cd $PLAYBOOKS"
 
-alias dla="yt-dlp -o '(artist)s.%(title)s.%(ext)s' -x --audio-format flac --external-downloader aria2c"
+alias dla="yt-dlp -o '%(title)s.%(ext)s' -x --audio-format wav --external-downloader aria2c"
 
-alias dlv="yt-dlp -o '(artist)s.%(title)s.%(ext)s' -f mp4 --external-downloader aria2c"
+alias dlv="yt-dlp -o '%(title)s.%(ext)s' -f mp4 --external-downloader aria2c"
 
 # open rb file in pry
 alias loadpry='pry -r'

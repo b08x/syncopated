@@ -19,94 +19,33 @@
   file:
     dest: "{{ desktop_directory_default_location }}/{{ item.dest }}"
     state: directory
-    owner: "{{ item.owner | default(desktop_directory_default_owner) }}"
-    group: "{{ item.group | default(desktop_directory_default_group) }}"
-    mode: "{{ item.mode | default(desktop_directory_default_mode) }}"
-    recurse: "{{ item.recurse | default(desktop_directory_default_recurse) }}"
-  with_items: "{{ desktop_directory_definitions }}"
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+    recurse: "{{ item.recurse | default(false) }}"
+  loop: "{{ desktop_directory_definitions }}"
   check_mode: no
 
-- block:
-    - name: Install desktop packages
-      aur:
-        use: paru
-        name: "{{ packages.desktop }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install browser packages
-      aur:
-        use: paru
-        name: "{{ packages.browser }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install media packages
-      aur:
-        use: paru
-        name: "{{ packages.media }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install development packages
-      aur:
-        use: paru
-        name: "{{ packages.development }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install docs packages
-      aur:
-        use: paru
-        name: "{{ packages.docs }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install texlive packages
-      aur:
-        use: paru
-        name: "{{ packages.texlive }}"
-        state: present
-        extra_args: --overwrite '*'
-      when: pkgs__texlive|default(false)|bool == True
-      tags: ['texlive']
-
-    - name: Install python packages
-      aur:
-        use: paru
-        name: "{{ packages.python }}"
-        state: present
-        extra_args: --overwrite '*'
-
-    - name: Install utility packages
-      aur:
-        use: paru
-        name: "{{ packages.utility }}"
-        state: present
-        extra_args: --overwrite '*'
-
-  become: False
-  tags: ['packages']
 
 #NOTETHIS: these can be used in a seperate playbook
 # - name: Import sway role
 #   import_role:
 #     name: sway
 #   tags: ['sway']
-#   when: desktop.wm == 'sway'
+#   when: wm == 'sway'
 #
 # - name: Import gnome role
 #   import_role:
 #     name: gnome
 #   tags: ['gnome']
-#   when: desktop.wm == 'gnome'
+#   when: wm == 'gnome'
 
 # if this file does not exist, lightdm will fail to start
 - name: Set dmrc to selected window manager
   copy:
     content: |
       [Desktop]
-      Session={{ desktop.wm }}
+      Session={{wm }}
     dest: "{{ user.home }}/.dmrc"
     owner: "{{ user.name }}"
     mode: '0644'
@@ -150,10 +89,6 @@
     backup: False
   tags: ['redshift']
 
-- import_tasks:
-    file: barrier.yml
-  tags: ['barrier']
-
 - name: Install Thunar actions
   copy:
     src: "home/.config/Thunar/{{ item }}"
@@ -169,6 +104,17 @@
   shell: xdg-mime default thunar.desktop inode/directory
   become_user: "{{ user.name }}"
   tags: ['thunar']
+
+- name: Set JackTrip autostart entry
+  template:
+    src: home/.config/autostart/JackTrip.desktop.j2
+    dest: "{{ user.home }}/.config/autostart/JackTrip.desktop"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: "0644"
+    backup: yes
+    validate: "dex -d %s"
+  when: jacktrip.server.args != '' or jacktrip.client.args != ''
 
 - name: Set xdg autostart applications
   synchronize:

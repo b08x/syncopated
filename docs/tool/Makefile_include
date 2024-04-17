@@ -10,29 +10,29 @@ MKDIR_P = mkdir -p
 
 all:: pdf html
 
-pdf:: *.md roles/*.md
-	pandoc *.md roles/*.md \
+pdf:: README.md *.md roles/*.md
+	pandoc README.md *.md roles/*.md \
 		-f gfm \
 		-V linkcolor:blue \
 		--pdf-engine=xelatex \
 		--lua-filter $(TOOL_DIR)/template/columns/columns.lua \
 		--number-sections \
 		--table-of-contents \
-		--metadata title="SyncopatedIaC" \
+		--metadata title="Syncopated AudioIaC" \
 		--metadata title-prefix="The User Manual" \
 		--metadata subtitle="The User Manual" \
 		--template $(TOOL_DIR)/template/eisvogel.tex \
 		--metadata titlepage="True" \
 		-o SyncopatedIaC.pdf
 
-html:: *.md roles/*.md
-	pandoc *.md roles/*.md \
+html:: README.md *.md roles/*.md
+	pandoc README.md *.md roles/*.md \
 		-f gfm \
 		--number-sections \
 		--table-of-contents \
 		--toc-depth=2 \
 		--katex \
-		--metadata title="SyncopatedIaC" \
+		--metadata title="Syncopated AudioIaC" \
 		--template $(TOOL_DIR)/template/mdbook.html \
 		--metadata titlepage="True" \
 		--metadata date="`date -u '+%Y-%m-%d'`" \

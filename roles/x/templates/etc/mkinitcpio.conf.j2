@@ -4,7 +4,7 @@
 # run.  Advanced users may wish to specify all system modules
 # in this array.  For instance:
 #     MODULES=(usbhid xhci_hcd)
-{% if video.nvidia == True %}
+{% if nvidia is defined %}
 MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
 {% else %}
 {% if inventory_hostname == 'tinybot' %}
@@ -61,7 +61,7 @@ FILES=()
 
 
 # After installing the official NVIDIA driver, you need to edit it /etc/mkinitcpio.conf, HOOKSdelete it in one line kms, save it, and then execute it mkinitcpio -Pto regenerate the image. This prevents the initramfs from including the nouveau module and avoids conflicts between nouveau and the official driver.
-{% if video.nvidia|bool %}
+{% if nvidia is defined %}
 HOOKS=(base udev autodetect modconf keyboard keymap consolefont block filesystems shutdown fsck)
 {% else %}
 HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block filesystems shutdown fsck)

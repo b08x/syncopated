@@ -1,20 +1,12 @@
 ---
 
-- name: Install input-remapper
-  aur:
-    use: paru
-    name: input-remapper-git
-    state: present
-  become: False
-  tags: ['packages']
-
-- name: Sync input presets folder
+- name: Sync input-remapper presets folder
   synchronize:
     src: home/.config/input-remapper-2/presets/
     dest: "{{ user.home }}/.config/input-remapper-2/presets/"
     recursive: yes
     mode: push
-    delete: yes
+    delete: no
     checksum: yes
     perms: no
     rsync_opts:

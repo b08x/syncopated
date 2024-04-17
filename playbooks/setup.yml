@@ -1,0 +1,134 @@
+---
+- hosts: all
+  tags: ["workstation", "setup"]
+  become: True
+  gather_subset:
+    - hardware
+    - network
+  vars_files:
+    - ../vars/theme.yml
+  vars:
+    path:
+      - "{{ lookup('env','HOME') }}/.asdf/bin"
+      - "{{ lookup('env','HOME') }}/.local/bin"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+    PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
+    ZSH: "/usr/share/oh-my-zsh"
+    DISPLAY: ":0"
+# variables from vars_files are available starting here...
+  pre_tasks:
+    - name: show expected_value
+      debug:
+        var: ansible_facts["date_time"]["epoch"]
+      tags: ["always"]
+
+      # the task will run if `check_mode` to 'no'
+    - name: Register timestamp
+      shell: "date +'%s.%Y-%m-%d@%H:%M:%S~'"
+      register: timestamp
+      check_mode: no
+      tags: ["always"]
+
+    - name: show expected_value
+      debug:
+        var: distribution
+      tags: ['always']
+
+    - name: Set suffix
+      set_fact:
+        suffix: "{{ timestamp.stdout_lines[0] }}"
+      tags: ["always"]
+
+    - name: Symlink /etc/os-release to /etc/system-release
+      file:
+        src: /etc/os-release
+        dest: /etc/system-release
+        state: link
+
+    - name: Set admin group name
+      set_fact:
+        admin_group: wheel
+      tags: ["always"]
+
+    - name: Check -march support
+      shell: |
+        /lib/ld-linux-x86-64.so.2 --help | grep supported|xargs|awk '{print $1}'
+      register: supported_march
+      tags: ["always"]
+      check_mode: False
+
+    - block:
+        - name: Set architecture
+          set_fact:
+            architecture: "x86-64-v3"
+          when: supported_march.stdout_lines[0] == 'x86-64-v3'
+
+        - name: Set architecture
+          set_fact:
+            architecture: "x86-64"
+          when: supported_march.stdout_lines[0] == 'x86-64-v2'
+
+      when: supported_march.stdout_lines[0] is defined
+      tags: ["always"]
+      check_mode: False
+
+    - block:
+        - name: Check if keys are present
+          stat:
+            path: "{{ user.home }}/.ssh/id_ed25519"
+          register: keys
+
+        - name: Start ssh daemon
+          service:
+            name: sshd
+            state: started
+            enabled: True
+
+        - name: Copy keys from remote host
+          delegate_to: 127.0.0.1
+          run_once: True
+          become_user: "{{ user.name }}"
+          shell: "scp {{ user.name }}@{{ keyserver }}:~/.ssh/{{ item }} {{ user.home }}/.ssh/{{ item }}"
+          args:
+            chdir: "{{ user.home }}"
+          with_items:
+            - id_ed25519
+            - id_ed25519.pub
+            - config
+            - known_hosts
+            - authorized_keys
+          when:
+            - not keys.stat.exists
+            - newInstall is defined
+          tags: ["keys"]
+
+      ignore_errors: "{{ ansible_check_mode }}"
+      vars:
+        expected_value: "playbook_pre_task_blockVar"
+      tags: ["testing"]
+
+  roles:
+    - role: distro
+      tags: ["distro"]
+
+    - role: user
+      tags: ["user"]
+
+    - role: base
+      tags: ["base"]
+
+    - role: shell
+      tags: ["shell"]
+
+    - role: terminal
+      tags: ["terminal"]
+
+    - role: network
+      tags: ["network"]
+
+    - role: ruby
+      tags: ["ruby"]
+
+    - role: tools
+      tags: ["tools"]

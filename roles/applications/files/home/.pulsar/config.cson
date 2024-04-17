@@ -28,7 +28,7 @@
     ]
   editor:
     fontFamily: "Hack Nerd Font Mono"
-    fontSize: 15
+    fontSize: 13
     preferredLineLength: 120
     softWrap: true
     softWrapAtPreferredLineLength: true
@@ -41,7 +41,7 @@
     "*.j2": "source.python.jinja"
     "*.rules": "source.shell"
     "*.spi": "source.ruby.sonic-pi"
-    "*.yml": "source.ansible-advanced"
+    "*.yml": "source.ansible"
     "*.yml.j2": "source.yaml.jinja"
     ".*.j2": "source.shell.jinja"
     "docker-compose*.yml": "source.yaml"

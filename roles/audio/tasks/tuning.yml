@@ -8,10 +8,9 @@
 
 - name: Ensure user belongs to audio group
   user:
-    name: "{{ item.name }}"
+    name: "{{ user.name }}"
     groups: "audio"
     append: yes
-  with_items: "{{ users }}"
 
 - name: Set rtprio, memlock and nice for audio group
   copy:
@@ -22,6 +21,7 @@
     dest: "/etc/security/limits.d/99-realtime.conf"
     mode: '0644'
     backup: True
+  ignore_errors: "{{ ansible_check_mode }}"
 
 # It is safe to have this file even if
 # your hardware contains neither device
@@ -43,15 +43,6 @@
   tags: ['sysctl']
 
 - block:
-    - name: Install Tuned
-      aur:
-        use: paru
-        name: tuned
-        state: present
-        extra_args: "--overwrite '*'"
-      become: False
-      tags: ['packages']
-
     - name: Enable tuned service
       systemd:
         name: tuned
@@ -90,14 +81,6 @@
 
 
 - block:
-    - name: Install rtirq & rtkit
-      aur:
-        use: auto
-        name: "rtkit,rtirq"
-        state: present
-      become: False
-      tags: ['packages']
-
     - name: Set rtirq defaults
       copy:
         src: etc/sysconfig/rtirq
@@ -132,15 +115,6 @@
     - "enable rtkit service"
 
 - block:
-
-    - name: Install cpupower
-      aur:
-        use: auto
-        name: cpupower
-        state: present
-      become: False
-      tags: ['packages']
-
     - name: Set cpucpower defaults
       template:
         src: etc/default/cpupower.j2
@@ -163,7 +137,10 @@
   service:
     name: irqbalance
     enabled: False
-  ignore_errors: True
+  ignore_errors: "{{ ansible_check_mode }}"
+  register: irqbalance_service
+  failed_when: (irqbalance_service.msg is defined and not 'Could not find the requested service irqbalance' in irqbalance_service.msg)
+
 
 # - name: Disable ananicy-cpp and bpftune
 #   service:

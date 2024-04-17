@@ -1,6 +1,36 @@
 ---
 # tasks file for roles/distro
 
-- import_tasks:
-    file: "Archlinux/main.yml"
-  when: distribution == 'Archlinux' or distribution == 'EndeavourOS'
+- name: Load a variable file based on the OS type, or a default if not found. the file.
+  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        # - '{{ansible_distribution}}.yml'
+        # - '{{ansible_os_family}}.yml'
+        - Archlinux.yml
+        - main.yml
+      paths:
+        - 'vars'
+  tags: ['always']
+
+- block:
+    - import_tasks:
+        file: "Archlinux/main.yml"
+      tags: ['repo', 'mirrors']
+
+    # - name: Current packages installed
+    #   shell: |
+    #     paru -Q |awk '{print $1}'
+    #   become: False
+    #   register: installed_packages
+    #   check_mode: no
+    #   tags: ['packages']
+    #
+    # - name: Set packages to be installed
+    #   set_fact:
+    #     arch_packages: "{{ packages|difference(arch_installed_packages.stdout) }}"
+    #   check_mode: no
+    #   tags: ['packages']
+
+  when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'

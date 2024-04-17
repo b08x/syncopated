@@ -33,10 +33,10 @@ super + d
   ~/.config/rofi/scripts/launcher_t1.sh
 
 super + F5
-  {{ desktop.terminal }} --class "htop" -e htop
+  {{ terminal }} --class "htop" -e htop
 
 super + alt + n
-  {{ desktop.terminal }} --class "notepad" -e notepad.sh
+  {{ terminal }} --class "notepad" -e notepad.sh
 
 F12
   search_web.sh
@@ -85,18 +85,21 @@ super + x
 
 #super + End
 #	terminator
-{% if desktop.browser == 'google-chrome-stable' %}
+{% if browser == 'google-chrome-stable' %}
 super + Home
-  {{ desktop.browser }} --disable-gpu %U
+  {{browser }} --disable-gpu %U
 
 super + shift + Home
-  {{ desktop.browser }} --disable-gpu --incognito %U
+  {{ browser }} --disable-gpu --incognito %U
 {% endif %}
 super + KP_Enter
-  {{ desktop.terminal }} -e ranger
+  {{ terminal }} -e ranger
 
 super + shift + KP_Enter
   thunar
+
+Print
+  teiler
 
 shift + Print
   maim -u -s | xclip -selection clipboard -t image/png
@@ -105,10 +108,10 @@ super + Print
   simplescreenrecorder --start-hidden
 
 XF86AudioMute
-  ~/.local/bin/mic_mute.sh mute
+  mic_mute.sh mute
 
 super + XF86AudioMute
-  ~/.local/bin/mic_mute.sh unmute
+  mic_mute.sh unmute
 
 Print
   sendmidi dev 'Midi Through Port-0' panic
