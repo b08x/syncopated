@@ -11,6 +11,10 @@ This project explores Infrastructure as Code (IaC) principles to streamline Linu
 
 While not a production-ready solution in itself, SyncopatedIaC provides a robust foundation and modular building blocks for crafting tailored Linux audio distributions. It prioritizes professional audio software, real-time optimizations, and streamlined workflows.
 
+# demo
+
+[![asciicast](https://asciinema.org/a/654626.svg)](https://asciinema.org/a/654626)
+
 ## Key Concepts
 
 - **Configuration as Code:** Ansible playbooks define the precise settings and software required for your ideal audio environment. This ensures repeatability, reduces manual intervention, and makes sharing setups across a studio or team seamless.
@@ -97,9 +101,6 @@ For example
   - The `pulseaudio` role is used to install and configure the PulseAudio sound server.
 
 
-# demo
-
-[![asciicast](https://asciinema.org/a/622463.svg)](https://asciinema.org/a/622463)
 
 # testing
 
