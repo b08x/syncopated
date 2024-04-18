@@ -1,5 +1,5 @@
 ---
-- hosts: desktop
+- hosts: workstation
   become: True
   gather_facts: yes
   vars_files:
