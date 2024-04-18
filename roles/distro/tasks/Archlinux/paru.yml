@@ -10,7 +10,7 @@
   block:
     - name: Install paru
       pacman:
-        name: paru-bin
+        name: paru
         state: present
         force: yes
         extra_args: --noconfirm
