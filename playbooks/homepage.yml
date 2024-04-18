@@ -26,8 +26,8 @@
           - name: visiblemagic
             url: "http://192.168.36.1"
         intranetLLM:
-          #   url: "http://ninjabot.syncopated.net"
-          # - name: Agenta
+          - name: SillyTavern
+            url: "http://ninjabot.syncopated.net:8008"
           - name: Dify
             url: "http://ninjabot.syncopated.net/apps"
           - name: Anything-LLM
@@ -125,7 +125,7 @@
 
     - name: Set index.html template
       template:
-        src: ../../templates/homepage/index.html.j2
+        src: ../templates/homepage/index.html.j2
         dest: /usr/share/nginx/html/homepage/index.html
         owner: root
         group: "{{ user.group }}"

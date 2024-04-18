@@ -17,14 +17,14 @@ terminal_alt: "alacritty"
 dm: False
 browser: "google-chrome-stable"
 
-barrier:
-  client:
-    name: tinybot
-    server: "[soundbot]:24801"
-  server:
-    name: tinybot
-    address: "[tinybot]:24800"
-    config: "{{ user.home }}/.config/Debauchee/tinybot.conf"
+# barrier:
+#   client:
+#     name: tinybot
+#     server: "[soundbot]:24801"
+#   server:
+#     name: tinybot
+#     address: "[tinybot]:24800"
+#     config: "{{ user.home }}/.config/Debauchee/tinybot.conf"
 
 x:
   autostart:
@@ -33,8 +33,9 @@ x:
 i3:
   autostart:
     - "tilda"
-    - "/usr/bin/barriers -f --no-tray --debug INFO --name tinybot --disable-crypto --disable-client-cert-checking -c /home/b08x/.config/Debauchee/tinybot.conf --address :24800"
-    - "/usr/bin/barrierc -f --no-tray --debug INFO --name tinybot --disable-crypto [soundbot]:24801"
+    - "barriers --debug INFO --name tinybot --disable-crypto --disable-client-cert-checking -c /home/b08x/.config/Debauchee/tinybot.conf --address :24800"
+    - "sleep 0.5"
+    - "barrierc --debug INFO --name tinybot --disable-crypto [soundbot]:24801"
   tray_output: "DP-2"
   assignments: "default"
   workspaces:

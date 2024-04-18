@@ -125,7 +125,7 @@ $exec "dunst"
 
 {% if i3.autostart != 'default' %}
 {% for a in i3.autostart %}
-$exec "{{ a }};sleep 0.5"
+$exec "{{ a }}"
 {% endfor %}
 {% endif %}
 

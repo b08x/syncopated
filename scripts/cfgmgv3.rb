@@ -44,16 +44,15 @@ CLI::UI.frame_style = :bracket
 
 CLI::UI::StdoutRouter.enable
 CLI::UI::Frame.open('syncopatedIaC') do
+
   CLI::UI::Frame.open('Playbook') do
     syncopated = Ansible.new(ANSIBLE_HOME)
-    # p syncopated.playbooks
-    # exit
     @playbook = `gum filter #{syncopated.playbooks}`.chomp
     @playbook.gsub!(/\[\]/, '')
   end
+
   CLI::UI::Frame.open('Type') do
     @type = `gum choose "tags" "roles"`.chomp
-    # @tags.gsub!(/\n/,',')
   end
 
   case @type
