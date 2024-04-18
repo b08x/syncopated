@@ -30,8 +30,6 @@
             url: "http://ninjabot.syncopated.net:8008"
           - name: Dify
             url: "http://ninjabot.syncopated.net/apps"
-          - name: Anything-LLM
-            url: "http://ninjabot.syncopated.net:3008"
           - name: Big-AGI
             url: "http://tinybot.syncopated.net:4000"
           - name: Flowise
@@ -40,9 +38,13 @@
             url: "http://ninjabot.syncopated.net:3000"
           - name: Redis
             url: "http://ninjabot.syncopated.net:8001"
+          - name: Anything-LLM
+            url: "http://ninjabot.syncopated.net:3008"
           - name: Sterling-PDF
             url: "http://ninjabot.syncopated.net:8080"
         webtools:
+          - name: gitlab
+            url: "https://gitlab.com/b08x"
           - name: github
             url: "https://github.com"
           - name: google search console
