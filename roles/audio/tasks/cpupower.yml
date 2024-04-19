@@ -1,0 +1,38 @@
+---
+
+- block:
+    - name: Set cpucpower defaults
+      template:
+        src: etc/default/cpupower.j2
+        dest: /etc/default/cpupower
+        mode: '0644'
+        backup: yes
+
+    - name: Enable cpupower service
+      service:
+        name: cpupower
+        enabled: True
+      when: ansible_system_vendor != "QEMU"
+      ignore_errors: "{{ ansible_check_mode }}"
+
+  tags: ['cpupower']
+
+# Do not use the irqbalance daemon, or do so carefully [4].
+# https://wiki.archlinux.org/title/Professional_audio#Tips_and_tricks
+- name: Disable irqbalance service
+  service:
+    name: irqbalance
+    enabled: False
+  ignore_errors: "{{ ansible_check_mode }}"
+  register: irqbalance_service
+  failed_when: (irqbalance_service.msg is defined and not 'Could not find the requested service irqbalance' in irqbalance_service.msg)
+
+
+# - name: Disable ananicy-cpp and bpftune
+#   service:
+#     name: "{{ item }}"
+#     enabled: False
+#   ignore_errors: True
+#   loop:
+#     - ananicy-cpp
+#     - bpftune

@@ -1,0 +1,35 @@
+---
+
+- block:
+    - name: Set rtirq defaults
+      copy:
+        src: etc/sysconfig/rtirq
+        dest: /etc/rtirq.conf
+        directory_mode: no
+        owner: root
+        group: root
+        mode: '0644'
+      register: rtirq_config
+
+    # rtkit package should be Installed before this happens
+    - name: Set rtkit parameters
+      copy:
+        src: etc/rtkit.conf
+        dest: /etc/rtkit.conf
+        directory_mode: no
+        owner: root
+        group: root
+        mode: '0644'
+      register: rtkit_conf
+
+    - name: Set rtkit systemd parameters
+      template:
+        src: usr/lib/systemd/system/rtkit-daemon.service.j2
+        dest: /usr/lib/systemd/system/rtkit-daemon.service
+        mode: '0644'
+      register: rtkit_systemd
+
+  tags: ['rtirq', 'rtkit']
+  notify:
+    - "enable rtirq service"
+    - "enable rtkit service"

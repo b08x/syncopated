@@ -1,60 +1,23 @@
 # desktop
 
-# What are the tasks and configurations performed by the "desktop" role?
-The /syncopatedIaC/roles/desktop/tasks/main.yml file defines the tasks for the "desktop" role. The main tasks and configurations performed are:
+The "desktop" role in the Ansible automation framework is responsible for configuring the desktop environment, window manager, and general applications on Linux workstations. It performs several key tasks and configurations:
 
-Installing various package groups like desktop, browser, media, etc.
-Creating configuration directories
-Generating config files from templates for configs like dunst, picom, etc.
-Configuring the DM/Login by setting .dmrc
-Importing tasks to configure things like input-remapper, menu, barrier
-Setting xdg autostart applications
-Configuring Thunar file actions
-Updating the desktop database
-It also imports the barrier.yml file to configure Barrier for multi-machine desktop use.
+1. **Installing Package Groups**: Installs various package groups such as desktop, browser, media, etc.
 
-# What variables are used by the "desktop" role and where are they declared?
-The main variables used are:
+2. **Creating Configuration Directories**: Creates directories for storing configuration files for applications.
 
-packages.* - Package group lists defined elsewhere
-user.* - User info like home, name, group from common_vars.yml
-desktop.wm - Selected window manager
-desktop.barrier - Barrier configuration
-Variables are also defined in roles/desktop/defaults/main.yml.
+3. **Generating Config Files**: Generates configuration files from templates for applications like dunst, picom, etc.
 
-# What functionality does the "desktop" role provide?
-The "desktop" role provides functionality to fully configure a desktop environment including installing packages, configuring the window manager, setting application autostart, shortcuts, configs and other aspects of a customized desktop experience.
+4. **Configuring DM/Login**: Configures the display manager/login by setting .dmrc and enabling automatic login.
 
-It works to set up a complete out of box ready to use desktop on various OS's in an automated and reusable way.
+5. **Importing Tasks**: Imports tasks to configure additional components like input-remapper, menu, barrier for multi-machine desktop use.
 
----
+6. **Setting Autostart Applications**: Configures autostart applications using xdg.
 
-The desktop role handlestasks related to configuring the desktop environment, window manager and general applications.
+7. **Configuring Thunar File Actions**: Configures file actions for the Thunar file manager.
 
-Some key aspects it manages:
+8. **Updating Desktop Database**: Updates the desktop database for applications.
 
-Structure is standard with tasks, defaults, vars folders.
+The role uses several variables, including package group lists defined elsewhere, user information like home, name, group from common_vars.yml, and configurations for the window manager and Barrier.
 
-Installs base desktop packages like gnome, kde, xfce based on {{desktop.wm}} value.
-
-Installs browser, media, development dependent packages.
-
-Creates configuration directories for apps like dunst, picom, sxhkd etc.
-
-Generates config files from templates - i3, dunstrc, picom etc.
-
-Manages DM/Login - sets .dmrc, enables automatic login.
-
-Configures WM - i3, sway related tasks are imported conditionally.
-
-Handles input methods - input-remapper tasks.
-
-Configures menu, thunar files, bindings - menu.yml, sxhkd.yml
-
-Sets xdg autostart apps, dunst, updates desktop db.
-
-Barrier role for multi-machine desktop - configs, services.
-
-Key goal is a fully configured and customized desktop environment including window manager, applications and preferences. Reusable across different *buntu/Arch systems.
-
-Main files involved are tasks/main.yml, calls to other subdomain task files, and Jinja template config file generation.
+Overall, the "desktop" role provides functionality to fully configure a desktop environment, including installing packages, configuring the window manager, setting application autostart, shortcuts, and other aspects of a customized desktop experience. It aims to set up a complete, ready-to-use desktop environment in an automated and reusable way.

@@ -1,29 +1,21 @@
 # i3
 
-The i3 role contains configuration related to installing and setting up the i3 window manager.
+The i3 role in Ansible focuses on installing and setting up the i3 window manager. It follows the standard role structure with key files and directories:
 
-The role directory follows the standard structure:
+- README.md: Documentation on the role's purpose and usage.
+- defaults/main.yml: Default variable values for the role.
+- handlers/main.yml: Handlers for the role's tasks.
+- tasks/main.yml: Main tasks file, including imports for additional tasks files.
+- templates/: Directory for template files used in configuration.
+- vars/main.yml: Role-specific variables.
 
-README.md - Documentation on what the role does.
+Specific tasks performed by the i3 role include:
 
-defaults/main.yml - Default variable values.
+1. Installing the i3 package.
+2. Generating and configuring i3 configuration files from templates.
+3. Setting up i3 autostart applications.
+4. Configuring i3 window bindings and workspaces.
+5. Managing the i3 service, including enabling, starting, and restarting it.
+6. Importing additional tasks files for configuring components like i3bar, i3blocks, etc.
 
-handlers/main.yml - Role handlers.
-
-tasks/main.yml - Main tasks file including imports for any additional tasks files.
-
-templates/ - Template files for configuration.
-
-vars/main.yml - Role variables.
-
-Some specific content and tasks handled by the i3 role include:
-
-Installing the i3 package
-Generating and configuring i3 configuration files from templates
-Setting up i3 autostart applications
-Configuring i3 window bindings and workspaces
-Managing i3 service - enabling, starting, restarting
-Importing additional tasks files for areas like i3bar, i3blocks, etc.
-So in summary, it provides all the configuration necesssary to install, set up and manage i3 as the window manager through Ansible in a repeatable way. This includes package installation, configuration generation and ongoing service management.
-
-The role is self-contained to focus specifically on i3 tasks while following best practices for role structure and documentation.
+Overall, the i3 role provides a comprehensive configuration for installing, setting up, and managing i3 as the window manager through Ansible in a repeatable manner. It focuses solely on i3 tasks while adhering to best practices for role structure and documentation.

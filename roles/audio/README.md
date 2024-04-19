@@ -1,30 +1,29 @@
 # audio
 
-The main tasks performed by the audio role include:
+The audio role is responsible for configuring a system for professional low-latency audio work. It performs the following key tasks:
 
-Installing required audio/codec packages (tag: packages)
+1. **Installing Audio/Codec Packages**: Installs required audio and codec packages necessary for audio processing (tag: packages).
 
-Creating directories for audio configuration files (tag: audio)
+2. **Creating Configuration Directories**: Creates directories for storing audio configuration files (tag: audio).
 
-Configuring real-time tuning settings like rtprio, niceness for audio group (tag: tuning, realtime)
+3. **Configuring Real-Time Tuning Settings**: Sets real-time tuning settings such as rtprio and niceness for the audio group (tag: tuning, realtime).
 
-Installing and configuring Tuned daemon for a real-time profile (tag: tuned)
+4. **Installing and Configuring Tuned Daemon**: Sets up the Tuned daemon for a real-time profile (tag: tuned).
 
-Configuring RT priority and RTKIT tools (tag: rtkit, rtirq)
+5. **Configuring RT Priority and RTKIT Tools**: Configures RT priority and RTKIT tools for real-time processing (tag: rtkit, rtirq).
 
-Configuring CPU power management using cpupower (tag: cpupower)
+6. **Configuring CPU Power Management**: Manages CPU power settings using cpupower (tag: cpupower).
 
-Disabling IRQ balancer service (tag: audio)
+7. **Disabling IRQ Balancer Service**: Disables the IRQ balancer service to prevent interference with audio processing (tag: audio).
 
-Configuring JackTrip autostart files (tag: jacktrip)
+8. **Configuring JackTrip Autostart Files**: Sets up autostart files for JackTrip, a tool for audio collaboration over the internet (tag: jacktrip).
 
-Adding support for MIDI tool LSMI (tag: lsmi, midi)
+9. **Adding Support for MIDI Tool LSMI**: Configures the system to support the LSMI MIDI tool (tag: lsmi, midi).
 
-It handles all aspects of configuring the system, users and services for professional low-latency audio work.
+The role ensures that the system meets the real-time requirements for audio applications and protocols like JackTrip by configuring priorities and settings accordingly. Key files involved in the role include:
 
-Key files involved are:
+- roles/audio/tasks/tuning.yml
+- roles/audio/tasks/main.yml
+- roles/audio/defaults/main.yml
 
-roles/audio/tasks/tuning.yml
-roles/audio/tasks/main.yml
-roles/audio/defaults/main.yml
-The role ensures the system meets real-time requirements for audio applications and protocols like JackTrip through configuring priorities, scheduling algorithms and services.
+In summary, the audio role is essential for configuring a system to handle professional audio work, providing the necessary tools and settings for low-latency audio processing.

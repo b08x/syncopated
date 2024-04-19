@@ -15,6 +15,60 @@
     recurse: "{{ item.recurse | default(false) }}"
   loop: "{{ audio_directory_definitions }}"
 
+# tasks file for desktop
+- name: Collect only selected facts
+  setup:
+    filter:
+      - 'ansible_system_vendor'
+
+- name: Ensure user belongs to audio group
+  user:
+    name: "{{ user.name }}"
+    groups: "audio"
+    append: yes
+
+- name: Set rtprio, memlock and nice for audio group
+  copy:
+    content: |
+      @audio  - rtprio  98
+      @audio  - nice    -19
+      @audio  - memlock unlimited
+    dest: "/etc/security/limits.d/99-realtime.conf"
+    mode: '0644'
+    backup: True
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: tune_for_realtime == True
+
+
+# It is safe to have this file even if
+# your hardware contains neither device
+# source: https://gentoostudio.org/?page_id=420
+- name: Set timer permissions in udev rules
+  copy:
+    content: |
+      KERNEL=="rtc0", GROUP="audio"
+      KERNEL=="hpet", GROUP="audio"
+    dest: "/etc/udev/rules.d/40-timer-permissions.rules"
+    mode: '0644'
+
+- name: Set sysctl parameters
+  copy:
+    src: etc/sysctl.d/99-cachyos-settings.conf
+    dest: /etc/sysctl.d/99-cachyos-settings.conf
+    mode: '0644'
+    backup: True
+  tags: ['sysctl']
+
+- import_tasks: alsa.yml
+
 - import_tasks:
-    file: tuning.yml
-  tags: ["tuning", "realtime"]
+    file: jack.yml
+  when: enable_jack == True
+
+- import_tasks:
+    file: pipewire.yml
+  when: enable_jack == True
+
+- import_tasks: cpupower.yml
+- import_tasks: rtkit.yml
+- import_tasks: tuned.yml

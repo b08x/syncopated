@@ -33,3 +33,17 @@
 - name: reload systemd
   systemd:
     daemon_reload: yes
+
+# handlers file for pulseaudio
+- name: restart pulseaudio
+  systemd:
+    name: "{{ item }}"
+    state: restarted
+    scope: user
+  with_items:
+    - pulseaudio.service
+    - pulseaudio.socket
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
+  become: False
+  ignore_errors: "{{ ansible_check_mode }}"
