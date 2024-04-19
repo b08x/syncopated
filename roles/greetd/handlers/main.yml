@@ -1,7 +1,0 @@
----
-# handlers file for greetd
-
-- name: enable greetd service
-  service:
-    name: greetd
-    enabled: True

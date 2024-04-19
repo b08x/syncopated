@@ -4,3 +4,59 @@
 rubies:
   - 3.1.0
   - 3.0.0
+
+gems:
+  - activesupport
+  - awesome_print
+  - bcrypt_pbkdf
+  - bundler
+  - childprocess
+  - clipboard
+  - colorize
+  - coltrane
+  - debug
+  - drydock
+  - ed25519
+  - eventmachine
+  - ffi
+  - fractional
+  - geo_coord
+  - highline
+  - i3ipc
+  - i18n
+  - irb
+  - json
+  - jsonl
+  - kramdown
+  - langchainrb
+  - logging
+  - minitest
+  - mocha
+  - multi_json
+  - neovim
+  - net-ssh
+  - open3
+  - open4
+  - parallel
+  - pastel
+  - pry
+  - pry-doc
+  - psych
+  - rake
+  - rdoc
+  - rexml
+  - rouge
+  - ruby-lsp
+  - ruby-openai
+  - rugged
+  - ruport
+  - solargraph
+  - sync
+  - sys-proctable
+  - treetop
+  - tty-box
+  - tty-command
+  - tty-config
+  - tty-prompt
+  - tty-screen
+  - yaml

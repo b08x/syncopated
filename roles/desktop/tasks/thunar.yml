@@ -1,0 +1,17 @@
+---
+
+- name: Install Thunar actions
+  copy:
+    src: "home/.config/Thunar/{{ item }}"
+    dest: "{{ user.home }}/.config/Thunar/{{ item }}"
+    mode: '0644'
+    backup: yes
+  with_items:
+    - accels.scm
+    - uca.xml
+  tags: ['thunar']
+
+- name: Set Thunar as default for opening directories
+  shell: xdg-mime default thunar.desktop inode/directory
+  become_user: "{{ user.name }}"
+  tags: ['thunar']

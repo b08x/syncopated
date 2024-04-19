@@ -52,3 +52,15 @@
   register: result
   changed_when: result.rc != 0
   become: False
+
+
+- name: Set JackTrip autostart entry
+  template:
+    src: home/.config/autostart/JackTrip.desktop.j2
+    dest: "{{ user.home }}/.config/autostart/JackTrip.desktop"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: "0644"
+    backup: yes
+    validate: "dex -d %s"
+  when: jacktrip.server.args != '' or jacktrip.client.args != ''

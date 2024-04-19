@@ -21,3 +21,28 @@ root_directory_definitions:
   - dest: /etc/mediamtx
 
 expected_value: "role_base_defaults"
+
+System_Utilities:
+  - acpi
+  - at
+  - await
+  - bottom
+  - broot
+  - btop
+  - duf
+  - dust
+  - ecasound
+  - elinks
+  - fd
+  - fsarchiver
+  - fuse3
+  - fuse-common
+  - inetutils
+  - inxi
+  - iotop
+  - lsparu
+  - lnav
+  - ncdu
+  - neofetch
+  - nvtop
+  - nyt
