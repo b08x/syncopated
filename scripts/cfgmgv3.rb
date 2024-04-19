@@ -17,7 +17,7 @@ HOST_VARS = File.join(ANSIBLE_HOME, 'host_vars')
 ROLES = File.join(ANSIBLE_HOME, 'roles')
 INVENTORY = File.join(ANSIBLE_HOME, 'inventory.ini')
 
-TAGS = %(alsa always applications asdf audio autofs autologin base bash bluetooth chaotic cleanup cpupower deadbeef desktop distro dns docker dots dunst env firewall gnome-keyring groups grub gtk htop i3 input-remapper jack keybindings keys lightdm lnav makepkg media mediamtx menu mirrors mixxx mkinitcpio network nfs ntp ohmyzsh packages pacman pam paru picom pipewire profile pulsar pulseaudio python qt ranger realtime redshift repo rsyncd rtirq rtkit ruby setup shell ssh sshd sudoers sysctl terminal testing theme thunar tuned tuning updatedb user utils video vscode x xdg zsh)
+TAGS = %(alsa always applications asdf audio autofs autologin base bash bluetooth chaotic cleanup cpupower deadbeef desktop distro dns docker dots dunst env firewall gnome-keyring groups grub gtk htop i3 input-remapper jack keybindings keys lightdm lnav makepkg media mediamtx menu mirrors mixxx mkinitcpio network nfs ntp ohmyzsh packages pacman pam paru picom pipewire profile pulsar pulseaudio python qt ranger realtime redshift repo rofi rsyncd rtirq rtkit ruby setup shell ssh sshd sudoers sysctl terminal testing theme thunar tuned tuning updatedb user utils video vscode x xdg zsh)
 GROUPS = %(all workstation dev daw llmos server)
 HOSTS = %(soundbot lapbot tinybot ninjabot bender)
 PLAYBOOKS = %(workstation homepage)
