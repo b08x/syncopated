@@ -11,12 +11,11 @@
 #   changed_when: false
 
 - block:
-    # - name: Install pulsar
-    #   aur:
-    #     use: auto
-    #     name: pulsar-bin
-    #     state: present
-    #   register: install_pulsar
+    - name: Install pulsar
+      aur:
+        use: auto
+        name: pulsar-bin
+        state: present
 
     - name: Check currently installed extensions
       shell: "pulsar -p ls |awk -F ' ' '{print $2}'|awk -F '@' '{print $1}'"

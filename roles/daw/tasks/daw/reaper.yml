@@ -1,5 +1,14 @@
 ---
 
+- name: Install backup_reaper.sh
+  copy:
+    src: home/.local/bin/backup_reaper.sh
+    dest: "{{ user.home }}/.local/bin/backup_reaper.sh"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0755'
+    backup: False
+
 - name: Check if reaper is already installed
   stat:
     path: /usr/local/bin/reaper

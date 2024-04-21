@@ -11,13 +11,13 @@
 #   changed_when: false
 
 - block:
-    # - name: Install vscode
-    #   aur:
-    #     use: auto
-    #     name: code
-    #     state: present
-    #   register: vscode_install
-    #   tags: ['packages']
+    - name: Install vscode
+      aur:
+        use: auto
+        name: code
+        state: present
+      register: vscode_install
+      tags: ['packages']
 
     - name: Check currently installed extensions
       shell: code --list-extensions

@@ -7,6 +7,9 @@
 # host_vars/lapbot.yml
 expected_value: "hostvars_lapbot"
 
+install_vscode: True
+install_pulsar: False
+
 chaoticrepo: True
 
 bluetooth: True

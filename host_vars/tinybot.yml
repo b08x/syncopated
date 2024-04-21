@@ -1,5 +1,8 @@
 ---
 
+use_docker: True
+use_libvirt: True
+
 share:
   nfs:
     parent: "{{ user.home }}"

@@ -1,6 +1,9 @@
 ---
 # defaults file for development
 
+install_pulsar: False
+install_vscode: False
+
 Development_Tools:
   - aspell-en
   - atool

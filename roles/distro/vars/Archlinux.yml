@@ -154,6 +154,7 @@ packages:
     - chromaprint
     - cmake
     - code-marketplace
+    - cpupower
     - darktable
     - dconf
     # - devdocs-desktop
