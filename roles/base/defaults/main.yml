@@ -19,6 +19,7 @@ root_directory_definitions:
   - dest: /etc/systemd/timesyncd.conf.d
   - dest: /etc/xdg
   - dest: /etc/mediamtx
+  - dest: /etc/autofs
 
 expected_value: "role_base_defaults"
 

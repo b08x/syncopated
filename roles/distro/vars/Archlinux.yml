@@ -125,6 +125,7 @@ packages:
     - aubio
     - audacity
     - audiofile
+    - autofs
     - autorandr
     # - autotiling-rs
     - await
@@ -133,7 +134,7 @@ packages:
     - bash-completion
     - bash-language-server
     - bat
-    - baudline-bin
+    # - baudline-bin
     - beautysh
     # - bipscript
     # - bipscript-ide
@@ -155,12 +156,12 @@ packages:
     - code-marketplace
     - darktable
     - dconf
-    - devdocs-desktop
+    # - devdocs-desktop
     - dex
-    - distrho-ports
-    - distrho-ports-lv2
-    - distrho-ports-vst
-    - distrho-ports-vst3
+    # - distrho-ports
+    # - distrho-ports-lv2
+    # - distrho-ports-vst
+    # - distrho-ports-vst3
     - djvulibre
     - doggo
     - dragonfly-reverb
@@ -197,10 +198,10 @@ packages:
     - gedit-plugins
     - gedit-smart-home
     - geoclue
-    - geonkick
-    - geonkick-common
-    - geonkick-lv2
-    - geonkick-standalone
+    # - geonkick
+    # - geonkick-common
+    # - geonkick-lv2
+    # - geonkick-standalone
     - gimp
     - git
     - git-delta
@@ -240,12 +241,12 @@ packages:
     - gum
     - gummi
     - gvfs-smb
-    - helm-synth
-    - helm-synth-common
-    - helm-synth-lv2
-    - helm-synth-standalone
-    - helm-synth-vst
-    - hexchat
+    # - helm-synth
+    # - helm-synth-common
+    # - helm-synth-lv2
+    # - helm-synth-standalone
+    # - helm-synth-vst
+    # - hexchat
     - highlight
     - hspell
     - html2md
@@ -266,7 +267,7 @@ packages:
     - jack-example-tools
     - jack-keyboard
     - jack_capture
-    - jack_link
+    # - jack_link
     - jack_mixer
     - jack_snapshot
     - jack_utils
@@ -299,7 +300,6 @@ packages:
     - linuxsampler
     - lnav
     - lsp-dsp-lib
-    - lsparu
     - lv2-c++-tools
     - lynx
     - maim
@@ -311,7 +311,7 @@ packages:
     - micro
     - midieditor
     - mixxx
-    - mojave-gtk-theme
+    # - mojave-gtk-theme
     - most
     - mpv
     - mpv-plugin-excerpt-git
@@ -342,7 +342,7 @@ packages:
     - obs-studio
     - obsidian
     - ocenaudio-bin
-    - octopi
+    # - octopi
     - odt2txt
     - open-chinese-fonts
     - opendesktop-fonts
@@ -354,7 +354,6 @@ packages:
     - opusfile
     - pamixer
     - pandoc-cli
-    - paruz
     - patat-bin
     - patchage
     - pavucontrol
@@ -414,10 +413,9 @@ packages:
     - rtmidi
     - ruby-psych
     - rxvt-unicode
-    - sampler
     - sc3-plugins
-    - scala-music
-    - scala-music-scales
+    # - scala-music
+    # - scala-music-scales
     - sd
     - seahorse
     - sendmidi
@@ -425,10 +423,11 @@ packages:
     - smartmontools
     - socat
     - sonic-pi-git
+    - sonic-visualiser
     # - sooperlooper-git
     - sound-gambit
     - sox
-    - sparta-plugins
+    # - sparta-plugins
     - speech-dispatcher
     - sshpass
     - stunnel
@@ -443,19 +442,18 @@ packages:
     - teiler-git
     - termdown
     - terminator
-    - terminology
     - termpdf.py-git
-    - texlive-basic
-    - texlive-bin
-    - texlive-coffee-stains
-    - texlive-doc
-    - texlive-fontsextra
-    - texlive-fontsrecommended
-    - texlive-latex
-    - texlive-latexextra
-    - texlive-latexrecommended
-    - texlive-pictures
-    - texlive-xetex
+    # - texlive-basic
+    # - texlive-bin
+    # - texlive-coffee-stains
+    # - texlive-doc
+    # - texlive-fontsextra
+    # - texlive-fontsrecommended
+    # - texlive-latex
+    # - texlive-latexextra
+    # - texlive-latexrecommended
+    # - texlive-pictures
+    # - texlive-xetex
     - thunar
     - thunar-archive-plugin
     - thunar-volman
@@ -495,7 +493,7 @@ packages:
     - wordnet-cli
     - wordnet-common
     - wordnet-tk
-    - wthrr-git
+    # - wthrr-git
     - x42-plugins
     - x42-plugins-lv2
     - x42-plugins-standalone
