@@ -64,7 +64,7 @@ FILES=()
 {% if nvidia is defined %}
 HOOKS=(base udev autodetect modconf keyboard keymap consolefont block filesystems shutdown fsck)
 {% else %}
-HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block filesystems shutdown fsck)
+HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block filesystems shutdown fsck)
 {% endif %}
 
 

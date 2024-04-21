@@ -8,7 +8,9 @@ GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3 nvidia-drm.mod
 GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3'
 {% endif %}
 
-GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M"
+GRUB_CMDLINE_LINUX="threadirqs crashkernel=384M-:128M"
+#GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M"
+
 #{% if grub.debug is defined %}
 # GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0 i915.enable_dc=0"
 #GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0"

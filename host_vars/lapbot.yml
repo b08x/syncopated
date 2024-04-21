@@ -7,8 +7,7 @@
 # host_vars/lapbot.yml
 expected_value: "hostvars_lapbot"
 
-repos:
-  chaotic: True
+chaoticrepo: True
 
 bluetooth: True
 # share:

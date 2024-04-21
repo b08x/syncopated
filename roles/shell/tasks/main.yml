@@ -10,7 +10,6 @@
     - root
   tags: ['profile']
 
-- name: Import zsh role
-  import_role:
-    name: zsh
+- import_tasks:
+    file: zsh.yml
   tags: ['zsh', 'profile']

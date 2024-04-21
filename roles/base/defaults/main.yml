@@ -22,27 +22,34 @@ root_directory_definitions:
 
 expected_value: "role_base_defaults"
 
-System_Utilities:
+base_packages:
   - acpi
   - at
   - await
-  - bottom
-  - broot
+  - bash-completion
+  - bash-language-server
+  - bat
   - btop
   - duf
   - dust
-  - ecasound
-  - elinks
   - fd
   - fsarchiver
   - fuse3
   - fuse-common
-  - inetutils
+  - gksu
   - inxi
   - iotop
-  - lsparu
-  - lnav
   - ncdu
   - neofetch
-  - nvtop
-  - nyt
+  - numlockx
+  - rsync
+  - smartmontools
+  - sudo
+  - sysstat
+  - tree
+  - tuned
+  - unzip
+  - wget
+  - xterm
+  - yadm
+  - zenity

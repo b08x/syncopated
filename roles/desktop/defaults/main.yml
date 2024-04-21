@@ -116,8 +116,6 @@ __i3_workspaces:
 x:
   autostart: 'default'
 
----
-
 # The default directory permission mode when creating directories using `theme_directory_definitions`
 theme_directory_default_mode: '0750'
 
@@ -162,8 +160,6 @@ terminal_directory_definitions:
   - dest: ".config/tilda"
   - dest: ".guake"
 
-
----
 # defaults file for theme
 
 expected_value: "basedir_varsTheme"
@@ -365,6 +361,7 @@ colors:
 Desktop_Environment_and_Theming:
   - arandr
   - arc-icon-theme
+  - barrier
   - breeze-gtk
   - cantarell-fonts
   - chrome-gnome-shell

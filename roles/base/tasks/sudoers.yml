@@ -23,14 +23,14 @@
         group: root
         recurse: True
 
-    - name: Set NOPASSWD for user in sudoers
-      lineinfile:
-        path: /etc/sudoers.d/99-user
-        line: '{{ user.name }} ALL=(ALL:ALL) NOPASSWD: ALL'
-        validate: '/usr/sbin/visudo -cf %s'
-        create: yes
-        backup: yes
-      when: user.name != 'root'
+    # - name: Set NOPASSWD for user in sudoers
+    #   lineinfile:
+    #     path: /etc/sudoers.d/99-user
+    #     line: '{{ user.name }} ALL=(ALL:ALL) NOPASSWD: ALL'
+    #     validate: '/usr/sbin/visudo -cf %s'
+    #     create: yes
+    #     backup: yes
+    #   when: user.name != 'root'
 
     - name: Set NOPASSWD for user in polkit
       copy:

@@ -3,3 +3,5 @@
 
 libvirt:
   service: 'disabled'
+
+use_libvirt: False

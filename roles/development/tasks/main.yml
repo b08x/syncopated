@@ -1,2 +1,16 @@
 ---
 # tasks file for development
+
+- name: Development Tasks
+  debug:
+    msg: "Starting development role tasks"
+
+- import_tasks:
+    file: dev/pulsar.yml
+  when: install_pulsar is defined
+  tags: ['pulsar']
+
+- import_tasks:
+    file: dev/vscode.yml
+  when: install_vscode is defined
+  tags: ['vscode']

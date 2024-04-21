@@ -1,8 +1,9 @@
 ---
 admin_group: wheel
 
-repos:
-  syncopated:
+repos_chaotic: True
+repos_syncopated: False
+syncopated:
     mirrors:
       - "http://bender.syncopated.net/syncopated/repo"
       #      - "http://syncopated.hopto.org/syncopated/repo"

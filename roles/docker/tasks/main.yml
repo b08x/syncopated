@@ -5,9 +5,64 @@
   debug:
     msg: "Starting docker tasks"
 
-- name: show expected_value
-  debug:
-    var: docker
+
+- block:
+
+    - block:
+        - name: Add Docker repository
+          shell: |
+            yum-config-manager --add-repo \
+            https://download.docker.com/linux/centos/docker-ce.repo
+          register: result
+
+        - name: Install Docker packages
+          dnf:
+            name: "{{ item }}"
+            state: present
+          loop:
+            - docker-ce
+            - docker-ce-cli
+            - containerd.io
+            - docker-compose-plugin
+          when: result is success
+
+        - name: Add docker cli-plugins to path
+          copy:
+            src: etc/profile.d/compose.sh
+            dest: /etc/profile.d/compose.sh
+            mode: '0644'
+
+      when: ansible_distribution == 'Fedora'
+
+    - name: Install docker packages
+      aur:
+        use: paru
+        name: "{{ item }}"
+        state: present
+        extra_args: "--overwrite '*'"
+      loop:
+        - docker
+        - docker-compose
+        - lazydocker-bin
+      become: False
+      when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+
+    # - name: Install docker packages
+    #   aur:
+    #     use: paru
+    #     name: "{{ item }}"
+    #     state: present
+    #     extra_args: "--overwrite '*'"
+    #   loop:
+    #     - nvidia-container-toolkit
+    #     - nvidia-docker-compose
+    #   become: False
+    #   when:
+    #     - (ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS')
+    #     - nvidia is defined
+
+  tags: ['packages']
+
 
 # https://discuss.python.org/t/getting-requirements-to-build-wheel-did-not-run-successfully-exit-code-1/30365/2
 - block:
@@ -53,6 +108,7 @@
     groups: docker
     append: yes
   check_mode: yes
+  ignore_errors: "{{ ansible_check_mode }}"
   # register: dockergroup
   # failed_when: "not 'Group docker does not exist' in dockergroup.msg"
   tags: ['groups']

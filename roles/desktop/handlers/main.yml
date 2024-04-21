@@ -5,3 +5,7 @@
   command: bash -lc "i3-msg -s /run/user/{{ user.uid }}/i3/ipc-socket.* reload"
   become: False
   ignore_errors: True
+
+- name: Reload sxhkd
+  script: "/usr/local/bin/reload-sxhkd.sh"
+  tags: ["profile", "keybindings"]

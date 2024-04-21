@@ -1,61 +1,5 @@
 ---
 
-- block:
-
-    - block:
-        - name: Add Docker repository
-          shell: |
-            yum-config-manager --add-repo \
-            https://download.docker.com/linux/centos/docker-ce.repo
-          register: result
-
-        - name: Install Docker packages
-          dnf:
-            name: "{{ item }}"
-            state: present
-          loop:
-            - docker-ce
-            - docker-ce-cli
-            - containerd.io
-            - docker-compose-plugin
-          when: result is success
-
-        - name: Add docker cli-plugins to path
-          copy:
-            src: etc/profile.d/compose.sh
-            dest: /etc/profile.d/compose.sh
-            mode: '0644'
-
-      when: ansible_distribution == 'Fedora'
-
-    - name: Install docker packages
-      aur:
-        use: paru
-        name: "{{ item }}"
-        state: present
-        extra_args: "--overwrite '*'"
-      loop:
-        - docker
-        - docker-compose
-        - lazydocker-bin
-      become: False
-      when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
-
-    - name: Install docker packages
-      aur:
-        use: paru
-        name: "{{ item }}"
-        state: present
-        extra_args: "--overwrite '*'"
-      loop:
-        - nvidia-container-toolkit
-        - nvidia-docker-compose
-      become: False
-      when:
-        - (ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS')
-        - nvidia is defined
-
-  tags: ['packages']
 
 - block:
     - name: Ensure docker data directory exists
@@ -75,6 +19,7 @@
         backup: True
       # register: dockerstorage
       # failed_when: "not 'Destination /usr/lib/systemd/system/docker.service does not exist' in dockerstorage.msg"
+      ignore_errors: "{{ ansible_check_mode }}"
       notify: reload systemd daemon
 
 - name: Create docker config directory
@@ -105,5 +50,6 @@
   systemd:
     name: docker
     enabled: True
+  ignore_errors: "{{ ansible_check_mode }}"
   # register: dockerservice
   # failed_when: "not 'Could not find the requested service' in dockerservice.msg"

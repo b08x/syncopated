@@ -30,7 +30,7 @@
         suffix: "{{ timestamp.stdout_lines[0] }}"
       tags: ["always"]
 
-    - name: Set expected_value
+    - name: Set Distro Name
       set_fact:
         ansible_distribution: "{{ distro }}"
       when: distro is defined
@@ -68,9 +68,11 @@
       tags: ["ruby"]
 
     - role: docker
+      when: use_docker == True
       tags: ["docker"]
 
     - role: libvirt
+      when: use_libvirt == True
       tags: ["libvirt"]
 
     - role: audio
@@ -79,8 +81,17 @@
     - role: desktop
       tags: ["desktop"]
 
-    - role: applications
-      tags: ["applications"]
+    - role: multimedia
+      tags: ["multimedia"]
+
+    - role: daw
+      when: inventory_hostname in groups.get('daw', [])
+      tags: ["daw"]
+
+    - role: development
+      when: inventory_hostname in groups.get('dev', [])
+      tags: ["development"]
+
 
   post_tasks:
     - name: Cleanup old backup files
