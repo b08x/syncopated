@@ -18,7 +18,7 @@ audio_directory_definitions:
   - dest: /etc/tuned/realtime-modified
   - dest: /usr/local/share/vamp
 
-tune_for_realtime: False
+tune_for_realtime: True
 
 cpupower:
   governor: powersave
@@ -83,6 +83,8 @@ pulse_directory_default_recurse: False
 pulse_directory_definitions:
   - dest: ".config/pulse"
     mode: "0700"
+
+use_bluetooth: False
 
 audio_packages:
   - a2jmidid

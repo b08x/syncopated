@@ -3,6 +3,8 @@
 use_docker: True
 use_libvirt: True
 
+chaoticrepo: True
+
 share:
   nfs:
     parent: "{{ user.home }}"

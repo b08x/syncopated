@@ -59,16 +59,26 @@
     backup: True
   tags: ['sysctl']
 
+- import_tasks: cpupower.yml
+- import_tasks: rtkit.yml
+- import_tasks: tuned.yml
+
 - import_tasks: alsa.yml
+
+- import_tasks:
+    file: alsa.yml
+  tags: ['alsa']
+
+- import_tasks:
+    file: pulseaudio.yml
+  tags: ['pulseaudio']
 
 - import_tasks:
     file: jack.yml
   when: enable_jack == True
+  tags: ['jack']
 
 - import_tasks:
     file: pipewire.yml
-  when: enable_jack == True
-
-- import_tasks: cpupower.yml
-- import_tasks: rtkit.yml
-- import_tasks: tuned.yml
+  when: enable_pipewire == True
+  tags: ['pipewire']

@@ -113,6 +113,7 @@ packages:
     - alsa-ucm-conf
     - alsa-utils
     - ambdec
+    - python-j2cli
     # - ambix-o1
     - arandr
     - arc-icon-theme
@@ -177,6 +178,7 @@ packages:
     - ecasound
     - elinks
     - epson-inkjet-printer-escpr2
+    - eza
     - faac
     - faad2
     - fd
@@ -258,6 +260,7 @@ packages:
     - iempluginsuite
     - imagemagick
     - imv
+    - input-remapper-git
     - inetutils
     - intersect.lv2-git
     - inxi

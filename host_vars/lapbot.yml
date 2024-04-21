@@ -10,6 +10,8 @@ expected_value: "hostvars_lapbot"
 install_vscode: True
 install_pulsar: False
 
+use_bluetooth: True
+
 chaoticrepo: True
 
 bluetooth: True
