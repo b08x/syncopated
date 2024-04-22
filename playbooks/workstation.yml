@@ -20,11 +20,6 @@
       check_mode: no
       tags: ["always"]
 
-    - setup:
-    - debug:
-        msg: System {{ inventory_hostname }} has distro {{ ansible_distribution }}
-      tags: ['always']
-
     - name: Set suffix
       set_fact:
         suffix: "{{ timestamp.stdout_lines[0] }}"
@@ -35,6 +30,11 @@
         ansible_distribution: "{{ distro }}"
       when: distro is defined
       tags: ["always", "testing"]
+
+    - setup:
+    - debug:
+        msg: System {{ inventory_hostname }} has distro {{ ansible_distribution }}
+      tags: ['always']
 
     - name: Symlink /etc/os-release to /etc/system-release
       file:

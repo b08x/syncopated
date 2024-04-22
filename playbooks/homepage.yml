@@ -115,7 +115,7 @@
     #     group: "{{ user.group }}"
     #     mode: '2775'
     #     recurse: True
-
+    #
     # - name: Copy static files
     #   copy:
     #     src: ../files/homepage

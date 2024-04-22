@@ -1,6 +1,6 @@
 ---
 
-terminal: "xterm"
+terminal: "kitty"
 terminal_alt: "alacritty"
 
 dm: False

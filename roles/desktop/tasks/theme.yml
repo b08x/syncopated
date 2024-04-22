@@ -17,6 +17,21 @@
   check_mode: no
   tags: ['profile']
 
+- name: Copy theme package to temp
+  copy:
+    src: files/syncopated-theme-1.0-6-x86_64.pkg.tar.zst
+    dest: /tmp/syncopated-theme-1.0-6-x86_64.pkg.tar.zst
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: ['packages']
+
+- name: Install syncopated theme
+  pacman:
+    name: /tmp/syncopated-theme-1.0-6-x86_64.pkg.tar.zst
+    state: present
+    extra_args: --overwrite '*'
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: ['packages']
+
 # - import_tasks:
 #     file: fonts.yml
 #   tags: ['fonts']

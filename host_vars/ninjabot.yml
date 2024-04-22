@@ -17,6 +17,7 @@ nvidia:
 
 dm: False
 browser: "google-chrome-stable"
+terminal: "kitty"
 audio: "jack"
 
 # barrier:
