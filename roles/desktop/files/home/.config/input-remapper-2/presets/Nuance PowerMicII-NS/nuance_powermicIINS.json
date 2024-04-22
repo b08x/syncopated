@@ -20,7 +20,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "Return",
+        "output_symbol": "Control_L + c",
         "mapping_type": "key_macro"
     },
     {
@@ -44,7 +44,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "KEY_DOWN",
+        "output_symbol": "Left",
         "mapping_type": "key_macro"
     },
     {
@@ -56,7 +56,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "KEY_UP",
+        "output_symbol": "Right",
         "mapping_type": "key_macro"
     },
     {
@@ -68,7 +68,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "Control_L + s",
+        "output_symbol": "Return",
         "mapping_type": "key_macro"
     },
     {
@@ -80,7 +80,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "XF86AudioLowerVolume",
+        "output_symbol": "Control_L + d",
         "mapping_type": "key_macro"
     },
     {
@@ -92,7 +92,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "XF86AudioRaiseVolume",
+        "output_symbol": "q",
         "mapping_type": "key_macro"
     },
     {
@@ -104,7 +104,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "Left",
+        "output_symbol": "KEY_UP",
         "mapping_type": "key_macro"
     },
     {
@@ -116,7 +116,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "Right",
+        "output_symbol": "KEY_DOWN",
         "mapping_type": "key_macro"
     }
 ]

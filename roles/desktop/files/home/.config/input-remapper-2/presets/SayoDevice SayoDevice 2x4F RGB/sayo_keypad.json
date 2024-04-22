@@ -92,7 +92,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "XF86RotateWindows",
+        "output_symbol": "Alt_L + Prior",
         "mapping_type": "key_macro"
     }
 ]

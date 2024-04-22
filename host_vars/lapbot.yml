@@ -7,8 +7,12 @@
 # host_vars/lapbot.yml
 expected_value: "hostvars_lapbot"
 
-repos:
-  chaotic: True
+install_vscode: True
+install_pulsar: False
+
+use_bluetooth: True
+
+chaoticrepo: True
 
 bluetooth: True
 # share:

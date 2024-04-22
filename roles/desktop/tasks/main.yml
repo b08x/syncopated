@@ -10,11 +10,6 @@
     msg: "Starting desktop tasks"
   register: expected_value
 
-# - name: test expected_value
-#   debug:
-#     msg: "{{ expected_value }}"
-#   tags: ['testing']
-
 - name: Ensure desktop directories exist
   file:
     dest: "{{ desktop_directory_default_location }}/{{ item.dest }}"
@@ -26,29 +21,21 @@
   loop: "{{ desktop_directory_definitions }}"
   check_mode: no
 
+- import_tasks:
+    file: "terminal.yml"
+  tags: ['terminal']
 
-#NOTETHIS: these can be used in a seperate playbook
-# - name: Import sway role
-#   import_role:
-#     name: sway
-#   tags: ['sway']
-#   when: wm == 'sway'
-#
-# - name: Import gnome role
-#   import_role:
-#     name: gnome
-#   tags: ['gnome']
-#   when: wm == 'gnome'
+- import_tasks:
+    file: "x11.yml"
+  tags: ['x11']
 
-# if this file does not exist, lightdm will fail to start
-- name: Set dmrc to selected window manager
-  copy:
-    content: |
-      [Desktop]
-      Session={{wm }}
-    dest: "{{ user.home }}/.dmrc"
-    owner: "{{ user.name }}"
-    mode: '0644'
+- import_tasks:
+    file: "sxhkd.yml"
+  tags: ['sxhkd']
+
+- import_tasks:
+    file: "i3.yml"
+  tags: ['i3']
 
 - import_tasks:
     file: input-remapper.yml
@@ -57,6 +44,24 @@
 - import_tasks:
     file: menu.yml
   tags: ['menu']
+
+- import_tasks:
+    file: "theme.yml"
+  tags: ['theme']
+
+- import_tasks:
+    file: "thunar.yml"
+  tags: ['thunar']
+
+# if this file does not exist, lightdm will fail to start
+- name: Set dmrc to selected window manager
+  copy:
+    content: |
+      [Desktop]
+      Session={{wm}}
+    dest: "{{ user.home }}/.dmrc"
+    owner: "{{ user.name }}"
+    mode: '0644'
 
 #TODO: Add dunst and picom xdg autostart desktop entries
 - name: Set dunst config
@@ -88,33 +93,6 @@
     mode: '0644'
     backup: False
   tags: ['redshift']
-
-- name: Install Thunar actions
-  copy:
-    src: "home/.config/Thunar/{{ item }}"
-    dest: "{{ user.home }}/.config/Thunar/{{ item }}"
-    mode: '0644'
-    backup: yes
-  with_items:
-    - accels.scm
-    - uca.xml
-  tags: ['thunar']
-
-- name: Set Thunar as default for opening directories
-  shell: xdg-mime default thunar.desktop inode/directory
-  become_user: "{{ user.name }}"
-  tags: ['thunar']
-
-- name: Set JackTrip autostart entry
-  template:
-    src: home/.config/autostart/JackTrip.desktop.j2
-    dest: "{{ user.home }}/.config/autostart/JackTrip.desktop"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: "0644"
-    backup: yes
-    validate: "dex -d %s"
-  when: jacktrip.server.args != '' or jacktrip.client.args != ''
 
 - name: Set xdg autostart applications
   synchronize:

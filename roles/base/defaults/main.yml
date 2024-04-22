@@ -19,5 +19,38 @@ root_directory_definitions:
   - dest: /etc/systemd/timesyncd.conf.d
   - dest: /etc/xdg
   - dest: /etc/mediamtx
+  - dest: /etc/autofs
 
 expected_value: "role_base_defaults"
+
+base_packages:
+  - acpi
+  - at
+  - await
+  - bash-completion
+  - bash-language-server
+  - bat
+  - btop
+  - duf
+  - dust
+  - fd
+  - fsarchiver
+  - fuse3
+  - fuse-common
+  - gksu
+  - inxi
+  - iotop
+  - ncdu
+  - neofetch
+  - numlockx
+  - rsync
+  - smartmontools
+  - sudo
+  - sysstat
+  - tree
+  - tuned
+  - unzip
+  - wget
+  - xterm
+  - yadm
+  - zenity

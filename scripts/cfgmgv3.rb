@@ -17,10 +17,10 @@ HOST_VARS = File.join(ANSIBLE_HOME, 'host_vars')
 ROLES = File.join(ANSIBLE_HOME, 'roles')
 INVENTORY = File.join(ANSIBLE_HOME, 'inventory.ini')
 
-TAGS = %(alsa always applications asdf audio autofs autologin base bash bluetooth chaotic cleanup cpupower deadbeef desktop distro dns docker dots dunst env firewall gnome-keyring groups grub gtk htop i3 input-remapper jack keybindings keys lightdm lnav makepkg media mediamtx menu mirrors mixxx mkinitcpio network nfs ntp ohmyzsh packages pacman pam paru picom pipewire profile pulsar pulseaudio python qt ranger realtime redshift repo rsyncd rtirq rtkit ruby setup shell ssh sshd sudoers sysctl terminal testing theme thunar tuned tuning updatedb user utils video vscode x xdg zsh)
-GROUPS = %(desktop workstation llmos server)
-HOSTS = %(soundbot tinybot ninjabot bender)
-PLAYBOOKS = %(workstation)
+TAGS = %(alsa always applications asdf audio autofs autologin base bash bluetooth chaotic cleanup cpupower deadbeef desktop distro dns docker dots dunst env firewall gnome-keyring groups grub gtk htop i3 input-remapper jack keybindings keys lightdm lnav makepkg media mediamtx menu mirrors mixxx mkinitcpio network nfs ntp ohmyzsh packages pacman pam paru picom pipewire profile pulsar pulseaudio python qt ranger realtime redshift repo rofi rsyncd rtirq rtkit ruby setup shell ssh sshd sudoers sysctl terminal testing theme thunar tuned tuning updatedb user utils video vscode x xdg zsh)
+GROUPS = %(all workstation dev daw llmos server)
+HOSTS = %(soundbot lapbot tinybot ninjabot bender)
+PLAYBOOKS = %(workstation homepage)
 ROLES = %(distro base audio desktop user shell terminal network ruby docker alsa pipewire jack pulseaudio audio lightdm x i3 desktop theme applications)
 
 class Ansible
@@ -44,16 +44,15 @@ CLI::UI.frame_style = :bracket
 
 CLI::UI::StdoutRouter.enable
 CLI::UI::Frame.open('syncopatedIaC') do
+
   CLI::UI::Frame.open('Playbook') do
     syncopated = Ansible.new(ANSIBLE_HOME)
-    # p syncopated.playbooks
-    # exit
     @playbook = `gum filter #{syncopated.playbooks}`.chomp
     @playbook.gsub!(/\[\]/, '')
   end
+
   CLI::UI::Frame.open('Type') do
-    @type = `gum choose "tags" "roles"`.chomp
-    # @tags.gsub!(/\n/,',')
+    @type = `gum choose "tags" "roles" "n/a"`.chomp
   end
 
   case @type
@@ -67,9 +66,12 @@ CLI::UI::Frame.open('syncopatedIaC') do
       @tags = `gum choose --no-limit #{ROLES}`.chomp
       @tags.gsub!(/\n/, ',')
     end
+  else
+
   end
+
   CLI::UI::Frame.open('Limit') do
-    @inventory = `gum choose "groups" "hosts"`.chomp
+    @inventory = `gum choose "all" "groups" "hosts"`.chomp
     # @tags.gsub!(/\n/,',')
   end
 

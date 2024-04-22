@@ -1,0 +1,79 @@
+---
+
+- name: Install backup_reaper.sh
+  copy:
+    src: home/.local/bin/backup_reaper.sh
+    dest: "{{ user.home }}/.local/bin/backup_reaper.sh"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0755'
+    backup: False
+
+- name: Check if reaper is already installed
+  stat:
+    path: /usr/local/bin/reaper
+  register: result
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- block:
+    - name: Check reaper version
+      shell: |
+        cat whatsnew.txt | grep {{ reaper.version }}
+      args:
+        chdir: /opt/REAPER
+      register: if_installed_version
+      changed_when: if_installed_version.stdout == ''
+      failed_when: "'No such file or directory' in if_installed_version.msg and if_installed_version.rc != 0"
+
+    - name: Debug msg
+      debug:
+        msg: "{{ if_installed_version }}"
+
+    - name: Backup reaper home config
+      shell: "{{ user.home }}/.local/bin/backup_reaper.sh"
+      register: reaper_backup
+      become_user: "{{ user.name }}"
+      environment:
+        PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+      tags: ['backup']
+
+    - name: Debug msg
+      debug:
+        msg: "{{ reaper_backup }}"
+
+  when: result.stat.exists
+
+- block:
+    - name: Fetch reaper
+      get_url:
+        url: "{{ reaper.url }}{{ reaper.file }}"
+        dest: "/tmp"
+        # validate_certs: no
+
+    - name: Uninstall reaper
+      shell: |
+        bash -x ./uninstall-reaper.sh --quiet --uninstall
+      args:
+        chdir: /opt/REAPER
+      when: result.stat.exists
+
+    - name: Extract and install reaper
+      shell: |
+        tar -xvf {{ reaper.file }}
+
+        cd reaper_linux_x86_64/
+
+        ./install-reaper.sh --install /opt \
+                        --integrate-desktop \
+                        --usr-local-bin-symlink
+      args:
+        chdir: "/tmp"
+
+  when: (not result.stat.exists or if_installed_version.changed)
+
+- name: Uninstall reaper only
+  shell: |
+    bash -x ./uninstall-reaper.sh --quiet --uninstall
+  args:
+    chdir: /opt/REAPER
+  when: result.stat.exists and uninstall_reaper|default(false)|bool

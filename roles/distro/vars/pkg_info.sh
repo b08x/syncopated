@@ -5,11 +5,14 @@ function process_file() {
     local filename=$1
     if [ -f "$filename" ]; then
         while IFS= read -r line; do
-            echo "$line"
-            # Add your processing logic here
-        done < "$filename"
-    else
-        echo "File not found: $filename"
+            name=$(paru -Si $line | grep -E '^Name' | choose --field-separator ': ' 1 || echo 'no name')
+
+            desc=$(paru -Si $line | grep -E '^Description' | choose --field-separator ': ' 1 || echo 'no desc')
+
+            url=$(paru -Si $line | grep -E '^URL' | choose --field-separator ': ' 1 || echo 'no url')
+            # paru -Si $line | grep -E '^Groups' | choose --field-separator ': ' 1 || echo 'no group'
+            echo "| ${name} | ${desc} |"
+          done < "$filename"
     fi
 }
 

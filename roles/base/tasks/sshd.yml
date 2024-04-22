@@ -16,11 +16,11 @@
 #   register: keyringservice
 #   tags: ['gnome-keyring']
 
-- name: Disable gnome-keyring service
-  systemd:
-    name: gnome-keyring-daemon
-    enabled: yes
-    scope: user
-  become_user: "{{ user.name }}"
-  # when: keyringservice.changed
-  tags: ['gnome-keyring']
+# - name: Disable gnome-keyring service
+#   systemd:
+#     name: gnome-keyring-daemon
+#     enabled: yes
+#     scope: user
+#   become_user: "{{ user.name }}"
+#   # when: keyringservice.changed
+#   tags: ['gnome-keyring']

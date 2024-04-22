@@ -31,7 +31,7 @@
 
     - import_tasks:
         file: chaotic.yml
-      when: chaotic is defined
+      when: chaoticrepo|bool
       tags: ["repo", "chaotic"]
 
   # when: "{{ install. }}|bool"

@@ -13,7 +13,3 @@ dm: False
 wm: "i3"
 
 browser: "google-chrome-stable"
-
-install_pulsar: True
-install_vscode: True
-install_deadbeef: True

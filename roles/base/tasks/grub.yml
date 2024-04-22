@@ -1,5 +1,4 @@
 ---
-
 #TODO: package this
 # - name: Install modified starfield theme
 #   unarchive:
@@ -13,7 +12,7 @@
     dest: /etc/default/grub
     owner: root
     group: root
-    mode: '644'
+    mode: "644"
     backup: yes
   register: default_grub
 
@@ -26,6 +25,7 @@
       {% set grub_command_map = {
         'Debian': 'update-grub',
         'Fedora': 'grub2-mkconfig -o /boot/efi/EFI/Fedora/grub.cfg\ngrub2-mkconfig -o /boot/grub2/grub.cfg',
+        'EndeavourOS': 'grub-mkconfig -o /boot/grub/grub.cfg',
         'Archlinux': 'grub-mkconfig -o /boot/grub/grub.cfg'
       } %}
 

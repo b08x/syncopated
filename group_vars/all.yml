@@ -46,8 +46,4 @@ docker:
 
 IgnorePkg: "ncurses lib32-ncurses gitui"
 
-repos:
-  syncopated:
-    mirrors:
-      - "http://bender.syncopated.net/syncopated/repo"
-      # - "http://syncopated.hopto.org/syncopated/repo"
+enable_jack: True

@@ -1,42 +1,42 @@
 <h1 align="center">
   <br>
   <img height="300" src="https://github.com/b08x/syncopatedIaC/blob/development/docs/images/pixelcrow03.png?raw=true"> <br>
-    SyncopatedIac
+    SyncopatedCaC
 <br>
 </h1>
 
-# An Audio-Centric Linux Distribution Framework
+**SyncopatedCaC: Configuration as Code for Linux Audio Workstations**
 
-This project explores Infrastructure as Code (IaC) principles to streamline Linux desktop configuration for audio production.  It aims to demonstrate best practices, promote customization, and facilitate a collaborative, community-driven approach to overcoming workflow challenges in the open-source audio engineering landscape.
+This project demonstrates the power of Configuration as Code (CaC) to manage and streamline Linux workstation setups for audio production. It provides a modular foundation for customizing your perfect audio environment, promoting a collaborative approach to Linux audio configuration.
 
-While not a production-ready solution in itself, SyncopatedIaC provides a robust foundation and modular building blocks for crafting tailored Linux audio distributions. It prioritizes professional audio software, real-time optimizations, and streamlined workflows.
+**Key Concepts & Tools**
+
+* **Configuration as Code (CaC):**  Ansible playbooks are the core of this project, ensuring your audio workstation's software, settings, and optimizations are defined in maintainable, shareable code.
+* **Customization:** yadm is used for managing personal configuration files (dotfiles), fostering experimentation and easy replication of your ideal setup across machines.
+* **Audio Focus:** Installation and configuration of DAWs, plugins, instruments, audio interfaces, and development tools are streamlined. System settings are tuned for low-latency (JACK, PulseAudio, ALSA).
+* **Community Collaboration:** Contributions from audio professionals and Linux enthusiasts will expand SyncopatedIaC and support diverse setups.
+
+**Framework Potential**
+
+SyncopatedIaC's CaC approach enables unique capabilities:
+
+* **Workflow Automation:** Improve efficiency with scripts for tasks like batch processing, backups, and syncing.
+* **Generative Audio & Data Exploration:** Leverage CaC to analyze audio, driving generative processes, visualizations, or MIDI control.
+* **Versioned Audio Projects:**  Track changes, collaborate, and manage audio projects effectively with Git.
+* **Specialized Audio Appliances:** Build custom embedded Linux audio solutions using CaC principles.
+
+**Scaling with Multiple Workstations**
+
+* **Consistent Workstations:** Run Ansible playbooks for a standardized setup across a studio.
+* **Centralized Dotfile Management:**  Use Ansible to manage dotfile distribution, ensuring a baseline experience while allowing individual customization where needed.
+
+**Invitation to Collaborate**
+
+We welcome contributions and insights to drive innovation in the open-source audio world. Share your CaC playbooks, scripts, and audio-specific Linux expertise!
 
 # demo
 
 [![asciicast](https://asciinema.org/a/654626.svg)](https://asciinema.org/a/654626)
-
-## Key Concepts
-
-- **Configuration as Code:** Ansible playbooks define the precise settings and software required for your ideal audio environment. This ensures repeatability, reduces manual intervention, and makes sharing setups across a studio or team seamless.
-- **Customization and Experimentation:** yadm manages version control for your personal dotfiles (terminal preferences, editor configs, etc.). Tweak, test, and revert with ease, while effortlessly replicating your perfected environment on new workstations.
-- **Focus on Audio:** Automate the installation and configuration of specialized DAWs, plugins, virtual instruments, and essential development tools. Optimize system settings for low-latency audio (JACK, PulseAudio, ALSA) and reliably manage hardware audio interfaces and MIDI devices.
-- **Community-Driven Collaboration:** We invite contributions and insights from audio professionals and Linux enthusiasts. Together, we can expand SyncopatedIaC's capabilities, refine practices, and support diverse audio production setups.
-
-## Framework Potential
-
-- **Automation for Streamlined Workflows:** Write custom scripts or leverage existing tools to automate repetitive audio tasks. Examples include batch processing files, backing up audio projects, syncing files between machines, and deploying processing to more powerful servers.
-- **Generative Audio and Data Exploration:** Develop scripts to analyze audio features and use this data to drive generative audio processes or create unique visualizations. Programmatically generate MIDI control data and parameter automation curves for intricate sounds within synths.
-- **Version Control for Audio Projects:** Track changes and experiment with audio projects using Git. Revert to previous versions, collaborate on sound design, and manage shared plugin/effect configurations.
-- **Specialized Audio Appliances:** Create purpose-built, embedded Linux audio solutions. Think dedicated live mixing systems, network-based audio appliances, or custom recording devices.
-
-### Scaling with Multiple Hosts
-
-Adapt the integration for different scenarios. In studios with similar setups, run this process on each machine. For centralized dotfile management, Ansible can execute a "yadm bootstrap" command on each remote host. Carefully consider which dotfiles should be standardized across workstations and which should remain unique to individual users.
-
-
-## Invitation to Collaborate
-
-We actively seek contributions and insights from experienced Linux audio professionals and developers.  Together, we can enhance this framework's capabilities, support diverse audio use cases, and drive innovation in the realm of open-source audio solutions.
 
 ---
 
@@ -113,8 +113,3 @@ ansible-inventory-grapher -i inventory.ini all -o "{}.dot" -a \
   bgcolor="darkgray";"
 
 ```
-
-
-#TODO:
-
-- [ ] add Pro Tools

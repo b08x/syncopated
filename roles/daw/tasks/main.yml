@@ -1,0 +1,21 @@
+---
+
+- name: Applications Tasks
+  debug:
+    msg: "Starting applications role tasks"
+
+- name: Ensure application directories exist
+  file:
+    path: "{{ application_directory_default_location }}/{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+    recurse: "{{ item.recurse | default(false) }}"
+  loop: "{{ application_directory_definitions }}"
+  check_mode: no
+  tags: ['profile']
+
+
+- import_tasks:
+    file: daw/main.yml
