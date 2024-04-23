@@ -1,5 +1,10 @@
 Given these ansible roles: [audio,base,daw,desktop,development,multimedia,network,shell,user}
 
+
+#TODO: https://wiki.archlinux.org/title/List_of_applications
+
+
+
 Format this table into json:
 
 | package                               | Main Category | Additional Category   |
