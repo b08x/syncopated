@@ -10,6 +10,8 @@ share:
     exports:
       - Workspace
 
+bind_share_exports: True
+
 services:
   mediamtx:
     enabled: True
