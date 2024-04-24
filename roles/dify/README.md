@@ -1,7 +1,7 @@
-Role Name
+Dify
 =========
 
-A brief description of the role goes here.
+Deploy Dify as a Docker service
 
 Requirements
 ------------
