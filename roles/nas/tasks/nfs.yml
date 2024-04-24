@@ -1,4 +1,5 @@
 ---
+
 - name: Create exports folder
   file:
     path: /srv/exports
@@ -6,6 +7,7 @@
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
     mode: "2775"
+  when: bind_share_exports|bool
 
 - block:
     - name: Ensure group nobody exists
@@ -113,6 +115,7 @@
     group: "{{ user.group }}"
   with_items:
     - "{{ share.nfs.exports }}"
+  when: bind_share_exports|bool
 
 - name: Ensure required entries are made to hosts file. # Notes 1232
   lineinfile:
@@ -122,17 +125,22 @@
   with_items:
     - "{{ share.nfs.exports }}"
   register: fstab
+  when: bind_share_exports|bool
 
 - name: reload systemd
   systemd:
     daemon_reload: yes
-  when: fstab.changed
+  when:
+    - fstab.changed
+    - bind_share_exports|bool
+  register: fstabreload
 
 - name: Mounted the binded folders
   shell: |
     mount /srv/exports/{{ item }}
   with_items:
     - "{{ share.nfs.exports }}"
+  when: fstabreload.rc == 0
 
 - name: Set the exports
   template:

@@ -1,6 +1,7 @@
 nas
 =========
 
+- [ ] the option to bind the share to a psuedofs mount?
 
 ```yaml
 ---

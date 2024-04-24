@@ -48,16 +48,39 @@ IgnorePkg: "ncurses lib32-ncurses gitui"
 
 packages:
     # - Catch2
+    # - ambix-o1
     # - ambix-o3
     # - ambix-o5
     # - antimicrox
+    # - asciiquarium-transparent-git
+    # - autotiling-rs
+    # - baudline-bin
+    # - bipscript
+    # - bipscript-ide
+    # - calcurse
     # - cpod-appimage
     # - crossguid
+    # - devdocs-desktop
+    # - distrho-ports
+    # - distrho-ports-lv2
+    # - distrho-ports-vst
+    # - distrho-ports-vst3
     # - drumrox
     # - ffmpeg4.4
     # - flashfocus
+    # - geonkick
+    # - geonkick-common
+    # - geonkick-lv2
+    # - geonkick-standalone
+    # - helm-synth
+    # - helm-synth-common
+    # - helm-synth-lv2
+    # - helm-synth-standalone
+    # - helm-synth-vst
+    # - hexchat
     # - ingen-git
     # - input-remapper-git
+    # - jack_link
     # - kissfft
     # - kvantum-qt5
     # - kvantum-theme-nordic-git
@@ -67,12 +90,15 @@ packages:
     # - mcfx-o1
     # - mcfx-o3
     # - mcfx-o5
+    # - mojave-gtk-theme
     # - network-manager-applet
     # - numix-circle-icon-theme-git
     # - numix-icon-theme-git
     # - nwg-wrapper
     # - obs-rtspserver
+    # - octopi
     # - pgmodeler
+    # - pgvector
     # - pipewire
     # - pipewire-alsa
     # - pipewire-audio
@@ -82,8 +108,12 @@ packages:
     # - playerctl
     # - poweralertd
     # - raul
+    # - scala-music
+    # - scala-music-scales
     # - sonic-visualiser-git
     # - sononym
+    # - sooperlooper-git
+    # - sparta-plugins
     # - swappy
     # - sway
     # - swaybg
@@ -91,6 +121,17 @@ packages:
     # - swayr
     # - sworkstyle
     # - syncopated-theme
+    # - texlive-basic
+    # - texlive-bin
+    # - texlive-coffee-stains
+    # - texlive-doc
+    # - texlive-fontsextra
+    # - texlive-fontsrecommended
+    # - texlive-latex
+    # - texlive-latexextra
+    # - texlive-latexrecommended
+    # - texlive-pictures
+    # - texlive-xetex
     # - vital-synth-git
     # - vst2sdk
     # - waybar
@@ -99,6 +140,7 @@ packages:
     # - wkhtmltopdf-static
     # - wlsunset
     # - wofi
+    # - wthrr-git
     # - xf86-video-intel
     - a2jmidid
     - adobe-source-han-sans-cn-fonts
@@ -113,14 +155,12 @@ packages:
     - alsa-ucm-conf
     - alsa-utils
     - ambdec
-    - python-j2cli
-    # - ambix-o1
     - arandr
     - arc-icon-theme
     - archlinux-xdg-menu
     - aria2
     - ascii-image-converter
-    # - asciiquarium-transparent-git
+    - asciiquarium-git
     - aspell-en
     - atool
     - aubio
@@ -128,23 +168,19 @@ packages:
     - audiofile
     - autofs
     - autorandr
-    # - autotiling-rs
     - await
     - awesome-terminal-fonts
+    - bandwhich
     - barrier
     - bash-completion
     - bash-language-server
     - bat
-    # - baudline-bin
     - beautysh
-    # - bipscript
-    # - bipscript-ide
     - bitwig-studio
     - bottom
     - breeze-gtk
     - broot
     - btop
-    # - calcurse
     - calf
     - calibre
     - cantarell-fonts
@@ -156,16 +192,13 @@ packages:
     - cmake
     - code-marketplace
     - cpupower
+    - curlie
     - darktable
     - dconf
-    # - devdocs-desktop
     - dex
-    # - distrho-ports
-    # - distrho-ports-lv2
-    # - distrho-ports-vst
-    # - distrho-ports-vst3
     - djvulibre
     - doggo
+    - downgrade
     - dragonfly-reverb
     - dragonfly-reverb-clap
     - dragonfly-reverb-lv2
@@ -201,10 +234,6 @@ packages:
     - gedit-plugins
     - gedit-smart-home
     - geoclue
-    # - geonkick
-    # - geonkick-common
-    # - geonkick-lv2
-    # - geonkick-standalone
     - gimp
     - git
     - git-delta
@@ -214,6 +243,7 @@ packages:
     - github-cli
     - gitui
     - gksu
+    - glow
     - gnome-common
     - gnome-keyring
     - gnu-free-fonts
@@ -244,12 +274,6 @@ packages:
     - gum
     - gummi
     - gvfs-smb
-    # - helm-synth
-    # - helm-synth-common
-    # - helm-synth-lv2
-    # - helm-synth-standalone
-    # - helm-synth-vst
-    # - hexchat
     - highlight
     - hspell
     - html2md
@@ -257,11 +281,12 @@ packages:
     - hydrogen-git
     - i3-wm
     - i3status-rust
+    - i7z
     - iempluginsuite
     - imagemagick
     - imv
-    - input-remapper-git
     - inetutils
+    - input-remapper-git
     - intersect.lv2-git
     - inxi
     - iotop
@@ -271,7 +296,6 @@ packages:
     - jack-example-tools
     - jack-keyboard
     - jack_capture
-    # - jack_link
     - jack_mixer
     - jack_snapshot
     - jack_utils
@@ -315,7 +339,7 @@ packages:
     - micro
     - midieditor
     - mixxx
-    # - mojave-gtk-theme
+    - mlocate
     - most
     - mpv
     - mpv-plugin-excerpt-git
@@ -346,7 +370,6 @@ packages:
     - obs-studio
     - obsidian
     - ocenaudio-bin
-    # - octopi
     - odt2txt
     - open-chinese-fonts
     - opendesktop-fonts
@@ -360,12 +383,12 @@ packages:
     - pandoc-cli
     - patat-bin
     - patchage
+    - patchance
     - pavucontrol
     - pdf2htmlex-appimage
     - pdfjs
     - perl-anyevent-i3
     - perl-image-exiftool
-    # - pgvector
     - picom
     - pod2man
     - polybar
@@ -378,6 +401,7 @@ packages:
     - python-adblock
     - python-chardet
     - python-conda-package-handling
+    - python-j2cli
     - python-pagelabels
     - python-pillow
     - python-pygments
@@ -406,7 +430,7 @@ packages:
     - qutebrowser
     - radiotray-ng
     - ranger
-    - raysession-git
+    - raysession
     - redshift
     - ripgrep
     - ripgrep-all
@@ -418,8 +442,6 @@ packages:
     - ruby-psych
     - rxvt-unicode
     - sc3-plugins
-    # - scala-music
-    # - scala-music-scales
     - sd
     - seahorse
     - sendmidi
@@ -428,10 +450,8 @@ packages:
     - socat
     - sonic-pi-git
     - sonic-visualiser
-    # - sooperlooper-git
     - sound-gambit
     - sox
-    # - sparta-plugins
     - speech-dispatcher
     - sshpass
     - stunnel
@@ -447,17 +467,6 @@ packages:
     - termdown
     - terminator
     - termpdf.py-git
-    # - texlive-basic
-    # - texlive-bin
-    # - texlive-coffee-stains
-    # - texlive-doc
-    # - texlive-fontsextra
-    # - texlive-fontsrecommended
-    # - texlive-latex
-    # - texlive-latexextra
-    # - texlive-latexrecommended
-    # - texlive-pictures
-    # - texlive-xetex
     - thunar
     - thunar-archive-plugin
     - thunar-volman
@@ -497,13 +506,14 @@ packages:
     - wordnet-cli
     - wordnet-common
     - wordnet-tk
-    # - wthrr-git
     - x42-plugins
     - x42-plugins-lv2
     - x42-plugins-standalone
+    - x86_energy_perf_policy
     - x264
     - x265
     - xterm
+    - yad
     - yadm
     - yt-dlp
     - zenity
