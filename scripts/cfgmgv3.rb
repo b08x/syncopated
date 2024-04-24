@@ -14,13 +14,13 @@ VARS = File.join(ANSIBLE_HOME, 'vars')
 # PLAYBOOKS = File.join(ANSIBLE_HOME, 'playbooks')
 GROUP_VARS = File.join(ANSIBLE_HOME, 'group_vars')
 HOST_VARS = File.join(ANSIBLE_HOME, 'host_vars')
-ROLES = File.join(ANSIBLE_HOME, 'roles')
+ROLES_HOME = File.join(ANSIBLE_HOME, 'roles')
 INVENTORY = File.join(ANSIBLE_HOME, 'inventory.ini')
 
 TAGS = %(alsa always applications asdf audio autofs autologin base bash bluetooth chaotic cleanup cpupower deadbeef desktop distro dns docker dots dunst env firewall gnome-keyring groups grub gtk htop i3 input-remapper jack keybindings keys lightdm lnav makepkg media mediamtx menu mirrors mixxx mkinitcpio network nfs ntp ohmyzsh packages pacman pam paru picom pipewire profile pulsar pulseaudio python qt ranger realtime redshift repo rofi rsyncd rtirq rtkit ruby setup shell ssh sshd sudoers sysctl terminal testing theme thunar tuned tuning updatedb user utils video vscode x xdg zsh)
 GROUPS = %(all workstation dev daw llmos server)
 HOSTS = %(soundbot lapbot tinybot ninjabot bender)
-PLAYBOOKS = %(workstation homepage)
+PLAYBOOKS = %(workstation homepage nas)
 ROLES = %(distro base audio desktop user shell terminal network ruby docker alsa pipewire jack pulseaudio audio lightdm x i3 desktop theme applications)
 
 class Ansible
@@ -91,7 +91,7 @@ end
 
 CLI::UI::Frame.open('Group') do
   Dir.chdir(File.join(ANSIBLE_HOME)) do
-    Open3.popen3 "ansible-playbook -C -i inventory.ini playbooks/#{@playbook}.yml --limit #{@group} --tags #{@tags}" do |_stdin, stdout, _stderr, _thread|
+    Open3.popen3 "ansible-playbook -i inventory.ini playbooks/#{@playbook}.yml --limit #{@group} --tags #{@tags}" do |_stdin, stdout, _stderr, _thread|
       while line = stdout.gets
         puts "#{line}"
       end

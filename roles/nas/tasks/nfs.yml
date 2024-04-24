@@ -101,6 +101,7 @@
     state: directory
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
+    mode: '2775'
   with_items:
     - "{{ share.nfs.exports }}"
 
