@@ -1,4 +1,4 @@
-<h3 align="center">
+<h2 align="center">
   <br>
   <img height="300" src="https://github.com/b08x/syncopatedIaC/blob/development/docs/images/pixelcrow03.png?raw=true"> <br>
     SyncopatedCaC: Configuration as Code for Linux Workstations

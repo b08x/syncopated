@@ -26,8 +26,10 @@
           - name: visiblemagic
             url: "http://192.168.36.1"
         intranetLLM:
+          - name: Agenta
+            url: "http://soundbot.syncopated.net"
           - name: SillyTavern
-            url: "http://ninjabot.syncopated.net:8008"
+            url: "http://tinybot.syncopated.net:8008"
           - name: Dify
             url: "http://ninjabot.syncopated.net/apps"
           - name: Big-AGI
@@ -35,7 +37,7 @@
           - name: Flowise
             url: "http://ninjabot.syncopated.net:3002"
           - name: Langfuse
-            url: "http://ninjabot.syncopated.net:3000"
+            url: "http://ninjabot.syncopated.net:3004"
           - name: Redis
             url: "http://ninjabot.syncopated.net:8001"
           - name: Anything-LLM
@@ -96,7 +98,6 @@
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
 
   pre_tasks:
-
     - name: Set datetime
       set_fact:
         datetime: ansible_date_time.epoch
@@ -131,7 +132,7 @@
         dest: /usr/share/nginx/html/homepage/index.html
         owner: root
         group: "{{ user.group }}"
-        mode: '0664'
+        mode: "0664"
         backup: False
 
   post_tasks:
