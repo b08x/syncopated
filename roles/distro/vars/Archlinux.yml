@@ -229,6 +229,9 @@ packages:
     - fuse-common
     - gconf
     - gedit
+    - aspell
+    - gucharmap
+    - libgit2-glib
     - gedit-dark-variant
     - gedit-markdownpreview-git
     - gedit-plugins

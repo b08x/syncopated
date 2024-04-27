@@ -26,10 +26,8 @@
           - name: visiblemagic
             url: "http://192.168.36.1"
         intranetLLM:
-          - name: Agenta
-            url: "http://soundbot.syncopated.net"
           - name: SillyTavern
-            url: "http://tinybot.syncopated.net:8008"
+            url: "http://tinybot.syncopated.net:8000"
           - name: Dify
             url: "http://ninjabot.syncopated.net/apps"
           - name: Big-AGI
