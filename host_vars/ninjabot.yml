@@ -2,9 +2,9 @@
 
 share:
   nfs:
-    parent: "{{ user.home }}"
+    parent: "/srv"
     exports:
-      - Videos
+      - storage
 
 chaoticrepo: True
 # TODO: test whether or not this variable will overwrite the defaults with nothing..

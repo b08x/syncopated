@@ -8,11 +8,9 @@ share:
   nfs:
     parent: "{{ user.home }}"
     exports:
-      - Library
-      - Recordings
-      - Sessions
       - Workspace
-      - Studio
+
+bind_share_exports: True
 
 services:
   mediamtx:
