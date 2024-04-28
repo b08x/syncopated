@@ -1,0 +1,154 @@
+---
+
+- name: Setup and Deploy Audapolis App
+  hosts: soundbot
+  become: False
+
+  vars:
+    repo_url: "https://github.com/bugbakery/audapolis.git"
+    project_dir: "{{ lookup('env','HOME') }}/Workspace/audapolis"
+    virtualenv_name: "audapolis_venv"
+    path:
+      - "{{ lookup('env','HOME') }}/.pyenv/bin"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+    ZSH: "/usr/share/oh-my-zsh"
+
+  pre_tasks:
+    - name: Gather system facts
+      ansible.builtin.setup:
+        gather_subset: network
+
+    - block:
+        - name: Install 'pyenv' (if not already installed)
+          shell: curl https://pyenv.run | bash
+
+        - name: Install 'pyenv-virtualenv' plugin
+          git:
+            repo: https://github.com/pyenv/pyenv-virtualenv.git
+            dest: "{{ ansible_env.HOME }}/.pyenv/plugins/pyenv-virtualenv"
+
+      when: ansible_facts['distribution'] != 'Archlinux'
+
+    - name: Install 'pyenv' (Arch Linux)
+      when: ansible_facts['distribution'] == 'Archlinux'
+      aur:
+        use: auto
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - pyenv
+        - pyenv-virtualenv
+        - uvicorn
+        - python-fastapi
+
+    - name: Add pyenv configurations to shell (optional, recommended)
+      block:
+       - lineinfile:
+           path: "{{ ansible_env.HOME }}/.zshrc"  # Or .zshrc if Zsh is used
+           line: 'export PYENV_ROOT="$HOME/.pyenv"'
+       - lineinfile:
+           path: "{{ ansible_env.HOME }}/.zshrc"  # Or .zshrc if Zsh is used
+           line: '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"'
+       # - lineinfile:
+       #     path: "{{ ansible_env.HOME }}/.zshrc"  # Or .zshrc if Zsh is used
+       #     line: 'eval "$(pyenv init -)"'
+       - lineinfile:
+           path: "{{ ansible_env.HOME }}/.zshrc"  # Or .zshrc if Zsh is used
+           line: 'eval "$(pyenv virtualenv-init -)"'
+
+
+  tasks:
+    - name: Clone Audapolis Repository
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ project_dir }}"
+
+    - setup:
+    - debug:
+        msg: Installing Python 3.10.0
+
+    - name: check if 3.10.0 is already installed
+      stat:
+        path: "{{ ansible_env.HOME }}/.pyenv/versions/3.10.0"
+      register: python_check
+      ignore_errors: "{{ ansible_check_mode }}"
+
+    - name: Install Python 3.10
+      when: not python_check.stat.exists
+      shell: pyenv install 3.10.0
+      args:
+        chdir: "{{ project_dir }}"
+
+    - name: List existing Python virtualenvs
+      command: pyenv versions --bare
+      register: existing_venvs
+
+    - name: Create Python Virtual Environment
+      when:
+        - python_check.stat.exists
+        - "'3.10.0' not in existing_venvs.stdout"
+      shell: pyenv virtualenv 3.10.0 {{ virtualenv_name }}
+      args:
+        chdir: "{{ project_dir }}"
+
+    - name: Activate Virtual Environment
+      shell: |
+        exec "$SHELL" && \
+        pyenv activate {{ virtualenv_name }}
+      args:
+        chdir: "{{ project_dir }}"
+
+    - name: Install specified python requirements in indicated (virtualenv)
+      ansible.builtin.pip:
+        requirements: "{{ project_dir }}/server/requirements.txt"
+        virtualenv: /my_app/venv
+
+    - name: Install Poetry
+      when: ansible_facts['distribution'] == 'Archlinux'
+      pip:
+        name: "{{ item }}"
+        extra_args: "--break-system-packages"
+      with_items:
+        - poetry
+        - opentimelineio
+        - vosk
+
+    - name: Install Poetry
+      when: ansible_facts['distribution'] != 'Archlinux'
+      pip:
+        name: "{{ item }}"
+      with_items:
+        - poetry
+        - opentimelineio
+        - vosk
+        - wheel
+
+    - setup:
+    - debug:
+        msg: "Installing Server Dependencies..."
+
+    - name: Install Server Dependencies
+      shell: |
+        exec "$SHELL" && poetry install
+      args:
+        chdir: "{{ project_dir }}/server"
+
+    - setup:
+    - debug:
+        msg: "Installing App Dependencies..."
+
+    - name: Install App Dependencies
+      npm:
+        path: "{{ project_dir }}/app"
+        state: present
+
+    # - name: Start Audapolis Server (in background)
+    #   shell: nohup poetry run uvicorn app.main:app --reload &
+    #   args:
+    #     chdir: "{{ project_dir }}/server"
+    #
+    # - name: Start Audapolis Electron App
+    #   shell: npm start
+    #   args:
+    #     chdir: "{{ project_dir }}/app"
