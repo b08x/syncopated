@@ -31,7 +31,7 @@
           - name: Dify
             url: "http://ninjabot.syncopated.net/apps"
           - name: Big-AGI
-            url: "http://tinybot.syncopated.net:4000"
+            url: "http://tinybot.syncopated.net:3000"
           - name: Flowise
             url: "http://ninjabot.syncopated.net:3002"
           - name: Langfuse

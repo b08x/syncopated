@@ -1,0 +1,62 @@
+version: "3"
+services:
+  sillytavernextras:
+    container_name: sillytavernextras
+    hostname: sillytavernextras
+    image: cohee1207/sillytavern-extras
+    build:
+      context: ../../SillyTavern-Extras/
+      dockerfile: docker/Dockerfile
+      args:
+        REQUIREMENTS: requirements.txt
+    volumes:
+      - "./cache:/root/.cache"
+      - "../../SillyTavern-Extras/api_key.txt:/sillytavern-extras/api_key.txt:rw"
+      - "./chromadb:/chromadb"
+    ports:
+      - "5100:5100"
+      - "9000:9000"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - NVIDIA_VISIBLE_DEVICES=all
+    entrypoint:
+      [
+        "python",
+        "server.py",
+        "--listen",
+        "--chroma-port=9000",
+        "--enable-modules=caption,summarize,classify,embeddings,websearch,chromadb",
+      ]
+    networks:
+      sillytavern:
+        ipv4_address: 10.6.0.3
+  sillytavern:
+    build: ..
+    container_name: sillytavern
+    hostname: sillytavern
+    image: ghcr.io/sillytavern/sillytavern:latest
+    volumes:
+      - "./extensions:/home/node/app/public/scripts/extensions/third-party"
+      - "$HOME/Workspace/Characters/SillyTavern/config:/home/node/app/config"
+      - "$HOME/Workspace/Characters/SillyTavern/user:/home/node/app/public/user"
+    ports:
+      - "8008:8000"
+    environment:
+      - PUID=1000
+      - PGID=1000
+    depends_on:
+      - sillytavernextras
+    links:
+      - sillytavernextras
+    networks:
+      sillytavern:
+        ipv4_address: 10.6.0.2
+
+networks:
+  sillytavern:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.6.0.0/16
+          gateway: 10.6.0.1
