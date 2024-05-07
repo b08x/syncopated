@@ -9,6 +9,7 @@ share:
   nfs:
     parent: "{{ user.home }}"
     exports:
+      - LLMOS
       - Recordings
       - Workspace
 

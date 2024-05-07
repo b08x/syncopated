@@ -10,7 +10,14 @@
 #  /srv/nfs4/home   *(rw,sync,sec=krb5i,nohide)
 #
 # Use `exportfs -arv` to reload.
+{% if bind_share_exports|bool %}
 /srv/exports 192.168.41.0/24(rw,fsid=0,no_subtree_check,sync) 192.168.36.0/24(rw,fsid=0,no_subtree_check,sync)
 {% for item in share.nfs.exports %}
 /srv/exports/{{ item }} 192.168.41.0/24(rw,nohide,insecure,no_subtree_check,sync) 192.168.36.0/24(rw,nohide,insecure,no_subtree_check,sync)
 {% endfor %}
+{% else %}
+/srv 192.168.41.0/24(rw,fsid=0,no_subtree_check,sync) 192.168.36.0/24(rw,fsid=0,no_subtree_check,sync)
+{% for item in share.nfs.exports %}
+/srv/{{ item }} 192.168.41.0/24(rw,nohide,insecure,no_subtree_check,sync) 192.168.36.0/24(rw,nohide,insecure,no_subtree_check,sync)
+{% endfor %}
+{% endif %}
