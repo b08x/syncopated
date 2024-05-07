@@ -8,6 +8,7 @@ share:
   nfs:
     parent: "{{ user.home }}"
     exports:
+      - Recordings
       - Workspace
 
 bind_share_exports: True
@@ -42,7 +43,7 @@ x:
 i3:
   autostart:
     - "tilda"
-    - "ray-daemon --session-root ~/NetworkSessions -p 7777"
+    - "ray-daemon --session-root ~/Studio/NetworkSessions -p 7777"
     - "sleep 0.5"
     - "barriers --debug INFO --name soundbot --disable-crypto --disable-client-cert-checking -c /home/b08x/.config/Debauchee/soundbot.conf --address :24801"
     - "sleep 0.5"

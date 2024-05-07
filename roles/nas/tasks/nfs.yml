@@ -64,7 +64,10 @@
             - 32769/udp
             - 32803/tcp
             - 40418/udp
-          notify: reload firewalld
+
+        - name: reload firewalld
+          shell: "firewall-cmd --reload"
+          ignore_errors: "{{ ansible_check_mode }}"
 
       when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
 
@@ -130,17 +133,13 @@
 - name: reload systemd
   systemd:
     daemon_reload: yes
-  when:
-    - fstab.changed
-    - bind_share_exports|bool
-  register: fstabreload
+  when: (fstab.changed or bind_share_exports|bool)
 
 - name: Mounted the binded folders
   shell: |
     mount /srv/exports/{{ item }}
   with_items:
     - "{{ share.nfs.exports }}"
-  when: fstabreload.rc == 0
 
 - name: Set the exports
   template:

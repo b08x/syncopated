@@ -10,7 +10,9 @@ share:
     parent: "{{ user.home }}"
     exports:
       - Recordings
-      - Sessions
+      - Workspace
+
+bind_share_exports: True
 
 cpupower:
   governor: performance
