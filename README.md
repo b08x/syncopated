@@ -1,6 +1,7 @@
 <img align="left" height=300 src="https://github.com/b08x/syncopatedCaC/blob/development/files/workspace07.jpeg?raw=true">
 <h2>Configuration as Code for Linux Workstations</h2>
-<p>This project is an exercise in using Configuration as Code (CaC) principles to streamline the management of Linux workstations.</p>
+<p>This project is an exercise in using Configuration as Code (CaC) to streamline the management of Linux workstations.</p>
+<p>'Configuration as Code' focuses on configuring the software that runs on top of the infrastructure. This involves managing settings, packages, and other configurations for applications and services. 
 <p>The project aims for organization, reproducibility and simplicity.</p>
 <br clear="left"/>
 
