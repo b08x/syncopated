@@ -450,7 +450,7 @@ packages:
     - shotcut
     - smartmontools
     - socat
-    - sonic-pi-git
+    # - sonic-pi-git
     - sonic-visualiser
     - sound-gambit
     - sox
