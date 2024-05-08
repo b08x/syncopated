@@ -48,7 +48,7 @@
         permanent: yes
         state: enabled
         immediate: yes
-      when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+      when: ansible_os_family == 'Archlinux'
 
     - name: Permit traffic to rpcbind service (MX/Debian)
       ufw:

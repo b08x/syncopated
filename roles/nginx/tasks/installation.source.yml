@@ -5,7 +5,7 @@
     name: "{{ item }}"
     state: present
     update_cache: yes
-  with_items: 
+  with_items:
     - git
     - "@Development Tools"
     - pcre2-devel
@@ -23,7 +23,7 @@
     - git
     - pcre
     - pcre2
-  when: ansible_distribution == 'Archlinux'
+  when: ansible_os_family == 'Archlinux'
 
 - name: create nginx group
   group:

@@ -4,7 +4,7 @@
 #   unarchive:
 #     src: files/usr/share/grub/starfield.tar.gz
 #     dest: "/usr/share/grub/themes"
-#   when: ansible_distribution == 'Archlinux'
+#   when: ansible_os_family == 'Archlinux'
 
 - name: Set kernel cmdline params in grub
   template:

@@ -33,4 +33,4 @@
     #   check_mode: no
     #   tags: ['packages']
 
-  when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+  when: ansible_os_family == 'Archlinux'
