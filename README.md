@@ -1,11 +1,8 @@
-<h2>
-  <br>
-  <img align="left" src="https://github.com/b08x/syncopatedCaC/blob/development/files/workspace07.jpeg?raw=true"> <br>
-    SyncopatedCaC: Configuration as Code for Linux Workstations
-    <br clear="left"/>
-</h2>
-
-This [project](https://github.com/users/b08x/projects/9?pane=info) applies Configuration as Code (CaC) principles to streamline the management of Linux workstations for audio production and software development. The project focuses on organization, reproducibility, consistency and simplicity.
+<img align="left" height=300 src="https://github.com/b08x/syncopatedCaC/blob/development/files/workspace07.jpeg?raw=true">
+<h2>Configuration as Code for Linux Workstations</h2>
+<p>This project is an exercise in using Configuration as Code (CaC) principles to streamline the management of Linux workstations.</p>
+<p>The project aims for organization, reproducibility and simplicity.</p>
+<br clear="left"/>
 
 ## Objectives
 
