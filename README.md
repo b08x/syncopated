@@ -1,4 +1,4 @@
-<img align="left" height=450 src="https://github.com/b08x/syncopatedCaC/blob/development/files/workspace07.jpeg?raw=true"><h2>Configuration as Code for Linux Workstations</h2>
+<img align="left" height=460 src="https://github.com/b08x/syncopatedCaC/blob/development/files/workspace07.jpeg?raw=true"><h2>Configuration as Code for Linux Workstations</h2>
 This project is an exercise codified configuration. 
 
 The project prioritizes three key objectives:
