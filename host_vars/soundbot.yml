@@ -20,6 +20,8 @@ cpupower:
   governor: performance
   perf_bias: 0
 
+browser: "google-chrome-stable"
+
 #TODO: this
 # tuned:
 #   profile: powersave

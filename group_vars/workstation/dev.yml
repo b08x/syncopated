@@ -4,16 +4,6 @@ expected_value: "groupvars_workstation_dev"
 
 chaoticrepo: True
 
-terminal: "kitty"
-terminal_alt: "alacritty"
-
-audio: "jack"
-
-dm: False
-wm: "i3"
-
-browser: "google-chrome-stable"
-
 install_vscode: True
 install_pulsar: True
 # simply just defining the variable will install the thing
