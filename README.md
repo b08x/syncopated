@@ -1,9 +1,9 @@
-<h2 align="center">
+<h2>
   <br>
-  <img height="300" src="https://github.com/b08x/syncopatedIaC/blob/development/docs/images/pixelcrow03.png?raw=true"> <br>
+  <img height="300" src="https://github.com/b08x/syncopatedCaC/blob/development/files/workspace07.jpeg?raw=true"> <br>
     SyncopatedCaC: Configuration as Code for Linux Workstations
 <br>
-</h1>
+</h2>
 
 This [project](https://github.com/users/b08x/projects/9?pane=info) applies Configuration as Code (CaC) principles to streamline the management of Linux workstations for audio production and software development. The project focuses on organization, reproducibility, consistency and simplicity.
 
@@ -71,7 +71,7 @@ This [project](https://github.com/users/b08x/projects/9?pane=info) applies Confi
     * Manage model versions, dependencies, and resource allocation across your workstations.
     * Optimize networking and storage configurations to streamline access and data transfer for LLM tasks.
 
-## Call to Action
+## Collaboration
 
 Contributions from audio professionals, software developers, and Linux enthusiasts are welcome. Let's collaborate to build a versatile solution for managing Linux audio and development environments!
 
