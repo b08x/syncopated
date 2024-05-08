@@ -166,8 +166,7 @@ packages:
     - aubio
     - audacity
     - audiofile
-    - autofs
-    - autorandr
+    # - autofs
     - await
     - awesome-terminal-fonts
     - bandwhich

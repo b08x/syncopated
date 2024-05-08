@@ -1,5 +1,16 @@
 ---
 
+# - name: mount_names
+#   set_fact:
+#     mount_names: "{{ ansible_mounts | map(attribute='mount') | list}}"
+#   tags: ['nfstest']
+#
+# - debug:
+#     var: mount_names
+#   loop: "{{ share.nfs.exports }}"
+#   failed_when: item not in mount_names
+#   tags: ['nfstest']
+
 - name: Create exports folder
   file:
     path: /srv/exports
@@ -64,7 +75,10 @@
             - 32769/udp
             - 32803/tcp
             - 40418/udp
-          notify: reload firewalld
+
+        - name: reload firewalld
+          shell: "firewall-cmd --reload"
+          ignore_errors: "{{ ansible_check_mode }}"
 
       when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
 
@@ -117,7 +131,7 @@
     - "{{ share.nfs.exports }}"
   when: bind_share_exports|bool
 
-- name: Ensure required entries are made to hosts file. # Notes 1232
+- name: Ensure required entries are made to fstab file
   lineinfile:
     path: /etc/fstab
     state: present
@@ -127,20 +141,27 @@
   register: fstab
   when: bind_share_exports|bool
 
-- name: reload systemd
+- name: Reload systemd
   systemd:
     daemon_reload: yes
-  when:
-    - fstab.changed
-    - bind_share_exports|bool
-  register: fstabreload
+  when: (fstab.changed or bind_share_exports|bool)
 
-- name: Mounted the binded folders
-  shell: |
-    mount /srv/exports/{{ item }}
-  with_items:
-    - "{{ share.nfs.exports }}"
-  when: fstabreload.rc == 0
+# https://docs.ansible.com/ansible/latest/collections/ansible/posix/mount_module.html#parameter-state
+- name: Mount and bind the exports
+  ansible.posix.mount:
+    path: "/srv/exports/{{ item }}"
+    src: "{{ user.home }}/{{ item }}"
+    opts: bind
+    state: ephemeral
+    fstype: none
+  with_items: "{{ share.nfs.exports }}"
+  ignore_errors: True
+
+# - name: Mounted the binded folders
+#   shell: |
+#     mount /srv/exports/{{ item }}
+#   with_items:
+#     - "{{ share.nfs.exports }}"
 
 - name: Set the exports
   template:

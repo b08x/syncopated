@@ -65,6 +65,6 @@
         # - .config/i3/autostart
 
   notify:
-   - Reload sxhkd
+   - Reload i3
    - Reload sxhkd
   tags: ['profile']

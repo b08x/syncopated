@@ -6,7 +6,8 @@ share:
     exports:
       - storage
 
-chaoticrepo: True
+bind_share_exports: False
+
 # TODO: test whether or not this variable will overwrite the defaults with nothing..
 # docker:
   # service: 'enabled'
@@ -95,7 +96,7 @@ host:
       - nvidia-470xx-dkms
       - nvidia-470xx-settings
       - nvidia-470xx-utils
-      - nvidia-container-runtime
+      # - nvidia-container-runtime
       - nvidia-container-toolkit
       # - nvidia-docker
       - nvidia-docker-compose

@@ -88,11 +88,11 @@
 </action>
 <action>
 	<icon>soundbot</icon>
-	<name>convert to wav</name>
+	<name>convert to ogg</name>
 	<submenu></submenu>
 	<unique-id>1642234727848050-4</unique-id>
-	<command>xterm -class &apos;soundbot&apos; -T &quot;convert to wav&quot; -e /home/b08x/.local/bin/convert_to_wav.rb %F</command>
-	<description>convert file to wav</description>
+	<command>xterm -class &apos;soundbot&apos; -T &quot;convert to ogg&quot; -e /home/b08x/Utils/bin/convert2ogg.sh %F</command>
+	<description>convert file to ogg</description>
 	<range></range>
 	<patterns>*</patterns>
 	<audio-files/>
