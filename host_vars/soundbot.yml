@@ -2,8 +2,6 @@
 
 ansible_distribution: EndeavourOS
 
-chaoticrepo: False
-
 share:
   nfs:
     parent: "{{ user.home }}"
@@ -27,15 +25,6 @@ cpupower:
 #   profile: powersave
 
 audio: "jack"
-
-# barrier:
-#   client:
-#     name: soundbot
-#     server: "[tinybot]:24800"
-#   server:
-#     name: soundbot
-#     address: "[soundbot]:24801"
-#     config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
 
 x:
   autostart:

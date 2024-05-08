@@ -13,3 +13,5 @@ dm: False
 wm: "i3"
 
 browser: "google-chrome-stable"
+
+chaoticrepo: True

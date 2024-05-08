@@ -1,9 +1,10 @@
 ---
 #setup repositories
-- name: show expected_value
-  debug:
-    var: ansible_os_family
-  tags: ['always']
+# - name: show expected_value
+#   debug:
+#     var: ansible_os_family
+#   tags: ['always']
+
 - block:
     # - name: Import syncopated repo key
     #   community.general.pacman_key:
@@ -29,6 +30,14 @@
         backup: True
       tags: ["pacman"]
 
+    - name: Set makepkg to use aria2
+      template:
+        src: etc/makepkg.conf.j2
+        dest: /etc/makepkg.conf
+        mode: "0644"
+        backup: True
+      tags: ["makepkg"]
+
     - import_tasks:
         file: chaotic.yml
       when: chaoticrepo|bool
@@ -41,14 +50,6 @@
 
 - name: Flush handlers
   meta: flush_handlers
-
-- name: Set makepkg to use aria2
-  template:
-    src: etc/makepkg.conf.j2
-    dest: /etc/makepkg.conf
-    mode: "0644"
-    backup: True
-  tags: ["makepkg"]
 
 - import_tasks:
     file: paru.yml

@@ -2,14 +2,14 @@
 # tasks file for roles/distro
 
 - name: Load a variable file based on the OS type, or a default if not found. the file.
-  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
   vars:
     params:
       files:
         # - '{{ansible_distribution}}.yml'
-        # - '{{ansible_os_family}}.yml'
-        - Archlinux.yml
-        - main.yml
+        - '{{ansible_os_family}}.yml'
+        # - Archlinux.yml
+        # - main.yml
       paths:
         - 'vars'
   tags: ['always']
