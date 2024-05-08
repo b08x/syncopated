@@ -85,6 +85,7 @@ super + x
 
 #super + End
 #	terminator
+
 {% if browser == 'google-chrome-stable' %}
 super + Home
   {{browser }} --disable-gpu %U
@@ -92,6 +93,7 @@ super + Home
 super + shift + Home
   {{ browser }} --disable-gpu --incognito %U
 {% endif %}
+
 super + KP_Enter
   {{ terminal }} -e ranger
 

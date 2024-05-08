@@ -1,32 +1,36 @@
 {% if inventory_hostname == 'tinybot' %}
-file:///mnt/soundbot/Workspace/syncopatedNotes/website/assets
+file:///mnt/bender
+file:///mnt/ninjabot
 file:///mnt/soundbot
-file:///mnt/bender
-file://{{ user.home }}/Workspace/Archive
-file://{{ user.home }}/Workspace
 file://{{ user.home }}/Documents
 file://{{ user.home }}/Downloads
+file://{{ user.home }}/LLMOS
 file://{{ user.home }}/Library
 file://{{ user.home }}/Pictures
 file://{{ user.home }}/Recordings
 file://{{ user.home }}/Sessions
 file://{{ user.home }}/Videos
+file://{{ user.home }}/Workspace
+file://{{ user.home }}/Workspace/Archive
 {% elif inventory_hostname == 'tinybot' %}
-file:///{{ user.home }}Workspace/syncopatedNotes/website/assets
 file:///mnt/bender
-file://{{ user.home }}/Workspace/Archive
-file://{{ user.home }}/Workspace
+file:///mnt/ninjabot
+file:///mnt/tinybot
 file://{{ user.home }}/Documents
 file://{{ user.home }}/Downloads
+file://{{ user.home }}/LLMOS
 file://{{ user.home }}/Library
 file://{{ user.home }}/Pictures
 file://{{ user.home }}/Recordings
 file://{{ user.home }}/Sessions
 file://{{ user.home }}/Videos
+file://{{ user.home }}/Workspace
+file://{{ user.home }}/Workspace/Archive
 {% else %}
 file:///mnt/bender
-file://{{ user.home }}/Workspace/Archive
-file://{{ user.home }}/Workspace
+file:///mnt/ninjabot
+file:///mnt/soundbot
+file:///mnt/tinybot
 file://{{ user.home }}/Documents
 file://{{ user.home }}/Downloads
 file://{{ user.home }}/Library
@@ -34,4 +38,6 @@ file://{{ user.home }}/Pictures
 file://{{ user.home }}/Recordings
 file://{{ user.home }}/Sessions
 file://{{ user.home }}/Videos
+file://{{ user.home }}/Workspace
+file://{{ user.home }}/Workspace/Archive
 {% endif %}

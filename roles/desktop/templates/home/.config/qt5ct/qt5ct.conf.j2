@@ -1,13 +1,13 @@
 [Appearance]
-color_scheme_path={{ user.home }}/.config/qt6ct/colors/syncopated.conf
+color_scheme_path={{ user.home }}/.config/qt5ct/colors/syncopated.conf
 custom_palette=true
 icon_theme={{ gtk.theme.icons }}
 standard_dialogs=gtk3
 style={{ qtstyle }}
 
 [Fonts]
-fixed="Hack Nerd Font,12,-1,5,50,0,0,0,0,0"
-general="Hack Nerd Font,12,-1,5,50,0,0,0,0,0"
+fixed="{{ font.mono.name }},{{ font.primary.size }},-1,5,50,0,0,0,0,0"
+general="{{ font.primary.name }},{{ font.primary.size }},-1,5,50,0,0,0,0,0"
 
 [Interface]
 activate_item_on_single_click=1
