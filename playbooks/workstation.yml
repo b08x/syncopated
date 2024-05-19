@@ -6,7 +6,7 @@
     path:
       - "{{ lookup('env','HOME') }}/.asdf/bin"
       - "{{ lookup('env','HOME') }}/.local/bin"
-      - "{{ lookup('env','HOME') }}/Utils/bin"      
+      - "{{ lookup('env','HOME') }}/Utils/bin"
   environment:
     PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
@@ -86,7 +86,7 @@
       tags: ["multimedia"]
 
     - role: daw
-      when: inventory_hostname in groups.get('daw', [])
+      # when: inventory_hostname in groups.get('daw', [])
       tags: ["daw"]
 
     - role: development

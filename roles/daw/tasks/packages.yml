@@ -64,33 +64,3 @@
 #
 #   become: False
 #   tags: ['packages']
-
-
-- import_tasks:
-    file: analysis/vamp.yml
-  tags: ['vamp']
-
-- import_tasks:
-    file: analysis/sonicannotator.yml
-  tags: ['sonicannotator']
-
-- import_tasks:
-    file: analysis/soniclineup.yml
-  tags: ['soniclineup']
-
-- import_tasks:
-    file: analysis/tony.yml
-  tags: ['tony']
-
-- import_tasks:
-    file: touchosc/main.yml
-  tags: ['touchosc']
-
-- import_tasks:
-    file: mixxx.yml
-  when: mixxx is defined
-  tags: ['mixxx']
-
-- import_tasks:
-    file: reaper.yml
-  tags: ['reaper']
