@@ -10,9 +10,9 @@ services:
       args:
         REQUIREMENTS: requirements.txt
     volumes:
-      - "./cache:/root/.cache"
       - "../../SillyTavern-Extras/api_key.txt:/sillytavern-extras/api_key.txt:rw"
       - "./chromadb:/chromadb"
+      - "./cache:/root/.cache"
     ports:
       - "5100:5100"
       - "9000:9000"
@@ -26,7 +26,7 @@ services:
         "server.py",
         "--listen",
         "--chroma-port=9000",
-        "--enable-modules=caption,summarize,classify,embeddings,websearch,chromadb",
+        "--enable-modules=caption,summarize,classify,embeddings,websearch,chromadb,sd",
       ]
     networks:
       sillytavern:
@@ -39,7 +39,7 @@ services:
     volumes:
       - "./extensions:/home/node/app/public/scripts/extensions/third-party"
       - "$HOME/Workspace/Characters/SillyTavern/config:/home/node/app/config"
-      - "$HOME/Workspace/Characters/SillyTavern/user:/home/node/app/public/user"
+      - "$HOME/Workspace/Characters/SillyTavern/data:/home/node/app/data"
     ports:
       - "8008:8000"
     environment:

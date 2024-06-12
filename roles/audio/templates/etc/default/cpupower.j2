@@ -1,11 +1,13 @@
 # Define CPUs governor
 # valid governors: ondemand, performance, powersave, conservative, userspace.
-governor='{{ cpupower.governor }}'
+governor="{{ cpupower.governor }}"
 
+{% if cpu.min_freq is defined %}
 # Limit frequency range
 # Valid suffixes: Hz, kHz (default), MHz, GHz, THz
-#min_freq=""
-#max_freq=""
+min_freq="{{ cpu.min_freq }}MHz"
+max_freq="{{ cpu.max_freq }}Mhz"
+{% endif %}
 
 # Specific frequency to be set.
 # Requires userspace governor to be available.

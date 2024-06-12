@@ -16,6 +16,10 @@ bind_share_exports: False
 
 nvidia:
 
+cpu:
+  min_freq: 3000
+  max_freq: 3200
+
 dm: False
 browser: "google-chrome-stable"
 terminal: "kitty"

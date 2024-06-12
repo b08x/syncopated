@@ -1,2 +1,77 @@
 ---
 # tasks file for sillytavern
+- name: Deploy Sillytavern
+  debug:
+    msg: "Deploying Sillytavern"
+
+- name: Fetch SillyTavern repository
+  git:
+    repo: "{{ SillyTavern.repo }}"
+    dest: "{{ SillyTavern.path }}"
+    recursive: yes
+    accept_hostkey: yes
+    update: no
+    force: no
+    version: release
+  check_mode: no
+
+- name: Fetch SillyTavern Extras repository
+  git:
+    repo: "{{ SillyTavern.extras }}"
+    dest: "{{ SillyTavern.path }}/extras"
+    recursive: yes
+    accept_hostkey: yes
+    update: no
+    force: no
+    version: main
+  check_mode: no
+
+- name: Create docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ SillyTavern.path }}/docker/docker-compose.yml"
+    mode: '0644'
+
+- name: Stop any running Sillytavern containers
+  docker_container:
+    name: "{{ item }}"
+    state: stopped
+  with_items:
+    - sillytavern
+    - sillytavernextras
+  ignore_errors: yes
+
+- name: Assert no Sillytavern containers are running
+  assert:
+    that: "docker ps -aqf 'name=sillytavern' | wc -l == 0"
+    fail_msg: "Sillytavern containers are still running. Please stop them manually."
+
+- name: Pull SillyTavern image
+  docker_image:
+    name: ghcr.io/sillytavern/sillytavern:latest
+    source: registry
+    state: present
+
+- name: Build SillyTavern Extras image
+  docker_image:
+    name: cohee1207/sillytavern-extras
+    path: ../../SillyTavern-Extras/
+    build:
+      dockerfile: docker/Dockerfile
+      args:
+        REQUIREMENTS: requirements.txt
+    source: build
+    state: present
+
+- name: Build SillyTavern image
+  docker_image:
+    name: ghcr.io/sillytavern/sillytavern:latest
+    path: ..
+    source: build
+    state: present
+
+- name: Bring up SillyTavern containers
+  docker_compose:
+    project_name: sillytavern
+    file: /path/to/docker-compose.yml
+    state: started

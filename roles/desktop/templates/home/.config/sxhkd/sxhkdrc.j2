@@ -118,3 +118,9 @@ control + alt + End
 
 control + alt + Home
   uxterm -class 'backup' -e sudo shutdown -r now
+
+XF86AudioMicMute
+  sendmidi dev 'Midi Through Port-0' cc 13 127
+
+super + comma
+  sendmidi dev 'Midi Through Port-0' cc 13 0

@@ -1,2 +1,8 @@
 ---
 # defaults file for sillytavern
+
+SillyTavern:
+  repo: git@github.com:b08x/SillyTavern.git
+  extras: git@github.com:b08x/SillyTavern-Extras.git
+  path: "{{ lookup('env','HOME') }}/Workspace/SillyTavern"
+  version: release
