@@ -5,12 +5,12 @@ services:
     hostname: sillytavernextras
     image: cohee1207/sillytavern-extras
     build:
-      context: ../../SillyTavern-Extras/
+      context: ../extras/
       dockerfile: docker/Dockerfile
       args:
         REQUIREMENTS: requirements.txt
     volumes:
-      - "../../SillyTavern-Extras/api_key.txt:/sillytavern-extras/api_key.txt:rw"
+      - "../extras/api_key.txt:/sillytavern-extras/api_key.txt:rw"
       - "./chromadb:/chromadb"
       - "./cache:/root/.cache"
     ports:
@@ -26,7 +26,7 @@ services:
         "server.py",
         "--listen",
         "--chroma-port=9000",
-        "--enable-modules=caption,summarize,classify,embeddings,websearch,chromadb,sd",
+        "--enable-modules=caption,summarize,classify,embeddings,websearch,chromadb,sd,coqui-tts",
       ]
     networks:
       sillytavern:

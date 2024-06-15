@@ -1,0 +1,109 @@
+app:
+  description: Braid two texts into one
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: completion
+  name: Text Braid
+model_config:
+  agent_mode:
+    enabled: false
+    max_iteration: 5
+    strategy: function_call
+    tools: []
+  annotation_reply:
+    enabled: false
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    datasets:
+      datasets: []
+    retrieval_model: single
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    image:
+      detail: high
+      enabled: true
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+  model:
+    completion_params:
+      stop: []
+    mode: chat
+    name: gemini-1.5-pro-latest
+    provider: google
+  more_like_this:
+    enabled: false
+  opening_statement: null
+  pre_prompt: 'Here is the context for the image generation task:
+
+    <context>
+
+    {{CONTEXT}}
+
+    </context>
+
+
+    Here is the first descriptive statement about the image to generate:
+
+    <statement1>
+
+    {{STATEMENT1}}
+
+    </statement1>
+
+
+    And here is the second descriptive statement about the image:
+
+    <statement2>
+
+    {{STATEMENT2}}
+
+    </statement2>
+
+
+    Carefully read the context and the two statements. Then, in the scratchpad space
+    below, think through how you could combine the key elements of the two statements
+    into a single imperative statement that could be used as a prompt to generate
+    an image. The imperative statement should be worded as a command and capture the
+    most salient details from the two original statements.
+
+
+    Now, provide your final imperative mood statement that combines the two original
+    statements into a single prompt for image generation. Write this inside <imperative_statement>
+    tags.'
+  prompt_type: simple
+  retriever_resource:
+    enabled: false
+  sensitive_word_avoidance:
+    configs: []
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form:
+  - text-input:
+      default: ''
+      label: CONTEXT
+      max_length: 48
+      required: true
+      variable: CONTEXT
+  - paragraph:
+      default: ''
+      label: STATEMENT1
+      required: true
+      variable: STATEMENT1
+  - paragraph:
+      default: ''
+      label: STATEMENT2
+      required: true
+      variable: STATEMENT2
