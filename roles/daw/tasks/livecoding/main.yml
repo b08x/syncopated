@@ -1,9 +1,9 @@
 ---
 
-- import_tasks:
-    file: sonic-pi.yml
-  tags: ['sonic-pi']
-
-- import_tasks:
-    file: bipscript.yml
-  tags: ['bipscript']
+# - import_tasks:
+#     file: sonic-pi.yml
+#   tags: ['sonic-pi']
+#
+# - import_tasks:
+#     file: bipscript.yml
+#   tags: ['bipscript']

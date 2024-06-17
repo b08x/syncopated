@@ -37,8 +37,6 @@ i3:
     - "tilda"
     - "ray-daemon --session-root ~/Studio/NetworkSessions -p 7777"
     - "sleep 0.5"
-    - "barriers --debug INFO --name soundbot --disable-crypto --disable-client-cert-checking -c /home/b08x/.config/Debauchee/soundbot.conf --address :24801"
-    - "sleep 0.5"
     - "barrierc -f --no-tray --debug INFO --name soundbot --disable-crypto [tinybot]:24800"
   tray_output: "primary"
   assignments: "default"

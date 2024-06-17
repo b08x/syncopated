@@ -36,7 +36,10 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color='bg:#141414,bg+:#3F3F3F,info:
 
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local
 
-
-{% if inventory_hostname == 'ninjabot' %}
+{% if inventory_hostname  == 'ninjabot' %}
 export PATH="$HOME/.bun/bin:$PATH"
 {% endif %}
+
+export STORAGE="/mnt/ninjabot/storage"
+export WORKSPACE="$HOME/Workspace"
+export ASSET_FOLDER="$HOME/Library"

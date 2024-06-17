@@ -1,0 +1,18 @@
+---
+
+- name: set teiler profiles
+  copy:
+    src: home/.config/teiler
+    dest: "{{ user.home }}/.config/"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    backup: false
+
+- name: set teiler config
+  template:
+    src: home/.config/teiler/config.j2
+    dest: "{{ user.home }}/.config/teiler/config"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: false
