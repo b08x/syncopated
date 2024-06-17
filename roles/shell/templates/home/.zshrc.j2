@@ -118,10 +118,6 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 
 [[ -f /usr/share/zsh/site-functions/git-flow-completion.zsh ]] && source /usr/share/zsh/site-functions/git-flow-completion.zsh
 
-if [ -x "$(command -v glab)" ]; then
-source <(glab completion -s zsh); compdef _glab glab
-fi
-
 # completion; use cache if updated within 24h
 autoload -Uz compinit
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
