@@ -32,11 +32,11 @@
     dest: "{{ SillyTavern.path }}/docker/docker-compose-with-extras.yml"
     mode: '0644'
 
-- name: Build the images and bring up the containers
-  shell: |
-    docker-compose -f docker-compose-with-extras.yml up --build -d
-  args:
-    chdir: "{{ SillyTavern.path }}/docker"
+# - name: Build the images and bring up the containers
+#   shell: |
+#     docker-compose -f docker-compose-with-extras.yml up --build -d
+#   args:
+#     chdir: "{{ SillyTavern.path }}/docker"
 
 # - name: Stop any running Sillytavern containers
 #   docker_container:

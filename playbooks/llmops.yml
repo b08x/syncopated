@@ -43,3 +43,6 @@
 
     - role: sillytavern
       tags: ["sillytavern"]
+
+    - role: flowise
+      tags: ["flowise"]

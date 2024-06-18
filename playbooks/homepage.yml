@@ -13,6 +13,8 @@
         intranet:
           - name: hookerbot
             url: "http://hookerbot"
+          - name: visiblemagic
+            url: "http://192.168.41.50"
           - name: linkding
             url: "http://bender.syncopated.net:9090/bookmarks"
           - name: pihole
@@ -23,47 +25,45 @@
             url: "http://ninjabot.syncopated.net:32400/web"
           - name: qbittorrent
             url: "http://bender.syncopated.net:8080"
-          - name: visiblemagic
-            url: "http://192.168.36.1"
         intranetLLM:
           - name: Dify
             url: "http://ninjabot.syncopated.net/apps"
-          - name: Agenta
-            url: "http://soundbot/apps"
+          - name: Flowise
+            url: "http://ninjabot.syncopated.net:3002"
           - name: SillyTavern
             url: "http://ninjabot.syncopated.net:8008"
           - name: Big-AGI
-            url: "http://tinybot.syncopated.net:3000"
-          - name: Flowise
-            url: "http://ninjabot.syncopated.net:3002"
+            url: "http://localhost:3001"
           - name: Langfuse
-            url: "http://ninjabot.syncopated.net:3004"
+            url: "http://ninjabot.syncopated.net:3000"
+          - name: Agenta
+            url: "http://soundbot/apps"
           - name: Redis
             url: "http://ninjabot.syncopated.net:8001"
         webtools:
-          - name: gitlab
-            url: "https://gitlab.com/b08x"
-          - name: github
-            url: "https://github.com"
-          - name: google search console
-            url: "https://search.google.com/search-console?resource_id=https%3A%2F%2Fb08x.github.io%2F"
           - name: gmail
             url: "https://gmail.google.com"
-          - name: reddit
-            url: "https://www.reddit.com/"
+          - name: github
+            url: "https://github.com"
+          - name: gitlab
+            url: "https://gitlab.com/b08x"
           - name: youtube
             url: "https://www.youtube.com/"
+          - name: reddit
+            url: "https://www.reddit.com/"
+          - name: google search console
+            url: "https://search.google.com/search-console?resource_id=https%3A%2F%2Fb08x.github.io%2F"
         webtoolsmisc:
           - name: Huggingface
             url: "https://huggingface.co/"
           - name: LLaVA
             url: "https://llava.hliu.cc/"
+          - name: llama-parse
+            url: "https://cloud.llamaindex.ai/"            
           - name: colors-between
             url: "https://hexcolor.co/colors-between"
           - name: d2 playground
             url: "https://play.d2lang.com/?script=qlDQtVOo5AIEAAD__w%3D%3D&"
-          - name: llama-parse
-            url: "https://cloud.llamaindex.ai/"
         webtoolsLLM:
           - name: Anthropic Console
             url: "https://console.anthropic.com/"

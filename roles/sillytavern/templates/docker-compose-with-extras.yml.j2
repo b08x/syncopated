@@ -1,6 +1,9 @@
-version: "3"
 services:
   sillytavernextras:
+    deploy:
+        resources:
+            limits:
+                memory: 4096M
     container_name: sillytavernextras
     hostname: sillytavernextras
     image: cohee1207/sillytavern-extras
@@ -11,8 +14,8 @@ services:
         REQUIREMENTS: requirements.txt
     volumes:
       - "../extras/api_key.txt:/sillytavern-extras/api_key.txt:rw"
-      - "./chromadb:/chromadb"
-      - "./cache:/root/.cache"
+      - chromadb-data-volume:/chromadb
+      - sillytavernextras-cache-volume:/root/.cache
     ports:
       - "5100:5100"
       - "9000:9000"
@@ -26,22 +29,25 @@ services:
         "server.py",
         "--listen",
         "--chroma-port=9000",
-        "--enable-modules=caption,summarize,classify,embeddings,websearch,chromadb,sd,coqui-tts",
+        "--enable-modules=caption,summarize,classify,embeddings,websearch,chromadb,coqui-tts",
       ]
     networks:
-      sillytavern:
-        ipv4_address: 10.6.0.3
+      - sillytavern
   sillytavern:
+    deploy:
+        resources:
+            limits:
+                memory: 4096M
     build: ..
     container_name: sillytavern
     hostname: sillytavern
     image: ghcr.io/sillytavern/sillytavern:latest
     volumes:
-      - "./extensions:/home/node/app/public/scripts/extensions/third-party"
-      - "$HOME/Workspace/Characters/SillyTavern/config:/home/node/app/config"
-      - "$HOME/Workspace/Characters/SillyTavern/data:/home/node/app/data"
+      - sillytavern-extensions-volume:/home/node/app/public/scripts/extensions/third-party
+      - sillytavern-config-volume:/home/node/app/config
+      - sillytavern-data-volume:/home/node/app/data
     ports:
-      - "8008:8000"
+      - "8000:8000"
     environment:
       - PUID=1000
       - PGID=1000
@@ -50,13 +56,26 @@ services:
     links:
       - sillytavernextras
     networks:
-      sillytavern:
-        ipv4_address: 10.6.0.2
+      - sillytavern
 
 networks:
   sillytavern:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 10.6.0.0/16
-          gateway: 10.6.0.1
+
+volumes:
+  data:
+  chromadb-data-volume:
+    name: chromadb-data-volume
+    external: true
+  sillytavernextras-cache-volume:
+    name: sillytavernextras-cache-volume
+    external: true
+  sillytavern-extensions-volume:
+    name: sillytavern-extensions-volume
+    external: true
+  sillytavern-config-volume:
+    name: sillytavern-config-volume
+    external: true
+  sillytavern-data-volume:
+    name: sillytavern-data-volume
+    external: true
