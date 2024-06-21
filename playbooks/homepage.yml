@@ -31,7 +31,7 @@
           - name: Flowise
             url: "http://ninjabot.syncopated.net:3002"
           - name: SillyTavern
-            url: "http://ninjabot.syncopated.net:8008"
+            url: "http://ninjabot.syncopated.net:8000"
           - name: Big-AGI
             url: "http://localhost:3001"
           - name: Langfuse
@@ -59,7 +59,7 @@
           - name: LLaVA
             url: "https://llava.hliu.cc/"
           - name: llama-parse
-            url: "https://cloud.llamaindex.ai/"            
+            url: "https://cloud.llamaindex.ai/"
           - name: colors-between
             url: "https://hexcolor.co/colors-between"
           - name: d2 playground
@@ -96,7 +96,6 @@
             url: "https://chat.lmsys.org/"
           - name: Pi AI
             url: "https://pi.ai/threads"
-
 
   environment:
     PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
