@@ -24,7 +24,7 @@ services:
     image: ghcr.io/chroma-core/chroma:latest
     container_name: flowise-chroma
     volumes:
-      - chroma-data-volume:/chroma/chroma
+      - flowise-chroma-data-volume:/chroma/chroma
     environment:
       PUID: 1000
       PGID: 1000
@@ -41,7 +41,7 @@ services:
       PUID: 1000
       PGID: 1000
     volumes:
-      - redis-data-volume:/data
+      - flowise-redis-data-volume:/data
     ports:
       - "6379:6379"
       - "8081:8081"
@@ -61,7 +61,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres-data-volume:/var/lib/postgresql/data:rw
+      - flowise-postgres-data-volume:/var/lib/postgresql/data:rw
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
       interval: 5s
@@ -95,12 +95,12 @@ networks:
 
 volumes:
   data:
-  postgres-data-volume:
+  flowise-chroma-data-volume:
+    name: flowise-chroma-data
+    driver: local
+  flowise-postgres-data-volume:
     name: flowise-pgvector-data
     driver: local
-  redis-data-volume:
+  flowise-redis-data-volume:
     name: flowise-redis-data
-    driver: local
-  chroma-data-volume:
-    name: flowise-chroma-data
     driver: local
