@@ -1,8 +1,8 @@
 ---
 
-- name: Applications Tasks
+- name: DAW Tasks
   debug:
-    msg: "Starting applications role tasks"
+    msg: "Starting DAW role tasks"
 
 - name: Ensure application directories exist
   file:
@@ -16,6 +16,22 @@
   check_mode: no
   tags: ['profile']
 
+- import_tasks:
+    file: controllers/main.yml
+  tags: ['controllers']
 
 - import_tasks:
-    file: daw/main.yml
+    file: analysis/main.yml
+  tags: ['analysis']
+
+- import_tasks:
+    file: players/main.yml
+  tags: ['players']
+
+- import_tasks:
+    file: editors/main.yml
+  tags: ['editors']
+
+- import_tasks:
+    file: livecoding/main.yml
+  tags: ['livecoding']

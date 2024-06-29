@@ -80,7 +80,7 @@
           shell: "firewall-cmd --reload"
           ignore_errors: "{{ ansible_check_mode }}"
 
-      when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+      when: ansible_os_family == 'Archlinux'
 
     - block:
         - name: Permit tcp traffic to rpcbind

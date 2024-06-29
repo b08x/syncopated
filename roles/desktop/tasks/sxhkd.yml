@@ -38,7 +38,7 @@
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
     mode: '0644'
-    backup: yes
+    backup: false
   notify:
     - Reload i3
     - Reload sxhkd

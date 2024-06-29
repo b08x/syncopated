@@ -16,6 +16,10 @@ bind_share_exports: False
 
 nvidia:
 
+cpu:
+  min_freq: 3000
+  max_freq: 3200
+
 dm: False
 browser: "google-chrome-stable"
 terminal: "kitty"
@@ -35,8 +39,6 @@ x:
 i3:
   autostart:
     - "barrierc -f --debug INFO --name ninjabot --disable-crypto [tinybot]:24800"
-    - "sleep 0.5"
-    - "barrierc -f --debug INFO --name ninjabot --disable-crypto [soundbot]:24801"
   tray_output: 'primary'
   assignments: 'default'
   workspaces: 'default'

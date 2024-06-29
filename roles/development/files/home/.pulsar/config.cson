@@ -28,7 +28,7 @@
     ]
   editor:
     fontFamily: "Hack Nerd Font Mono"
-    fontSize: 13
+    fontSize: 28
     preferredLineLength: 120
     softWrap: true
     softWrapAtPreferredLineLength: true
@@ -135,7 +135,7 @@
   "tool-bar-markdown-writer":
     critic_markup: true
   "tree-view":
-    hideVcsIgnoredFiles: false
+    hideVcsIgnoredFiles: true
   welcome:
     lastViewedChangeLog: "1.63.2022120804"
     showChangeLog: false

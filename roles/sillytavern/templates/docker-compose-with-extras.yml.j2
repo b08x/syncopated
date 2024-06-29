@@ -1,0 +1,85 @@
+services:
+  sillytavernextras:
+    deploy:
+        resources:
+            limits:
+                memory: 8192M
+    container_name: sillytavernextras
+    hostname: sillytavernextras
+    image: cohee1207/sillytavern-extras
+    build:
+      context: ../extras/
+      dockerfile: docker/Dockerfile
+      args:
+        REQUIREMENTS: requirements.txt
+    volumes:
+      - "../extras/api_key.txt:/sillytavern-extras/api_key.txt:rw"
+      - sillytavernextras-chroma-data-volume:/chromadb
+      - sillytavernextras-cache-volume:/root/.cache
+    ports:
+      - "5100:5100"
+      - "9000:9000"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - NVIDIA_VISIBLE_DEVICES=all
+    entrypoint:
+      [
+        "python",
+        "server.py",
+        "--listen",
+        "--chroma-port=9000",
+        "--enable-modules=caption,summarize,classify,embeddings,websearch,chromadb,edge-tts",
+      ]
+    networks:
+      - sillytavern
+  sillytavern:
+    deploy:
+        resources:
+            limits:
+                memory: 4096M
+    build: ..
+    container_name: sillytavern
+    hostname: sillytavern
+    image: ghcr.io/sillytavern/sillytavern:latest
+    volumes:
+      - sillytavern-extensions-volume:/home/node/app/public/scripts/extensions/third-party
+      - sillytavern-config-volume:/home/node/app/config
+      - sillytavern-data-volume:/home/node/app/data
+      - sillytavern-plugins-volume:/home/node/app/plugins
+    ports:
+      - "8000:8000"
+    environment:
+      - PUID=1000
+      - PGID=1000
+    depends_on:
+      - sillytavernextras
+    links:
+      - sillytavernextras
+    networks:
+      - sillytavern
+
+networks:
+  sillytavern:
+    driver: bridge
+
+volumes:
+  data:
+  sillytavern-config-volume:
+    name: sillytavern-config-volume
+    driver: local
+  sillytavern-data-volume:
+    name: sillytavern-data-volume
+    driver: local
+  sillytavern-extensions-volume:
+    name: sillytavern-extensions-volume
+    driver: local
+  sillytavern-plugins-volume:
+    name: sillytavern-plugins-volume
+    driver: local
+  sillytavernextras-cache-volume:
+    name: sillytavernextras-cache-volume
+    driver: local
+  sillytavernextras-chroma-data-volume:
+    name: sillytavernextras-chroma-data-volume
+    driver: local

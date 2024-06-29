@@ -39,9 +39,9 @@
 #     file: zram.yml
 #   tags: ["zram"]
 
-- import_tasks:
-    file: autofs.yml
-  tags: ["autofs"]
+# - import_tasks:
+#     file: autofs.yml
+#   tags: ["autofs"]
 
 - import_tasks:
     file: utils.yml

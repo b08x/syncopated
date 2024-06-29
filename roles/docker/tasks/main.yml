@@ -45,7 +45,7 @@
         - docker-compose
         - lazydocker-bin
       become: False
-      when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+      when: ansible_os_family == 'Archlinux'
 
     # - name: Install docker packages
     #   aur:
@@ -58,7 +58,7 @@
     #     - nvidia-docker-compose
     #   become: False
     #   when:
-    #     - (ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS')
+    #     - ansible_os_family == 'Archlinux'
     #     - nvidia is defined
 
   tags: ['packages']
@@ -82,7 +82,7 @@
 #         - docker-compose
 #       environment:
 #         PIP_CONSTRAINT: "/tmp/cython_constraint.txt"
-#       when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+#       when: ansible_os_family == 'Archlinux'
 #
 #     - name: Install python docker modules
 #       pip:

@@ -5,13 +5,6 @@ share:
     parent: ""
     exports: []
 
-terminal: "xterm-256color"
-terminal_alt: "xterm-256color"
-
-
-wm: shell
-browser: "w3m"
-
 #
 # network_interfaces:
 #   - device: eno1

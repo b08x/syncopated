@@ -19,3 +19,10 @@ nas:
 
 pi:
   hole:
+
+terminal: "xterm-256color"
+terminal_alt: "xterm-256color"
+
+
+wm: shell
+browser: "w3m"

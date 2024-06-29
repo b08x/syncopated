@@ -1,0 +1,67 @@
+app:
+  description: "Analyze how the AI character\u2019s dignity is portrayed through semiotic\
+    \ choices in the text. Do the representations reinforce or undermine the AI\u2019\
+    s status as an end in itself? Explain using specific examples."
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: completion
+  name: Dignity and Representation
+model_config:
+  agent_mode:
+    enabled: false
+    max_iteration: 5
+    strategy: function_call
+    tools: []
+  annotation_reply:
+    enabled: false
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    datasets:
+      datasets: []
+    retrieval_model: single
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    image:
+      detail: high
+      enabled: false
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+  model:
+    completion_params:
+      stop: []
+    mode: chat
+    name: gemini-1.5-pro-latest
+    provider: google
+  more_like_this:
+    enabled: false
+  opening_statement: null
+  pre_prompt: "Analyze how the AI character\u2019s dignity is portrayed through semiotic\
+    \ choices in the text. Do the representations reinforce or undermine the AI\u2019\
+    s status as an end in itself? Explain using specific examples.\n\n<text>\n{{text}}\n\
+    </text>"
+  prompt_type: simple
+  retriever_resource:
+    enabled: false
+  sensitive_word_avoidance:
+    configs: []
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form:
+  - paragraph:
+      default: ''
+      label: text
+      required: true
+      variable: text

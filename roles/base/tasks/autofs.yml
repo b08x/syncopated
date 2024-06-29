@@ -8,7 +8,7 @@
 - name: Set autofs config folder
   set_fact:
     _autofs_dir: /etc/autofs
-  when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+  when: ansible_os_family == 'Archlinux'
 
 # - block:
 #     - name: Install autofs
@@ -30,7 +30,7 @@
 #         name: autofs
 #         state: present
 #       become: False
-#       when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+#       when: ansible_os_family == 'Archlinux'
 #
 #   tags: ['packages']
 

@@ -16,3 +16,6 @@ galaxy_cache/
 galaxy_token
 docs/build/
 hostvars.json
+*.zip
+*.qcow2
+*.iso

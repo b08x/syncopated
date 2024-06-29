@@ -22,7 +22,6 @@ fi
 
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 
-{% if dm == False %}
 
 # automatically run startx when logging in on tty1
 # When Xorg is run in rootless mode, Xorg logs are saved to ~/.local/share/xorg/Xorg.log.
@@ -32,5 +31,3 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 # startx -- -keeptty >~/.xorg.log 2>&1
 
 [[ -z "${DISPLAY}" ]] && [[ "${XDG_VTNR}" -eq 1 ]] && startx -- -keeptty >~/.xorg.log 2>&1
-
-{% endif %}

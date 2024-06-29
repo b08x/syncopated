@@ -14,6 +14,8 @@ use_bluetooth: True
 
 bluetooth: True
 
+browser: "google-chrome-stable"
+
 #
 # x:
 #   autostart:

@@ -3,20 +3,20 @@
 
 
 - block:
-    - name: Clone repository
-      git:
-        repo: "{{ flowise.repo }}"
-        dest: "{{ flowise.path }}"
-        recursive: yes
-        accept_hostkey: yes
-        update: no
-        force: no
-        version: "{{ flowise.version }}"
-      check_mode: no
-
-    - name: show env vars
-      debug:
-        msg: "{{ env.vars }}"
+    # - name: Clone repository
+    #   git:
+    #     repo: "{{ flowise.repo }}"
+    #     dest: "{{ flowise.path }}"
+    #     recursive: yes
+    #     accept_hostkey: yes
+    #     update: no
+    #     force: no
+    #     version: "{{ flowise.version }}"
+    #   check_mode: no
+    #
+    # - name: show env vars
+    #   debug:
+    #     msg: "{{ env.vars }}"
 
     - name: Install docker file templates
       template:

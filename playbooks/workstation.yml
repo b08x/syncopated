@@ -6,7 +6,7 @@
     path:
       - "{{ lookup('env','HOME') }}/.asdf/bin"
       - "{{ lookup('env','HOME') }}/.local/bin"
-      - "{{ lookup('env','HOME') }}/Utils/bin"      
+      - "{{ lookup('env','HOME') }}/Utils/bin"
   environment:
     PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
@@ -86,7 +86,7 @@
       tags: ["multimedia"]
 
     - role: daw
-      when: inventory_hostname in groups.get('daw', [])
+      # when: inventory_hostname in groups.get('daw', [])
       tags: ["daw"]
 
     - role: development
@@ -96,30 +96,35 @@
 
   post_tasks:
     - name: Cleanup old backup files
-      script: "cleanup.sh"
+      script: "{{ lookup('env','HOME') }}/Utils/bin/cleanup.sh"
       when: cleanup is defined
       tags: ["cleanup"]
 
-    # Reset is not implemented local connection
-    - name: Reboot host
-      reboot:
-      async: 1
-      poll: 0
-      ignore_errors: True
+    - block:
+        - name: Reboot the host
+          reboot:
+            msg: "Reboot initiated by Ansible"
+            connect_timeout: 5
+            reboot_timeout: 300
+            pre_reboot_delay: 0
+            post_reboot_delay: 30
+            test_command: uptime
+
+      rescue:
+        # Do not assume the inventory_hostname is resolvable and delay 10 seconds at start
+        - name: Wait 600 seconds for port 22 to become open"
+          ansible.builtin.wait_for:
+            port: 22
+            host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+            delay: 10
+            timeout: 600
+          connection: local
+
       when: reboot is defined
       tags: ['reboot']
 
-    - name: Wait for host to reboot
-      wait_for_connection:
-        connect_timeout: 20
-        sleep: 5
-        delay: 5
-        timeout: 120
-      when: reboot is defined
-      tags: ['reboot']
 
-    - name: Ensure reboot was successful
+    - name: Reboot successful
       debug:
-        msg: "Reboot success!"
-      when: reboot is defined
+        msg: "Reboot successful"
       tags: ['reboot']

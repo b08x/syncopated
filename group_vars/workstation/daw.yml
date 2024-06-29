@@ -4,10 +4,6 @@ expected_value: "groupvars_workstation_daw"
 
 audio: "jack"
 
-dm: False
-wm: "i3"
-
-browser: "google-chrome-stable"
 
 # reaper:
 # vamp:
