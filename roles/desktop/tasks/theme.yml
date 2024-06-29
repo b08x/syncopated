@@ -19,7 +19,7 @@
 
 - name: Copy theme package to temp
   copy:
-    src: files/syncopated-theme-1.0-6-x86_64.pkg.tar.zst
+    src: usr/local/share/themes/syncopated-theme-1.0-6-x86_64.pkg.tar.zst
     dest: /tmp/syncopated-theme-1.0-6-x86_64.pkg.tar.zst
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['packages']

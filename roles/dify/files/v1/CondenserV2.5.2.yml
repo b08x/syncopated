@@ -1,0 +1,729 @@
+app:
+  description: "Your task is to carefully analyze the following language model prompt\
+    \ instruction :\n<prompt_instruction>\n{{#context#}}\n</prompt_instruction>\n\
+    First, read through the prompt instruction closely and analyze its discourse semantics,\
+    \ identifying the interconnections and functional relationships between different\
+    \ parts of the text. Write your analysis inside <discourse_semantics_analysis>\
+    \ tags.\nNext, determine the intended communicative goal of this prompt example\
+    \ based on its pragmatic grammar. What is it trying to achieve? Write this inside\
+    \ <communicative_goal> tags.\nNow analyze the functional grammar of the prompt\
+    \ example. Identify the key elements and their grammatical functions. Cross-reference\
+    \ this with your pragmatic grammar analysis. Write your functional grammar analysis\
+    \ inside <functional_grammar_analysis> tags.\nNext, review the prompt example\
+    \ again and identify potential sources of interference that could affect the interpretation.\
+    \ Note any intentional sources of interference as well as suggest corrections\
+    \ for these inside <interference> tags. \nDifferentiate the necessary details\
+    \ in the prompt example from extraneous ones. List the necessary details inside\
+    \ <necessary_details> tags and any extraneous details inside <extraneous_details>\
+    \ tags.\nPropose a method for condensing this prompt example down to its essential\
+    \ components while still preserving its intended function. Explain your condensation\
+    \ method inside <condensation_method> tags.\nFinally, write out a condensed version\
+    \ of the prompt example inside <condensed_prompt> tags. Then explain the generative\
+    \ grammar of your condensed version inside <condensed_prompt_grammar> tags."
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: CondenserV2.5.2
+workflow:
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: template-transform
+      id: 1716157190268-1716157972824
+      selected: false
+      source: '1716157190268'
+      sourceHandle: source
+      target: '1716157972824'
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: template-transform
+        targetType: end
+      id: 1716157972824-1716157982111
+      selected: false
+      source: '1716157972824'
+      sourceHandle: source
+      target: '1716157982111'
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: question-classifier
+        targetType: llm
+      id: 1716163546177-1716157190268
+      selected: false
+      source: '1716163546177'
+      sourceHandle: '2'
+      target: '1716157190268'
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: llm
+        targetType: end
+      id: 1716084704676-1716552660205
+      source: '1716084704676'
+      sourceHandle: source
+      target: '1716552660205'
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: http-request
+        targetType: template-transform
+      id: 1717573859472-1717576333051
+      source: '1717573859472'
+      sourceHandle: source
+      target: '1717576333051'
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: question-classifier
+        targetType: if-else
+      id: 1716163546177-1717655020905
+      source: '1716163546177'
+      sourceHandle: '1'
+      target: '1717655020905'
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: start
+        targetType: if-else
+      id: 1716084350133-1717851298558
+      source: '1716084350133'
+      sourceHandle: source
+      target: '1717851298558'
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: if-else
+        targetType: http-request
+      id: 1717851298558-1717573859472
+      source: '1717851298558'
+      sourceHandle: 'true'
+      target: '1717573859472'
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: if-else
+        targetType: question-classifier
+      id: 1717851298558-1716163546177
+      source: '1717851298558'
+      sourceHandle: 'false'
+      target: '1716163546177'
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: template-transform
+        targetType: end
+      id: 1717576333051-1717851375924
+      source: '1717576333051'
+      sourceHandle: source
+      target: '1717851375924'
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1717655020905-true-1717655093134-target
+      source: '1717655020905'
+      sourceHandle: 'true'
+      target: '1717655093134'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1717655020905-false-1716084704676-target
+      source: '1717655020905'
+      sourceHandle: 'false'
+      target: '1716084704676'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1717655093134-source-1718285119816-target
+      source: '1717655093134'
+      sourceHandle: source
+      target: '1718285119816'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: sourcePrompt
+          max_length: null
+          options: []
+          required: true
+          type: paragraph
+          variable: sourcePrompt
+        - label: Type
+          max_length: 48
+          options:
+          - Instruction
+          - Persona
+          required: true
+          type: select
+          variable: type
+        - label: Format
+          max_length: 48
+          options:
+          - json
+          - xml
+          - text
+          required: true
+          type: select
+          variable: format
+        - label: Explain
+          max_length: 48
+          options:
+          - 'True'
+          - 'False'
+          required: true
+          type: select
+          variable: explain
+        - label: Dialogue
+          max_length: null
+          options: []
+          required: false
+          type: paragraph
+          variable: dialogue
+        - label: Invert
+          max_length: 48
+          options:
+          - 'False'
+          - 'True'
+          required: false
+          type: select
+          variable: invert
+        - label: Notes
+          max_length: null
+          options: []
+          required: false
+          type: paragraph
+          variable: notes
+        - label: knowle
+          max_length: 48
+          options:
+          - 'False'
+          - 'True'
+          required: false
+          type: select
+          variable: knowle
+      height: 271
+      id: '1716084350133'
+      position:
+        x: -295.21163654490897
+        y: 299.03889346943777
+      positionAbsolute:
+        x: -295.21163654490897
+        y: 299.03889346943777
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1716084350133'
+          - sourcePrompt
+        desc: ''
+        model:
+          completion_params:
+            frequency_penalty: 0.6
+            max_tokens: 3901
+            temperature: 0.5
+            top_k: 45
+          mode: chat
+          name: gemini-1.5-pro-latest
+          provider: google
+        prompt_template:
+        - edition_type: basic
+          id: 5a6b7631-bc4d-4e25-9142-f4844a0bf3c8
+          role: system
+          text: 'In the prompt instruction, carefully analyze the discourse semantics,
+            identifying the interconnections and functional relationships between
+            different parts of the text.
+
+
+            Next, determine the intended communicative goal of this prompt example
+            based on its pragmatic grammar.
+
+
+            Now, analyze the functional grammar of the prompt example.
+
+
+            Review the prompt example again and identify potential sources of interference
+            that could affect the interpretation.
+
+
+            Differentiate the necessary details in the prompt example from extraneous
+            ones.
+
+
+            Propose a method for condensing this prompt example down to its essential
+            components while still preserving its intended function.
+
+
+            Finally, write out a condensed version of the prompt example in {{#1716084350133.format#}}format
+
+            '
+        - id: a036b8f1-0c9f-4d41-a397-6b07dcf8880a
+          role: user
+          text: '<prompt_example>
+
+            {{#context#}}
+
+            </prompt_example>'
+        selected: false
+        title: analyse
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 97
+      id: '1716084704676'
+      position:
+        x: 1380.6576614252317
+        y: 681.5382490902123
+      positionAbsolute:
+        x: 1380.6576614252317
+        y: 681.5382490902123
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1716084350133'
+          - sourcePrompt
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 8192
+            response_format: XML
+            temperature: 0.8
+            top_k: 53
+            top_p: 0.2
+          mode: chat
+          name: llama3-8b-8192
+          provider: groq
+        prompt_template:
+        - id: e2239e44-bbb2-4c66-805b-b61a560b7b9d
+          role: system
+          text: "{\n  \"task\": \"Craft and condense persona definition for AI agent\"\
+            ,\n  \"subtasks\": [\n      {\n        \"action\": \"Analyze discourse\
+            \ semantics\",\n        \"details\": \"Identify interconnections and functional\
+            \ relationships within the text describing the desired persona\"\n   \
+            \   },\n      {\n        \"action\": \"Identify pragmatic grammar\",\n\
+            \        \"details\": \"Analyze the context to determine the intended\
+            \ communication goal (e.g., informative, persuasive)\"\n      },\n   \
+            \   {\n        \"action\": \"Analyze functional grammar\",\n        \"\
+            details\": \"Identify elements and their functions within the persona\
+            \ description\"\n      },\n      {\n        \"action\": \"Correct functional\
+            \ grammar errors\"\n      },\n      {\n        \"action\": \"Differentiate\
+            \ necessary and extraneous details\"\n      },\n      {\n        \"action\"\
+            : \"Condense persona definition\",\n        \"details\": \"Remove extraneous\
+            \ details while preserving core characteristics that define the AI agent's\
+            \ persona\"\n      },\n      {\n        \"action\": \"Braiding Persona-Aligned\
+            \ Mannerisms\",\n        \"details\": \"Analyze the desired persona traits.\
+            \ Identify key elements within the persona description that require specific\
+            \ language mannerisms to establish coherence and structure. Integrate\
+            \ these chosen mannerisms into the condensed definition while maintaining\
+            \ clarity and ensuring the persona remains consistent.\"\n      },\n \
+            \     {\n        \"action\": \"Include example dialogue\",\n      \"details\"\
+            : Illustrated with examples of language mannerisms.\n      },\n      {\n\
+            \        \"action\": \"Explain condensation process\"  \n      },\n  \
+            \    {\n        \"action\": \"Explain the rationale behind chosen language\
+            \ mannerisms for the persona\"\n      },\n      {\n        \"action\"\
+            : \"Output condensed persona definition\"\n      }\n}"
+        - id: b648c78b-5233-4f72-9408-89bac6ee16d7
+          role: user
+          text: "persona definition: \"{{#context#}}\"\nexample dialogue: \n{{#1716084350133.dialogue#}}"
+        selected: false
+        title: LLM 3
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 97
+      id: '1716157190268'
+      position:
+        x: 926.2857142857142
+        y: 831.3571428571429
+      positionAbsolute:
+        x: 926.2857142857142
+        y: 831.3571428571429
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ arg1 }}'
+        title: Template 3
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1716157190268'
+          - text
+          variable: arg1
+      height: 53
+      id: '1716157972824'
+      position:
+        x: 1488.857142857143
+        y: 1177.0714285714287
+      positionAbsolute:
+        x: 1488.857142857143
+        y: 1177.0714285714287
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1716157190268'
+          - text
+          variable: text
+        selected: false
+        title: End 3
+        type: end
+      height: 89
+      id: '1716157982111'
+      position:
+        x: 2074.2857142857147
+        y: 1209.9285714285716
+      positionAbsolute:
+        x: 2074.2857142857147
+        y: 1209.9285714285716
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        classes:
+        - id: '1'
+          name: Instruction
+        - id: '2'
+          name: Persona
+        desc: ''
+        instructions: ''
+        model:
+          completion_params:
+            temperature: 0.5
+          mode: chat
+          name: command-r-plus
+          provider: cohere
+        query_variable_selector:
+        - '1716084350133'
+        - type
+        selected: false
+        title: Question Classifier 3
+        topics: []
+        type: question-classifier
+      height: 183
+      id: '1716163546177'
+      position:
+        x: 491.04135913313416
+        y: 409.59873276845246
+      positionAbsolute:
+        x: 491.04135913313416
+        y: 409.59873276845246
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1716084704676'
+          - text
+          variable: text
+        selected: false
+        title: End 2
+        type: end
+      height: 89
+      id: '1716552660205'
+      position:
+        x: 2069.0240780822087
+        y: 671.8851964004313
+      positionAbsolute:
+        x: 2069.0240780822087
+        y: 671.8851964004313
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: '{{#1716084350133.sourcePrompt#}}'
+          type: raw-text
+        desc: ''
+        headers: Content-Type:application/json
+        method: post
+        params: ''
+        selected: false
+        timeout:
+          connect: 300
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+          read: 600
+          write: 600
+        title: HTTP Request
+        type: http-request
+        url: http://tinybot:4567/summary
+        variables: []
+      height: 105
+      id: '1717573859472'
+      position:
+        x: 693.7142857142858
+        y: 100.92857142857142
+      positionAbsolute:
+        x: 693.7142857142858
+        y: 100.92857142857142
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: with ruby api
+        selected: false
+        template: '{{ summary }}'
+        title: summarized
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1717573859472'
+          - body
+          variable: summary
+      height: 83
+      id: '1717576333051'
+      position:
+        x: 1022
+        y: 79.49999999999991
+      positionAbsolute:
+        x: 1022
+        y: 79.49999999999991
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        conditions:
+        - comparison_operator: is
+          id: '1717655059802'
+          value: 'True'
+          variable_selector:
+          - '1716084350133'
+          - invert
+        desc: ''
+        logical_operator: and
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 125
+      id: '1717655020905'
+      position:
+        x: 975.7010364533719
+        y: 444.7059336615422
+      positionAbsolute:
+        x: 975.7010364533719
+        y: 444.7059336615422
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1717576333051'
+          - output
+        desc: ''
+        model:
+          completion_params:
+            frequency_penalty: 0.6
+            max_tokens: 3901
+            temperature: 0.5
+            top_k: 45
+          mode: chat
+          name: gemini-1.5-pro-latest
+          provider: google
+        prompt_template:
+        - edition_type: basic
+          id: 5a6b7631-bc4d-4e25-9142-f4844a0bf3c8
+          role: system
+          text: "Your task is to carefully analyze the following language model prompt\
+            \ instruction :\n<prompt_instruction>\n{{#context#}}\n</prompt_instruction>\n\
+            First, read through the prompt instruction closely and analyze its discourse\
+            \ semantics, identifying the interconnections and functional relationships\
+            \ between different parts of the text. Write your analysis inside <discourse_semantics_analysis>\
+            \ tags.\nNext, determine the intended communicative goal of this prompt\
+            \ example based on its pragmatic grammar. What is it trying to achieve?\
+            \ Write this inside <communicative_goal> tags.\nNow analyze the functional\
+            \ grammar of the prompt example. Identify the key elements and their grammatical\
+            \ functions. Cross-reference this with your pragmatic grammar analysis.\
+            \ Write your functional grammar analysis inside <functional_grammar_analysis>\
+            \ tags.\nNext, review the prompt example again and identify potential\
+            \ sources of interference that could affect the interpretation. Write\
+            \ out any intentional sources of interference inside Suggest corrections\
+            \ for these inside <interference> tags. \nDifferentiate the necessary\
+            \ details in the prompt example from extraneous ones. List the necessary\
+            \ details inside <necessary_details> tags and any extraneous details inside\
+            \ <extraneous_details> tags.\nPropose a method for condensing this prompt\
+            \ example down to its essential components while still preserving its\
+            \ intended function. Explain your condensation method inside <condensation_method>\
+            \ tags.\nFinally, write out a condensed version of the prompt example\
+            \ inside <condensed_prompt> tags. Then explain the generative grammar\
+            \ of your condensed version inside <condensed_prompt_grammar> tags."
+        selected: false
+        title: invert analyse
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 97
+      id: '1717655093134'
+      position:
+        x: 1359.9251729129303
+        y: 390.0668198359776
+      positionAbsolute:
+        x: 1359.9251729129303
+        y: 390.0668198359776
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        conditions:
+        - comparison_operator: is
+          id: '1717851337811'
+          value: 'True'
+          variable_selector:
+          - '1716084350133'
+          - knowle
+        desc: ''
+        logical_operator: and
+        selected: false
+        title: IF/ELSE 2
+        type: if-else
+      height: 125
+      id: '1717851298558'
+      position:
+        x: 116.20535671610338
+        y: 323.21336396719556
+      positionAbsolute:
+        x: 116.20535671610338
+        y: 323.21336396719556
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1717576333051'
+          - output
+          variable: output
+        selected: false
+        title: End 3
+        type: end
+      height: 89
+      id: '1717851375924'
+      position:
+        x: 1400.2857142857144
+        y: 49.49999999999997
+      positionAbsolute:
+        x: 1400.2857142857144
+        y: 49.49999999999997
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1717655093134'
+          - text
+          variable: text
+        selected: false
+        title: End 4
+        type: end
+      height: 89
+      id: '1718285119816'
+      position:
+        x: 1663.9251729129303
+        y: 390.0668198359776
+      positionAbsolute:
+        x: 1663.9251729129303
+        y: 390.0668198359776
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: -33.79101579635358
+      y: 284.48582289340357
+      zoom: 0.4955632512933133

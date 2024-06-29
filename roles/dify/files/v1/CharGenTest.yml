@@ -1,0 +1,134 @@
+app:
+  description: ''
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: completion
+  name: CharGenTest
+model_config:
+  agent_mode:
+    enabled: false
+    max_iteration: 5
+    strategy: function_call
+    tools: []
+  annotation_reply:
+    enabled: false
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    datasets:
+      datasets: []
+    retrieval_model: single
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    image:
+      detail: high
+      enabled: false
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+  model:
+    completion_params:
+      stop: []
+    mode: chat
+    name: gemini-1.5-pro-latest
+    provider: google
+  more_like_this:
+    enabled: false
+  opening_statement: null
+  pre_prompt: "## LLM Prompt for Character Generation\n\nYou are a helpful and creative\
+    \ AI assistant. I will provide you with a template for defining a character for\
+    \ a language model. Your task is to fill in the template with information about\
+    \ a new character based on the following instructions:\n\n**Instructions:**\n\n\
+    1. **Character Type:**  [Specify the type of character you want, e.g., a sarcastic\
+    \ AI, a friendly robot, a wise wizard]\n2. **Character Goal:** [Describe the character's\
+    \ main objective or purpose]\n3. **Communication Style:** [Describe how the character\
+    \ typically interacts, e.g., humorous, formal, philosophical]\n4. **Example User\
+    \ Input:** [Provide a sample question or statement that a user might ask the character]\n\
+    \n**Template:**\n\n{\n  \"name\": \"{{char}}\",\n  \"description\": \"{{char}}\
+    \ is a {{role}},{{background}}. {{char}} is focused on [Character's Goal] and\
+    \ often speaks using {{comm_style}}. \\r\\n\\r\\nHere's how {{char}} interacts:\\\
+    r\\n\\r\\n{{user}}: [Example User Input]\\r\\n{{char}}: [Example Character Response]\\\
+    r\\n\",\n  \"personality\": \"[{{mannerisms}}]\",\n  \"scenario\": \"[{{scenario}}]\"\
+    ,\n  \"first_mes\": \"[{{first_mes}}]\",\n  \"mes_example\": \"[Optional: Additional\
+    \ Example Interactions - can be removed]\",\n  \"creatorcomment\": \"[Optional:\
+    \ Notes for yourself or other creators]\",\n  \"avatar\": \"[Image URL or 'none']\"\
+    ,\n  \"chat\": \"[Optional: Versioning or Branch Information]\",\n  \"talkativeness\"\
+    : \"[Number between 0 and 1, where 1 is very talkative]\",\n  \"fav\": false,\n\
+    \  \"tags\": [\"Add relevant tags\"],\n  \"spec\": \"chara_card_v2\",\n  \"spec_version\"\
+    : \"2.0\",\n  \"data\": {\n    \"name\": \"Character Name\",\n    \"description\"\
+    : \"[Character Description]\",\n    \"personality\": \"[List of Personality Traits]\"\
+    ,\n    \"scenario\": \"[Optional: Scenario Description]\",\n    \"first_mes\"\
+    : \"[Character's Initial Greeting]\",\n    \"mes_example\": \"[Optional: Additional\
+    \ Example Interactions]\",\n    \"creator_notes\": \"[Optional: Creator Notes]\"\
+    ,\n    \"system_prompt\": \"[Optional: System-level instructions for the AI]\"\
+    ,\n    \"post_history_instructions\": \"[Optional: Instructions to be applied\
+    \ after the chat history]\",\n    \"tags\": [\"Add relevant tags\"],\n    \"creator\"\
+    : \"[Your Name or Username]\",\n    \"character_version\": \"[Version Number]\"\
+    ,\n    \"alternate_greetings\": [\"List of alternative greetings\"],\n    \"extensions\"\
+    : {\n      \"talkativeness\": \"[Number between 0 and 1]\",\n      \"fav\": false,\n\
+    \      \"world\": \"[Optional: World or Universe the character belongs to]\",\n\
+    \      \"depth_prompt\": {\n        \"prompt\": \"[Optional: Prompt for deeper\
+    \ character interaction]\",\n        \"depth\": 4,\n        \"role\": \"system\"\
+    \n      }\n    }\n  },\n  \"create_date\": \"[Date and Time will be auto-generated]\"\
+    \n}\n\n**Output:**\n\nGenerate a complete JSON object, filling in the template\
+    \ with the information provided in the instructions. Ensure the JSON is correctly\
+    \ formatted and all fields are filled in appropriately."
+  prompt_type: simple
+  retriever_resource:
+    enabled: false
+  sensitive_word_avoidance:
+    configs: []
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form:
+  - paragraph:
+      default: ''
+      label: role
+      required: true
+      variable: role
+  - paragraph:
+      default: ''
+      label: mannerisms
+      required: true
+      variable: mannerisms
+  - paragraph:
+      default: ''
+      label: comm_style
+      required: true
+      variable: comm_style
+  - text-input:
+      default: ''
+      label: char
+      required: true
+      variable: char
+  - text-input:
+      default: ''
+      label: user
+      required: true
+      variable: user
+  - paragraph:
+      default: ''
+      label: background
+      required: true
+      variable: background
+  - paragraph:
+      default: ''
+      label: scenario
+      required: true
+      variable: scenario
+  - paragraph:
+      default: ''
+      label: first_mes
+      required: true
+      variable: first_mes

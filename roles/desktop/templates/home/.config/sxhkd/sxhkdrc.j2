@@ -10,19 +10,8 @@ control + Menu
 alt + Next
   wmfocus
 
-#control + Print
-#control + Break
-
-XF86AudioRecord
-  kitty --name scriber -e dictation.sh
-
-#XF86HomePage
-
-XF86Mail
-  kitty --name scriber -e dictation.sh
-
-super + XF86AudioRecord
-  urxvt --name scriber -e dictation.sh
+super + Prior
+  ~/Utils/bin/search_web.sh
 
 Menu
   ~/.config/rofi/scripts/launcher_t1.sh
@@ -85,13 +74,15 @@ super + x
 
 #super + End
 #	terminator
+
 {% if browser == 'google-chrome-stable' %}
 super + Home
-  {{browser }} --disable-gpu %U
+  {{ browser }} --new-window --disable-gpu %U /usr/share/nginx/html/homepage/index.html
 
 super + shift + Home
-  {{ browser }} --disable-gpu --incognito %U
+  {{ browser }} --disable-gpu --incognito %U /usr/share/nginx/html/homepage/index.html
 {% endif %}
+
 super + KP_Enter
   {{ terminal }} -e ranger
 
@@ -122,8 +113,14 @@ Print
 #XF86MonBrightnessUp
 #  brightnessctl -d intel_backlight s +10%
 
-control + alt + End
-  uxterm -class 'backup' -e sudo shutdown -h now
+#control + alt + End
+#  uxterm -class 'backup' -e sudo shutdown -h now
 
 control + alt + Home
   uxterm -class 'backup' -e sudo shutdown -r now
+
+XF86AudioMicMute
+  sendmidi dev 'Midi Through Port-0' cc 13 127
+
+super + comma
+  sendmidi dev 'Midi Through Port-0' cc 13 0

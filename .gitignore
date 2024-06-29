@@ -1,3 +1,4 @@
+roles/ansible-pyenv/.vscode/.prettierrc.yaml
 *.pyc
 tmp/
 *.mp4
@@ -15,3 +16,6 @@ galaxy_cache/
 galaxy_token
 docs/build/
 hostvars.json
+*.zip
+*.qcow2
+*.iso

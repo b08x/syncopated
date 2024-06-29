@@ -2,15 +2,7 @@
 
 expected_value: "groupvars_workstation_dev"
 
-terminal: "kitty"
-terminal_alt: "alacritty"
-
-audio: "jack"
-
-dm: False
-wm: "i3"
-
-browser: "google-chrome-stable"
+chaoticrepo: True
 
 install_vscode: True
 install_pulsar: True

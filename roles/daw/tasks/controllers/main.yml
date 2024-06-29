@@ -1,0 +1,36 @@
+---
+
+- import_tasks:
+    file: touchosc.yml
+  tags: ['touchosc']
+
+- import_tasks:
+    file: protokol.yml
+  tags: ['protokol']
+
+- import_tasks:
+    file: osc2midi.yml
+  tags: ['osc2midi']
+
+- name: Enable avahi service
+  systemd:
+    name: avahi-daemon
+    enabled: yes
+    state: started
+
+
+
+# existing_file.results: This refers to the result of the stat task,
+# which gathers information about the existence of files/directories specified in the loop parameter.
+
+# selectattr('stat.exists', 'defined'): This filter selects the items from existing_file.results
+# where the stat.exists attribute is defined. In other words, it filters out any results that don't have the stat.exists attribute.
+
+# selectattr('stat.islnk', 'defined'): This filter further narrows down the selected items from the previous step
+# by filtering only those results where the stat.islnk attribute is defined.
+# This ensures that only symlink entries are considered.
+
+# list: This filter converts the filtered results into a list format.
+
+# length > 0: This checks if the length of the resulting list is greater than zero,
+# indicating that there are existing symlink entries for the specified paths.

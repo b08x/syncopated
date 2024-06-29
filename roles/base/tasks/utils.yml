@@ -10,18 +10,18 @@
     - htop
     - lnav
 
-- name: Install htop and lnav configs
-  template:
-    src: "home/.config/{{ item }}.j2"
-    dest: "{{ user.home }}/.config/{{ item }}"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-    backup: yes
-  with_items:
-    - 'htop/htoprc'
-    - 'lnav/checklog.lnav'
-  tags: ['htop', 'lnav']
+# - name: Install htop and lnav configs
+#   template:
+#     src: "home/.config/{{ item }}.j2"
+#     dest: "{{ user.home }}/.config/{{ item }}"
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+#     mode: '0644'
+#     backup: yes
+#   with_items:
+#     - 'htop/htoprc'
+#     - 'lnav/checklog.lnav'
+#   tags: ['htop', 'lnav']
 
 - name: Install ranger configs
   synchronize:

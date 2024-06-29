@@ -2,19 +2,26 @@
 #
 # The values are relative pathnames from the home directory and
 # will be translated on a per-path-element basis into the users locale
-ARCHIVE=Archive
+# PUBLICSHARE=Public
+ARCHIVE=Library/Archive
+AUDIO=Library/Audio
+COLLECTIONS=Library/Sound/Collections
+DATASETS=Library/DataSets
 DESKTOP=Desktop
 DOCUMENTS=Documents
 DOWNLOADS=Downloads
-MUSIC=Music
-PICTURES=Pictures
-PUBLICSHARE=Public
-RECORDINGS=Recordings
-SESSIONS=Sessions
-SOUNDFONTS=Library/Soundfonts
-SOUNDS=Library/Sounds
-MIDI=Library/Midi
-SOURCE=Library/Source
+GENERATIVE=Library/Sound/Generated
 LIBRARY=Library
+LLMOS=LLMOS
+MIDI=Library/Midi
+MUSIC=Library/Audio/Music
+PICTURES=Library/Images
+PROJECTS=Studio/Projects
+RECORDINGS=Recordings
+SESSIONS=Studio/Sessions
+SOUND=Library/Sound
+SOUNDFONTS=Library/Sound/Soundfonts
+SOURCE=Library/Source
+STUDIO=Studio
 VIDEOS=Videos
 WORKSPACE=Workspace

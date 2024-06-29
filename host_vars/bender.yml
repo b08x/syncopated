@@ -7,13 +7,6 @@ share:
       - backup
       - storage
 
-terminal: "xterm-256color"
-terminal_alt: "xterm-256color"
-
-audio: False
-
-wm: shell
-browser: "w3m"
 
 # network_interfaces:
 #   - device: enp2s0

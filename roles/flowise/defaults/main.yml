@@ -3,19 +3,23 @@
 
 flowise:
   repo: https://github.com/FlowiseAI/Flowise.git
-  version: flowise@1.3.8
+  version: flowise@1.8.2
   path: "{{ user.home }}/LLMOS/flowise"
   image: flowiseai/flowise
   container_name: flowise
   volumes:
     - host: "{{ user.home }}/LLMOS/flowise/docker/data"
       container: /root/.flowise
+    - host: "{{ user.home }}/LLMOS/flowise/docker/data/output"
+      container: /root/.flowise/output
   ports:
     - host: 3002
       container: 3002
 env:
   vars:
     port: 3002
+    # cors_origins: "*"
+    # iframe_origins: ""
     database_path: /root/.flowise
     apikey_path: /root/.flowise
     secretkey_path: /root/.flowise
@@ -29,16 +33,11 @@ env:
     # database_password: ""
     # flowise_username: user
     # flowise_password: 1234
+    # flowise_file_size_limit:
     # flowise_secretkey_overwrite: myencryptionkey
     debug: true
     # (error | warn | info | verbose | debug)
     log_level: debug
-    # tool_function_builtin_dep: crypto,fs
-    # tool_function_external_dep: moment,lodash
-    # langchain_tracing_v2: true
-    # langchain_endpoint: https://api.smith.langchain.com
-    # langchain_api_key: your_api_key
-    # langchain_project: your_project
 
 compose:
-  command: /bin/sh -c "sleep 3; flowise start"
+  entrypoint: /bin/sh -c "sleep 3; flowise start"

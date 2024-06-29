@@ -1,15 +1,14 @@
 export UU_ORDER="$UU_ORDER:~/.zshrc"
 
-
-if [ -d $HOME/.bin ]; then
-  PATH="$PATH:$HOME/.bin"
+if [ -d $HOME/Utils/bin ]; then
+  PATH="$HOME/Utils/bin:$PATH"
 fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="/usr/local/share/oh-my-zsh"
 
 {% if inventory_hostname == 'tinybot' %}
-ZSH_THEME="af-magic"
+ZSH_THEME="strug"
 {% else %}
 ZSH_THEME="kphoen"
 {% endif %}
@@ -18,7 +17,7 @@ CASE_SENSITIVE="true"
 ENABLE_CORRECTION="false"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-ZSH_CUSTOM="/usr/local/share/zsh"
+ZSH_CUSTOM="$HOME/.zsh"
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -42,8 +41,20 @@ colors
 
 export CLICOLOR=1
 
-setopt hist_ignore_all_dups inc_append_history
-setopt share_history
+
+
+setopt SHARE_HISTORY         # Share history between all sessions.
+setopt HIST_IGNORE_DUPS      # Do not record an event that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS  # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_IGNORE_SPACE     # Do not record an event starting with a space.
+setopt HIST_SAVE_NO_DUPS     # Do not write a duplicate event to the history file.
+setopt HIST_VERIFY           # Do not execute immediately upon history expansion.
+setopt APPEND_HISTORY        # append to history file (Default)
+setopt HIST_NO_STORE         # Don't store history commands
+setopt HIST_REDUCE_BLANKS    # Remove superfluous blanks from each command line being added to the history.
+
+HISTORY_IGNORE="(ls|cd|pwd|exit|cd)*"
+
 
 HISTFILE=~/.zhistory
 HISTSIZE=10000
@@ -105,6 +116,8 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
 
+[[ -f /usr/share/zsh/site-functions/git-flow-completion.zsh ]] && source /usr/share/zsh/site-functions/git-flow-completion.zsh
+
 # completion; use cache if updated within 24h
 autoload -Uz compinit
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
@@ -134,43 +147,25 @@ useditor() {
   export SVN_EDITOR="$@"
 }
 
-if [[ ! -n $EDITOR ]]; then useditor nvim; fi
+if [[ ! -n $EDITOR ]]; then useditor micro; fi
 
-[ -n "$DISPLAY" ] && export TERM="{{ terminal }}" || export TERM=xterm
-[ -n "$DISPLAY" ] && export TERMINAL="{{ terminal }}" || export TERMINAL=xterm
+[ -n "$DISPLAY" ] && export TERM="kitty" || export TERM=xterm
+[ -n "$DISPLAY" ] && export TERMINAL="kitty" || export TERMINAL=xterm
 
 TERMCMD="$TERMINAL"
 
-[ -n "$DISPLAY" ] && export BROWSER="{{ browser }}" || export BROWSER=links
+[ -n "$DISPLAY" ] && export BROWSER="google-chrome-stable" || export BROWSER=links
 
 eval "$(zoxide init zsh)"
 
-{% if inventory_hostname == 'ninjabot' %}
-# bun completions
+{% if use_bin is defined  %}
 [ -s "/home/b08x/.bun/_bun" ] && source "/home/b08x/.bun/_bun"
-
-# bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 {% endif %}
 
-# mcfly
-# eval "$(mcfly init zsh)"
-
-[[ -f /usr/share/doc/mcfly/mcfly.zsh ]] && source /usr/share/doc/mcfly/mcfly.zsh
-
-{% if inventory_hostname == 'lapbot' %}
-# argc-completions
-export ARGC_COMPLETIONS_ROOT="/home/b08x/Workspace/argc-completions"
-export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
-export PATH="$ARGC_COMPLETIONS_ROOT/bin:$PATH"
-# To add completions for only the specified command, modify next line e.g. argc_scripts=( cargo git )
-argc_scripts=( $(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p') )
-source <(argc --argc-completions zsh $argc_scripts)
-{% endif %}
-
-{% if inventory_hostname == 'lapbot' %}
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/home/b08x/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-{% endif %}
+export PYENV_ROOT="$HOME/.pyenv"
+if [[ -d $PYENV_ROOT/bin ]]; then
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+fi

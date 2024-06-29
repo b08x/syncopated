@@ -1,0 +1,49 @@
+---
+
+- name: Check if Protokol is already installed
+  stat:
+    path: "/usr/local/bin/Protokol_{{ protokol.version }}"
+  register: protokol_installed
+  changed_when: false
+
+- name: Check if update_Protokol variable is defined
+  set_fact:
+    protokol_update_required: "{{ update_Protokol is defined }}"
+  changed_when: false
+
+- block:
+    - name: Remove existing Protokol version
+      file:
+        path: "/usr/local/bin/Protokol_{{ protokol.version }}"
+        state: absent
+      when: protokol_update_required
+
+    - name: Fetch Protokol
+      get_url:
+        url: "{{ protokol.url }}/{{ protokol.file }}"
+        dest: "/tmp"
+
+    - name: Extract and install Protokol
+      shell:
+        cmd: |
+          unzip -q -o "/tmp/{{ protokol.file }}" -d "/tmp"
+          mv "/tmp/Protokol" "/usr/local/bin/Protokol_{{ protokol.version }}"
+          chmod +x /usr/local/bin/Protokol_{{ protokol.version }}
+      args:
+        creates: "/usr/local/bin/Protokol_{{ protokol.version }}"
+        executable: /bin/bash
+
+    - name: Create new symlink
+      file:
+        src: "/usr/local/bin/Protokol"
+        dest: "/usr/local/bin/Protokol_{{ protokol.version }}"
+        state: link
+        force: yes
+
+    - name: Install desktop entry
+      copy:
+        src: usr/share/applications/Protokol.desktop
+        dest: /usr/share/applications/Protokol.desktop
+        mode: '644'
+
+  when: not protokol_installed.stat.exists or protokol_update_required

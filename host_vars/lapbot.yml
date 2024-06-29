@@ -12,18 +12,10 @@ install_pulsar: False
 
 use_bluetooth: True
 
-chaoticrepo: True
-
 bluetooth: True
-# share:
-#   nfs:
-#     parent: ""
-#     exports: []
-  # barrier:
-  #   server:
-  #     name: soundbot.syncopated.net
-  #     address: '[soundbot.syncopated.net]:24800'
-  #     config: "{{ user.home }}/.config/Debauchee/soundbot.conf"
+
+browser: "google-chrome-stable"
+
 #
 # x:
 #   autostart:

@@ -13,3 +13,7 @@ dm: False
 wm: "i3"
 
 browser: "google-chrome-stable"
+
+chaoticrepo: True
+
+asset_folder: "{{ lookup('env','HOME') }}/Library"

@@ -1,0 +1,213 @@
+app:
+  description: "This prompt outlines a detailed process for analyzing, optimizing,\
+    \ and condensing an instruction example using various linguistic approaches in\
+    \ the context of natural language processing (NLP). The ultimate goal is to produce\
+    \ a more succinct version of the original text that retains its essential meaning\
+    \ and context. The process involves the following steps:\n\n1. Analyze and condense\
+    \ prompt instruction example:\n   - The main task is to analyze a given instruction\
+    \ example and then condense it into a more concise form while preserving its meaning\
+    \ and context.\n\n2. Correlate discourse semantics:\n   - Identify the functional\
+    \ relationships and interconnections within the text to understand how different\
+    \ parts of the instruction contribute to its overall meaning.\n\n3. Identify pragmatic\
+    \ grammar:\n   - Determine the intended communicative goal of the instruction,\
+    \ i.e., what action or response the author expects from the recipient.\n\n4. Analyze\
+    \ functional grammar:\n   - Identify the elements of the instruction (e.g., nouns,\
+    \ verbs, adjectives) and their functions, and cross-reference these with the pragmatic\
+    \ grammar to ensure that the instruction's meaning is clear and unambiguous.\n\
+    \n5. Optimize Functional Grammar:\n   - Modify the functional grammar of the instruction\
+    \ to make it more clear, concise, and effective, while still preserving its original\
+    \ meaning and context.\n\n6. Distinguish and reduce extraneous details:\n   -\
+    \ Identify any unnecessary or irrelevant information in the instruction and remove\
+    \ it to make the text more concise and focused.\n\n7. Explain condensation methodology:\n\
+    \   - Provide a detailed explanation of the steps taken to condense the instruction,\
+    \ including the linguistic approaches used and any decisions made during the process.\n\
+    \n8. Condense prompt:\n   - Use optimized lexical choices and concise sentence\
+    \ structures to produce a shorter version of the instruction that retains its\
+    \ essential meaning and context.\n\n9. Explain generative grammar of condensed\
+    \ output:\n   - Provide a detailed explanation of the grammatical structure and\
+    \ rules used to generate the condensed output, including any transformations or\
+    \ modifications made to the original text.\n\n10. Output condensed prompt instruction\
+    \ in {{#1716084350133.outputFormat#}} format:\n   - Finally, present the condensed\
+    \ prompt instruction in the specified output format, which may include specific\
+    \ formatting or presentation requirements.\n\nOverall, this prompt outlines a\
+    \ rigorous and systematic approach to text analysis and condensation using natural\
+    \ language processing techniques, with the goal of producing a more effective\
+    \ and efficient instruction example."
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: Condenser
+workflow:
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1716084704676-source-1716084936666-target
+      source: '1716084704676'
+      sourceHandle: source
+      target: '1716084936666'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1716084350133-source-1716084704676-target
+      source: '1716084350133'
+      sourceHandle: source
+      target: '1716084704676'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: sourcePrompt
+          max_length: null
+          options: []
+          required: true
+          type: paragraph
+          variable: sourcePrompt
+        - label: outputformat
+          max_length: 48
+          options:
+          - json
+          - xml
+          - text
+          - markdown table
+          required: true
+          type: select
+          variable: outputformat
+      height: 115
+      id: '1716084350133'
+      position:
+        x: -71.42857142857139
+        y: 296.5
+      positionAbsolute:
+        x: -71.42857142857139
+        y: 296.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1716084350133'
+          - sourcePrompt
+        desc: Analyze and condense prompt instruction example
+        model:
+          completion_params:
+            frequency_penalty: 0
+            k: 0
+            p: 0.99
+            presence_penalty: 0
+            temperature: 0.4
+            top_k: 122
+            top_p: 0.5
+          mode: chat
+          name: gemini-1.5-flash-latest
+          provider: google
+        prompt_template:
+        - edition_type: basic
+          id: 5a6b7631-bc4d-4e25-9142-f4844a0bf3c8
+          role: system
+          text: " {\n    \"task\": \"Analyze and condense prompt instruction example\"\
+            ,\n    \"subtasks\": [\n      {\n        \"action\": \"Correlate discourse\
+            \ semantics\",\n        \"details\": \"Identify interconnections and functional\
+            \ relationships within the text\"\n      },\n      {\n        \"action\"\
+            : \"Identify pragmatic grammar\",\n        \"details\": \"Determine the\
+            \ intended communicative goal\"\n      },\n      {\n        \"action\"\
+            : \"Analyze functional grammar\",\n        \"details\": \"Identify elements\
+            \ and their functions, cross-reference with pragmatic grammar\"\n    \
+            \  },\n      {\n        \"action\": \"Optimize Functional Grammar\"\n\
+            \      },\n      {\n        \"action\": \"Distinguish and reduce extraneous\
+            \ details\"\n      },\n      {\n        \"action\": \"Explain condensation\
+            \ methodology\"\n      },\n      {\n        \"action\": \"Condense prompt\"\
+            ,\n        \"details\": \"Optimize lexical choices; ensure preservation\
+            \ of context\"\n      },\n      {\n        \"action\": \"Explain generative\
+            \ grammar of condensed output\"\n      },\n      {\n        \"action\"\
+            : \"Output condensed prompt instruction in {{#1716084350133.outputformat#}}format\"\
+            \n      }\n    ]\n  }\n}"
+        - id: 0c692a9e-1e90-4b0d-ae86-8f666b553c24
+          role: user
+          text: 'prompt instruction example: "{{#context#}}"'
+        selected: true
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 145
+      id: '1716084704676'
+      position:
+        x: 446.2089133725773
+        y: 146.90295243061036
+      positionAbsolute:
+        x: 446.2089133725773
+        y: 146.90295243061036
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1716084704676'
+          - text
+          variable: text
+        selected: false
+        title: End
+        type: end
+      height: 89
+      id: '1716084936666'
+      position:
+        x: 942
+        y: 296.5
+      positionAbsolute:
+        x: 942
+        y: 296.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -298.15546043619
+      y: 368.3035601421609
+      zoom: 0.7821009966505545

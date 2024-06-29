@@ -1,0 +1,48 @@
+---
+- hosts: all
+  become: False
+  gather_subset:
+    - hardware
+    - network
+  vars:
+    branch: "main"
+    path:
+      - "{{ lookup('env','HOME') }}/.local/bin"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+    PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
+
+  pre_tasks:
+    - name: Set datetime
+      set_fact:
+        datetime: ansible_date_time.epoch
+      tags: ["always"]
+
+    - name: Set suffix
+      set_fact:
+        suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
+      tags: ["always"]
+
+  tasks:
+    - name: Clone Utils Repository
+      git:
+        repo: git@github.com:b08x/Utils.git
+        dest: "{{ user.home }}/Utils"
+        recursive: yes
+        accept_hostkey: yes
+        force: no
+        version: main
+    #   register: utilsClone
+    #   changed_when: utilsClone.before != "null"
+    #
+    # - setup:
+    # - debug:
+    #     msg: "{{ utilsClone.before }}"
+    #   tags: ['always']
+
+    - name: Checkout development Branch
+      git:
+        repo: git@github.com:b08x/Utils.git
+        dest: "{{ user.home }}/Utils"
+        version: development
+      when: branch == 'development'

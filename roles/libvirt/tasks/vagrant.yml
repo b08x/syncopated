@@ -40,5 +40,5 @@
         force: yes
         extra_args: --noconfirm
 
-  when: ansible_distribution == 'Archlinux'
+  when: ansible_os_family == 'Archlinux'
   tags: ['packages']

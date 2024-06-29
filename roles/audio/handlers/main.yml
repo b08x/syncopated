@@ -1,5 +1,12 @@
 ---
 # handlers file for audio
+
+- name: restart cpupower service
+  systemd:
+    name: cpupower
+    state: restarted
+  ignore_errors: "{{ ansible_check_mode }}"
+
 - name: enable rtirq service
   systemd:
     name: rtirq

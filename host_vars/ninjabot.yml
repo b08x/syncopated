@@ -6,7 +6,8 @@ share:
     exports:
       - storage
 
-chaoticrepo: True
+bind_share_exports: False
+
 # TODO: test whether or not this variable will overwrite the defaults with nothing..
 # docker:
   # service: 'enabled'
@@ -14,6 +15,10 @@ chaoticrepo: True
   # nvidia: True
 
 nvidia:
+
+cpu:
+  min_freq: 3000
+  max_freq: 3200
 
 dm: False
 browser: "google-chrome-stable"
@@ -34,8 +39,6 @@ x:
 i3:
   autostart:
     - "barrierc -f --debug INFO --name ninjabot --disable-crypto [tinybot]:24800"
-    - "sleep 0.5"
-    - "barrierc -f --debug INFO --name ninjabot --disable-crypto [soundbot]:24801"
   tray_output: 'primary'
   assignments: 'default'
   workspaces: 'default'
@@ -95,7 +98,7 @@ host:
       - nvidia-470xx-dkms
       - nvidia-470xx-settings
       - nvidia-470xx-utils
-      - nvidia-container-runtime
+      # - nvidia-container-runtime
       - nvidia-container-toolkit
       # - nvidia-docker
       - nvidia-docker-compose

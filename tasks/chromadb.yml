@@ -67,17 +67,18 @@
     - name: Create and start services
       community.docker.docker_compose:
         project_src: "{{ data }}/chromadb"
+        build: true
       register: output
 
     - name: Show results
       ansible.builtin.debug:
         var: output
 
-    - name: Run `docker-compose up` again
-      community.docker.docker_compose:
-        project_src: "{{ data }}/chromadb"
-        build: false
-      register: output
+    # - name: Run `docker-compose up` again
+    #   community.docker.docker_compose:
+    #     project_src: "{{ data }}/chromadb"
+    #     build: false
+    #   register: output
 
     - name: Show results
       ansible.builtin.debug:

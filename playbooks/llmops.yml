@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  become: True
+  become: False
   gather_subset:
     - hardware
     - network
@@ -40,6 +40,9 @@
     #     mode: g+s
 
   roles:
+
+    - role: sillytavern
+      tags: ["sillytavern"]
 
     - role: flowise
       tags: ["flowise"]

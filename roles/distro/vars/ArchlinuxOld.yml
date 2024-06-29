@@ -485,7 +485,7 @@ packages:
     - njconnect
     - non-mixer-lv2-git
     - patchage
-    - raysession-git
+    # - raysession-git
     - rnnoise
     - rtaudio
     - scala-music

@@ -7,5 +7,6 @@
   ignore_errors: True
 
 - name: Reload sxhkd
-  script: "/usr/local/bin/reload-sxhkd.sh"
+  command: bash -lc "reload-sxhkd.sh"
+  become: False
   tags: ["profile", "keybindings"]

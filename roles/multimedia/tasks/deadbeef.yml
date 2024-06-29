@@ -13,7 +13,7 @@
 #         name: deadbeef-git
 #         state: present
 #       become: False
-#       when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+#       when: ansible_os_family == 'Archlinux'
 #
 #     - name: Install deadbeef
 #       dnf:

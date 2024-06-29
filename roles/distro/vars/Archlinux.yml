@@ -166,8 +166,7 @@ packages:
     - aubio
     - audacity
     - audiofile
-    - autofs
-    - autorandr
+    # - autofs
     - await
     - awesome-terminal-fonts
     - bandwhich
@@ -229,6 +228,9 @@ packages:
     - fuse-common
     - gconf
     - gedit
+    - aspell
+    - gucharmap
+    - libgit2-glib
     - gedit-dark-variant
     - gedit-markdownpreview-git
     - gedit-plugins
@@ -278,11 +280,11 @@ packages:
     - hspell
     - html2md
     - htop
-    - hydrogen-git
+    # - hydrogen-git
     - i3-wm
     - i3status-rust
     - i7z
-    - iempluginsuite
+    # - iempluginsuite
     - imagemagick
     - imv
     - inetutils
@@ -291,8 +293,8 @@ packages:
     - inxi
     - iotop
     - jaaa
-    - jack2
-    - jack2-dbus
+    # - jack2
+    # - jack2-dbus
     - jack-example-tools
     - jack-keyboard
     - jack_capture
@@ -430,7 +432,7 @@ packages:
     - qutebrowser
     - radiotray-ng
     - ranger
-    - raysession
+    # - raysession
     - redshift
     - ripgrep
     - ripgrep-all
@@ -448,7 +450,7 @@ packages:
     - shotcut
     - smartmontools
     - socat
-    - sonic-pi-git
+    # - sonic-pi-git
     - sonic-visualiser
     - sound-gambit
     - sox

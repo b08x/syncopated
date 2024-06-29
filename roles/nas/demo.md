@@ -129,7 +129,7 @@ Enable NFS Services:
         - 40418/udp
       notify: reload firewalld
 
-  when: ansible_distribution == 'Archlinux' or ansible_distribution == 'EndeavourOS'
+  when: ansible_os_family == 'Archlinux'
 
 - block:
     - name: Permit tcp traffic to rpcbind

@@ -43,7 +43,7 @@ ILoveCandy
 #TotalDownload
 CheckSpace
 #VerbosePkgLists
-ParallelDownloads = 5
+ParallelDownloads = 8
 
 # By default, pacman accepts packages signed by keys that its local keyring
 # trusts (see pacman-key and its man page), as well as unsigned packages.
@@ -95,34 +95,17 @@ SigLevel = PackageRequired
 Include = /etc/pacman.d/endeavouros-mirrorlist
 {% endif %}
 
-#[testing]
-#Include = /etc/pacman.d/mirrorlist
-
 [core]
 Include = /etc/pacman.d/mirrorlist
 
 [extra]
 Include = /etc/pacman.d/mirrorlist
 
-#[community-testing]
-#Include = /etc/pacman.d/mirrorlist
-
 [community]
 Include = /etc/pacman.d/mirrorlist
 
-# The multilib repositories are enabled by default in ArchLabs.
-# If you don't run 32 bit applications you may comment them out
-
-#[multilib-testing]
-#Include = /etc/pacman.d/mirrorlist
-
 [multilib]
 Include = /etc/pacman.d/mirrorlist
-
-# [archlabs-testing]
-# Server =  https://pub-7d84e047b852442a86fd6d7feb1ff2cd.r2.dev/$repo/$arch
-# Server =  https://github.com/ArchLabs/$repo/raw/master/$arch
-# Server =  https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
 
 [archlabs]
 Server = https://pub-7d84e047b852442a86fd6d7feb1ff2cd.r2.dev/$repo/$arch

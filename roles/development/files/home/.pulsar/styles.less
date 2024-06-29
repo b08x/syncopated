@@ -33,7 +33,7 @@ atom-text-editor {
   // height: 3.0rem;
   border-bottom: 0.25mm dashed #d3d9a7;
   font-family: "Hack Nerd Font Mono";
-  font-size: 1.25rem;
+  font-size: 1.75rem;
 }
 
 .tab-bar:not([data-reactid]) .tab .title[data-path]::before {
@@ -43,7 +43,8 @@ atom-text-editor {
 
 .tree-view {
   background-color: #0C0F11;
-  font-size: 1.25em;
+  padding-left: 1rem;
+  font-size: 2.0rem;
   font-weight: normal !important;
 }
 
@@ -108,7 +109,7 @@ atom-text-editor::shadow {
       }
 
       &.syntax--single {
-        color: #cb1818;
+        color: #d74141;
       }
     }
   }
@@ -130,11 +131,22 @@ atom-text-editor::shadow {
     }
   }
 
+    &.syntax--class,
+    &.syntax--type.syntax--class {
+      color: #985353
+    }
+
+    &.syntax--module,
+    &.syntax--type.syntax--module {
+      color: #b6b6b6
+    }
+
+
   .syntax--entity {
     &.syntax--name {
       color: #222;
       &.syntax--function {
-        color: #f146a7;
+        color: #e64fa5;
       }
       &.syntax--class,
       &.syntax--type.syntax--class,
@@ -155,7 +167,7 @@ atom-text-editor::shadow {
     }
 
     .syntax--symbol {
-      color: #ed1414;
+      color: #5cc238;
     }
 
     .syntax--constant.syntax--other.syntax--symbol>.syntax--punctuation {

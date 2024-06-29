@@ -10,6 +10,16 @@
     - root
   tags: ['profile']
 
+- name: Set user aliases
+  template:
+    src: home/.aliases.j2
+    dest: "{{ user.home }}/.aliases"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: true
+  tags: ['aliases', 'profile']
+
 - import_tasks:
     file: zsh.yml
   tags: ['zsh', 'profile']

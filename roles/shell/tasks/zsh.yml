@@ -22,6 +22,8 @@
     delete: no
     checksum: yes
     perms: no
+    owner: False
+    group: False
     rsync_opts:
       - "--update"
       - "--omit-dir-times"
@@ -30,24 +32,26 @@
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['env', 'profile']
 
-- name: Set permissions on zsh cutom function folder
-  file:
-    path: /usr/local/share/zsh
-    state: directory
-    owner: root
-    group: root
-    recurse: True
+# - name: Set permissions on zsh cutom function folder
+#   file:
+#     path: /usr/local/share/zsh
+#     state: directory
+#     owner: root
+#     group: root
+#     recurse: True
 
-# - name: Set zsh profile configs
-#   template:
-#     src: "home/{{ item }}.j2"
-#     dest: "{{ user.home }}/{{ item }}"
-#     owner: "{{ user.name }}"
-#     group: "{{ user.group }}"
-#     mode: '0644'
-#     backup: True
-#   with_items:
-#     - .zprofile
-#     - .zshenv
-#     - .zshrc
-#   tags: ['env', 'profile']
+- name: Set zsh profile configs
+  template:
+    src: "home/{{ item }}.j2"
+    dest: "{{ user.home }}/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: True
+  with_items:
+    - .aliases
+    - .zprofile
+    - .zshenv
+    - .zshrc
+    - .zlogin
+  tags: ['env', 'profile']
