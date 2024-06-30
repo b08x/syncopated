@@ -49,12 +49,12 @@ setup_gitconfig() {
     git_name=$(gum input --prompt "Enter your Git username: ")
     git_email=$(gum input --prompt "Enter your Git email: ")
 
-    git config --global user.name "$git_name"
-    git config --global user.email "$git_email"
+    git config --global user.name "${git_name}"
+    git config --global user.email "${git_email}"
 
     echo "Git configuration has been set up."
-    echo "Name: $git_name"
-    echo "Email: $git_email"
+    echo "Name: ${git_name}"
+    echo "Email: ${git_email}"
 }
 
 setup_sudoers() {
@@ -160,8 +160,8 @@ DISTRO=$(lsb_release -si)
 
 case $DISTRO in
 	Arch|ArchLabs|cachyos|EndeavourOS)
-		pacman -Syu --noconfirm --downloadonly --quiet
-    pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
+		sudo pacman -Syu --noconfirm --downloadonly --quiet
+    sudo pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
     firewalld python-setuptools rustup fd rubygems yadm jack2 jack2-dbus \
     pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger \
     nodejs npm ansible --overwrite '*'
@@ -173,14 +173,14 @@ case $DISTRO in
 		enabled=1
 		gpgcheck=1
 		gpgkey=https://repo.charm.sh/yum/gpg.key' | tee /etc/yum.repos.d/charm.repo
-		dnf -y install gum ansible
+		sudo dnf -y install gum ansible
 		;;
 	Debian|Raspbian|MX|Pop)
-		mkdir -p /etc/apt/keyrings
-		curl -fsSL https://repo.charm.sh/apt/gpg.key | gpg --dearmor -o /etc/apt/keyrings/charm.gpg
-		echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | tee /etc/apt/sources.list.d/charm.list
-		apt-get update --quiet
-		apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible
+		sudo mkdir -p /etc/apt/keyrings
+		curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+		echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+		sudo apt-get update --quiet && \
+		sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible
 		;;
 	*)
 		echo "Unsupported distribution."
@@ -209,7 +209,7 @@ fi
 branch=$(gum choose "main" "development" "feature/popos" --prompt "Select the branch to clone:")
 
 # Clone the repository with the selected branch
-git clone -b "${branch}" git@github.com:b08x/SyncopatedOS "${DOTFILES_DIR}"
+git clone --recursive -b "${branch}" git@github.com:b08x/SyncopatedOS "${DOTFILES_DIR}"
 
 # Prompt for additional environment variables
 echo "Enter additional environment variables (press Enter with empty input to finish):"
@@ -230,4 +230,4 @@ done
 echo "test complete!"
 
 # Run the initial setup playbook with environment variables
-eval "$env_command ansible-playbook -i $ANSIBLE_HOME/inventory setup.yml"
+eval "${env_command} ansible-playbook -i ${ANSIBLE_HOME}/inventory setup.yml"
