@@ -42,21 +42,6 @@ prompt_for_userid() {
     echo $USERNAME
 }
 
-# Function to set up .gitconfig
-setup_gitconfig() {
-    echo "Setting up .gitconfig..."
-
-    git_name=$(gum input --prompt "Enter your Git username: ")
-    git_email=$(gum input --prompt "Enter your Git email: ")
-
-    git config --global user.name "${git_name}"
-    git config --global user.email "${git_email}"
-
-    echo "Git configuration has been set up."
-    echo "Name: ${git_name}"
-    echo "Email: ${git_email}"
-}
-
 setup_sudoers() {
     echo "Setting up sudoers for ${USER}..."
 
@@ -107,6 +92,20 @@ EOF
     echo "Sudoers and polkit setup completed."
 }
 
+# Function to set up .gitconfig
+setup_gitconfig() {
+    echo "Setting up .gitconfig..."
+
+    git_name=$(gum input --prompt "Enter your Git username: ")
+    git_email=$(gum input --prompt "Enter your Git email: ")
+
+    git config --global user.name "${git_name}"
+    git config --global user.email "${git_email}"
+
+    echo "Git configuration has been set up."
+    echo "Name: ${git_name}"
+    echo "Email: ${git_email}"
+}
 
 # Function to set up SSH keys
 setup_ssh_keys() {
@@ -194,9 +193,7 @@ setup_ssh_keys
 setup_gitconfig
 
 # Prompt for sudoers setup
-setup_sudoers_prompt=$(gum choose "Yes" "No" --prompt "Do you want to set up sudoers for passwordless sudo?")
-
-if [ "$setup_sudoers_prompt" = "Yes" ]; then
+if gum confirm "Do you want to set up sudoers for passwordless sudo?" --default="Yes"; then
     setup_sudoers
     if [ $? -ne 0 ]; then
         echo "Sudoers setup failed. Continuing with the rest of the script."
