@@ -9,18 +9,6 @@ ctrl_c() {
 
 trap ctrl_c INT SIGINT SIGTERM ERR EXIT
 
-# Check if the user is root
-if [[ $(id -u) -ne 0 ]]; then
-   echo "This script must be run with sudo"
-   exit 1
-fi
-
-# Ensure the script is run as a non-root user
-if [ "$(id -u)" -eq 0 ]; then
-    echo "This script must be run as a non-root user" >&2
-    exit 1
-fi
-
 # declare colors!
 declare -rx ALL_OFF="\e[1;0m"
 declare -rx BBOLD="\e[1;1m"
