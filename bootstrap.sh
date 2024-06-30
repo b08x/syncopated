@@ -103,11 +103,11 @@ setup_ssh_keys() {
     fi
 
     echo "SSH keys not found. Attempting to transfer from another host."
-    ssh_host=$(gum input --placeholder "hostname.domain.net" --prompt "Enter the hostname where SSH keys are stored: ")
+    REMOTE_HOST=$(gum input --placeholder "hostname.domain.net" --prompt "Enter the hostname where SSH keys are stored: ")
     ssh_folder=$(gum input --value "${HOME}/.ssh" --prompt "Enter the folder name for SSH keys: ")
 
     # Copy SSH keys
-    if scp -r "$ssh_host:$ssh_folder" "${HOME}/.ssh"; then
+    if rsync -avP --delete "${REMOTE_HOST}:~/.ssh/" "${HOME}/.ssh/"; then
         # Set proper permissions for SSH keys
         chmod 700 "${HOME}/.ssh"
         chmod 600 "${HOME}/.ssh"/*
