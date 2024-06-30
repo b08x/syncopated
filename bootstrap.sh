@@ -44,15 +44,6 @@ setup_sudoers() {
         return 1
     fi
 
-    # Determine the distribution
-    if [ -f /etc/os-release ]; then
-        . /etc/os-release
-        DISTRO=$ID
-    else
-        echo "Unable to determine distribution. Skipping polkit setup."
-        return 1
-    fi
-
     case $DISTRO in
         Arch|ArchLabs|cachyos|EndeavourOS)
             cat << EOF | sudo tee /etc/polkit-1/rules.d/49-nopasswd_global.rules
