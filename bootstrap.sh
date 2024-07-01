@@ -15,6 +15,9 @@ BLUE="${BBOLD}\e[1;34m"
 GREEN="${BBOLD}\e[1;32m"
 RED="${BBOLD}\e[1;31m"
 YELLOW="${BBOLD}\e[1;33m"
+export GUM_INPUT_WIDTH=0
+
+DISTRO=$(lsb_release -si)
 
 # --- Display Function ---
 say() {
@@ -33,7 +36,7 @@ setup_sudoers() {
 
   # Check if sudoers entry already exists
   if grep -q "${USER} ALL=(ALL:ALL) NOPASSWD: ALL" /etc/sudoers.d/99-${USER}; then
-    echo "Sudoers entry already exists."
+    say "Sudoers entry already exists.\n" $GREEN
   else
     echo "${USER} ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/99-${USER}"
   fi
@@ -41,9 +44,9 @@ setup_sudoers() {
   sudo visudo -cf "/etc/sudoers.d/99-${USER}"
 
   if [ $? -eq 0 ]; then
-    echo "Sudoers file is valid"
+    say "Sudoers file is valid" $GREEN
   else
-    echo "Sudoers file is invalid"
+    say "Sudoers file is invalid" $RED
     return 1
   fi
 
@@ -67,41 +70,42 @@ ResultActive=yes
 EOF
       ;;
     *)
-      echo "Unsupported distribution for polkit setup."
+      say "Unsupported distribution for polkit setup." $RED
       return 1
   esac
 
-  echo "Sudoers and polkit setup completed."
+  say "Sudoers and polkit setup completed." $GREEN
 }
 
 # --- Git Configuration (Idempotent) ---
 setup_gitconfig() {
-  echo "Setting up .gitconfig..."
 
   # Check if git config already exists
   if git config --global --get user.name && git config --global --get user.email; then
-    echo "Git configuration already exists."
+    gum log --time rfc822 --level info "Git configuration already exists."
   else
     git_name=$(gum input --value "b08x" --prompt "Enter your Git username: ")
     git_email=$(gum input --value "rwpannick@gmail.com" --prompt "Enter your Git email: ")
+
+    gum log --time rfc822 --level info "Setting up .gitconfig..."
 
     git config --global user.name "${git_name}"
     git config --global user.email "${git_email}"
   fi
 
-  echo "Git configuration has been set up."
-  echo "Name: $(git config --global user.name)"
-  echo "Email: $(git config --global user.email)"
+  gum log --time rfc822 --level debug "Name: $(git config --global user.name)"
+  gum log --time rfc822 --level debug "Email: $(git config --global user.email)"
 }
 
 # --- SSH Key Setup (Idempotent) ---
 setup_ssh_keys() {
   if [ -f "${HOME}/.ssh/id_ed25519" ] && [ -f "${HOME}/.ssh/id_ed25519.pub" ]; then
-    echo "SSH keys already exist."
+    say "SSH keys already exist." $GREEN
     return 0
   fi
 
-  echo "SSH keys not found. Attempting to transfer from another host."
+  say "SSH keys not found. Attempting to transfer from another host." $YELLOW
+
   REMOTE_HOST=$(gum input --placeholder "hostname.domain.net" --prompt "Enter the hostname where SSH keys are stored: ")
   ssh_folder=$(gum input --value "${HOME}/.ssh" --prompt "Enter the folder name for SSH keys: ")
 
@@ -110,18 +114,15 @@ setup_ssh_keys() {
     # Set proper permissions for SSH keys
     chmod 700 "${HOME}/.ssh"
     chmod 600 "${HOME}/.ssh"/*
-    echo "SSH keys successfully transferred and set up."
+    say "SSH keys successfully transferred and set up." $GREEN
     return 0
   else
-    echo "Failed to transfer SSH keys."
+    say "Failed to transfer SSH keys." $RED
     return 1
   fi
 }
 # --- Package Installation (Idempotent) ---
 install_packages() {
-  echo "Installing essential packages..." $GREEN
-
-  DISTRO=$(lsb_release -si)
 
   case $DISTRO in
     Arch|ArchLabs|cachyos|EndeavourOS)
@@ -130,55 +131,65 @@ install_packages() {
       firewalld python-setuptools rustup fd rubygems yadm jack2 jack2-dbus \
       pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger \
       nodejs npm ansible &> /dev/null; then
+        say "Installing essential packages..." $GREEN
         sudo pacman -Syu --noconfirm --downloadonly --quiet
         sudo pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
         firewalld python-setuptools rustup fd rubygems yadm jack2 jack2-dbus \
         pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger \
-        nodejs npm ansible --overwrite '*'
+        nodejs npm ansible inxi --overwrite '*'
       fi
       ;;
     Fedora|Fedora)
       # Check if packages are already installed
       if ! dnf list installed gum ansible &> /dev/null; then
+        say "Installing essential packages..." $GREEN
         echo '[charm]
         name=Charm
         baseurl=https://repo.charm.sh/yum/
         enabled=1
         gpgcheck=1
         gpgkey=https://repo.charm.sh/yum/gpg.key' | tee /etc/yum.repos.d/charm.repo
-        sudo dnf -y install gum ansible
+        sudo dnf -y install gum ansible inxi
       fi
       ;;
     Debian|Raspbian|MX|Pop)
       # Check if packages are already installed
       if ! dpkg -l openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible &> /dev/null; then
+        say "Installing essential packages..." $GREEN
         sudo mkdir -p /etc/apt/keyrings
         curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
         echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
         sudo apt-get update --quiet && \
-        sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible
+        sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible inxi
       fi
       ;;
     *)
-      echo "Unsupported distribution."
+      say "Unsupported distribution." $RED
       exit 1
   esac
 }
 
 # --- Repository Cloning (Idempotent) ---
 clone_repository() {
-  echo "Cloning SyncopatedOS repository..." $GREEN
-
   # Check if repository is already cloned
   if [ -d "${DOTFILES_DIR}" ]; then
-    echo "Repository already cloned."
+    say "Repository already cloned.\n" $GREEN
   else
     say "Select branch" $BLUE
     branch=$(gum choose "main" "development" "feature/popos")
+    say "Cloning SyncopatedOS repository..." $BLUE
     git clone --recursive -b "${branch}" git@github.com:b08x/SyncopatedOS "${DOTFILES_DIR}"
   fi
 }
 
+wipe() {
+tput -S <<!
+clear
+cup 1
+!
+}
+
+wipe
 # --- Main Script ---
 # Set up variables
 USER_HOME="${HOME}"
@@ -186,36 +197,51 @@ CONFIG_DIR="${USER_HOME}/.config"
 DOTFILES_DIR="${CONFIG_DIR}/dotfiles"
 ANSIBLE_HOME="${DOTFILES_DIR}"
 
+gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This bootstrap script is about to configure some shit. Welcome to $(gum style --foreground 212 'synflow')."
+
+sleep 1
+
 install_packages
 setup_ssh_keys
 setup_gitconfig
+
+sleep 1
 
 # --- Sudoers Setup (Optional) ---
 if gum confirm "Do you want to set up sudoers for passwordless sudo?" --default="Yes"; then
   setup_sudoers
   if [ $? -ne 0 ]; then
-    echo "Sudoers setup failed. Continuing with the rest of the script."
+    say "Sudoers setup failed. Continuing with the rest of the script." $RED
   fi
 else
-  echo "Skipping sudoers setup."
+  say "Skipping sudoers setup.\n" $BLUE
 fi
 
 clone_repository
+sleep 1
 
 # --- Environment Variables ---
-say "Enter additional environment variables (press Enter with empty input to finish):" $BLUE
+say "Enter additional environment variables (press Enter with empty input to finish): \n" $BLUE
 declare -A env_vars
 while true; do
-  var_name=$(gum input --prompt "Variable name (or Enter to finish): ")
+  var_name=$(gum input --width=0 --prompt "Variable name (or Enter to finish): ")
   [ -z "$var_name" ] && break
   var_value=$(gum input --prompt "Value for $var_name: ")
   env_vars["$var_name"]="$var_value"
 done
 
 # --- Ansible Playbook Execution ---
-say "Running Ansible playbook..." $GREEN
+wipe
+say "Running Ansible playbook...\n" $BLUE
+
 env_command="env ANSIBLE_HOME=${ANSIBLE_HOME}"
+
 for var in "${!env_vars[@]}"; do
   env_command+=" $var=${env_vars[$var]}"
 done
-eval "${env_command} ansible-playbook -i ${ANSIBLE_HOME}/inventory setup.yml"
+
+eval "${env_command} ansible-playbook -i localhost, ${ANSIBLE_HOME}/playbooks/setup.yml"
+
+wipe
+
+gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This shit has been $(gum style --foreground 212 'configured')."
