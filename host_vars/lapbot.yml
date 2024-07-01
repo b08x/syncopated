@@ -16,6 +16,8 @@ bluetooth: True
 
 browser: "google-chrome-stable"
 
+zsh_theme: strug
+
 #
 # x:
 #   autostart:

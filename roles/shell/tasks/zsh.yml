@@ -24,8 +24,8 @@
 
 - name: Install zsh custom functions
   synchronize:
-    src: usr/local/share/zsh
-    dest: /usr/local/share/
+    src: home/.local/share/zsh
+    dest: "{{ user.home }}/.local/share/"
     recursive: yes
     mode: push
     delete: no

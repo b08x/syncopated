@@ -7,17 +7,13 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH="/usr/local/share/oh-my-zsh"
 
-{% if inventory_hostname == 'tinybot' %}
-ZSH_THEME="strug"
-{% else %}
-ZSH_THEME="kphoen"
-{% endif %}
+ZSH_THEME="{{ zsh_theme }}"
 
 CASE_SENSITIVE="true"
 ENABLE_CORRECTION="false"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-ZSH_CUSTOM="$HOME/.zsh"
+ZSH_CUSTOM="$HOME/.local/share/zsh"
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -157,12 +153,6 @@ TERMCMD="$TERMINAL"
 [ -n "$DISPLAY" ] && export BROWSER="google-chrome-stable" || export BROWSER=links
 
 eval "$(zoxide init zsh)"
-
-{% if use_bin is defined  %}
-[ -s "/home/b08x/.bun/_bun" ] && source "/home/b08x/.bun/_bun"
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-{% endif %}
 
 export PYENV_ROOT="$HOME/.pyenv"
 if [[ -d $PYENV_ROOT/bin ]]; then
