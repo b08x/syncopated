@@ -54,7 +54,7 @@ AuthorizedKeysFile	.ssh/authorized_keys
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-{% if inventory_hostname == 'bender' %}
+{% if ssh_allowpassword is defined %}
 PasswordAuthentication yes
 {% else %}
 PasswordAuthentication no

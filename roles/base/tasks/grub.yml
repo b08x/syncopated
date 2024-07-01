@@ -7,7 +7,7 @@
 #   when: ansible_os_family == 'Archlinux'
 
 - name: Check for EFI support
-  ansible.builtin.shell: efibootmgr -v
+  shell: efibootmgr -v
   register: efi_check
   ignore_errors: yes
   tags: ['check']
@@ -46,8 +46,7 @@
       {% set grub_command_map = {
         'Debian': 'update-grub',
         'Fedora': 'grub2-mkconfig -o /boot/efi/EFI/Fedora/grub.cfg\ngrub2-mkconfig -o /boot/grub2/grub.cfg',
-        'EndeavourOS': 'grub-mkconfig -o /boot/grub/grub.cfg',
         'Archlinux': 'grub-mkconfig -o /boot/grub/grub.cfg'
       } %}
 
-      {{ grub_command_map.get(ansible_distribution, '# Unsupported distribution') }}
+      {{ grub_command_map.get(ansible_os_family, '# Unsupported distribution') }}

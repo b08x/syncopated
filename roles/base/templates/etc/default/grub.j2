@@ -1,11 +1,11 @@
 # GRUB boot loader configuration
 GRUB_DEFAULT='saved'
 GRUB_TIMEOUT='5'
-GRUB_DISTRIBUTOR='Archlabs - Syncopated'
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
 {% if nvidia is defined %}
 GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3 nvidia-drm.modeset=1'
 {% else %}
-GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3'
+GRUB_CMDLINE_LINUX_DEFAULT='zswap.enabled=0 loglevel=3'
 {% endif %}
 
 {% if efi_supported %}

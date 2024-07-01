@@ -1,6 +1,10 @@
 ---
 # tasks file for shell
 
+- import_tasks:
+    file: zsh.yml
+  tags: ['zsh', 'profile']
+
 - name: Set user shell
   user:
     name: "{{ item }}"
@@ -19,7 +23,3 @@
     mode: '0644'
     backup: true
   tags: ['aliases', 'profile']
-
-- import_tasks:
-    file: zsh.yml
-  tags: ['zsh', 'profile']

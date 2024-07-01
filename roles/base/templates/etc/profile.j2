@@ -1,6 +1,7 @@
 {% if ansible_os_family == 'Debian' %}
 # /etc/profile: system-wide .profile file for the Bourne shell (sh(1))
 # and Bourne compatible shells (bash(1), ksh(1), ash(1), ...).
+export UU_ORDER="$UU_ORDER:/etc/profile"
 
 if [ "${PS1-}" ]; then
   if [ "${BASH-}" ] && [ "$BASH" != "/bin/sh" ]; then
