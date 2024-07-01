@@ -27,11 +27,17 @@ prompt_for_userid() {
   echo "$USERNAME"
 }
 
-# --- Sudoers Setup ---
+# --- Sudoers Setup (Idempotent) ---
 setup_sudoers() {
   echo "Setting up sudoers for ${USER}..."
 
-  echo "${USER} ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/99-${USER}"
+  # Check if sudoers entry already exists
+  if grep -q "${USER} ALL=(ALL:ALL) NOPASSWD: ALL" /etc/sudoers.d/99-${USER}; then
+    echo "Sudoers entry already exists."
+  else
+    echo "${USER} ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/99-${USER}"
+  fi
+
   sudo visudo -cf "/etc/sudoers.d/99-${USER}"
 
   if [ $? -eq 0 ]; then
@@ -68,22 +74,27 @@ EOF
   echo "Sudoers and polkit setup completed."
 }
 
-# --- Git Configuration ---
+# --- Git Configuration (Idempotent) ---
 setup_gitconfig() {
   echo "Setting up .gitconfig..."
 
-  git_name=$(gum input --value "b08x" --prompt "Enter your Git username: ")
-  git_email=$(gum input --value "rwpannick@gmail.com" --prompt "Enter your Git email: ")
+  # Check if git config already exists
+  if git config --global --get user.name && git config --global --get user.email; then
+    echo "Git configuration already exists."
+  else
+    git_name=$(gum input --value "b08x" --prompt "Enter your Git username: ")
+    git_email=$(gum input --value "rwpannick@gmail.com" --prompt "Enter your Git email: ")
 
-  git config --global user.name "${git_name}"
-  git config --global user.email "${git_email}"
+    git config --global user.name "${git_name}"
+    git config --global user.email "${git_email}"
+  fi
 
   echo "Git configuration has been set up."
-  echo "Name: ${git_name}"
-  echo "Email: ${git_email}"
+  echo "Name: $(git config --global user.name)"
+  echo "Email: $(git config --global user.email)"
 }
 
-# --- SSH Key Setup ---
+# --- SSH Key Setup (Idempotent) ---
 setup_ssh_keys() {
   if [ -f "${HOME}/.ssh/id_ed25519" ] && [ -f "${HOME}/.ssh/id_ed25519.pub" ]; then
     echo "SSH keys already exist."
@@ -106,6 +117,67 @@ setup_ssh_keys() {
     return 1
   fi
 }
+# --- Package Installation (Idempotent) ---
+install_packages() {
+  echo "Installing essential packages..." $GREEN
+
+  DISTRO=$(lsb_release -si)
+
+  case $DISTRO in
+    Arch|ArchLabs|cachyos|EndeavourOS)
+      # Check if packages are already installed
+      if ! pacman -Qi openssh base-devel rsync openssh python-pip \
+      firewalld python-setuptools rustup fd rubygems yadm jack2 jack2-dbus \
+      pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger \
+      nodejs npm ansible &> /dev/null; then
+        sudo pacman -Syu --noconfirm --downloadonly --quiet
+        sudo pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
+        firewalld python-setuptools rustup fd rubygems yadm jack2 jack2-dbus \
+        pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger \
+        nodejs npm ansible --overwrite '*'
+      fi
+      ;;
+    Fedora|Fedora)
+      # Check if packages are already installed
+      if ! dnf list installed gum ansible &> /dev/null; then
+        echo '[charm]
+        name=Charm
+        baseurl=https://repo.charm.sh/yum/
+        enabled=1
+        gpgcheck=1
+        gpgkey=https://repo.charm.sh/yum/gpg.key' | tee /etc/yum.repos.d/charm.repo
+        sudo dnf -y install gum ansible
+      fi
+      ;;
+    Debian|Raspbian|MX|Pop)
+      # Check if packages are already installed
+      if ! dpkg -l openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible &> /dev/null; then
+        sudo mkdir -p /etc/apt/keyrings
+        curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+        echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+        sudo apt-get update --quiet && \
+        sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible
+      fi
+      ;;
+    *)
+      echo "Unsupported distribution."
+      exit 1
+  esac
+}
+
+# --- Repository Cloning (Idempotent) ---
+clone_repository() {
+  echo "Cloning SyncopatedOS repository..." $GREEN
+
+  # Check if repository is already cloned
+  if [ -d "${DOTFILES_DIR}" ]; then
+    echo "Repository already cloned."
+  else
+    say "Select branch" $BLUE
+    branch=$(gum choose "main" "development" "feature/popos")
+    git clone --recursive -b "${branch}" git@github.com:b08x/SyncopatedOS "${DOTFILES_DIR}"
+  fi
+}
 
 # --- Main Script ---
 # Set up variables
@@ -114,43 +186,7 @@ CONFIG_DIR="${USER_HOME}/.config"
 DOTFILES_DIR="${CONFIG_DIR}/dotfiles"
 ANSIBLE_HOME="${DOTFILES_DIR}"
 
-# --- Install Packages ---
-say "Installing essential packages..." $GREEN
-
-DISTRO=$(lsb_release -si)
-
-case $DISTRO in
-  Arch|ArchLabs|cachyos|EndeavourOS)
-    sudo pacman -Syu --noconfirm --downloadonly --quiet
-    sudo pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
-    firewalld python-setuptools rustup fd rubygems yadm jack2 jack2-dbus \
-    pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger \
-    nodejs npm ansible --overwrite '*'
-    ;;
-  Fedora|Fedora)
-    echo '[charm]
-    name=Charm
-    baseurl=https://repo.charm.sh/yum/
-    enabled=1
-    gpgcheck=1
-    gpgkey=https://repo.charm.sh/yum/gpg.key' | tee /etc/yum.repos.d/charm.repo
-    sudo dnf -y install gum ansible
-    ;;
-  Debian|Raspbian|MX|Pop)
-    sudo mkdir -p /etc/apt/keyrings
-    curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
-    echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
-    sudo apt-get update --quiet && \
-    sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible
-    ;;
-  *)
-    echo "Unsupported distribution."
-    exit 1
-esac
-
-# --- User Interaction ---
-say "Hello, there! Welcome to this." $BLUE
-
+install_packages
 setup_ssh_keys
 setup_gitconfig
 
@@ -164,13 +200,7 @@ else
   echo "Skipping sudoers setup."
 fi
 
-# --- Branch Selection ---
-say "Select branch" $BLUE
-branch=$(gum choose "main" "development" "feature/popos")
-
-# --- Repository Cloning ---
-say "Cloning SyncopatedOS repository..." $GREEN
-git clone --recursive -b "${branch}" git@github.com:b08x/SyncopatedOS "${DOTFILES_DIR}"
+clone_repository
 
 # --- Environment Variables ---
 say "Enter additional environment variables (press Enter with empty input to finish):" $BLUE
