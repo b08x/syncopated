@@ -147,7 +147,7 @@ install_packages() {
         baseurl=https://repo.charm.sh/yum/
         enabled=1
         gpgcheck=1
-        gpgkey=https://repo.charm.sh/yum/gpg.key' | tee /etc/yum.repos.d/charm.repo
+        gpgkey=https://repo.charm.sh/yum/gpg.key' | sudo tee /etc/yum.repos.d/charm.repo
         sudo dnf -y install gum ansible inxi efibootmgr fzf
       fi
       ;;
@@ -155,9 +155,13 @@ install_packages() {
       # Check if packages are already installed
       if ! dpkg -l openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible inxi efibootmgr fzf &> /dev/null; then
         say "Installing essential packages..." $GREEN
-        sudo mkdir -p /etc/apt/keyrings
-        curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
-        echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+        if [ -f "/etc/apt/keyrings/charm.gpg" ]; then
+          say "Charm keyring in place" $BLUE
+        else
+          sudo mkdir -p /etc/apt/keyrings
+          curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+          echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+        fi
         sudo apt-get update --quiet && \
         sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible inxi efibootmgr fzf
       fi
