@@ -1,4 +1,4 @@
-<img align="left" width=460 height=400 src="https://github.com/b08x/syncopatedCaC/blob/development/files/workspace07.jpeg?raw=true"><h2>Configuration as Code for Linux Workstations</h2>
+<img align="left" width=460 height=400 src="https://github.com/b08x/syncopatedCaC/blob/development/assets/workspace07.jpeg?raw=true"><h2>Configuration as Code for Linux Workstations</h2>
 
 This project is an exercise codified configuration.
 

@@ -19,3 +19,4 @@ hostvars.json
 *.zip
 *.qcow2
 *.iso
+file/closet/

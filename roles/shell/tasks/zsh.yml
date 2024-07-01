@@ -5,6 +5,15 @@
   debug:
     msg: "Starting zsh tasks"
 
+- name: Install zsh
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - zsh
+    - zoxide
+  tags: ['packages']
+
 - name: Install oh-my-zsh
   shell: |
     if [ ! -d "/usr/local/share/oh-my-zsh" ]; then
@@ -15,8 +24,8 @@
 
 - name: Install zsh custom functions
   synchronize:
-    src: usr/local/share/zsh
-    dest: /usr/local/share/
+    src: home/.local/share/zsh
+    dest: "{{ user.home }}/.local/share/"
     recursive: yes
     mode: push
     delete: no
@@ -55,3 +64,14 @@
     - .zshrc
     - .zlogin
   tags: ['env', 'profile']
+
+
+# add asdf plugin to oh-my-zsh plugins var
+- name: Add asdf plugin to oh-my-zsh plugins
+  lineinfile:
+    path: "{{ user.home }}/.zshrc"
+    regexp: "^plugins="
+    line: "plugins=(asdf ansible bundler docker-compose copypath fd fzf ripgrep zsh-navigation-tools ruby history systemd web-search)"
+    insertafter: 'ZSH_CUSTOM="$HOME/.local/share/zsh"'
+    firstmatch: True
+  when: use_asdf is defined

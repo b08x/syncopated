@@ -54,7 +54,7 @@ AuthorizedKeysFile	.ssh/authorized_keys
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-{% if inventory_hostname == 'bender' %}
+{% if ssh_allowpassword is defined %}
 PasswordAuthentication yes
 {% else %}
 PasswordAuthentication no
@@ -106,7 +106,7 @@ PrintMotd no
 {% if ansible_distribution == 'Fedora' %}
 #PidFile /var/run/sshd.pid
 {% endif %}
-{% if ansible_distribution == 'MX' %}
+{% if ansible_os_family == 'Debian' %}
 #PidFile /var/run/sshd.pid
 {% endif %}
 #MaxStartups 10:30:100
@@ -126,7 +126,7 @@ Subsystem	sftp	/usr/lib/ssh/sftp-server
 {% if ansible_distribution == 'Fedora' %}
 Subsystem	sftp	/usr/libexec/openssh/sftp-server
 {% endif %}
-{% if ansible_distribution == 'MX' %}
+{% if ansible_os_family == 'Debian' %}
 Subsystem	sftp	/usr/lib/openssh/sftp-server
 {% endif %}
 # Example of overriding settings on a per-user basis

@@ -44,14 +44,10 @@
 #   tags: ["autofs"]
 
 - import_tasks:
-    file: utils.yml
-  tags: ['utils']
-
-- import_tasks:
     file: grub.yml
   tags: ["grub"]
 
-- import_tasks:
-    file: autologin.yml
-  tags: ['autologin']
-  when: autologin is defined
+# - import_tasks:
+#     file: autologin.yml
+#   tags: ['autologin']
+#   when: autologin is defined

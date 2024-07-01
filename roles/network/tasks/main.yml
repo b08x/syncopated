@@ -38,4 +38,6 @@
     group: root
     mode: '0644'
     backup: True
+  with_items: "{{ network_hosts }}"
+  when: netork_managed_etc_hosts is defined
   tags: ['dns']

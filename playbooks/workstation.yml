@@ -50,14 +50,11 @@
 
   roles:
 
-    - role: distro
-      tags: ["distro"]
+    # - role: distro
+    #   tags: ["distro"]
 
     - role: base
       tags: ["base"]
-
-    - role: network
-      tags: ["network"]
 
     - role: user
       tags: ["user"]
@@ -65,66 +62,69 @@
     - role: shell
       tags: ["shell"]
 
+    - role: network
+      tags: ["network"]
+
     - role: ruby
       tags: ["ruby"]
-
-    - role: docker
-      when: use_docker == True
-      tags: ["docker"]
-
-    - role: libvirt
-      when: use_libvirt == True
-      tags: ["libvirt"]
-
-    - role: audio
-      tags: ["audio"]
-
-    - role: desktop
-      tags: ["desktop"]
-
-    - role: multimedia
-      tags: ["multimedia"]
-
-    - role: daw
-      # when: inventory_hostname in groups.get('daw', [])
-      tags: ["daw"]
-
-    - role: development
-      when: inventory_hostname in groups.get('dev', [])
-      tags: ["development"]
-
-
-  post_tasks:
-    - name: Cleanup old backup files
-      script: "{{ lookup('env','HOME') }}/Utils/bin/cleanup.sh"
-      when: cleanup is defined
-      tags: ["cleanup"]
-
-    - block:
-        - name: Reboot the host
-          reboot:
-            msg: "Reboot initiated by Ansible"
-            connect_timeout: 5
-            reboot_timeout: 300
-            pre_reboot_delay: 0
-            post_reboot_delay: 30
-            test_command: uptime
-
-      rescue:
-        # Do not assume the inventory_hostname is resolvable and delay 10 seconds at start
-        - name: Wait 600 seconds for port 22 to become open"
-          ansible.builtin.wait_for:
-            port: 22
-            host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
-            delay: 10
-            timeout: 600
-          connection: local
-
-      when: reboot is defined
-      tags: ['reboot']
-
-
-    - name: Reboot successful
-      debug:
-        msg: "Reboot successful"
-      tags: ['reboot']
+  #
+  #   - role: docker
+  #     when: use_docker == True
+  #     tags: ["docker"]
+  #
+  #   - role: libvirt
+  #     when: use_libvirt == True
+  #     tags: ["libvirt"]
+  #
+  #   - role: audio
+  #     tags: ["audio"]
+  #
+  #   - role: desktop
+  #     tags: ["desktop"]
+  #
+  #   - role: multimedia
+  #     tags: ["multimedia"]
+  #
+  #   - role: daw
+  #     # when: inventory_hostname in groups.get('daw', [])
+  #     tags: ["daw"]
+  #
+  #   - role: development
+  #     when: inventory_hostname in groups.get('dev', [])
+  #     tags: ["development"]
+  #
+  #
+  # post_tasks:
+  #   - name: Cleanup old backup files
+  #     script: "{{ lookup('env','HOME') }}/Utils/bin/cleanup.sh"
+  #     when: cleanup is defined
+  #     tags: ["cleanup"]
+  #
+  #   - block:
+  #       - name: Reboot the host
+  #         reboot:
+  #           msg: "Reboot initiated by Ansible"
+  #           connect_timeout: 5
+  #           reboot_timeout: 300
+  #           pre_reboot_delay: 0
+  #           post_reboot_delay: 30
+  #           test_command: uptime
+  #
+  #     rescue:
+  #       # Do not assume the inventory_hostname is resolvable and delay 10 seconds at start
+  #       - name: Wait 600 seconds for port 22 to become open"
+  #         ansible.builtin.wait_for:
+  #           port: 22
+  #           host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+  #           delay: 10
+  #           timeout: 600
+  #         connection: local
+  #
+  #     when: reboot is defined
+  #     tags: ['reboot']
+  #
+  #
+  #   - name: Reboot successful
+  #     debug:
+  #       msg: "Reboot successful"
+  #     tags: ['reboot']

@@ -20,6 +20,7 @@ root_directory_definitions:
   - dest: /etc/xdg
   - dest: /etc/mediamtx
   - dest: /etc/autofs
+  - dest: /usr/share/backgrounds
 
 expected_value: "role_base_defaults"
 
