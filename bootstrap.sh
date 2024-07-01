@@ -222,12 +222,17 @@ sleep 1
 
 # --- Environment Variables ---
 say "Enter additional environment variables (press Enter with empty input to finish): \n" $BLUE
+
 declare -A env_vars
 while true; do
   var_name=$(gum input --width=0 --prompt "Variable name (or Enter to finish): ")
-  [ -z "$var_name" ] && break
-  var_value=$(gum input --prompt "Value for $var_name: ")
-  env_vars["$var_name"]="$var_value"
+
+  if [[ -z "${var_name}" ]]; then
+    break
+  else
+    var_value=$(gum input --prompt "Value for ${var_name}: ")
+    env_vars["${var_name}"]="${var_value}"
+  fi
 done
 
 # --- Ansible Playbook Execution ---
@@ -247,7 +252,7 @@ EOF
 
 say "And so it begins...\n" $BLUE
 
-eval "${env_command} ansible-playbook -i hosts ${ANSIBLE_HOME}/playbooks/setup.yml"
+gum spin --spinner dot --spinner.margin="2 2" --title "Running Setup Playbook..." -- eval "${env_command} ansible-playbook -i hosts ${ANSIBLE_HOME}/playbooks/setup.yml"
 
 sleep 5
 
