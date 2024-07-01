@@ -16,8 +16,12 @@ if [[ $(id -u) -ne 0 ]]; then
 	dbus-update-activation-environment --all
 fi
 
-if ! pgrep -a "keyring" >/dev/null; then
-	eval "$(/usr/bin/gnome-keyring-daemon --replace --daemonize --components=pkcs11,secrets,ssh,gpg)"
+if [ -x "$(command -v gnome-keyring-daemon)" ]; then
+
+  if ! pgrep -a "keyring" >/dev/null; then
+  	eval "$(/usr/bin/gnome-keyring-daemon --replace --daemonize --components=pkcs11,secrets,ssh,gpg)"
+  fi
+
 fi
 
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
