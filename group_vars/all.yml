@@ -24,8 +24,8 @@ autofs_client:
     - storage
 
 
+netork_managed_etc_hosts: True
 network_domain: syncopated.net
-
 network_hosts:
   - ip: 192.168.41.20
     host: bender
