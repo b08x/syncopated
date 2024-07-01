@@ -128,20 +128,19 @@ install_packages() {
     Arch|ArchLabs|cachyos|EndeavourOS)
       # Check if packages are already installed
       if ! pacman -Qi openssh base-devel rsync openssh python-pip \
-      firewalld python-setuptools rustup fd rubygems yadm jack2 jack2-dbus \
-      pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger \
-      nodejs npm ansible &> /dev/null; then
+      firewalld python-setuptools rustup fd rubygems net-tools htop \
+      gum most ranger nodejs npm ansible &> /dev/null; then
         say "Installing essential packages..." $GREEN
         sudo pacman -Syu --noconfirm --downloadonly --quiet
         sudo pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
-        firewalld python-setuptools rustup fd rubygems yadm jack2 jack2-dbus \
-        pulseaudio pulseaudio-jack pulseaudio-alsa net-tools htop gum most ranger \
+        firewalld python-setuptools rustup fd rubygems \
+        net-tools htop gum most ranger \
         nodejs npm ansible inxi --overwrite '*'
       fi
       ;;
     Fedora|Fedora)
       # Check if packages are already installed
-      if ! dnf list installed gum ansible &> /dev/null; then
+      if ! dnf list installed gum ansible inxi &> /dev/null; then
         say "Installing essential packages..." $GREEN
         echo '[charm]
         name=Charm
@@ -154,7 +153,7 @@ install_packages() {
       ;;
     Debian|Raspbian|MX|Pop)
       # Check if packages are already installed
-      if ! dpkg -l openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible &> /dev/null; then
+      if ! dpkg -l openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible inxi &> /dev/null; then
         say "Installing essential packages..." $GREEN
         sudo mkdir -p /etc/apt/keyrings
         curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
