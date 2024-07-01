@@ -196,11 +196,12 @@ CONFIG_DIR="${USER_HOME}/.config"
 DOTFILES_DIR="${CONFIG_DIR}/dotfiles"
 ANSIBLE_HOME="${DOTFILES_DIR}"
 
+install_packages
+
 gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This bootstrap script is about to configure some shit. Welcome to $(gum style --foreground 212 'synflow')."
 
 sleep 1
 
-install_packages
 setup_ssh_keys
 setup_gitconfig
 
@@ -240,7 +241,8 @@ for var in "${!env_vars[@]}"; do
 done
 
 cd $ANSIBLE_HOME && \
-echo "[workstation]\nlocalhost ansible_connection=local" > hosts
+echo "[workstation]" > hosts
+echo "localhost ansible_connection=local" >> hosts
 
 eval "${env_command} ansible-playbook -i hosts ${ANSIBLE_HOME}/playbooks/setup.yml"
 
