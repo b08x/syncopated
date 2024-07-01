@@ -70,9 +70,9 @@
 
     - role: base
       tags: ["base"]
-    #
-    # - role: network
-    #   tags: ["network"]
+
+    - role: network
+      tags: ["network"]
     #
     # - role: ruby
     #   tags: ["ruby"]

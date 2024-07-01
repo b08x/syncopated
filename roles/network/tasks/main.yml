@@ -38,4 +38,5 @@
     group: root
     mode: '0644'
     backup: True
+  with_items: "{{ network_hosts }}"
   tags: ['dns']
