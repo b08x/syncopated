@@ -173,6 +173,7 @@ clone_repository() {
   # Check if repository is already cloned
   if [ -d "${DOTFILES_DIR}" ]; then
     say "Repository already cloned.\n" $GREEN
+    cd $ANSIBLE_HOME && git fetch && git pull
   else
     say "Select branch" $BLUE
     branch=$(gum choose "main" "development" "feature/popos")
