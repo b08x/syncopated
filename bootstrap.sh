@@ -220,10 +220,18 @@ fi
 clone_repository
 sleep 1
 
+# --- set the inventory file for intial boostrapin'
+cat << EOF | tee "${ANSIBLE_HOME}/hosts"
+[workstation]
+localhost ansible_connection=local
+EOF
+
 # --- Environment Variables ---
 say "Enter additional environment variables (press Enter with empty input to finish): \n" $BLUE
 
 declare -A env_vars
+declare var_name=""
+
 while true; do
   var_name=$(gum input --width=0 --prompt "Variable name (or Enter to finish): ")
 
@@ -236,7 +244,7 @@ while true; do
 done
 
 # --- Ansible Playbook Execution ---
-wipe
+# wipe
 say "Settting env vars and setup inventory for Playbook Execution...\n" $BLUE
 
 env_command="env ANSIBLE_HOME=${ANSIBLE_HOME}"
@@ -245,18 +253,14 @@ for var in "${!env_vars[@]}"; do
   env_command+=" $var=${env_vars[$var]}"
 done
 
-cat << EOF | tee "${ANSIBLE_HOME}/hosts"
-[workstation]
-localhost ansible_connection=local
-EOF
-
 say "And so it begins...\n" $BLUE
 
-gum spin --spinner dot --spinner.margin="2 2" --title "Running Setup Playbook..." -- eval "${env_command} ansible-playbook -i hosts ${ANSIBLE_HOME}/playbooks/setup.yml"
+# gum spin --spinner dot --spinner.margin="2 2" --title "Running Setup Playbook..." -- '
+eval "${env_command} ansible-playbook -i hosts ${ANSIBLE_HOME}/playbooks/setup.yml"
 
 sleep 5
 
-wipe
+# wipe
 
 gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This shit has been $(gum style --foreground 212 'configured')."
 
