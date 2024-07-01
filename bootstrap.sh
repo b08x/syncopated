@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 # --- Error Handling ---
@@ -22,12 +22,7 @@ DISTRO=$(lsb_release -si)
 # --- Display Function ---
 say() {
   echo -e "${2}${1}${ALL_OFF}"
-}
-
-# --- User Input ---
-prompt_for_userid() {
-  read -p "Please enter the user id: " USERNAME
-  echo "$USERNAME"
+  sleep 1
 }
 
 # --- Sudoers Setup (Idempotent) ---
@@ -237,7 +232,7 @@ done
 
 # --- Ansible Playbook Execution ---
 wipe
-say "Running Ansible playbook...\n" $BLUE
+say "Settting env vars and setup inventory for Playbook Execution...\n" $BLUE
 
 env_command="env ANSIBLE_HOME=${ANSIBLE_HOME}"
 
@@ -245,9 +240,12 @@ for var in "${!env_vars[@]}"; do
   env_command+=" $var=${env_vars[$var]}"
 done
 
-cd $ANSIBLE_HOME && \
-echo "[workstation]" > hosts
-echo "localhost ansible_connection=local" >> hosts
+cat << EOF | tee "${ANSIBLE_HOME}/hosts"
+[workstation]
+localhost ansible_connection=local
+EOF
+
+say "And so it begins...\n" $BLUE
 
 eval "${env_command} ansible-playbook -i hosts ${ANSIBLE_HOME}/playbooks/setup.yml"
 

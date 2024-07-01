@@ -181,3 +181,10 @@ ansible-inventory-grapher -i inventory.ini all -o "{}.dot" -a \
   edge [ dir=back arrowtail=empty style="dashed" ];\
   bgcolor="darkgray";"
 ```
+
+
+# installing
+
+```shell
+/usr/bin/curl -sSL https://raw.githubusercontent.com/b08x/SyncopatedOS/development/bootstrap.sh | sh
+```
