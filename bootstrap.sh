@@ -251,3 +251,13 @@ sleep 5
 wipe
 
 gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This shit has been $(gum style --foreground 212 'configured')."
+
+sleep 1
+
+if gum confirm "Wanna reboot?" --default="Yes"; then
+  say "rebooting..." $GREEN
+  shutdown -r now
+else
+  say "not rebooting...." $YELLOW
+  sleep 2
+fi
