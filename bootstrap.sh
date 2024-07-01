@@ -246,6 +246,8 @@ echo "localhost ansible_connection=local" >> hosts
 
 eval "${env_command} ansible-playbook -i hosts ${ANSIBLE_HOME}/playbooks/setup.yml"
 
+sleep 5
+
 wipe
 
 gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This shit has been $(gum style --foreground 212 'configured')."
