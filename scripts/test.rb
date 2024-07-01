@@ -34,7 +34,8 @@ class AnsibleProject
 
   def initialize(config)
     @config = config
-    @playbooks = Dir.children(@config.playbooks).map { |file| File.join(@config.playbooks, file) }
+    # Adjust to include only '.yml' files
+    @playbooks = Dir.glob(File.join(@config.playbooks, '*.yml'))
     @group_vars = @config.group_vars
     @host_vars = @config.host_vars
   end
