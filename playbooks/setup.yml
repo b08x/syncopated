@@ -1,5 +1,5 @@
 ---
-- hosts: soundbot
+- hosts: localhost
   become: True
   gather_facts: yes
   vars:
