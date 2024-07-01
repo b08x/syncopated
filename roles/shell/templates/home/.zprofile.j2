@@ -8,6 +8,7 @@ fi
 
 export -U PATH
 
+#TODO: so, with autologin, something needs to be done with unlocking the gnome-keyring....
 if [ -x "$(command -v gnome-keyring-daemon)" ]; then
 
   export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
