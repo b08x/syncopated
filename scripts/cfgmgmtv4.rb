@@ -12,6 +12,7 @@ require 'tty-prompt'
 class Configuration
   attr_reader :ansible_home, :inventory, :playbooks, :group_vars, :host_vars, :roles_home, :tags, :groups, :hosts,
               :roles
+  attr_writer :tags, :groups, :hosts, :roles
 
   def initialize
     @ansible_home = ENV['ANSIBLE_HOME'] || File.expand_path('..', __dir__)
@@ -20,10 +21,10 @@ class Configuration
     @group_vars = File.join(@ansible_home, 'group_vars')
     @host_vars = File.join(@ansible_home, 'host_vars')
     @roles_home = File.join(@ansible_home, 'roles')
-    @tags = %(alsa always applications asdf audio autofs autologin base bash bluetooth chaotic cleanup cpupower deadbeef desktop distro dns docker dots dunst env firewall gnome-keyring groups grub gtk htop i3 input-remapper jack keybindings keys lightdm lnav makepkg media mediamtx menu mirrors mixxx mkinitcpio network nfs ntp ohmyzsh packages pacman pam paru picom pipewire profile pulsar pulseaudio python qt ranger realtime redshift repo rofi rsyncd rtirq rtkit ruby setup shell ssh sshd sudoers sysctl terminal testing theme thunar tuned tuning updatedb user utils video vscode x xdg zsh)
-    @groups = %(all workstation dev daw llmos server)
-    @hosts = %(soundbot lapbot tinybot ninjabot bender)
-    @roles = %(distro base audio desktop user shell terminal network ruby docker alsa pipewire jack pulseaudio audio lightdm x i3 desktop theme applications)
+    @tags = [] # Dynamically generated later
+    @groups = [] # Dynamically generated later
+    @hosts = [] # Dynamically generated later
+    @roles = [] # Dynamically generated later
   end
 end
 
@@ -60,8 +61,10 @@ class UI
     @prompt.select('Select Type', ['n/a', 'tags', 'roles'])
   end
 
-  def select_tags
-    @prompt.multi_select('Select Tags', @config.tags)
+  def select_tags(playbook, ansible_project)
+    # Get tags dynamically from the playbook
+    tags = ansible_project.tags(playbook)
+    @prompt.multi_select('Select Tags', tags.split(" "))
   end
 
   def select_roles
@@ -83,6 +86,16 @@ end
 
 # Main Script
 config = Configuration.new
+
+# Dynamically generate lists from Ansible project
+config.tags = `ansible-playbook -i #{config.inventory} #{config.playbooks} --list-tags | awk -F 'TASK TAGS:' '{print $2}'`.chomp.strip.gsub(
+  /\[|\]|,/, ''
+).split(' ')
+
+config.groups = Dir.children(config.group_vars).map { |group| group.gsub('.yml', '') }
+config.hosts = Dir.children(config.host_vars).map { |host| host.gsub('.yml', '') }
+config.roles = Dir.children(config.roles_home)
+
 ansible_project = AnsibleProject.new(config)
 ui = UI.new(config)
 
@@ -91,7 +104,7 @@ type = ui.select_type
 
 tags = case type
        when 'tags'
-         ui.select_tags
+         ui.select_tags(playbook, ansible_project)
        when 'roles'
          ui.select_roles
        else
@@ -117,9 +130,14 @@ command_parts << '--tags' << tags.join(',') unless tags.empty?
 CLI::UI.frame_style = :bracket
 
 CLI::UI::StdoutRouter.enable
-CLI::UI::Frame.open('syncopatedIaC') do
+
+CLI::UI::Frame.open('syncopatedOS') do
+
+  CLI::UI::Frame.open('Info') do
+    puts command_parts
+  end
   # Run Ansible Playbook
-  CLI::UI::Frame.open('Group') do
+  CLI::UI::Frame.open('Output') do
     Dir.chdir(config.ansible_home) do
       Open3.popen3(command_parts.join(' ')) do |_stdin, stdout, stderr, _thread|
         # Capture stdout and stderr
