@@ -1,0 +1,96 @@
+app:
+  description: Braid two descriptive texts into an imperative mood image prompt
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: completion
+  name: Braid Descriptive Texts - Imperative Prompt
+model_config:
+  agent_mode:
+    enabled: false
+    max_iteration: 5
+    strategy: function_call
+    tools: []
+  annotation_reply:
+    enabled: false
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    datasets:
+      datasets: []
+    retrieval_model: single
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    image:
+      detail: high
+      enabled: true
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+  model:
+    completion_params:
+      stop: []
+    mode: chat
+    name: claude-3-sonnet-20240229
+    provider: anthropic
+  more_like_this:
+    enabled: false
+  opening_statement: null
+  pre_prompt: 'Your task is to convert a given statement into an imperative mood prompt
+    command. This involves transforming the statement into a direct command or instruction.
+
+
+    Here is the statement to convert:
+
+    <statement>
+
+    {{STATEMENT}}
+
+    </statement>
+
+
+    To convert the statement to an imperative mood:
+
+    1. Remove any subject pronouns (e.g., "you", "we", "they")
+
+    2. Start with a verb in its base form
+
+    3. Make the statement direct and concise
+
+    4. Use exclamation points sparingly, only for emphasis if necessary
+
+
+    Here are some examples of conversions:
+
+    - "You should eat your vegetables" becomes "Eat your vegetables"
+
+    - "We need to finish the project by Friday" becomes "Finish the project by Friday"
+
+    - "They must arrive on time" becomes "Arrive on time"
+
+
+    Now, convert the given statement into an imperative mood prompt command. Write
+    your answer inside <answer> tags.'
+  prompt_type: simple
+  retriever_resource:
+    enabled: false
+  sensitive_word_avoidance:
+    configs: []
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form:
+  - paragraph:
+      default: ''
+      label: STATEMENT
+      required: true
+      variable: STATEMENT
