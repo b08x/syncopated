@@ -180,7 +180,7 @@ clone_repository() {
     cd $ANSIBLE_HOME && git fetch && git pull
   else
     say "Select branch" $BLUE
-    branch=$(gum choose "main" "development" "feature/popos")
+    branch=$(gum choose --selected="development" "main" "development")
     say "Cloning SyncopatedOS repository..." $BLUE
     git clone --recursive -b "${branch}" git@github.com:b08x/SyncopatedOS "${DOTFILES_DIR}"
   fi
