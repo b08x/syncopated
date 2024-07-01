@@ -129,18 +129,18 @@ install_packages() {
       # Check if packages are already installed
       if ! pacman -Qi openssh base-devel rsync openssh python-pip \
       firewalld python-setuptools rustup fd rubygems net-tools htop \
-      gum most ranger nodejs npm ansible efibootmgr inxi &> /dev/null; then
+      gum most ranger nodejs npm ansible efibootmgr inxi fzf &> /dev/null; then
         say "Installing essential packages..." $GREEN
         sudo pacman -Syu --noconfirm --downloadonly --quiet
         sudo pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
         firewalld python-setuptools rustup fd rubygems \
         net-tools htop gum most ranger \
-        nodejs npm ansible inxi efibootmgr --overwrite '*'
+        nodejs npm ansible inxi efibootmgr fzf --overwrite '*'
       fi
       ;;
     Fedora|Fedora)
       # Check if packages are already installed
-      if ! dnf list installed gum ansible inxi efibootmgr &> /dev/null; then
+      if ! dnf list installed gum ansible inxi efibootmgr fzf &> /dev/null; then
         say "Installing essential packages..." $GREEN
         echo '[charm]
         name=Charm
@@ -148,18 +148,18 @@ install_packages() {
         enabled=1
         gpgcheck=1
         gpgkey=https://repo.charm.sh/yum/gpg.key' | tee /etc/yum.repos.d/charm.repo
-        sudo dnf -y install gum ansible inxi efibootmgr
+        sudo dnf -y install gum ansible inxi efibootmgr fzf
       fi
       ;;
     Debian|Raspbian|MX|Pop)
       # Check if packages are already installed
-      if ! dpkg -l openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible inxi efibootmgr &> /dev/null; then
+      if ! dpkg -l openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible inxi efibootmgr fzf &> /dev/null; then
         say "Installing essential packages..." $GREEN
         sudo mkdir -p /etc/apt/keyrings
         curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
         echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
         sudo apt-get update --quiet && \
-        sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible inxi efibootmgr
+        sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible inxi efibootmgr fzf
       fi
       ;;
     *)
