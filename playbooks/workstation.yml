@@ -65,8 +65,8 @@
     - role: network
       tags: ["network"]
 
-  #   - role: ruby
-  #     tags: ["ruby"]
+    - role: ruby
+      tags: ["ruby"]
   #
   #   - role: docker
   #     when: use_docker == True

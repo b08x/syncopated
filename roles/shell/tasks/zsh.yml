@@ -64,3 +64,14 @@
     - .zshrc
     - .zlogin
   tags: ['env', 'profile']
+
+
+# add asdf plugin to oh-my-zsh plugins var
+- name: Add asdf plugin to oh-my-zsh plugins
+  lineinfile:
+    path: "{{ user.home }}/.zshrc"
+    regexp: "^plugins="
+    line: "plugins=(asdf ansible bundler docker-compose copypath fd fzf ripgrep zsh-navigation-tools ruby history systemd web-search)"
+    insertafter: 'ZSH_CUSTOM="$HOME/.local/share/zsh"'
+    firstmatch: True
+  when: use_asdf is defined
