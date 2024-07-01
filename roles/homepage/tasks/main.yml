@@ -7,8 +7,8 @@
     state: directory
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
-    mode: '2775'
-    recurse: True
+    mode: '2755'
+    recurse: False
 
 - name: sync folder
   synchronize:
