@@ -3,13 +3,4 @@
 #
 # Syntax: simple "KEY=VAL" pairs on separate lines
 UU_ORDER="/etc/environment"
-
-ECASOUND=ecasound
-LADSPA_PATH="/usr/lib/ladspa"
-LADSPA_RDF_PATH="/usr/share/ladspa/rdf"
-VAMP_PATH="/usr/local/share/vamp"
-
-QT_QPA_PLATFORMTHEME=qt5ct
-#QT_STYLE_OVERRIDE=kvantum
-#BROWSER=firefox
-#EDITOR=nano
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"

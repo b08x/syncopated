@@ -37,6 +37,11 @@
         msg: System {{ inventory_hostname }} has distro {{ ansible_distribution }}
       tags: ['always']
 
+    - setup:
+    - debug:
+        msg: System {{ inventory_hostname }} belongs to distro group {{ ansible_os_family }}
+      tags: ['always']
+
     - name: Symlink /etc/os-release to /etc/system-release
       file:
         src: /etc/os-release
@@ -50,8 +55,8 @@
 
   roles:
 
-    # - role: distro
-    #   tags: ["distro"]
+    - role: user
+      tags: ["user"]
 
     - role: shell
       tags: ["shell"]
@@ -61,10 +66,6 @@
 
     - role: network
       tags: ["network"]
-
-    - role: user
-      tags: ["user"]
-
 
     - role: ruby
       tags: ["ruby"]

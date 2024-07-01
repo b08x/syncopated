@@ -8,22 +8,14 @@ GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3 nvidia-drm.mod
 GRUB_CMDLINE_LINUX_DEFAULT='nowatchdog zswap.enabled=0 loglevel=3'
 {% endif %}
 
-{% if inventory_hostname != 'lapbot' %}
+{% if efi_supported %}
 GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M"
 {% else %}
 GRUB_CMDLINE_LINUX="threadirqs crashkernel=384M-:128M"
 {% endif %}
 
-#{% if grub.debug is defined %}
-# GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0 i915.enable_dc=0"
-#GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0"
-#{% else %}
-#GRUB_CMDLINE_LINUX="efi=runtime threadirqs crashkernel=384M-:128M net.ifnames=0 biosdevname=0"
-#{% endif %}
-
 # Preload both GPT and MBR modules so that they are not missed
 GRUB_PRELOAD_MODULES="part_gpt part_msdos"
-
 
 # Set to 'countdown' or 'hidden' to change timeout behavior,
 # press ESC key to display menu.
@@ -52,11 +44,11 @@ GRUB_DISABLE_RECOVERY='true'
 
 # Uncomment and set to the desired menu colors.  Used by normal and wallpaper
 # modes only.  Entries specified as foreground/background.
-GRUB_COLOR_NORMAL="yellow/black"
+GRUB_COLOR_NORMAL="blue/black"
 GRUB_COLOR_HIGHLIGHT="red/black"
 
 # Uncomment one of them for the gfx desired, a image background or a gfxtheme
-GRUB_BACKGROUND='/usr/share/backgrounds/syncopated/str_01_05a.png'
+GRUB_BACKGROUND='/usr/share/backgrounds/str_01_04.png'
 #GRUB_THEME="/path/to/gfxtheme"
 
 # Uncomment to get a beep at GRUB start

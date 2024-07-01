@@ -129,18 +129,18 @@ install_packages() {
       # Check if packages are already installed
       if ! pacman -Qi openssh base-devel rsync openssh python-pip \
       firewalld python-setuptools rustup fd rubygems net-tools htop \
-      gum most ranger nodejs npm ansible &> /dev/null; then
+      gum most ranger nodejs npm ansible efibootmgr inxi &> /dev/null; then
         say "Installing essential packages..." $GREEN
         sudo pacman -Syu --noconfirm --downloadonly --quiet
         sudo pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
         firewalld python-setuptools rustup fd rubygems \
         net-tools htop gum most ranger \
-        nodejs npm ansible inxi --overwrite '*'
+        nodejs npm ansible inxi efibootmgr --overwrite '*'
       fi
       ;;
     Fedora|Fedora)
       # Check if packages are already installed
-      if ! dnf list installed gum ansible inxi &> /dev/null; then
+      if ! dnf list installed gum ansible inxi efibootmgr &> /dev/null; then
         say "Installing essential packages..." $GREEN
         echo '[charm]
         name=Charm
@@ -148,18 +148,18 @@ install_packages() {
         enabled=1
         gpgcheck=1
         gpgkey=https://repo.charm.sh/yum/gpg.key' | tee /etc/yum.repos.d/charm.repo
-        sudo dnf -y install gum ansible inxi
+        sudo dnf -y install gum ansible inxi efibootmgr
       fi
       ;;
     Debian|Raspbian|MX|Pop)
       # Check if packages are already installed
-      if ! dpkg -l openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible inxi &> /dev/null; then
+      if ! dpkg -l openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible inxi efibootmgr &> /dev/null; then
         say "Installing essential packages..." $GREEN
         sudo mkdir -p /etc/apt/keyrings
         curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
         echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
         sudo apt-get update --quiet && \
-        sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible inxi
+        sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev gum ansible inxi efibootmgr
       fi
       ;;
     *)
@@ -239,7 +239,10 @@ for var in "${!env_vars[@]}"; do
   env_command+=" $var=${env_vars[$var]}"
 done
 
-eval "${env_command} ansible-playbook -i localhost, ${ANSIBLE_HOME}/playbooks/setup.yml"
+cd $ANSIBLE_HOME && \
+echo "[workstation]\nlocalhost ansible_connection=local" > hosts
+
+eval "${env_command} ansible-playbook -i hosts ${ANSIBLE_HOME}/playbooks/setup.yml"
 
 wipe
 

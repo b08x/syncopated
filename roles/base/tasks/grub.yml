@@ -6,6 +6,27 @@
 #     dest: "/usr/share/grub/themes"
 #   when: ansible_os_family == 'Archlinux'
 
+- name: Check for EFI support
+  ansible.builtin.shell: efibootmgr -v
+  register: efi_check
+  ignore_errors: yes
+  tags: ['check']
+
+- name: Set efi_supported variable
+  set_fact:
+    efi_supported: "{{ not efi_check.failed }}"
+  tags: ['check']
+
+- setup:
+- debug:
+    msg: "{{ efi_supported }}"
+  tags: ['debug']
+
+- name: Copy background to /usr/share/backgrounds
+  copy:
+    src: usr/share/backgrounds/str_01_04.png
+    dest: /usr/share/backgrounds/str_01_04.png
+
 - name: Set kernel cmdline params in grub
   template:
     src: etc/default/grub.j2
