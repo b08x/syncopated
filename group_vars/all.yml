@@ -23,20 +23,19 @@ autofs_client:
     - backup
     - storage
 
-
 netork_managed_etc_hosts: True
 network_domain: syncopated.net
 network_hosts:
-  - ip: 192.168.41.20
-    host: bender
-  - ip: 192.168.36.9
-    host: soundbot
   - ip: 192.168.36.3
     host: tinybot
+  - ip: 192.168.36.9
+    host: soundbot
   - ip: 192.168.36.21
     host: ninjabot
   - ip: 192.168.41.10
     host: lapbot
+  - ip: 192.168.41.20
+    host: bender
 
 lan:
   gateway: 192.168.41.1
