@@ -32,6 +32,8 @@ network_hosts:
     host: soundbot
   - ip: 192.168.36.21
     host: ninjabot
+  - ip: 192.168.36.23
+    host: isabella
   - ip: 192.168.41.10
     host: lapbot
   - ip: 192.168.41.20
