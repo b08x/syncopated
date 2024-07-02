@@ -1,9 +1,5 @@
 #!/usr/bin/env zsh
 
-if [ -x "$(command -v glab)" ]; then
-alias glab_compl="source <(glab completion -s zsh); compdef _glab glab"
-fi
-
 # system power
 alias reboot="sudo shutdown -r now"
 alias shutdown="sudo shutdown -h now"
@@ -11,7 +7,7 @@ alias shutdown="sudo shutdown -h now"
 # list input devices
 alias lsin="sudo libinput list-devices"
 
-alias h="history -E"
+alias h="history"
 
 alias cl="tput clear && tput cup 1"
 
@@ -32,7 +28,7 @@ alias lltrah="eza --sort=ext --long -a --level=2 --icons auto -s modified"
 
 # if available use bat instead of cat
 if [ -x "$(command -v bat)" ]; then
-  alias cat="bat --theme 'Monokai Extended' -p"
+  alias cat="bat-preview"
 fi
 
 # mlocate
@@ -74,7 +70,7 @@ alias gfp="git fetch && git pull"
 alias gp="git push"
 alias glog="git log --oneline --decorate --graph --all"
 alias gs="gitui"
-alias co="git checkout"
+
 #turn off pcspkr
 alias beepoff="rmmod pcspkr"
 
@@ -137,7 +133,7 @@ alias loadpry='pry -r'
 
 alias baudline_jack="baudline_jack -channels 4 -jack"
 
-alias yf="yadm fetch && yadm pull && yadm alt"
+alias yfp="yadm fetch && yadm pull"
 alias yp="yadm push"
 
 alias yd="gitui -d $HOME/.local/share/yadm/repo.git -w $HOME --logging"

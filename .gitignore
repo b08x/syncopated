@@ -20,3 +20,4 @@ hostvars.json
 *.qcow2
 *.iso
 file/closet/
+roles/utils/files/dotfiles/
