@@ -10,9 +10,9 @@ require 'tty-prompt'
 
 # Configuration
 class Configuration
-  attr_reader :ansible_home, :inventory, :playbooks, :group_vars, :host_vars, :roles_home, :tags, :groups, :hosts,
+  attr_reader :ansible_home, :playbooks, :group_vars, :host_vars, :roles_home, :tags, :groups, :hosts,
               :roles
-  attr_writer :tags, :groups, :hosts, :roles
+  attr_accessor :tags, :groups, :hosts, :roles, :inventory
 
   def initialize
     @ansible_home = ENV['ANSIBLE_HOME'] || File.expand_path('..', __dir__)
@@ -128,8 +128,8 @@ group = case limit
         end
 
 command_parts = ['ansible-playbook', '-i', config.inventory, playbook]
-unless !localhost
-  command_parts << '--limit' << group.join(',') unless group.empty?
+unless localhost
+	command_parts << '--limit' << group.join(',') unless group.empty?
 end
 command_parts << '--tags' << tags.join(',') unless tags.empty?
 
