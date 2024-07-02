@@ -128,7 +128,7 @@ install_packages() {
         say "Installing essential packages..." $GREEN
         sudo pacman -Syu --noconfirm --downloadonly --quiet
         sudo pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
-        firewalld python-setuptools rustup fd rubygems \
+        firewalld python-setuptools fd rubygems \
         net-tools htop gum most ranger \
         nodejs npm ansible inxi efibootmgr fzf --overwrite '*'
       fi
@@ -256,7 +256,7 @@ done
 say "And so it begins...\n" $BLUE
 
 # gum spin --spinner dot --spinner.margin="2 2" --title "Running Setup Playbook..." -- '
-eval "${env_command} ansible-playbook -i hosts ${ANSIBLE_HOME}/playbooks/setup.yml"
+eval "${env_command} ansible-playbook -i ${ANSIBLE_HOME}/hosts ${ANSIBLE_HOME}/playbooks/setup.yml"
 
 sleep 5
 
