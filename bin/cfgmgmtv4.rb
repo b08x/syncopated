@@ -44,6 +44,7 @@ class AnsibleProject
       /\[|\]|,/, ''
     )
   end
+
 end
 
 # UI Class
@@ -83,11 +84,6 @@ class UI
     @prompt.multi_select('Select Host', @config.hosts)
   end
 
-  def localhost
-    command_parts = ['ansible-playbook', '-i', 'localhost,', '-c local']
-    command_parts << '--tags' << tags.join(',') unless tags.empty?
-    return command_parts
-  end
 end
 
 # Main Script
@@ -126,17 +122,13 @@ group = case limit
           ui.select_host
         when 'localhost'
           localhost = true
+          config.inventory = File.join(config.ansible_home, 'hosts')
         else
           []
         end
 
-if localhost
-  command_parts = ['ansible-playbook', '-i localhost,', '-c local', playbook]
-else
-  command_parts = ['ansible-playbook', '-i', config.inventory, playbook]
-  command_parts << '--limit' << group.join(',') unless group.empty?
-end
-
+command_parts = ['ansible-playbook', '-i', config.inventory, playbook]
+command_parts << '--limit' << group.join(',') unless group.empty? || unless localhost
 command_parts << '--tags' << tags.join(',') unless tags.empty?
 
 CLI::UI.frame_style = :bracket
