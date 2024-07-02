@@ -128,7 +128,9 @@ group = case limit
         end
 
 command_parts = ['ansible-playbook', '-i', config.inventory, playbook]
-command_parts << '--limit' << group.join(',') unless group.empty? || unless localhost
+unless !localhost
+  command_parts << '--limit' << group.join(',') unless group.empty?
+end
 command_parts << '--tags' << tags.join(',') unless tags.empty?
 
 CLI::UI.frame_style = :bracket
