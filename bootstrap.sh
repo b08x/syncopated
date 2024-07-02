@@ -123,7 +123,7 @@ install_packages() {
     Arch|ArchLabs|cachyos|EndeavourOS)
       # Check if packages are already installed
       if ! pacman -Qi openssh base-devel rsync openssh python-pip \
-      firewalld python-setuptools rustup fd rubygems net-tools htop \
+      firewalld python-setuptools fd rubygems net-tools htop \
       gum most ranger nodejs npm ansible efibootmgr inxi fzf &> /dev/null; then
         say "Installing essential packages..." $GREEN
         sudo pacman -Syu --noconfirm --downloadonly --quiet
