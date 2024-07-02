@@ -1,6 +1,6 @@
 ---
 
-- name: use shell to do stuff
+- name: Create folders for user config
   shell: |
     mkdir -pv pipewire
 
@@ -41,36 +41,9 @@
     group: "{{ pipewire_user }}"
   notify: Restart WirePlumber
 
-- name: Create filter-chain configuration for noise reduction
-  copy:
-    dest: "/home/{{ pipewire_user }}/.config/pipewire/filter-chain.conf.d/noise-reduction.conf"
-    content: |
-      {
-        "name": "noise_reduction",
-        "description": "Noise Reduction Filter Chain",
-        "filter.graph": [
-          {
-            "type": "ladspa",
-            "name": "noise_reduction",
-            "plugin": "{{ noise_reduction_plugin }}",
-            "label": "{{ noise_reduction_label }}",
-            "control": {
-              "VAD Threshold": {{ vad_threshold }}
-            }
-          }
-        ],
-        "capture.props": {
-          "node.name": "alsa_input.usb-*.*",
-          "media.class": "Audio/Source"
-        },
-        "playback.props": {
-          "node.name": "filtered_noise_reduction",
-          "media.class": "Audio/Sink"
-        }
-      }
-    owner: "{{ pipewire_user }}"
-    group: "{{ pipewire_user }}"
-  notify: Restart PipeWire
+https://www.perplexity.ai/search/let-s-work-on-migrating-from-j-_TZudN6TQbS1inb0KNHW4g
+
+https://docs.pipewire.org/page_module_filter_chain.html
 
 - name: Enable and start PipeWire services
   systemd:
