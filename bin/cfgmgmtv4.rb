@@ -72,7 +72,7 @@ class UI
   end
 
   def select_limit
-    @prompt.select('Select Limit', %w[all groups hosts])
+    @prompt.select('Select Limit', %w[all groups hosts localhost])
   end
 
   def select_group
@@ -81,6 +81,12 @@ class UI
 
   def select_host
     @prompt.multi_select('Select Host', @config.hosts)
+  end
+
+  def localhost
+    command_parts = ['ansible-playbook', '-i', 'localhost,', '-c local']
+    command_parts << '--tags' << tags.join(',') unless tags.empty?
+    return command_parts
   end
 end
 
@@ -118,13 +124,19 @@ group = case limit
           ui.select_group
         when 'hosts'
           ui.select_host
+        when 'localhost'
+          localhost = true
         else
           []
         end
 
-# Construct the command based on user selections
-command_parts = ['ansible-playbook', '-i', config.inventory, playbook]
-command_parts << '--limit' << group.join(',') unless group.empty?
+if localhost
+  command_parts = ['ansible-playbook', '-i localhost,', '-c local', playbook]
+else
+  command_parts = ['ansible-playbook', '-i', config.inventory, playbook]
+  command_parts << '--limit' << group.join(',') unless group.empty?
+end
+
 command_parts << '--tags' << tags.join(',') unless tags.empty?
 
 CLI::UI.frame_style = :bracket
