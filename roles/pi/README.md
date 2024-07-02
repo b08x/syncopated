@@ -17,7 +17,7 @@ https://wiki.seeedstudio.com/ReSpeaker_4_Mic_Array_for_Raspberry_Pi/
 https://github.com/jacktrip/jacktrip.git
 
 
-
+https://github.com/radiganm/njconnect
 
 
 sudo rfkill block wifi
@@ -48,3 +48,12 @@ sudo apt -y install nodejs
   ls
   pip3 install pvrespeakerdemo
   export PATH="$HOME/.local/bin:$PATH"
+
+
+install jackd2
+
+
+---
+
+
+bcm2835-i2s 3f203000.i2s: I2S SYNC error!

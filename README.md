@@ -1,13 +1,7 @@
-<img align="left" width=460 height=400 src="https://github.com/b08x/syncopatedCaC/blob/development/assets/workspace07.jpeg?raw=true"><h2>Configuration as Code for Linux Workstations</h2>
+<img width=500 height=400 src="https://github.com/b08x/syncopatedCaC/blob/development/assets/workspace07.jpeg?raw=true"><h2>Syncopated OS</h2>
 
-This project is an exercise codified configuration.
+An exercise in using Ansible for Workstation Provisioning & Configuration Management
 
-The project prioritizes three key objectives:
-
-<p>Organization: To improve the maintainability and overall understanding of the workstation environment for administrators and users alike.</p>
-<p>Reproducibility: Consistent and reliable configurations, enabling predictable and stable provisionings</p>
-<p>Simplicity: While achieving the aforementioned goals, the project attempts to maintain a straight-forward approach.</p>
-<br clear="left"/>
 
 ## Objectives
 
@@ -17,11 +11,6 @@ The project prioritizes three key objectives:
 
 -   **Efficiency in Workflow:** Automate tasks within audio and software development workflows.
 
--   **Data-Driven Audio:**  Leverage programming for tasks like:
-
-    * Audio file analysis (tempo, key, rhythmic patterns) to drive generative processes, visualizations, or effect settings.
-    * Algorithmic sound synthesis, sample manipulation, or generative music creation.
-    * Using analyzed data or external inputs to control sound generation and MIDI devices for dynamic results.
 
 ## Core Components
 
@@ -38,7 +27,6 @@ The project prioritizes three key objectives:
       - Integration with network shares, remote systems, and collaboration platforms.
 
 
-  - **yadm (Dotfile Management):** Version-controls and centralizes personal files for editors, terminals, desktop settings, and other preferences across software development and audio production.
 
 ## Use Cases
 
@@ -56,23 +44,6 @@ The project prioritizes three key objectives:
     * Build custom audio synthesis and processing tools for unique sound design elements.
     * Control MIDI instruments, effects, or visualizers with analyzed audio data for dynamic performances or installations.
 
-### Versioned Projects
-
-* **Seamless Collaboration:** Facilitate collaborative workflows in media productions using tools like Git:
-    * Track changes in large audio projects alongside scripts, code, and other supporting assets.
-    * Enable collaborative editing or score development with clear version history.
-
-### Specialized Appliances
-
-* **Custom Solutions:**  Employ CaC principles to design custom embedded Linux solutions or networked audio systems tailored for specific audio or development needs.
-
-### Large Language Model Integration
-
-* **Streamline LLM Workflows:**
-    * Automate the setup and configuration of containerized LLM instances (Docker, Kubernetes).
-    * Manage model versions, dependencies, and resource allocation across your workstations.
-    * Optimize networking and storage configurations to streamline access and data transfer for LLM tasks.
-
 ## Collaboration
 
 Contributions from audio professionals, software developers, and Linux enthusiasts are welcome. Let's collaborate to build a versatile solution for managing Linux audio and development environments!
@@ -89,60 +60,16 @@ Contributions from audio professionals, software developers, and Linux enthusias
 
 | Path                      | Content                                     |
 | :------------------------ | :------------------------------------------ |
-| [files](files/)           | Additional Files not included in roles      |
+| [assets](assets/)           | media files                               |
+| [bin](bin/)                | utiliy scripts                                          |
 | [group_vars](group_vars/) | Variables for Host Groups                   |
 | [host_vars](host_vars/)   | Variables for Hosts                         |
 | [playbooks](playbooks/)   | Playbooks                                   |
 | [plugins](plugins/)       | Plugins and Modules                         |
 | [roles](roles/)           | Roles                                       |
-| [scripts](scripts/)       | Various scripts to perform admin tasks      |
-| [tasks](tasks/)           | Additional tasks not included in roles      |
-| [templates](templates/)   | Additional templates not included in roles  |
 | [vars](vars/)             | Variables to include in playbooks and tasks |
 | ansible.cfg               | Ansible configuration file                  |
 | inventory.ini             | Host inventory                              |
-
-## Playbooks
-
-| Name                                      | Description |
-|:------------------------------------------|:------------|
-| [workstation](playbooks/workstation.yml)  |             |
-| [nas](playbooks/nas.yml)                  |             |
-| [homepage](playbooks/homepage.yml)        |             |
-| [database](playbooks/devops/database.yml) |             |
-| [pihole](playbooks/devops/pihole.yml)     |             |
-| [libvirt](playbooks/devops/libvirt.yml)   |             |
-| [docker](playbooks/devops/docker.yml )    |             |
-| [webhost](playbooks/devops/webhost.yml)   |             |
-| [packager](playbooks/devops/packager.yml) |             |
-
-
-## Roles
-
-
-| Name                              | Description |
-|:----------------------------------|:------------|
-| [audio](roles/audio/)             |             |
-| [base](roles/base/)               |             |
-| [daw](roles/daw/)                 |             |
-| [desktop](roles/desktop/)         |             |
-| [development](roles/development/) |             |
-| [dify](roles/dify/)               |             |
-| [distro](roles/distro/)           |             |
-| [docker](roles/docker/)           |             |
-| [flowise](roles/flowise/)         |             |
-| [libvirt](roles/libvirt/)         |             |
-| [llm](roles/llm/)                 |             |
-| [multimedia](roles/multimedia/)   |             |
-| [nas](roles/nas/)                 |             |
-| [network](roles/network/)         |             |
-| [nginx](roles/nginx/)             |             |
-| [obs-studio](roles/obs-studio/)   |             |
-| [ruby](roles/ruby/)               |             |
-| [shell](roles/shell/)             |             |
-| [sillytavern](roles/sillytavern/) |             |
-| [sonic-pi](roles/sonic-pi/)       |             |
-| [user](roles/user)                |             |
 
 
 ## Commonly Used Options

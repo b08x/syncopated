@@ -7,8 +7,6 @@
 
 ### Playbook: `setup_pipewire.yml`
 
-```yaml
----
 - name: Setup PipeWire with custom configuration and noise reduction
   hosts: localhost
   become: true
@@ -147,7 +145,6 @@
         name: wireplumber
         state: restarted
         scope: user
-```
 
 # ### Explanation
 #
