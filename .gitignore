@@ -21,3 +21,4 @@ hostvars.json
 *.iso
 file/closet/
 roles/utils/files/dotfiles/
+roles/llmops/files/*.agi.json

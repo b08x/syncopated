@@ -1,9 +1,10 @@
 ---
 # tasks file for homepage
 
+
 - name: Create homepage folder
   file:
-    path: "{{ user.home }}/.local/share/html/homepage"
+    path: "{{ homepage_directory }}"
     state: directory
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
@@ -13,7 +14,7 @@
 - name: sync folder
   synchronize:
     src: home/.local/share/html/homepage/
-    dest: "{{ user.home }}/.local/share/html/homepage/"
+    dest: "{{ homepage_directory }}/"
     recursive: yes
     mode: push
     delete: no
@@ -29,7 +30,7 @@
 - name: Set index.html template
   template:
     src: home/.local/share/html/homepage/index.html.j2
-    dest: "{{ user.home }}/.local/share/html/homepage/index.html"
+    dest: "{{ homepage_directory }}/index.html"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
     mode: '0664'

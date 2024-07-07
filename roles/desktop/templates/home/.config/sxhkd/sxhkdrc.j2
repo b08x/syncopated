@@ -4,6 +4,9 @@ super + Menu
 super + o ; {g,a,k,v}
 	{terminator,alacritty,jack-keyboard,vmpk}
 
+XF86AudioRecord
+	dsnote --action start-listening-active-window
+
 control + Menu
   wmfocus
 
@@ -89,14 +92,11 @@ super + KP_Enter
 super + shift + KP_Enter
   thunar
 
-Print
-  teiler
-
-shift + Print
-  maim -u -s | xclip -selection clipboard -t image/png
+Print ; {s,t,c,r}
+  {teiler,tmp-screenshot,tmp-screenshot-clip,ssr-hidden.sh}
 
 super + Print
-  simplescreenrecorder --start-hidden
+  sendmidi dev 'Midi Through Port-0' panic
 
 XF86AudioMute
   mic_mute.sh mute
@@ -104,8 +104,6 @@ XF86AudioMute
 super + XF86AudioMute
   mic_mute.sh unmute
 
-Print
-  sendmidi dev 'Midi Through Port-0' panic
 
 #XF86MonBrightnessDown
 #  brightnessctl -d intel_backlight s 10%-

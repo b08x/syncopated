@@ -79,8 +79,8 @@
   #   - role: audio
   #     tags: ["audio"]
   #
-  #   - role: desktop
-  #     tags: ["desktop"]
+    - role: desktop
+      tags: ["desktop"]
   #
   #   - role: multimedia
   #     tags: ["multimedia"]

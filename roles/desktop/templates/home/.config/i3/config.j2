@@ -123,12 +123,6 @@ $exec_always "pkill picom; sleep 1; DISPLAY=':0' picom -b; sleep 1"
 $exec "nm-applet"
 $exec "dunst"
 
-{% if i3.autostart != 'default' %}
-{% for a in i3.autostart %}
-$exec "{{ a }}"
-{% endfor %}
-{% endif %}
-
 $exec_always nitrogen --restore
 
 $exec "sleep 1; dex -a -s /etc/xdg/autostart/:~/.config/autostart/"
@@ -137,3 +131,11 @@ $exec "sleep 1; dex -a -s /etc/xdg/autostart/:~/.config/autostart/"
 $exec pactl -- set-sink-volume 0 55%
 
 $exec_always "reload-sxhkd.sh"
+
+sleep 1
+
+{% if i3.autostart != 'default' %}
+{% for a in i3.autostart %}
+$exec "{{ a }}"
+{% endfor %}
+{% endif %}

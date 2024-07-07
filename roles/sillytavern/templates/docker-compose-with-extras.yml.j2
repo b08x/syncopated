@@ -1,9 +1,5 @@
 services:
   sillytavernextras:
-    deploy:
-        resources:
-            limits:
-                memory: 8192M
     container_name: sillytavernextras
     hostname: sillytavernextras
     image: cohee1207/sillytavern-extras
@@ -14,8 +10,8 @@ services:
         REQUIREMENTS: requirements.txt
     volumes:
       - "../extras/api_key.txt:/sillytavern-extras/api_key.txt:rw"
-      - sillytavernextras-chroma-data-volume:/chromadb
-      - sillytavernextras-cache-volume:/root/.cache
+      - ./sillytavernextras-chroma-data-volume:/chromadb
+      - ./sillytavernextras-cache-volume:/root/.cache
     ports:
       - "5100:5100"
       - "9000:9000"
@@ -34,10 +30,6 @@ services:
     networks:
       - sillytavern
   sillytavern:
-    deploy:
-        resources:
-            limits:
-                memory: 4096M
     build: ..
     container_name: sillytavern
     hostname: sillytavern
@@ -76,10 +68,4 @@ volumes:
     driver: local
   sillytavern-plugins-volume:
     name: sillytavern-plugins-volume
-    driver: local
-  sillytavernextras-cache-volume:
-    name: sillytavernextras-cache-volume
-    driver: local
-  sillytavernextras-chroma-data-volume:
-    name: sillytavernextras-chroma-data-volume
     driver: local

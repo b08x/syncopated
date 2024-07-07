@@ -22,6 +22,8 @@ cpupower:
 
 browser: "google-chrome-stable"
 
+homepage_directory: "{{ user.home }}/Documents/homepage"
+
 #TODO: this
 # tuned:
 #   profile: powersave
