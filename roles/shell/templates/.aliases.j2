@@ -28,7 +28,7 @@ alias lltrah="eza --sort=ext --long -a --level=2 --icons auto -s modified"
 
 # if available use bat instead of cat
 if [ -x "$(command -v bat)" ]; then
-  alias cat="bat-preview"
+  alias cat="bat -p"
 fi
 
 # mlocate
@@ -148,7 +148,7 @@ alias vnc_serv="x11vnc -ncache_cr -display :0"
 # alias changed="fd -H -t d -t f -E "*.ray-snapshots" -E "qutebrowser" -E "google-chrome" -E "*.git" -E ".cache/" -E "[Cc]ache" --changed-within 2hours | sort"
 
 # sampler
-alias sampler="fd -e flac -e wav -e opus -e mp3 --strip-cwd-prefix .  | fzf --preview='mpv {}' --preview-window=30% --tac --reverse -m --cycle --bind 'return:execute(play {})'"
+alias soundsampler="fd -e flac -e wav -e opus -e mp3 --strip-cwd-prefix .  | fzf --preview='mpv {}' --preview-window=30% --tac --reverse -m --cycle --bind 'return:execute(play {})'"
 
 alias samplerv2="fd -e flac -e wav -e opus -e mp3 . '/home/b08x'  | fzf --preview='mpv {}' --preview-window '~3,follow' --tac --reverse -m --cycle   --bind 'ctrl-/:toggle-preview' --bind 'return:execute(mpv {}),ctrl-y:change-preview-window(down|hidden|)'"
 

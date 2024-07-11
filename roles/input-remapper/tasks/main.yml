@@ -2,7 +2,7 @@
 
 - name: Sync input-remapper presets folder
   synchronize:
-    src: home/.config/input-remapper-2/presets/
+    src: presets/
     dest: "{{ user.home }}/.config/input-remapper-2/presets/"
     recursive: yes
     mode: push

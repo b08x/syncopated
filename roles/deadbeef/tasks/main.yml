@@ -32,11 +32,12 @@
     group: "{{ user.group }}"
   loop:
     - ".config/deadbeef"
+    - ".config/deadbeef/playlists"
     - ".local/lib/deadbeef"
 
 - name: Sync deadbeef plugins
   synchronize:
-    src: home/.local/lib/deadbeef/
+    src: plugins/
     dest: "{{ user.home }}/.local/lib/deadbeef/"
     recursive: yes
     mode: push
@@ -47,10 +48,22 @@
       - "--update"
       - "--omit-dir-times"
 
-- name: Sync deadbeef config folder
+- name: Set deadbeef configs
+  copy:
+    src: "{{ item }}"
+    dest: "{{ user.home }}/.config/deadbeef/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: True
+  with_items:
+    - config
+    - dspconfig
+
+- name: Sync deadbeef playlists
   synchronize:
-    src: home/.config/deadbeef/
-    dest: "{{ user.home }}/.config/deadbeef/"
+    src: playlists/
+    dest: "{{ user.home }}/.config/deadbeef/playlists/"
     recursive: yes
     mode: push
     delete: no
@@ -59,6 +72,7 @@
     rsync_opts:
       - "--update"
       - "--omit-dir-times"
+
 
 # deadbeef shellexec commands
 #
