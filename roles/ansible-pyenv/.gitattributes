@@ -1,6 +1,0 @@
-# Autodetect text files
-* text=auto
-
-*.yml text eol=lf
-*.yaml text eol=lf
-*.md text eol=lf

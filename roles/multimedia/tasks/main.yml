@@ -15,9 +15,3 @@
     enabled: True
   when: serivces.mediamtx.enabled is defined
   tags: ['mediamtx']
-
-
-- import_tasks:
-    file: deadbeef.yml
-  when: install_deadbeef is defined
-  tags: ['media', 'deadbeef']
