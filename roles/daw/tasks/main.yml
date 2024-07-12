@@ -4,6 +4,12 @@
   debug:
     msg: "Starting DAW role tasks"
 
+- name: Set global variables
+  set_fact:
+    touchosc_installed: false
+    touchosc_update_required: false
+  tags: always
+
 - name: Ensure application directories exist
   file:
     path: "{{ application_directory_default_location }}/{{ item.dest }}"
