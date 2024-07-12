@@ -35,7 +35,7 @@
 - block:
     - name: Set i3status-rs configuration
       template:
-        src: "home/{{ item }}.j2"
+        src: "{{ item }}.j2"
         dest: "{{ user.home }}/{{ item }}"
         owner: "{{ user.name }}"
         group: "{{ user.group }}"
@@ -43,12 +43,12 @@
         backup: yes
       register: wmconfig
       with_items:
-        - .config/i3status-rust/config.toml
-        - .config/i3status-rust/themes/syncopated.toml
+        - i3status-rust/config.toml
+        - i3status-rust/themes/syncopated.toml
 
     - name: Set i3 configuration
       template:
-        src: "home/{{ item }}.j2"
+        src: "{{ item }}.j2"
         dest: "{{ user.home }}/{{ item }}"
         owner: "{{ user.name }}"
         group: "{{ user.group }}"
@@ -56,15 +56,14 @@
         backup: yes
       register: wmconfig
       with_items:
-        - .config/i3/config
-        - .config/i3/modes/resize
-        - .config/i3/keybindings
-        - .config/i3/appearance
-        - .config/i3/window_behavior
-        # - .config/i3/window_assignments
-        # - .config/i3/autostart
+        - config
+        - modes/resize
+        - keybindings
+        - appearance
+        - window_behavior
+        # - window_assignments
+        # - autostart
 
   notify:
    - Reload i3
-   - Reload sxhkd
   tags: ['profile']

@@ -1,0 +1,19 @@
+---
+
+- name: Install ranger configs
+  synchronize:
+    src: ranger/
+    dest: "{{ user.home }}/.config/ranger/"
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--progress"
+      - "--itemize-changes"
+      # - "--chown={{ user.name }}:{{ user.name }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: ['ranger']

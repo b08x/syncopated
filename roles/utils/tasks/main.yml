@@ -1,12 +1,35 @@
 ---
 # tasks file for utils
 
-- name: Set redshift config
-  copy:
-    src: home/.config/redshift/redshift.conf
-    dest: "{{ user.home }}/.config/redshift/redshift.conf"
+- name: Ensure utillity config folders exist
+  file:
+    path: "{{ user.home }}/.config/{{ item }}"
+    state: directory
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
-    mode: '0644'
-    backup: False
+  loop:
+    - htop
+    - lnav
+    - ranger
+    - redshift
+    - teiler
+
+- import_tasks:
+    file: codepackager.yml
+  tags: ['codepackager']
+
+# - import_tasks:
+#     file: lnav.yml
+#   tags: ['lnav']
+
+- import_tasks:
+    file: ranger.yml
+  tags: ['ranger']
+
+- import_tasks:
+    file: redshift.yml
   tags: ['redshift']
+
+- import_tasks:
+    file: teiler.yml
+  tags: ['teiler']

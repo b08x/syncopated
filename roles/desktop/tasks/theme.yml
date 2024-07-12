@@ -60,36 +60,61 @@
 #   ignore_errors: "{{ ansible_check_mode }}"
 #   when: themesdir.changed
 
+
+- name: Install sxhkd reload function
+  copy:
+    content: |
+      # DO NOT EDIT! This file will be overwritten by LXAppearance.
+      # Any customization should be done in ~/.gtkrc-2.0.mine instead.
+      gtk-theme-name="{{ gtk.theme.name }}"
+      gtk-icon-theme-name="{{ gtk.theme.icons }}"
+      gtk-font-name="{{ font.primary.name }} {{ font.primary.size }}"
+      gtk-cursor-theme-name="{{ gtk.theme.cursor }}"
+      gtk-cursor-theme-size=0
+      gtk-toolbar-style=GTK_TOOLBAR_BOTH
+      gtk-toolbar-icon-size=GTK_ICON_SIZE_MENU
+      gtk-button-images=1
+      gtk-menu-images=1
+      gtk-enable-event-sounds=1
+      gtk-enable-input-feedback-sounds=1
+      gtk-xft-antialias=1
+      gtk-xft-hinting=1
+      gtk-xft-hintstyle="hintfull"
+      gtk-xft-rgba="rgb"
+    dest: "{{ user.home }}/.gtkrc-2.0"
+    owner: "{{ user.name }}"
+    mode: '0644'
+
+
 - name: Install gtk configurations
   template:
-    src: "home/{{ item }}.j2"
-    dest: "{{ user.home }}/{{ item }}"
+    src: "{{ item }}.j2"
+    dest: "{{ user.home }}/.config/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
     mode: '0644'
     backup: yes
   with_items:
-    - '.config/gtk-3.0/bookmarks'
-    - '.config/gtk-3.0/gtk.css'
-    - '.config/gtk-3.0/settings.ini'
-    - '.config/gtk-4.0/settings.ini'
-    - '.gtkrc-2.0'
+    - 'gtk-3.0/bookmarks'
+    - 'gtk-3.0/gtk.css'
+    - 'gtk-3.0/settings.ini'
+    - 'gtk-4.0/settings.ini'
   tags: ['profile', 'gtk']
 
 - name: Install qt configurations
   template:
-    src: "home/{{ item }}.j2"
-    dest: "{{ user.home }}/{{ item }}"
+    src: "{{ item }}.j2"
+    dest: "{{ user.home }}/.config/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
     mode: '0644'
     backup: yes
   with_items:
-    - '.config/Kvantum/kvantum.kvconfig'
-    - '.config/qt5ct/colors/syncopated.conf'
-    - '.config/qt5ct/qt5ct.conf'
-    - '.config/qt6ct/colors/syncopated.conf'
-    - '.config/qt6ct/qt6ct.conf'
+    - 'Kvantum/kvantum.kvconfig'
+    - 'qt5ct/colors/syncopated.conf'
+    - 'qt5ct/qt5ct.conf'
+    - 'qt6ct/colors/syncopated.conf'
+    - 'qt6ct/qt6ct.conf'
   tags: ['profile', 'qt']
 
 # - name: Create syncopated backgrounds folder

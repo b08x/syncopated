@@ -69,3 +69,161 @@ protokol:
   url: "https://hexler.net/pub/protokol/"
   file: "protokol-0.5.4.105-linux-x64.zip"
   version: 0.5.4.105
+
+  - ambdec
+  - arandr
+  - caps-lv2-git
+  - carla
+  - ecasound
+  - faac
+  - faad2
+  - fftw
+  - fluidsynth
+  - fmit
+  - geonkick
+  - geonkick-common
+  - geonkick-lv2
+  - geonkick-standalone
+  - helm-synth
+  - helm-synth-common
+  - helm-synth-lv2
+  - helm-synth-standalone
+  - helm-synth-vst
+  - intersect.lv2-git
+  - jaaa
+  - jalv
+  - jalv-select-git
+  - jconvolver
+  - jnoisemeter
+  - ladspa
+  - lame
+  - libaudec
+  - libcaca
+  - libpipewire
+  - lsp-dsp-lib
+  - lsparu
+  - lv2-c++-tools
+  - mediainfo
+  - mediamtx
+  - metagedit-git
+  - midieditor
+  - mixxx
+  - mojave-gtk-theme
+  - mpv
+  - mpv-plugin-excerpt-git
+  - mupdf-tools
+  - non-mixer-lv2-git
+  - non-sequencer
+  - ocenaudio-bin
+  - opus
+  - opus-tools
+  - opusfile
+  - pamixer
+  - qmidinet
+  - qpdf
+  - qsampler
+  # - raysession-git
+  - rnnoise
+  - sampler
+  - sc3-plugins
+  - sooperlooper-git
+  - sound-gambit
+  - sox
+  - sparta-plugins-lv2-git
+  - tap-plugins-lv2-git
+  - teiler-git
+  - termpdf.py-git
+  - vamp-plugin-sdk
+  - vidcutter
+  - vlc
+  - x42-plugins
+  - x42-plugins-lv2
+  - x42-plugins-standalone
+  - x264
+  - x265
+  - zita-ajbridge
+  - zita-alsa-pcmi
+  - zita-convolver
+  - zita-dpl1
+  - zita-lrx
+  - zita-mu1
+  - zita-rev1
+
+# audio_packages:
+#   utilities_and_tools:
+#     - a2jmidid  # MIDI bridge
+#     - aria2     # Downloader with some audio streaming capabilities
+#     - audiofile  # Python audio file I/O library
+#     - ecasound  # Audio server for ALSA/OSS
+#     - faac      # Free Audio Codec library (encoding)
+#     - faad2     # Free Audio Codec library (decoding)
+#     - ffmpeg     # Powerful multimedia framework (can handle audio encoding/decoding)
+#     - fluidsynth  # Software synthesizer
+#     - fmit      # Lightweight MIDI sequencer
+#     - jack2      # JACK Audio Connection Kit (low-latency audio server)
+#     - jack2-dbus  # JACK Audio Connection Kit D-Bus bridge
+#     - lame      # MP3 encoding library
+#     - librosa    # Python library for music and audio analysis
+#     - midieditor # MIDI sequencer
+#     - mixxx     # Open-source DJ software
+#     - qsampler  # Sample playback synthesizer
+#     - qtractor  # Digital audio workstation
+#     - recorder   # Simple command-line audio recorder
+#     - sox        # Lightweight audio converter and editor
+#     - timidity++ # Software MIDI synthesizer
+#     - vorbis-tools # Ogg Vorbis encoder/decoder
+#
+#   libraries_and_development_tools:
+#     - aubio     # Audio signal processing library
+#     - csound     # Sound synthesis and audio programming language
+#     - lsp-dsp-lib # Digital Signal Processing library
+#     - rtaudio    # Real-time audio library
+#     - rtmidi     # Real-time MIDI library
+#     - scala-music # Scala music theory library
+#     - scala-music-scales # Scala musical scales library
+#     - vamp-plugin-sdk # Development kit for creating Vamp audio plugins
+#
+#   plugins_and_effects:
+#     - ambdec    # Ambisonic audio decoder
+#     - calf      # Collection of Modular Audio Processing Software (LV2 plugins)
+#     - dragonfly-reverb  # Collection of audio effects
+#     - jalv       # JACK Audio Level Meter
+#     - jconvolver # JACK convolution reverb plugin
+#     - jnoisemeter # JACK noise meter
+#     - ladspa     # Linux Audio Developers Simple Plugin API (collection of audio plugins)
+#     - sc3-plugins # SuperCollider audio plugins
+#     - spat       # Spatial audio plugin for JACK
+#     - swh-lv2-git # Supernova Workstation Host (LV2 audio plugin host)
+#
+#   music_creation_and_editing_software:
+#     - audacity  # Audio editor and recorder
+#     - carla     # Software modular synthesizer
+#     - guitarix   # Real-time guitar effects processor
+#     - helm-synth  # Software synthesizer with Helm graphical interface
+#     - hydrogen-git # Hydrogen drum machine
+#     - linuxsampler # Software sampler
+#     - ocenaudio-bin # Audio editor with spectral editing features
+#     - pavucontrol # PulseAudio volume control
+#     - pulseaudio-alsa # PulseAudio ALSA module
+#     - pulseaudio-jack # PulseAudio JACK module
+#     - sonic-pi-git # Live coding environment for music creation
+#     - sound-juicer # Audio extractor from videos
+#     - soundconverter  # Audio format converter
+#     - supercollider # Open-source audio programming language
+#
+#   miscellaneous:
+#     - cantarell-fonts  # Font that can be useful for musical notation
+#     - chromecast  # Consider if using chromecast for casting audio
+#     - fontforge  # Font editor (useful for creating custom musical notation fonts)
+#     - sendmidi   # Send MIDI messages from the command line
+#     - sound-font-converter # MIDI soundfont converter
+#     - soundproxy  # Audio proxy server
+#     - speech-dispatcher # Audio routing and processing tool
+#     - timidity-opus  # Ogg Vorbis output plugin for Timidity++
+#     - timidity-pd  # Pure Data output plugin for Timidity++
+#     - tonespace  # Real-time audio processing framework
+#     - vmpk       # Virtual MIDI Piano Keyboard
+#     - vorbis-tools # Ogg Vorbis encoder/decoder
+#     - zita-ajbridge # JACK-ALSA bridge for Zita software
+#     - zita-alsa-pcmi # ALSA PCM audio driver for Zita software
+#     - zita-convolver # Convolution reverb plugin for Zita software

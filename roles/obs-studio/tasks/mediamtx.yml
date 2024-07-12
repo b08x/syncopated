@@ -1,0 +1,17 @@
+---
+# tasks file for multimedia
+
+- name: Set mediamtx config
+  copy:
+    src: etc/mediamtx/mediamtx.yml
+    dest: /etc/mediamtx/mediamtx.yml
+    backup: True
+  tags: ['mediamtx']
+
+- name: Enable mediamtx service
+  service:
+    name: mediamtx
+    state: stopped
+    enabled: True
+  when: serivces.mediamtx.enabled is defined
+  tags: ['mediamtx']

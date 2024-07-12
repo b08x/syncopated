@@ -1,17 +1,5 @@
 ---
-
-# to allow for ansible pipelining functionality
-# https://docs.ansible.com/ansible/2.4/intro_configuration.html#pipelining
-# while this requirement was removed in RHEL, many other distros leave this option enabled
-- name: Disable requiretty for user so automation can run without interruption
-  lineinfile:
-    dest: /etc/sudoers
-    regexp: "^Defaults    requiretty"
-    line: "Defaults:{{ user.name }}    !requiretty"
-    backrefs: yes
-    backup: yes
-    validate: 'visudo -cf %s'
-  when: user.name != 'root'
+# tasks file for sudoers
 
 - block:
 

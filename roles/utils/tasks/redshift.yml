@@ -1,0 +1,11 @@
+---
+
+- name: Set redshift config
+  copy:
+    src: redshift/redshift.conf
+    dest: "{{ user.home }}/.config/redshift/redshift.conf"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: False
+  tags: ['redshift']

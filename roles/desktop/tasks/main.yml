@@ -42,7 +42,7 @@
 #TODO: Add dunst and picom xdg autostart desktop entries
 - name: Set dunst config
   template:
-    src: "home/.config/dunst/dunstrc.j2"
+    src: "dunst/dunstrc.j2"
     dest: "{{ user.home }}/.config/dunst/dunstrc"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
@@ -52,7 +52,7 @@
 
 - name: Set picom config
   template:
-    src: "home/.config/picom.conf.j2"
+    src: "picom.conf.j2"
     dest: "{{ user.home }}/.config/picom.conf"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"

@@ -20,16 +20,16 @@
   loop: "{{ root_directory_definitions }}"
 
 - import_tasks:
-    file: sudoers.yml
-  tags: ["sudoers"]
+    file: sshd.yml
+  tags: ["sshd"]
 
 - import_tasks:
     file: environment.yml
   tags: ["env", "profile"]
 
 - import_tasks:
-    file: sshd.yml
-  tags: ["sshd"]
+    file: grub.yml
+  tags: ["grub"]
 
 - import_tasks:
     file: updatedb.yml
@@ -42,10 +42,6 @@
 # - import_tasks:
 #     file: autofs.yml
 #   tags: ["autofs"]
-
-- import_tasks:
-    file: grub.yml
-  tags: ["grub"]
 
 # - import_tasks:
 #     file: autologin.yml

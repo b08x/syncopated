@@ -33,7 +33,7 @@
 
 - name: Install sxhkd keybindings
   template:
-    src: "home/.config/sxhkd/sxhkdrc.j2"
+    src: "sxhkdrc.j2"
     dest: "{{ user.home }}/.config/sxhkd/sxhkdrc"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"

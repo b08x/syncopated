@@ -16,7 +16,7 @@
 
 - name: Set user aliases
   template:
-    src: home/.aliases.j2
+    src: .aliases.j2
     dest: "{{ user.home }}/.aliases"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
