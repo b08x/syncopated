@@ -3,9 +3,6 @@
 x:
   autostart: 'default'
 
-de:
-  wm: i3
-
 packages:
   - dunst
   - picom

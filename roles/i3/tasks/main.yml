@@ -22,7 +22,7 @@
   copy:
     content: |
       [Desktop]
-      Session={{wm}}
+      Session={{ window_manager }}
     dest: "{{ user.home }}/.dmrc"
     owner: "{{ user.name }}"
     mode: '0644'

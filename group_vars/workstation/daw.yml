@@ -2,10 +2,15 @@
 
 expected_value: "groupvars_workstation_daw"
 
+browser: "google-chrome-stable"
+
 audio: "jack"
 
-wm: i3
-
+jacktrip:
+  server:
+    args: ""
+  client:
+    args: ""
 # reaper:
 # vamp:
 # mixxx:

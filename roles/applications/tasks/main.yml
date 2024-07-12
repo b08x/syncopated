@@ -12,8 +12,6 @@
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
   loop:
-    - htop
-    - lnav
     - ranger
     - redshift
     - teiler
@@ -21,10 +19,6 @@
 - import_tasks:
     file: codepackager.yml
   tags: ['codepackager']
-
-- import_tasks:
-    file: ranger.yml
-  tags: ['ranger']
 
 - import_tasks:
     file: "thunar.yml"
@@ -37,9 +31,3 @@
 - import_tasks:
     file: teiler.yml
   tags: ['teiler']
-
-
-
-# - import_tasks:
-#     file: lnav.yml
-#   tags: ['lnav']

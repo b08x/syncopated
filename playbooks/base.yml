@@ -79,8 +79,5 @@
     - role: ruby
       tags: ["ruby"]
 
-    - role: utilities
-      tags: ["utilities"]
-
     - role: networking
       tags: ["networking"]

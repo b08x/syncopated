@@ -5,7 +5,7 @@
 	<name>Open Terminal Here</name>
 	<submenu></submenu>
 	<unique-id>1640763842500001-1</unique-id>
-	<command>kitty --working-directory %d</command>
+	<command>blackbox --working-directory %d</command>
 	<description>Open a terminal in the current directory.</description>
 	<range></range>
 	<patterns>*</patterns>
@@ -17,7 +17,7 @@
 	<name>Open Root Terminal Here</name>
 	<submenu></submenu>
 	<unique-id>1640763842500039-2</unique-id>
-	<command>gksu kitty %f</command>
+	<command>gksu blackbox %f</command>
 	<description>Open a Root terminal in the current directory.</description>
 	<range></range>
 	<patterns>*</patterns>
@@ -348,7 +348,7 @@
 	<name>ascii-image-converter</name>
 	<submenu></submenu>
 	<unique-id>1706493947136144-1</unique-id>
-	<command>kitty -e ascii-image-converter -f -n -C -m &quot; =^^^ssssda...&quot; --save-img . %f</command>
+	<command>blackbox -e ascii-image-converter -f -n -C -m &quot; =^^^ssssda...&quot; --save-img . %f</command>
 	<description></description>
 	<range>*</range>
 	<patterns>*</patterns>

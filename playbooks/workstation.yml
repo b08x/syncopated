@@ -30,6 +30,9 @@
     - role: i3
       tags: ["i3"]
 
+    - role: applications
+      tags: ["applications"]
+
     - role: barrier
       tags: ["barrier"]
 

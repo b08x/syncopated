@@ -24,13 +24,14 @@ root_directory_definitions:
 
 expected_value: "role_base_defaults"
 
----
-# roles/base
 packages:
   - ascii-image-converter
+  - asciiquarium-git
+  - asciiquarium-transparent-git
   - aspell
   - aspell-en
   - atool
+  - audiofile
   - autofs
   - await
   - bandwhich
@@ -39,71 +40,66 @@ packages:
   - bat
   - beautysh
   - bottom
-  - broot
-  - btop
-  - calcurse
   - choose
+  - chromaprint
   - cmake
   - cpupower
+  - crossguid
   - curlie
-  - dconf
   - dex
   - doggo
   - downgrade
   - duf
-  - dunst
   - dust
   - elinks
+  - eza
+  - faac
+  - faad2
   - fd
-  - feh
   - figlet
   - firewalld
-  - flashfocus
   - fsarchiver
   - fuse3
   - fuse-common
-  - gconf
-  - gedit
   - git
   - git-delta
   - git-lfs
   - github-cli
   - gitui
-  - gksu
   - glow
   - gnome-keyring
-  - gnu-free-fonts
   - gnuplot
   - gource
   - gping
   - graphicsmagick
   - gst-libav
   - gstreamer
-  - gtk-update-icon-cache
-  - gucharmap
-  - gum
+  - gum  
   - highlight
   - hspell
   - html2md
   - htop
   - i7z
   - imagemagick
-  - imv
   - inetutils
   - inxi
   - iotop
   - jq
-  - kitty
+  - libcyaml
+  - libgit2
+  - libgit2-glib
+  - libvips
+  - libvoikko
+  - links
   - lnav
   - lnav-git
   - lynx
-  - maim
   - mako
   - mediainfo
   - meld
+  - micro
   - mlocate
   - most
-  - mpv
   - mupdf-tools
   - nano-syntax-highlighting
   - ncdu
@@ -112,7 +108,7 @@ packages:
   - npm
   - numlockx
   - nuspell
-  - nvtop
+  - nyan-lang-git
   - odt2txt
   - openssl
   - opus
@@ -120,32 +116,55 @@ packages:
   - opusfile
   - pamixer
   - pandoc-cli
-  - pavucontrol
   - pdf2htmlex-appimage
   - pdfjs
   - perl-image-exiftool
+  - pgvector
+  - platformfolders
   - playerctl
   - pod2man
   - poppler
+  - postgresql-libs
   - poweralertd
   - python-adblock
   - python-chardet
+  - python-conda-package-handling
+  - python-j2cli
+  - python-pagelabels
   - python-pillow
   - python-pygments
+  - python-pympler
   - python-setuptools
+  - python-sphinx-intl
+  - python-sphinxcontrib-svg2pdfconverter
+  - qpdf
   - ranger
   - ripgrep
   - ripgrep-all
   - rsync
+  - rxvt-unicode
   - sd
   - smartmontools
   - socat
+  - speech-dispatcher
   - sshpass
+  - stunnel
   - sudo
   - swappy
-  - sxiv
   - sysstat
   - taglib
+  - teiler-git
+  - texlive-basic
+  - texlive-bin
+  - texlive-coffee-stains
+  - texlive-doc
+  - texlive-fontsextra
+  - texlive-fontsrecommended
+  - texlive-latex
+  - texlive-latexextra
+  - texlive-latexrecommended
+  - texlive-pictures
+  - texlive-xetex
   - tldr
   - transmission-cli
   - tree
@@ -154,7 +173,6 @@ packages:
   - unzip
   - v4l-utils
   - vorbis-tools
-  - w3m
   - wavpack
   - wget
   - wkhtmltopdf-static

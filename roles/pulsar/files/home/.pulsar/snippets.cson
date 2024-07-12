@@ -67,7 +67,7 @@
             codeBlock: [onDullWhite]
             imageText: [onDullWhite, vividRed]
           images:
-            backend: kitty
+            backend: blackbox
           pandocExtensions:
             - patat_extensions
             - autolink_bare_uris

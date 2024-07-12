@@ -81,9 +81,6 @@
     - role: ruby
       tags: ["ruby"]
 
-    - role: utilities
-      tags: ["utilities"]
-
     - role: networking
       tags: ["networking"]
 
@@ -138,6 +135,9 @@
 
     - role: i3
       tags: ["i3"]
+
+    - role: applications
+      tags: ["applications"]
 
     - role: barrier
       tags: ["barrier"]

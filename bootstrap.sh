@@ -191,10 +191,10 @@ cup 1
 wipe
 # --- Main Script ---
 # Set up variables
-USER_HOME="${HOME}"
-CONFIG_DIR="${USER_HOME}/.config"
-DOTFILES_DIR="${CONFIG_DIR}/dotfiles"
-ANSIBLE_HOME="${DOTFILES_DIR}"
+declare -rx USER_HOME="${HOME}"
+declare -rx CONFIG_DIR="${USER_HOME}/.config"
+declare -rx DOTFILES_DIR="${CONFIG_DIR}/dotfiles"
+declare -rx ANSIBLE_HOME="${DOTFILES_DIR}"
 
 install_packages
 
@@ -220,12 +220,14 @@ fi
 clone_repository
 sleep 1
 
-#TODO: set ANSIBLE_HOME
-#TODO: set to hostname
+HOSTNAME=$(/usr/bin/hostnamectl --transient 2>/dev/null) || \
+HOSTNAME=$(/usr/bin/hostname 2>/dev/null) || \
+HOSTNAME=$(/usr/bin/uname -n)
+
 # --- set the inventory file for intial boostrapin'
 cat << EOF | tee "${ANSIBLE_HOME}/hosts"
 [workstation]
-localhost ansible_connection=local
+${HOSTNAME} ansible_connection=local
 EOF
 
 # --- Environment Variables ---

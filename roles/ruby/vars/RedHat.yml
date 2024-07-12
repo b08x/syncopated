@@ -3,11 +3,12 @@
 packages:
   - cmake
   - libgit2-devel
-  - libopenslide-devel
+  - openslide-devel
   - readline-devel
   - openssl-devel
-  - libvips-devel
+  - vips-devel
   - libyaml-devel
   - openssl
-  - postgresql-server-devel
+  # - postgresql-server-devel
+  - libpq-devel
   - ruby-devel

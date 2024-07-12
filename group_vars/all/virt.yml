@@ -1,0 +1,7 @@
+---
+
+use_docker: True
+use_libvirt: False
+
+docker:
+  storage: /var/lib/docker

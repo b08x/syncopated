@@ -8,6 +8,8 @@ syncopated:
   "http://bender.syncopated.net/syncopated/repo"
       #  "http://syncopated.hopto.org/syncopated/repo"
 
+chaoticrepo: True
+
 IgnorePkg: "ncurses lib32-ncurses gitui"
 
 packages:

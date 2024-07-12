@@ -35,6 +35,14 @@
     file: updatedb.yml
   tags: ["updatedb"]
 
+- import_tasks:
+    file: ranger.yml
+  tags: ['ranger']
+
+# - import_tasks:
+#     file: lnav.yml
+#   tags: ['lnav']
+
 # - import_tasks:
 #     file: zram.yml
 #   tags: ["zram"]
