@@ -70,6 +70,7 @@ protokol:
   file: "protokol-0.5.4.105-linux-x64.zip"
   version: 0.5.4.105
 
+packages:
   - ambdec
   - arandr
   - caps-lv2-git

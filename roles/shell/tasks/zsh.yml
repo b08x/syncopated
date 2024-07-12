@@ -58,7 +58,6 @@
     mode: '0644'
     backup: True
   with_items:
-    - .aliases
     - .zprofile
     - .zshenv
     - .zshrc

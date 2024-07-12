@@ -9,10 +9,10 @@
       register: tuned_service
       ignore_errors: "{{ ansible_check_mode }}"
 
-    # - name: print tuned_service output
-    #   debug:
-    #     msg: "{{ tuned_service }}"
-    #   when:
+    - name: Print tuned_service output
+      debug:
+        msg: "{{ tuned_service }}"
+      when: debug is defined
 
     - name: Install realtime-modified profile
       copy:
@@ -22,6 +22,10 @@
         group: root
         mode: '0644'
 
+    - name: Show tuned_service variable
+      debug:
+        msg: "{{ tuned_profile }}"
+
     - name: Set tuned profile
       shell: |
         tuned-adm profile {{ tuned.profile }}
@@ -29,10 +33,5 @@
       changed_when: tuned_profile.rc != 0
       when: tuned_service.state == 'started'
       ignore_errors: "{{ ansible_check_mode }}"
-
-    # - name: print tuned_service
-    #   debug:
-    #     msg: "{{ tuned_profile }}"
-    #   when:
 
   tags: ['tuned']

@@ -43,9 +43,6 @@
         - newInstall is defined
       tags: ["keys"]
 
-- import_tasks:
-    file: sudoers.yml
-  tags: ["sudoers"]
 
 # dotfiles
 # user defined tasks here
