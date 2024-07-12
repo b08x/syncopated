@@ -13,7 +13,6 @@ packages:
   - jack_utils
   - jacktrip
 
-
 jack_control:
   dps:
     device: hw:0

@@ -220,6 +220,8 @@ fi
 clone_repository
 sleep 1
 
+#TODO: set ANSIBLE_HOME
+#TODO: set to hostname
 # --- set the inventory file for intial boostrapin'
 cat << EOF | tee "${ANSIBLE_HOME}/hosts"
 [workstation]

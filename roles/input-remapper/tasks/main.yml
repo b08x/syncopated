@@ -1,5 +1,8 @@
 ---
 
+  # - dest: ".config/input-remapper-2"
+  # - dest: ".config/input-remapper-2/presets"
+
 - name: Sync input-remapper presets folder
   synchronize:
     src: presets/

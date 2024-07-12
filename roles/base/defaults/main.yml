@@ -24,83 +24,146 @@ root_directory_definitions:
 
 expected_value: "role_base_defaults"
 
-base_packages:
-  - acpi
-  - at
+---
+# roles/base
+packages:
+  - ascii-image-converter
+  - aspell
+  - aspell-en
+  - atool
+  - autofs
   - await
+  - bandwhich
   - bash-completion
   - bash-language-server
   - bat
+  - beautysh
+  - bottom
+  - broot
   - btop
+  - calcurse
+  - choose
+  - cmake
+  - cpupower
+  - curlie
+  - dconf
+  - dex
+  - doggo
+  - downgrade
   - duf
+  - dunst
   - dust
+  - elinks
   - fd
+  - feh
+  - figlet
+  - firewalld
+  - flashfocus
   - fsarchiver
   - fuse3
   - fuse-common
-  - gksu
-  - inxi
-  - iotop
-  - ncdu
-  - neofetch
-  - numlockx
-  - rsync
-  - smartmontools
-  - sudo
-  - sysstat
-  - tree
-  - tuned
-  - unzip
-  - wget
-  - xterm
-  - yadm
-  - zenity
-
-Development_Tools:
-  - aspell-en
-  - atool
-  - autoconf
-  - automake
-  - bat
-  - bash-completion
-  - bash-language-server
-  - cmake
-  - code-marketplace
-  - figlet
-  - gcc
   - gconf
+  - gedit
   - git
+  - git-delta
   - git-lfs
-  - gitflow-avh
-  - gitflow-zshcompletion-avh
   - github-cli
   - gitui
   - gksu
+  - glow
+  - gnome-keyring
+  - gnu-free-fonts
   - gnuplot
-  - go
   - gource
+  - gping
+  - graphicsmagick
+  - gst-libav
+  - gstreamer
+  - gtk-update-icon-cache
+  - gucharmap
+  - gum
+  - highlight
   - hspell
+  - html2md
+  - htop
+  - i7z
+  - imagemagick
+  - imv
+  - inetutils
+  - inxi
+  - iotop
   - jq
+  - kitty
+  - lnav
+  - lnav-git
   - lynx
-  - make
+  - maim
+  - mako
+  - mediainfo
+  - meld
+  - mlocate
+  - most
+  - mpv
+  - mupdf-tools
   - nano-syntax-highlighting
+  - ncdu
+  - net-tools
+  - nodejs
   - npm
+  - numlockx
+  - nuspell
+  - nvtop
+  - odt2txt
+  - openssl
+  - opus
+  - opus-tools
+  - opusfile
+  - pamixer
+  - pandoc-cli
+  - pavucontrol
+  - pdf2htmlex-appimage
+  - pdfjs
+  - perl-image-exiftool
+  - playerctl
+  - pod2man
+  - poppler
+  - poweralertd
+  - python-adblock
+  - python-chardet
+  - python-pillow
+  - python-pygments
   - python-setuptools
-  - ruby-psych
-  - stunnel
+  - ranger
+  - ripgrep
+  - ripgrep-all
+  - rsync
+  - sd
+  - smartmontools
+  - socat
+  - sshpass
   - sudo
-  - texlive-bin
-  - texlive-basic
-  - texlive-doc
-  - texlive-fontsextra
-  - texlive-fontsrecommended
-  - texlive-latex
-  - texlive-latexextra
-  - texlive-latexrecommended
-  - texlive-pictures
-  - texlive-xetex
+  - swappy
+  - sxiv
+  - sysstat
+  - taglib
+  - tldr
+  - transmission-cli
+  - tree
+  - ueberzug
+  - unrar
   - unzip
+  - v4l-utils
+  - vorbis-tools
+  - w3m
+  - wavpack
   - wget
+  - wkhtmltopdf-static
+  - wmctrl
+  - wordnet-cli
+  - wordnet-common
   - x264
   - x265
-  - zsh
+  - xterm
+  - yad
+  - yt-dlp
+  - zoxide

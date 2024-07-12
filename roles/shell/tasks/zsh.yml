@@ -1,6 +1,9 @@
 ---
 # tasks file for zsh
 
+#  - dest: ".zsh"
+
+
 - name: ZSH Tasks
   debug:
     msg: "Starting zsh tasks"

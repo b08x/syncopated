@@ -3,8 +3,12 @@
 x:
   autostart: 'default'
 
+de:
+  wm: i3
 
-x_pkgs:
+packages:
+  - dunst
+  - picom
   - xarchiver
   - xclip
   - xcursor-breeze
@@ -13,6 +17,7 @@ x_pkgs:
   - xf86-input-libinput
   - xf86-input-wacom
   - xf86-video-fbdev
+  - xf86-video-intel
   - xf86-video-vesa
   - xkill-shortcut
   - xob

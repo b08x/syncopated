@@ -1,0 +1,88 @@
+* {
+  /* `otf-font-awesome` is required to be installed for icons */
+  font-family: sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+}
+
+.modules-right, .modules-left, .modules-center {
+  margin: 4px;
+}
+
+.modules-right > * > *, .modules-left, .modules-center {
+  border-radius: 12px;
+}
+
+.modules-right > * > * {
+  padding: 0px 12px;
+  font-weight: normal;
+  background-color: #191919;
+  margin-left: 8px
+}
+
+.modules-center {
+
+}
+
+#tray {
+  padding: 0px 12px;
+}
+
+window#waybar {
+  background-color: #090909;
+  color: #dcdcdc;
+  font-weight: bold;
+  border: solid 10px #090909;
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.modules-left {
+  background-color: #191919;
+}
+
+#window {
+  background-color: #191919;
+  border-radius: 12px;
+  padding: 0px 12px;
+}
+
+window#waybar.empty #window {
+  background-color: transparent;
+}
+
+#workspaces button {
+  font-weight: 400;
+  padding: 0 5px;
+  background: none;
+  border: none;
+  border-radius: 1000px;
+  border: solid 2px #191919;
+}
+
+#workspaces button.focused, #workspaces button.active {
+  background-color: #191919;
+  color: #fff;
+  border: solid 2px #458588;
+}
+
+#mpris {
+  padding: 0 6px;
+  font-weight: normal;
+}
+
+#mpris.spotifyd, #mpris.spotify {
+  background-color: #253526;
+  /* color: #fff; */
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding: 0px 12px;
+}

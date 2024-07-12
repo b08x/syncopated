@@ -1,2 +1,6 @@
 ---
 # defaults file for obs-studio
+
+packages:
+  - obs-studio
+  - obs-rtspserver

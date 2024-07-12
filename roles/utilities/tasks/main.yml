@@ -1,0 +1,45 @@
+---
+# tasks file for utils
+
+- name: Utillity Tasks
+  debug:
+    msg: "Starting utilities tasks"
+
+- name: Ensure utillity config folders exist
+  file:
+    path: "{{ user.home }}/.config/{{ item }}"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+  loop:
+    - htop
+    - lnav
+    - ranger
+    - redshift
+    - teiler
+
+- import_tasks:
+    file: codepackager.yml
+  tags: ['codepackager']
+
+- import_tasks:
+    file: ranger.yml
+  tags: ['ranger']
+
+- import_tasks:
+    file: "thunar.yml"
+  tags: ['thunar']
+
+- import_tasks:
+    file: redshift.yml
+  tags: ['redshift']
+
+- import_tasks:
+    file: teiler.yml
+  tags: ['teiler']
+
+
+
+# - import_tasks:
+#     file: lnav.yml
+#   tags: ['lnav']

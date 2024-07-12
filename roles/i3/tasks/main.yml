@@ -17,6 +17,16 @@
   check_mode: no
   tags: ['profile']
 
+# if this file does not exist, lightdm will fail to start
+- name: Set dmrc to selected window manager
+  copy:
+    content: |
+      [Desktop]
+      Session={{wm}}
+    dest: "{{ user.home }}/.dmrc"
+    owner: "{{ user.name }}"
+    mode: '0644'
+
 - name: Install i3ipc module
   pip:
     name: i3ipc

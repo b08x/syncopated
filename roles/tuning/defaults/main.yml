@@ -9,3 +9,6 @@ cpupower:
 
 tuned:
   profile: powersave
+
+packages:
+  - x86_energy_perf_policy

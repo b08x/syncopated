@@ -1,0 +1,86 @@
+---
+- hosts: all
+  become: True
+  gather_facts: yes
+  vars:
+    path:
+      - "{{ lookup('env','HOME') }}/.asdf/bin"
+      - "{{ lookup('env','HOME') }}/.local/bin"
+      - "{{ lookup('env','HOME') }}/Utils/bin"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+    PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
+    ZSH: "/usr/share/oh-my-zsh"
+    DISPLAY: ":0"
+  # variables from vars_files are available starting here...
+  pre_tasks:
+    # the task will run if `check_mode` to 'no'
+    - name: Register timestamp
+      shell: "date +'%s.%Y-%m-%d@%H:%M:%S~'"
+      register: timestamp
+      check_mode: no
+      tags: ["always"]
+
+    - name: Set suffix
+      set_fact:
+        suffix: "{{ timestamp.stdout_lines[0] }}"
+      tags: ["always"]
+
+    - name: Set distro name
+      set_fact:
+        ansible_distribution: "{{ distro }}"
+      when: distro is defined
+      tags: ["always", "testing"]
+
+    - name: Display distro name
+      debug:
+        msg: System {{ inventory_hostname }} has distro {{ ansible_distribution }}
+      tags: ['always']
+
+    - name: Symlink /etc/os-release to /etc/system-release
+      file:
+        src: /etc/os-release
+        dest: /etc/system-release
+        state: link
+
+    - name: Set admin group name
+      set_fact:
+        admin_group: wheel
+      tags: ["always"]
+
+    # to allow for ansible pipelining functionality
+    # https://docs.ansible.com/ansible/2.4/intro_configuration.html#pipelining
+    # while this requirement was removed in RHEL, many other distros leave this option enabled
+    - name: Disable requiretty for user so automation can run without interruption
+      lineinfile:
+        dest: /etc/sudoers
+        regexp: "^Defaults    requiretty"
+        line: "Defaults:{{ user.name }}    !requiretty"
+        backrefs: yes
+        backup: yes
+        validate: 'visudo -cf %s'
+      when: user.name != 'root'
+      tags: ['sudoers']
+
+  roles:
+
+    - role: base
+      tags: ["base"]
+
+    - role: user
+      tags: ["user"]
+
+    - role: shell
+      tags: ["shell"]
+
+    - role: sudoers
+      tags: ["sudoers"]
+
+    - role: ruby
+      tags: ["ruby"]
+
+    - role: utilities
+      tags: ["utilities"]
+
+    - role: networking
+      tags: ["networking"]

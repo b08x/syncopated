@@ -1,0 +1,13 @@
+---
+
+packages:
+  - cmake
+  - libgit2-devel
+  - libopenslide-devel
+  - readline-devel
+  - openssl-devel
+  - libvips-devel
+  - libyaml-devel
+  - openssl
+  - postgresql-server-devel
+  - ruby-devel

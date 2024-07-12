@@ -4,6 +4,7 @@ expected_value: "groupvars_workstation_daw"
 
 audio: "jack"
 
+wm: i3
 
 # reaper:
 # vamp:

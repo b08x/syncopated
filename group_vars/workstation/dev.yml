@@ -6,6 +6,7 @@ chaoticrepo: True
 
 install_vscode: True
 install_pulsar: True
+
 # simply just defining the variable will install the thing
 # it will call the task list
 # if desired more variables can defined within the tasks

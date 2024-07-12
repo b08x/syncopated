@@ -3,6 +3,7 @@
 use_docker: True
 use_libvirt: True
 
+tuned_profile: powersave
 # share:
 #   nfs:
 #     parent: "{{ user.home }}"

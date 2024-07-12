@@ -1,5 +1,8 @@
 ---
 
+#  - dest: ".config/sxhkd"
+
+
 - name: Install sxhkd reload function
   copy:
     content: |

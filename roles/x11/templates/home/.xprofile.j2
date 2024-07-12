@@ -1,20 +1,9 @@
 #!/usr/bin/env bash
 export UU_ORDER="$UU_ORDER:~/.xprofile"
 
-export XDG_DESKTOP_SESSION="{{wm }}"
-export XDG_CURRENT_DESKTOP="{{wm }}"
+export XDG_DESKTOP_SESSION="{{ de.wm }}"
+export XDG_CURRENT_DESKTOP="{{ de.wm }}"
 export XDG_CONFIG_HOME="$HOME/.config"
-
-export NO_AT_BRIDGE=1
-export QT_SCALE_FACTOR=1.0
-export QT_FONT_DPI=96
-
-# This value is now set in /etc/pofile
-# export QT_QPA_PLATFORMTHEME=qt5ct
-
-export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
-
-export RAY_PARENT_SCRIPT_DIR="$HOME/Sessions/ray-scripts"
 
 if [ -d /usr/share/fonts/75dpi ]; then
 	xset +fp /usr/share/fonts/75dpi
@@ -30,12 +19,9 @@ xset -b
 
 numlockx on
 
-yadm alt || echo "check yadm alt!"
-
 {% if x.autostart != 'default' %}
 {% for program in x.autostart %}
 {{ program }}
-
 {% endfor %}
 {% endif %}
 
