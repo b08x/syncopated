@@ -1,0 +1,19 @@
+---
+# handlers file for tuning
+- name: restart cpupower service
+  systemd:
+    name: cpupower
+    state: restarted
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: enable rtirq service
+  systemd:
+    name: rtirq
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: enable rtkit service
+  systemd:
+    name: rtkit-daemon
+    enabled: yes
+  ignore_errors: "{{ ansible_check_mode }}"

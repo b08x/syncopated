@@ -1,0 +1,10 @@
+---
+# handlers file for jackd
+- name: reload user systemd
+  systemd:
+    daemon_reload: yes
+  become_user: "{{ user.name }}"
+
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
