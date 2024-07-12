@@ -1,6 +1,7 @@
 ---
 
 lan:
+  domain: syncopated.net
   gateway: 192.168.41.1
   nameserver01: 192.168.41.41
   nameserver02: 192.168.41.1
