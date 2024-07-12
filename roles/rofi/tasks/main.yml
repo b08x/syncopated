@@ -1,5 +1,8 @@
 ---
 # tasks file for rofi
+- name: rofi Tasks
+  debug:
+    msg: "Starting rofi tasks"
 
 - name: Ensure rofi directories exist
   file:

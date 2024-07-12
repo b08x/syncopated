@@ -1,4 +1,7 @@
 ---
+- name: NAS Tasks
+  debug:
+    msg: "Starting NAS tasks"
 
 - import_tasks:
     file: nfs.yml
