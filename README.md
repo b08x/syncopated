@@ -157,72 +157,127 @@ This approach aims to develop a robust, flexible, and user-friendly system that 
 
 ---
 
+Updated Backlog
 
-## Epic:  Develop LLM-Enhanced Ansible Framework for Dynamic System Configuration
+---
+Epic: Develop LLM-Enhanced Ansible Framework for Dynamic System Configuration
 
-*User Story: As a DevOps engineer, I want an Ansible framework that leverages a large language model (LLM) to automatically adapt playbooks to diverse system configurations, reducing manual effort and improving compatibility.*
+Phase 1: Foundation (System Info & LLM)
 
-Walk 1:  System Information Gathering and LLM Integration
+Walk 1: System Information Gathering and LLM Integration
+Task 1: Research and select a suitable LLM (e.g., OpenAI, Google Cloud AI, local LLM) based on capabilities, cost, and security considerations.
 
-* **Task 1:** Research and select a suitable LLM (e.g., OpenAI, Google Cloud AI, local LLM) based on capabilities, cost, and security considerations.
-* **Task 2:** Create an Ansible role or module to gather comprehensive system information using Ansible facts and `inxi`.
-* **Task 3:** Develop a secure and reusable script (e.g., Python) to interact with the chosen LLM's API.
-* **Task 4:** Design and implement a mechanism for securely storing and retrieving LLM API keys or credentials.
-* **Task 5:**  Create initial LLM prompts for common system configuration tasks (e.g., package installation, service optimization).
+Task 2: Design and implement a Ruby Ansible module (llm_config) to encapsulate:
+Gathering system information (Ansible facts, inxi).
+Interfacing with the chosen LLM API.
+Parsing LLM responses.
 
-Walk 2: Dynamic Playbook Generation and Modification
+Task 3: Create initial LLM prompts for common system configuration tasks (e.g., package installation, service optimization).
 
-* **Task 6:** Develop Python logic to parse and extract relevant information (recommendations, code snippets) from the LLM's API response.
-* **Task 7:** Implement functionality to dynamically generate Ansible tasks based on the extracted LLM recommendations.
-* **Task 8:**  Create mechanisms to insert dynamically generated tasks into existing Ansible playbooks or modify existing task parameters.
-* **Task 9:** Implement error handling and logging for LLM API interactions and playbook modifications.
-* **Task 10:** Develop unit tests to validate the accuracy and reliability of playbook generation and modification logic.
+Walk 2: Dynamic Playbook Modification
+Task 4: Develop Python logic within the Ruby module to parse and extract relevant information (recommendations, code snippets) from the LLM's API response.
 
-Walk 3:  Testing, Validation, and Refinement
+Task 5: Implement mechanisms to insert dynamically generated tasks into existing Ansible playbooks or modify existing task parameters based on LLM output.
 
-* **Task 11:** Set up diverse test environments (different Linux distributions, hardware configurations) to rigorously test the framework.
-* **Task 12:**  Develop integration tests to validate end-to-end functionality, from information gathering to playbook execution.
-* **Task 13:**  Refine LLM prompts and playbook generation logic based on test results and real-world use cases.
-* **Task 14:** Implement a feedback mechanism (e.g., logging, user input) to capture and address edge cases or unexpected LLM responses.
-* **Task 15:**  Document the framework's usage, configuration options, and best practices.
+Task 6: Implement error handling and logging for LLM API interactions and playbook modifications.
 
-## Flow Diagram
+Task 7: Develop unit tests to validate the accuracy and reliability of playbook generation and modification logic.
 
-(Represent this visually with a flowcharting tool)
+Phase 2: Refinement & Optimization
 
-1. **Start:** Ansible playbook execution begins.
-2. **Gather System Information:** Ansible facts and `inxi` collect system data.
-3. **Format Data:** System information is structured into JSON or YAML.
-4. **Query LLM:**  The script sends the formatted data to the LLM API with a specific prompt.
-5. **Receive LLM Response:** The script receives the LLM's recommendations or code snippets.
-6. **Parse and Extract:**  The script extracts relevant information from the LLM's response.
-7. **Generate/Modify Playbook:** The script dynamically creates tasks or modifies the existing playbook.
-8. **Execute Playbook:** Ansible continues execution with the adapted playbook.
-9. **End:** Playbook execution completes.
+Walk 3: Redis Integration and Caching
+Task 8: Incorporate Redis caching logic into the Ruby module (llm_config) to store and retrieve LLM responses based on system data.
+Task 9: Update unit and integration tests to include Redis functionality.
 
-## Sequence Diagram
+---
+Phase 3: Dockerization and Deployment
+
+---
+
+Walk 4: Docker Image and Compose Setup
+
+Task 10: Create a Dockerfile to build a Docker image containing:
+Ruby, Ansible, required dependencies (inxi, redis gem).
+Your Ansible project files.
+Your Ruby module (llm_config).
+
+Task 11: Create a docker-compose.yml file to define services:
+ansible: The container running Ansible and the Ruby module.
+redis: The Redis container for caching.
+
+Task 12: Configure volume mounting (Ansible project, SSH keys if needed) in docker-compose.yml.
+
+---
+
+Walk 5: Testing, Refinement, and Documentation
+
+Task 13: Set up diverse test environments (different Linux distributions, hardware configurations) to rigorously test the Dockerized framework.
+
+Task 14: Develop integration tests to validate end-to-end functionality within the Docker environment.
+
+Task 15: Refine LLM prompts and playbook generation logic based on test results and real-world use cases.
+
+Task 16: Document the framework's usage, configuration options, and best practices, including Docker setup and execution instructions.
 
 
-```plantuml
+
+
+| Task                                    | Start Date | End Date   | Duration | Dependencies |
+|-----------------------------------------|------------|------------|----------|--------------|
+| Phase 1: Foundation                     | 2024-07-15 | 2024-07-28 | 2 weeks  |              |
+| Walk 1: System Info & LLM Integration | 2024-07-15 | 2024-07-21 | 1 week   |              |
+| Walk 2: Dynamic Playbook Modification | 2024-07-22 | 2024-07-28 | 1 week   | Sprint 1     |
+| Phase 2: Refinement & Optimization      | 2024-07-29 | 2024-08-04 | 1 week   | Phase 1      |
+| Walk 3: Redis Integration & Caching   | 2024-07-29 | 2024-08-04 | 1 week   | Phase 1      |
+| Phase 3: Dockerization and Deployment   | 2024-08-05 | 2024-08-18 | 2 weeks  | Phase 2      |
+| Walk 4: Docker Image & Compose Setup  | 2024-08-05 | 2024-08-11 | 1 week   | Phase 2      |
+| Walk 5: Testing, Refinement, Docs     | 2024-08-12 | 2024-08-18 | 1 week   | Sprint 4     |
+
+
+
+
+```
 @startuml
+participant "User or CI/CD" as user
+participant "Docker Compose" as compose
 participant "Ansible Playbook" as playbook
 participant "System (Ansible Facts/inxi)" as system
-participant "Script" as script
+participant "Ruby Module" as module
+participant "Redis" as redis
 participant "LLM API" as llm
 
+user -> compose : docker-compose up -d
+activate compose
+compose -> playbook : Start Ansible Playbook
+activate playbook
 playbook -> system : Gather System Information
 system --> playbook : Return System Data
-playbook -> script : Invoke Script, Pass System Data
-script -> llm : Send API Request (System Data, Prompt)
-llm --> script : Return LLM Response (Recommendations)
-script -> playbook : Modify Playbook (Add/Update Tasks)
+playbook -> module : Invoke Module, Pass System Data
+activate module
+module -> redis : Check for Cached Response
+activate redis
+redis --> module : Return Cached Response (if found)
+alt No Cached Response
+    deactivate redis
+    module -> llm : Send API Request
+    activate llm
+    llm --> module : Return LLM Response
+    deactivate llm
+    module -> redis : Store Response in Cache
+    activate redis
+    deactivate redis
+end
+module --> playbook : Return LLM Response
+deactivate module
+playbook -> playbook : Modify Playbook
 playbook -> system : Execute Modified Playbook Tasks
+deactivate playbook
+deactivate compose
 @enduml
 ```
 
 
-
-```plantuml
+```
 @startuml
 !theme vibrant
 
@@ -234,21 +289,30 @@ skinparam activity {
   ArrowColor #6980A5
   StartColor #D9ED7D
   EndColor #F2B266
+  DecisionColor #F2B266
 }
 
 start
 :Start: Ansible playbook execution begins.;
 :Gather System Information: \nAnsible facts and inxi collect system data.;
-:Format Data: \nSystem information is structured into JSON or YAML.;
-:Query LLM: \nThe script sends the formatted data to the LLM API with a specific prompt.;
-:Receive LLM Response: \nThe script receives the LLM's recommendations or code snippets.;
-:Parse and Extract: \nThe script extracts relevant information from the LLM's response.;
-:Generate/Modify Playbook: \nThe script dynamically creates tasks or modifies the existing playbook.;
-:Execute Playbook: \nAnsible continues execution with the adapted playbook.;
+:Format Data: \nSystem information is structured for the LLM.;
+:Check Redis Cache: \nThe Ruby module checks for a cached response.;
+if (Cached Response Found?) then (Yes)
+  :Retrieve from Cache: \nGet the LLM response from Redis.;
+else (No)
+  :Query LLM: \nThe Ruby module queries the LLM API.;
+  :Receive LLM Response: \nGet recommendations from the LLM API.;
+  :Cache Response: \nStore the LLM response in Redis.;
+endif
+:Parse and Extract: \nThe module extracts info from the LLM response.;
+:Generate/Modify Playbook: \nDynamically adjust the Ansible playbook.;
+:Execute Playbook: \nAnsible executes the modified playbook.;
 :End: Playbook execution completes.;
 stop
 @enduml
 ```
+
+
 
 **Important Considerations:**
 
