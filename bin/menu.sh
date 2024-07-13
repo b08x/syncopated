@@ -1,39 +1,301 @@
 #!/bin/bash
 
-# Function to display tasks in a new terminal window
-view_tasks() {
-  local role="$1"
-  local task_dir="roles/$role/tasks"
-  if [[ -d "$task_dir" ]]; then
-    # Get the list of task files
-    task_list=$(find "$task_dir" -type f -printf "%f\n")
+# --- Error Handling ---
+ctrl_c() {
+  echo "** End."
+  sleep 0.1
+}
+trap ctrl_c INT SIGINT SIGTERM ERR EXIT
 
-    # Display tasks using FZF
-    selected_task=$(echo "$task_list" | fzf --height=40% --reverse)
+# --- Colors ---
+ALL_OFF="\e[1;0m"
+BBOLD="\e[1;1m"
+BLUE="${BBOLD}\e[1;34m"
+GREEN="${BBOLD}\e[1;32m"
+RED="${BBOLD}\e[1;31m"
+YELLOW="${BBOLD}\e[1;33m"
+export GUM_INPUT_WIDTH=0
 
-    if [[ -n "$selected_task" ]]; then
-      # Construct the full path to the selected task file
-      selected_file="$task_dir/$selected_task"
+DISTRO=$(lsb_release -si)
 
-      # Open the task file in your preferred editor or viewer
-      terminator -e "cat '$selected_file' | less; bash"
-    else
-      echo "No task selected."
-    fi
-  else
-    echo "Error: Role directory not found: $role"
-  fi
+# --- Display Function ---
+say() {
+  echo -e "${2}${1}${ALL_OFF}"
+  sleep 1
 }
 
-# Get the list of roles from the 'roles' directory
-role_list=$(find roles/ -maxdepth 1 -type d -printf "%P\n" | sed '1d')
 
-# Use FZF to display the role menu
-selected_role=$(echo "$role_list" | fzf --height=40% --reverse)
+version=1.0.0
+usage="usage: ansible_menu [-h] [-v] [-x]"
 
-# Check if a role was selected
-if [[ -n "$selected_role" ]]; then
-  view_tasks "$selected_role"
-else
-  echo "No role selected."
-fi
+display_help() {
+    echo
+    echo "╔════════════════════╗"
+    echo "║░   Ansible Menu   ░║"
+    echo "╚════════════════════╝"
+    echo
+    echo "$usage"
+    echo
+    echo "   -h, --help              show this help"
+    echo "   -v, --version           get version"
+    echo "   -x, --execute           execute live"
+    echo
+    echo "   ctrl-p                 select playbook"
+    echo "   ctrl-h                 select host(s)"
+    echo "   ctrl-t                 select tags"
+    echo "   ctrl-r                 select task"
+    echo "   ctrl-x                 execute playbook"
+    echo "   ctrl-c                 exit"
+    echo
+    exit 0
+}
+
+while getopts hvx option
+do
+    case "${option}" in
+        h | help)
+            display_help
+            ;;
+        v | version)
+            echo "Ansible Menu v$version"
+            exit 0
+            ;;
+        x | execute)
+            declare -rx EXECUTE_MODE=True
+            ;;
+        *)
+            echo $usage
+            exit 1
+            ;;
+    esac
+done
+
+# Colors
+bg="#282c34"
+fg="#abb2bf"
+header="#61afef"
+selected="#c678dd"
+preview_bg="#21252b"
+preview_fg="#98c379"
+
+declare -rx GUM_SPIN_SPINNER="pulse"
+
+# Variables to store selections
+selected_playbook=""
+selected_hosts=""
+selected_tags=""
+selected_task=""
+
+# Function to extract tasks from a file
+extract_tasks() {
+    awk '/^- name:/ {print FILENAME ":" NR ":" substr($0, index($0,$3))}' "$1"
+}
+
+# Function to preview task details
+preview_task() {
+    local file="$1"
+    local line="$2"
+    sed -n "${line},/^$/p" "$file"
+}
+
+view_log() {
+  gum pager < file.log
+}
+
+# Function to select playbook
+select_playbook() {
+    selected_playbook=$(find playbooks/ -name "*.yml" | \
+        fzf --preview 'bat --style=numbers --color=always {}' \
+            --preview-window=right:60% \
+            --layout="reverse" \
+            --header="Select Playbook" \
+            --tac \
+            --prompt="Playbook > ")
+}
+
+# Function to select hosts
+select_hosts() {
+    selected_hosts=$(awk '/^[^ ]/ {gsub(/[\[\]]/, ""); print}' inventory.ini |uniq|choose 0|grep -Ev ':vars|=' | \
+        choose -f ':' 0 | \
+        fzf --multi \
+            --layout="reverse" \
+            --header="Select Host(s)" \
+            --prompt="Hosts > "| \
+        sd '\n' ',' | sd '  ' '')
+}
+
+# Function to select tags
+select_tags() {
+    if [[ -n "$selected_playbook" ]]; then
+        selected_tags=$(ansible-playbook -i inventory.ini "$selected_playbook" --list-tags | \
+            grep "TASK TAGS" | cut -d':' -f2 | tr '[' ' ' | tr ']' ' ' | tr ',' '\n' | \
+            fzf --multi \
+                --layout="reverse" \
+                --header="Select Tags" \
+                --prompt="Tags > "| \
+            sd '\n' ',' | sd '  ' '')
+
+        # selected_tags="${selected_tags%%*(  )}"
+
+    else
+        echo "Please select a playbook first."
+    fi
+}
+
+# Function to select task
+select_task() {
+    if [[ -n "$selected_playbook" ]]; then
+        # Create a temporary file to store all tasks
+        temp_file=$(mktemp)
+        find roles/ -type f -wholename "**/tasks/*.yml" -exec bash -c 'extract_tasks "$0"' {} \; > "$temp_file"
+
+        selected_task=$(cat "$temp_file" | \
+            fzf --preview 'line=$(echo {} | cut -d: -f2); file=$(echo {} | cut -d: -f1); bash -c "preview_task \"$file\" \"$line\""' \
+                --preview-window=right:50% \
+                --color="bg:$bg,fg:$fg,header:$header,pointer:$selected,preview-bg:$preview_bg,preview-fg:$preview_fg" \
+                --tac \
+                --layout="reverse" \
+                --header="Select Task" \
+                --prompt="Task > ")
+
+        # Remove the temporary file
+        rm "$temp_file"
+
+        if [[ -n "$selected_task" ]]; then
+            selected_task=$(echo "$selected_task" | cut -d: -f3-)
+        fi
+    else
+        echo "Please select a playbook first."
+    fi
+}
+
+preview_command() {
+  gum style \
+      --foreground 212 --border-foreground 212 --border double \
+      --align left --width 80 --margin "1 2" --padding "2 4" \
+      "Selected options:" \
+      "Playbook: $selected_playbook" \
+      "Hosts: $selected_hosts" \
+      "Tags: $selected_tags" \
+      "Task: $selected_task" \
+      "" \
+      "Command to execute:" \
+      "$command"
+}
+
+reset_vars() {
+  unset selected_playbook
+  unset selected_hosts
+  unset selected_tags
+  unset selected_task
+}
+
+# Function to execute playbook
+execute_playbook() {
+    if [[ -z "$selected_playbook" ]]; then
+        echo "Please select a playbook first."
+        return
+    fi
+
+    if [[ $EXECUTE_MODE ]]; then
+      command="ansible-playbook -i inventory.ini $selected_playbook"
+    else
+      command="ansible-playbook -C -i inventory.ini $selected_playbook"
+    fi
+
+    if [[ -n "$selected_hosts" ]]; then
+        command+=" --limit $selected_hosts"
+    fi
+
+    if [[ -n "$selected_tags" ]]; then
+        command+=" --tags '${selected_tags%,}'"
+    # else
+    #     command+=" --tags always"
+    fi
+
+    if [[ -n "$selected_task" ]]; then
+        command+=" --start-at-task '$selected_task'"
+    fi
+
+    command+=" -e 'gather_facts=true'"
+    tput clear
+    sleep 0.1
+
+    preview_command
+
+    if gum confirm "Do you want to execute this playbook?"; then
+        say "Executing: $command\n"
+        gum spin --spinner dot --title "Please wait while the thing loads..." -- sleep 5
+        # tput clear cup 5
+
+        # # Execute the command and pipe ou# tput to gum pager
+        # eval "$command" 2>&1 | gum pager
+        # Execute the command and pipe ou# tput to Ruby script
+        eval "$command" 2>&1 | tee file.log | ruby -e '
+            STDIN.each_line do |line|
+              # puts line if line.match(/TASK/)
+              input = line.chomp if line.match(/TASK/)
+                unless input.nil?
+                  input.each_char do |char|
+                    print "\e[34m#{char}\e[0m"
+                    $stdout.flush
+                    sleep 0.02
+                  end
+                  puts "\n"
+                end
+              res = line.chomp if line.match(/ok\:|changed\:/)
+              unless res.nil?
+                puts "\e[32m#{res.strip.chomp}\e[0m"
+                puts "\n"
+              end
+              cap = line.chomp if line.match(/PLAY RECAP|ok\=/)
+              puts "\e[33m#{cap.strip.chomp}\e[0m\n" unless cap.nil?
+            end
+            puts "\n"
+            sleep 3
+        '
+        gum confirm "You wanna see the logs?" && view_log
+    else
+        echo "Execution cancelled."
+    fi
+}
+# Export functions so they're available to subshells
+export -f extract_tasks
+export -f preview_task
+
+# Main menu
+while true; do
+    action=$(echo -e "Select Playbook\nPreview Command\nExecute Playbook\nSelect Host(s)\nSelect Tags\nSelect Task\nReset\nExit" | \
+          gum filter)
+        # fzf --header="Ansible Menu" \
+        #     --layout="reverse" \
+        #     --prompt="Action > ")
+
+    case "$action" in
+        "Select Playbook")
+            select_playbook
+            ;;
+        "Preview Command")
+            preview_command
+            gum confirm "Do you like what you see???" || reset_vars
+            ;;
+        "Execute Playbook")
+            execute_playbook
+            ;;
+        "Select Tags")
+            select_tags
+            ;;
+        "Select Host(s)")
+            select_hosts
+            ;;
+        "Select Task")
+            select_task
+            ;;
+        "Reset")
+            reset_vars
+            ;;
+        "Exit")
+            exit 0
+            ;;
+    esac
+done
