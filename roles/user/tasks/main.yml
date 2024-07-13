@@ -41,7 +41,8 @@
       when:
         - not keys.stat.exists
         - newInstall is defined
-      tags: ["keys"]
+
+  tags: ["keys"]
 
 
 # dotfiles

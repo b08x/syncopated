@@ -35,6 +35,8 @@ homepage:
         url: "http://soundbot/apps"
       - name: Redis
         url: "http://ninjabot.syncopated.net:8001"
+      - name: ArchiveBox
+        url: "http://ninjabot.syncopated.net:8000"
     webtools:
       - name: gmail
         url: "https://gmail.google.com"
