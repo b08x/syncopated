@@ -126,6 +126,36 @@ This approach aims to develop a robust, flexible, and user-friendly system that 
 
 ## Backlog
 
+```
+@startuml
+start
+:User interacts with Ansible Menu Script;
+:Select Hosts or Host Groups;
+if (Inventory Variables Present?) then (Yes)
+  :Filter out Inventory Variables;
+endif
+:Display Filtered Host List (fzf);
+:Select Playbook;
+:Parse Playbook for Roles;
+:Search for Tasks within Selected Roles;
+:Display Matching Tasks (fzf with -f flag for dynamic filtering);
+:Select Task(s);
+if (Multiple Tasks Selected?) then (Yes)
+  :Create Temporary Playbook;
+  :Add Selected Tasks to Temporary Playbook;
+  :Analyze Task Dependencies (Optional);
+  if (Dependencies Detected?) then (Yes)
+    :Prompt User for Additional Tasks;
+  endif
+  :Execute Temporary Playbook;
+else (No)
+  :Execute Selected Task;
+endif
+:Display Execution Results;
+stop
+@enduml
+```
+
 ## Epic: Decouple Package Installation and Enhance Distribution Compatibility**
 
 *User Story:* As a DevOps engineer, I want to run my Ansible playbooks on various Linux distributions without errors so that I can manage servers in diverse environments.
