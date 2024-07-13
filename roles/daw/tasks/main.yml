@@ -8,7 +8,7 @@
   set_fact:
     touchosc_installed: false
     touchosc_update_required: false
-  tags: always
+  tags: ['daw']
 
 - name: Ensure application directories exist
   file:

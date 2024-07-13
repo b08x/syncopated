@@ -175,6 +175,8 @@ execute_playbook() {
     if gum confirm "Do you want to execute this playbook?"; then
         echo "Executing: $command"
         echo "Please wait while the playbook runs..."
+        sleep 0.5
+        tput clear cup 5
 
         # # Execute the command and pipe output to gum pager
         # eval "$command" 2>&1 | gum pager
@@ -187,12 +189,17 @@ execute_playbook() {
                   input.each_char do |char|
                     print "\e[34m#{char}\e[0m"
                     $stdout.flush
-                    sleep 0.05
+                    sleep 0.02
                   end
+                  puts "\n"
                 end
-              res = line.chomp if line.match(/ok\:/)
-              puts "\e[32m#{res}\e[0m"
+              res = line.chomp if line.match(/PLAY RECAP|ok\:|ok\=|changed\:/)
+              unless res.nil?
+                puts "\e[32m#{res.strip.chomp}\e[0m"
+              end
             end
+            puts "all set!"
+            sleep 3
         '
         reset_vars
     else
