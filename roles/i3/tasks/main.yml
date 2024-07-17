@@ -46,7 +46,7 @@
     - name: Set i3status-rs configuration
       template:
         src: "{{ item }}.j2"
-        dest: "{{ i3.home }}/{{ item }}"
+        dest: "{{ user.home }}/.config/{{ item }}"
         owner: "{{ user.name }}"
         group: "{{ user.group }}"
         mode: '0644'
@@ -59,7 +59,7 @@
     - name: Set i3 configuration
       template:
         src: "{{ item }}.j2"
-        dest: "{{ i3.home }}/{ item }}"
+        dest: "{{ user.home }}/.config/i3/{{ item }}"
         owner: "{{ user.name }}"
         group: "{{ user.group }}"
         mode: '0644'
