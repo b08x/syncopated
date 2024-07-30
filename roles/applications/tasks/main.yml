@@ -1,9 +1,12 @@
 ---
-# tasks file for utils
 
 - name: Utillity Tasks
   debug:
     msg: "Starting utilities tasks"
+
+- import_tasks:
+    file: packages.yml
+  tags: ['packages']
 
 - name: Ensure utillity config folders exist
   file:

@@ -1,0 +1,9 @@
+---
+
+- name: install input-remapper packages
+  aur:
+    use: auto
+    name: "{{ input_remapper__packages }}"
+    state: present
+  when: ansible_os_family == "Archlinux"
+  tags: ['packages']

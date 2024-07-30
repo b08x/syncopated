@@ -1,8 +1,6 @@
 ---
 # defaults file for i3
 
-
-
 i3:
   home: "{{ lookup('env','HOME') }}/.config/i3"
   autostart: 'default'
@@ -60,6 +58,6 @@ i3_directory_definitions:
   - dest: ".config/i3/modes"
   - dest: ".config/i3status-rust/themes"
 
-packages:
+i3__packages:
   - i3-wm
   - i3status-rust

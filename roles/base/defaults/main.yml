@@ -24,7 +24,7 @@ root_directory_definitions:
 
 expected_value: "role_base_defaults"
 
-packages:
+base__packages:
   - ascii-image-converter
   - asciiquarium-git
   - asciiquarium-transparent-git
@@ -74,7 +74,7 @@ packages:
   - graphicsmagick
   - gst-libav
   - gstreamer
-  - gum  
+  - gum
   - highlight
   - hspell
   - html2md

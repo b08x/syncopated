@@ -1,0 +1,9 @@
+---
+
+- name: install applications packages
+  aur:
+    use: auto
+    name: "{{ applications__packages }}"
+    state: present
+  when: ansible_os_family == "Archlinux"
+  tags: ['packages']

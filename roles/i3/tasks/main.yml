@@ -1,9 +1,12 @@
 ---
-# tasks file for i3
 
 - name: i3 Tasks
   debug:
     msg: "Starting i3 tasks"
+
+- import_tasks:
+    file: packages.yml
+  tags: ['packages']
 
 - name: Ensure i3 directories exist
   file:

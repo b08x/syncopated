@@ -8,6 +8,7 @@
 MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
 {% else %}
 {% if inventory_hostname == 'tinybot' %}
+# MODULES=(crc32c-intel)
 MODULES=(i915 intel_agp)
 {% else %}
 MODULES=()
