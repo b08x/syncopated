@@ -1,4 +1,4 @@
 ---
 
 terminal: "terminator"
-terminal_alt: "blackbox"
+terminal_alt: "terminator"

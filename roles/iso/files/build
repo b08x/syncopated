@@ -22,9 +22,9 @@ acpi
 alsa-firmware
 alsa-lib
 alsa-plugins
-archlabs-dk
-archlabs-keyring
-archlabs-lemonbar
+# archlabs-dk
+# archlabs-keyring
+# archlabs-lemonbar
 b43-firmware
 dialog
 dunst
@@ -146,4 +146,3 @@ fi
 
 end=$(date +%s)
 echo "build took $(( (end - begin) / 60 ))m $(( (end - begin) % 60 ))s"
-

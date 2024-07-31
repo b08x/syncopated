@@ -82,7 +82,7 @@ super + shift + Home
   google-chrome-stable --disable-gpu --incognito %U /usr/share/nginx/html/homepage/index.html
 
 super + KP_Enter
-  blackbox -e ranger
+  terminator -e ranger
 
 super + shift + KP_Enter
   thunar
