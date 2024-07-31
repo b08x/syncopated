@@ -260,7 +260,7 @@ done
 say "And so it begins...\n" $BLUE
 
 # gum spin --spinner dot --spinner.margin="2 2" --title "Running Setup Playbook..." -- '
-eval "${env_command} ansible-playbook -i ${ANSIBLE_HOME}/hosts ${ANSIBLE_HOME}/playbooks/setup.yml"
+eval "${env_command} ansible-playbook -i ${ANSIBLE_HOME}/hosts ${ANSIBLE_HOME}/playbooks/full.yml"
 
 sleep 5
 
