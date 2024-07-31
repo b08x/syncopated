@@ -112,4 +112,9 @@ Include = /etc/pacman.d/mirrorlist
 [multilib]
 Include = /etc/pacman.d/mirrorlist
 
+{% if chaoticrepo == True %}
+[chaotic-aur]
+Include = /etc/pacman.d/chaotic-mirrorlist
+{% endif %}
+
 # vim:ft=config

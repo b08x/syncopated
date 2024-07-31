@@ -133,9 +133,6 @@ acpi
 alsa-firmware
 alsa-lib
 alsa-plugins
-# archlabs-dk
-# archlabs-keyring
-# archlabs-lemonbar
 b43-firmware
 dialog
 dunst

@@ -145,8 +145,8 @@ useditor() {
 
 if [[ ! -n $EDITOR ]]; then useditor micro; fi
 
-[ -n "$DISPLAY" ] && export TERM="terminator" || export TERM=xterm
-[ -n "$DISPLAY" ] && export TERMINAL="terminator" || export TERMINAL=xterm
+[ -n "$DISPLAY" ] && export TERM="kitty" || export TERM=xterm
+[ -n "$DISPLAY" ] && export TERMINAL="kitty" || export TERMINAL=xterm
 
 TERMCMD="$TERMINAL"
 
