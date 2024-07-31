@@ -26,7 +26,11 @@ expected_value: "role_base_defaults"
 
 base__packages:
   # - asciiquarium-transparent-git
+  # - crossguid
   # - html2md
+  # - lnav-git
+  # - nyan-lang-git
+  # - python-conda-package-handling
   - ascii-image-converter
   - asciiquarium-git
   - aspell
@@ -45,7 +49,6 @@ base__packages:
   - chromaprint
   - cmake
   - cpupower
-  - crossguid
   - curlie
   - dex
   - doggo
@@ -92,7 +95,6 @@ base__packages:
   - libvoikko
   - links
   - lnav
-  # - lnav-git
   - lynx
   - mako
   - mediainfo
@@ -108,7 +110,6 @@ base__packages:
   - npm
   - numlockx
   - nuspell
-  # - nyan-lang-git
   - odt2txt
   - openssl
   - opus
@@ -128,7 +129,6 @@ base__packages:
   - poweralertd
   - python-adblock
   - python-chardet
-  # - python-conda-package-handling
   - python-j2cli
   - python-pagelabels
   - python-pillow
