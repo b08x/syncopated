@@ -5,10 +5,13 @@
     filter:
       - 'ansible_processor'
 
-
 - name: Theme Tasks
   debug:
     msg: "Starting theme tasks!"
+
+- import_tasks:
+    file: packages.yml
+  tags: ['packages']
 
 - name: Ensure theme directories exist
   file:
@@ -90,7 +93,6 @@
     owner: "{{ user.name }}"
     mode: '0644'
 
-
 - name: Install gtk configurations
   template:
     src: "{{ item }}.j2"
@@ -122,23 +124,23 @@
     - 'qt6ct/qt6ct.conf'
   tags: ['profile', 'qt']
 
-# - name: Create syncopated backgrounds folder
-#   file:
-#     path: /usr/share/backgrounds/syncopated
-#     state: directory
-#     mode: '0755'
-#     group: "{{ user.group }}"
-#
-# - name: Install backgrounds
-#   synchronize:
-#     src: "usr/share/backgrounds/syncopated/"
-#     dest: "/usr/share/backgrounds/syncopated/"
-#     recursive: yes
-#     mode: push
-#     delete: no
-#     rsync_opts:
-#       - "--update"
-#       - "--backup"
-#       - "--suffix={{ suffix }}"
-#   ignore_errors: "{{ ansible_check_mode }}"
-#   tags: ['backgrounds']
+- name: Create syncopated backgrounds folder
+  file:
+    path: /usr/share/backgrounds/syncopated
+    state: directory
+    mode: '0755'
+    group: "{{ user.group }}"
+
+- name: Install backgrounds
+  synchronize:
+    src: "usr/share/backgrounds/syncopated/"
+    dest: "/usr/share/backgrounds/syncopated/"
+    recursive: yes
+    mode: push
+    delete: no
+    rsync_opts:
+      - "--update"
+      - "--backup"
+      - "--suffix={{ suffix }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: ['backgrounds']

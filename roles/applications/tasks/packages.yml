@@ -2,9 +2,9 @@
 
 - name: install applications packages
   aur:
-    use: auto
+    use: paru
     name: "{{ applications__packages }}"
     state: present
-  become: False    
+  become: False
   when: ansible_os_family == "Archlinux"
   tags: ['packages']

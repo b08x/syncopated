@@ -1,9 +1,9 @@
 ---
 
-- name: Install terminal packages
+- name: Install Theme packages
   aur:
     use: paru
-    name: "{{ terminal__packages }}"
+    name: "{{ theme__packages }}"
     state: present
     extra_args: "--overwrite '*'"
   become: False

@@ -122,10 +122,13 @@
   roles:
 
     - role: input-remapper
-      tags: ["input-remapper"]
+      tags: ["input-remapper", "keybindings"]
 
     - role: x11
       tags: ["x11"]
+
+    - role: sxhkd
+      tags: ["sxhkd", "keybindings"]
 
     - role: terminal
       tags: ["terminal"]
@@ -138,7 +141,7 @@
 
     - role: i3
       when: de is defined and window_manager == 'i3'
-      tags: ["i3"]
+      tags: ["i3", "keybindings"]
 
     - role: applications
       tags: ["applications"]

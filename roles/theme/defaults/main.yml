@@ -24,7 +24,7 @@ theme_directory_definitions:
   - dest: ".config/qt6ct/colors"
   - dest: ".config/Kvantum"
 
-packages:
+theme__packages:
   - arc-icon-theme
   - awesome-terminal-fonts
   - breeze-gtk
@@ -47,12 +47,12 @@ packages:
   - ttf-liberation
   - ttf-meslo-nerd
   - ttf-opensans
-  - ttf-tw
+  # - ttf-tw
   - ttf-ubuntu-font-family
   - kvantum
   - kvantum-qt5
   - kvantum-theme-matcha
-  - kvantum-theme-nordic-git
+  # - kvantum-theme-nordic-git
   - noto-color-emoji-fontconfig
   - noto-fonts
   - noto-fonts-cjk
@@ -71,4 +71,3 @@ packages:
   - qt6-tools
   - qt6ct
   - qscintilla-qt5
-  
