@@ -1,0 +1,11 @@
+---
+
+- name: install terminal packages
+  aur:
+    use: paru
+    name: "{{ terminal__packages }}"
+    state: present
+    extra_args: "--overwrite '*'"
+  become: False
+  when: ansible_os_family == "Archlinux"
+  tags: ['packages']

@@ -1,10 +1,10 @@
 ---
 
-- name: install applications packages
+- name: install xorg packages
   aur:
     use: auto
-    name: "{{ applications__packages }}"
+    name: "{{ xorg__packages }}"
     state: present
-  become: False    
+  become: False
   when: ansible_os_family == "Archlinux"
   tags: ['packages']

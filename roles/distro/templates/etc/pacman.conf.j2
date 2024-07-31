@@ -95,6 +95,11 @@ SigLevel = PackageRequired
 Include = /etc/pacman.d/endeavouros-mirrorlist
 {% endif %}
 
+{% if ansible_distribution == 'RebornOS' %}
+[Reborn-OS]
+Include = /etc/pacman.d/reborn-mirrorlist
+{% endif %}
+
 [core]
 Include = /etc/pacman.d/mirrorlist
 
@@ -113,9 +118,9 @@ Server = https://bitbucket.org/archlabslinux/$repo/raw/master/$arch
 Server = https://github.com/ArchLabs/$repo/raw/master/$arch
 Server = https://sourceforge.net/projects/archlabs-repo/files/$repo/$arch
 
-{% if chaoticrepo == True %}
-[chaotic-aur]
-Include = /etc/pacman.d/chaotic-mirrorlist
-{% endif %}
+#{% if chaoticrepo == True %}
+#[chaotic-aur]
+#Include = /etc/pacman.d/chaotic-mirrorlist
+#{% endif %}
 
 # vim:ft=config

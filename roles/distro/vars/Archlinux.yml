@@ -3,16 +3,16 @@ admin_group: wheel
 
 repos_chaotic: True
 repos_syncopated: False
-syncopated:
-    mirrors:
-  "http://bender.syncopated.net/syncopated/repo"
+# syncopated:
+#     mirrors:
+#   "http://bender.syncopated.net/syncopated/repo"
       #  "http://syncopated.hopto.org/syncopated/repo"
 
 chaoticrepo: True
 
 IgnorePkg: "ncurses lib32-ncurses gitui"
 
-packages:
+distro__packages:
   - archlinux-xdg-menu
 
 

@@ -3,7 +3,7 @@
 x:
   autostart: 'default'
 
-packages:
+xorg__packages:
   - dunst
   - picom
   - xarchiver

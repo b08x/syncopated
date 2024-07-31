@@ -3,24 +3,27 @@
 
 applications__packages:
   # - antimicrox
+  # - calibre
+  # - flashfocus
+  # - gconf
+  # - gksu
+  # - jupyter-nbconvert
+  # - nwg-wrapper
+  # - qutebrowser
   - arandr
   - broot
   - btop
   - calcurse
-  - calibre
   - cbonsai
   - dconf
   - devdocs-desktop
   - dunst
   - feh
-  - flashfocus
-  - gconf
   - gedit
   - gedit-markdownpreview-git
   - gedit-plugins
   - gedit-smart-home
   - geoclue
-  - gksu
   - gnu-free-fonts
   - google-chrome
   - gpick
@@ -29,24 +32,20 @@ applications__packages:
   - gummi
   - gvfs-smb
   - imv
-  - jupyter-nbconvert
   - keepassxc
   - maim
   - metagedit-git
   - mpv
-  - nitrogen-git
+  - nitrogen
   - nvtop
-  - nwg-wrapper
   - obsidian
   - openscad
   - openslide
   - pgmodeler
   - qpdfview
-  - qutebrowser
   - radiotray-ng
   - seahorse
   - shotcut
-  - sworkstyle
   - sxiv
   - thunar
   - thunar-archive-plugin

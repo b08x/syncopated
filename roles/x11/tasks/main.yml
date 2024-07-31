@@ -4,6 +4,10 @@
   debug:
     msg: "Starting xorg tasks"
 
+- import_tasks:
+    file: packages.yml
+  tags: ['packages']
+
 - name: Set xorg.conf
   template:
     src: etc/X11/xorg.conf.j2

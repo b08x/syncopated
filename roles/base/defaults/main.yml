@@ -25,9 +25,10 @@ root_directory_definitions:
 expected_value: "role_base_defaults"
 
 base__packages:
+  # - asciiquarium-transparent-git
+  # - html2md
   - ascii-image-converter
   - asciiquarium-git
-  - asciiquarium-transparent-git
   - aspell
   - aspell-en
   - atool
@@ -77,7 +78,6 @@ base__packages:
   - gum
   - highlight
   - hspell
-  - html2md
   - htop
   - i7z
   - imagemagick
@@ -92,7 +92,7 @@ base__packages:
   - libvoikko
   - links
   - lnav
-  - lnav-git
+  # - lnav-git
   - lynx
   - mako
   - mediainfo
@@ -108,7 +108,7 @@ base__packages:
   - npm
   - numlockx
   - nuspell
-  - nyan-lang-git
+  # - nyan-lang-git
   - odt2txt
   - openssl
   - opus
@@ -128,7 +128,7 @@ base__packages:
   - poweralertd
   - python-adblock
   - python-chardet
-  - python-conda-package-handling
+  # - python-conda-package-handling
   - python-j2cli
   - python-pagelabels
   - python-pillow
