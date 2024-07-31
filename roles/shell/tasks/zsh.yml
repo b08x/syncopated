@@ -1,9 +1,6 @@
 ---
 # tasks file for zsh
 
-#  - dest: ".zsh"
-
-
 - name: ZSH Tasks
   debug:
     msg: "Starting zsh tasks"
@@ -23,6 +20,28 @@
       export ZSH="/usr/local/share/oh-my-zsh"
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     fi
+  tags: ['ohmyzsh']
+
+- name: Install fd and ripgrep ohmyzsh plugins
+  synchronize:
+    src: "usr/local/share/oh-my-zsh/plugins/{{ item }}"
+    dest: /usr/local/share/oh-my-zsh/plugins/
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--progress"
+      - "--itemize-changes"
+      - "--chown=root:root"
+      - "--backup"
+      - "--suffix={{ suffix }}"
+  with_items:
+    - fd
+    - ripgrep
   tags: ['ohmyzsh']
 
 - name: Install zsh custom functions

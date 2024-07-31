@@ -7,6 +7,10 @@ export XDG_CURRENT_DESKTOP="{{ window_manager }}"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
+export QT_QPA_PLATFORMTHEME=qt5ct
+export QT_PLATFORMTHEME=qt5ct
+export QT_PLATFORM_PLUGIN=qt5ct
+
 if [ -d /usr/share/fonts/75dpi ]; then
 	xset +fp /usr/share/fonts/75dpi
 fi

@@ -25,38 +25,28 @@ theme_directory_definitions:
   - dest: ".config/Kvantum"
 
 theme__packages:
+  # - kvantum-theme-nordic-git
+  # - syncopated-theme
+  # - ttf-tw
   - arc-icon-theme
   - awesome-terminal-fonts
   - breeze-gtk
   - cantarell-fonts
   - gedit-dark-variant
-  - matcha-gtk-theme
-  - mojave-gtk-theme
-  - numix-circle-icon-theme-git
-  - numix-icon-theme-git
-  - open-chinese-fonts
-  - opendesktop-fonts
-  - syncopated-theme
-  - ttf-bitstream-vera
-  - ttf-dejavu
-  - ttf-devicons
-  - ttf-firacode-nerd
-  - ttf-font-awesome
-  - ttf-input
-  - ttf-jetbrains-mono
-  - ttf-liberation
-  - ttf-meslo-nerd
-  - ttf-opensans
-  # - ttf-tw
-  - ttf-ubuntu-font-family
   - kvantum
   - kvantum-qt5
   - kvantum-theme-matcha
-  # - kvantum-theme-nordic-git
+  - matcha-gtk-theme
+  - mojave-gtk-theme
   - noto-color-emoji-fontconfig
   - noto-fonts
   - noto-fonts-cjk
   - noto-fonts-emoji
+  - numix-circle-icon-theme-git
+  - numix-icon-theme-git
+  - open-chinese-fonts
+  - opendesktop-fonts
+  - qscintilla-qt5
   - qt5-base
   - qt5-declarative
   - qt5-graphicaleffects
@@ -70,4 +60,14 @@ theme__packages:
   - qt6-multimedia
   - qt6-tools
   - qt6ct
-  - qscintilla-qt5
+  - ttf-bitstream-vera
+  - ttf-dejavu
+  - ttf-devicons
+  - ttf-firacode-nerd
+  - ttf-font-awesome
+  - ttf-input
+  - ttf-jetbrains-mono
+  - ttf-liberation
+  - ttf-meslo-nerd
+  - ttf-opensans
+  - ttf-ubuntu-font-family
