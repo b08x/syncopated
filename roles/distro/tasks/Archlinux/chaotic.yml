@@ -1,14 +1,14 @@
 ---
 
-- name: Import primary key - chaotic
-  command: pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-  register: importkey
-  changed_when: false
-
-- name: Sign primary key - chaotic
-  command: pacman-key --lsign-key 3056513887B78AEB
-  register: signkey
-  changed_when: false
+# - name: Import primary key - chaotic
+#   command: pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+#   register: importkey
+#   changed_when: false
+#
+# - name: Sign primary key - chaotic
+#   command: pacman-key --lsign-key 3056513887B78AEB
+#   register: signkey
+#   changed_when: false
 
 - name: Install chaotic keyring and mirrorlist
   shell: |
