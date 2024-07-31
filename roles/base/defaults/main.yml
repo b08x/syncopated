@@ -156,7 +156,7 @@ base__packages:
   - teiler-git
   - texlive-basic
   - texlive-bin
-  - texlive-coffee-stains
+  # - texlive-coffee-stains
   - texlive-doc
   - texlive-fontsextra
   - texlive-fontsrecommended
