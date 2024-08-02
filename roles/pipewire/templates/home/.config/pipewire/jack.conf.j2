@@ -66,14 +66,14 @@ context.modules = [
 # global properties for all jack clients
 jack.properties = {
      #node.latency       = 1024/48000
-     #node.rate          = 1/48000
+     node.rate          = 1/48000
      #node.quantum       = 1024/48000
      #node.lock-quantum  = true
      #node.force-quantum = 0
-     #jack.show-monitor  = true
-     #jack.merge-monitor = true
-     #jack.show-midi     = true
-     #jack.short-name    = false
+     jack.show-monitor  = true
+     jack.merge-monitor = true
+     jack.show-midi     = true
+     jack.short-name    = false
      #jack.filter-name   = false
      #jack.filter-char   = " "
      #
@@ -109,7 +109,7 @@ jack.rules = [
         ]
         actions = {
             update-props = {
-                #node.latency = 512/48000
+                node.latency = 512/48000
             }
         }
     }

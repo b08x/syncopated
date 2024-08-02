@@ -1,136 +1,136 @@
+# roles/pipewire_config/tasks/main.yml
 ---
 
-- name: PipeWire Tasks
-  debug:
-    msg: "Starting Pipewire tasks"
+- name: Install necessary packages
+  pacman:
+    name:
+      - pipewire
+      - pipewire-audio
+      - pipewire-alsa
+      - pipewire-jack
+      - wireplumber
+      - rtkit
+      - easyeffects
+    state: present
 
-# - name: Create folders for user config
-#   shell: |
-#     mkdir -pv pipewire
-#
-#     mkdir -pv wireplumber/{scripts,wireplumber.conf.d}
-#   args:
-#     chdir: "{{ user.home }}/.config"
-#   become: False
-#
-# - name: Copy default PipeWire configuration files
-#   copy:
-#     src: "/usr/share/pipewire/"
-#     dest: "{{ user.home }}/.config/pipewire/"
-#     owner: "{{ user.name }}"
-#     group: "{{ user.group }}"
-#     remote_src: yes
-#   notify: Restart PipeWire
-#
-# - name: Create custom JSON configuration for sound card
-#   copy:
-#     dest: "/home/{{ pipewire_user }}/.config/wireplumber/wireplumber.conf.d/51-disable-suspension.conf"
-#     content: |
-#       {
-#         "monitor.alsa.rules": [
-#           {
-#             "matches": [
-#               { "node.name": "~alsa_input.*" },
-#               { "node.name": "~alsa_output.*" }
-#             ],
-#             "actions": {
-#               "update-props": {
-#                 "session.suspend-timeout-seconds": 0
-#               }
-#             }
-#           }
-#         ]
-#       }
-#     owner: "{{ pipewire_user }}"
-#     group: "{{ pipewire_user }}"
-#   notify: Restart WirePlumber
-#
-# # https://www.perplexity.ai/search/let-s-work-on-migrating-from-j-_TZudN6TQbS1inb0KNHW4g
-# #
-# # https://docs.pipewire.org/page_module_filter_chain.html
-#
-# - name: Enable and start PipeWire services
+- name: Ensure pipewire is real
+  file:
+    path: /usr/share/pipewire/pipewire.conf.d
+    state: directory
+
+- name: Backup existing PipeWire configuration
+  copy:
+    src: /etc/pipewire/pipewire.conf
+    dest: /etc/pipewire/pipewire.conf.bak
+    remote_src: yes
+  ignore_errors: yes
+
+- name: Copy default PipeWire configuration
+  copy:
+    src: /usr/share/pipewire/pipewire.conf
+    dest: /etc/pipewire/pipewire.conf
+    remote_src: yes
+
+- name: Copy default media-session configuration
+  copy:
+    src: /usr/share/pipewire/media-session.d/
+    dest: /etc/pipewire/media-session.d/
+    remote_src: yes
+    mode: preserve
+
+- name: Adjust resampling quality
+  template:
+    src: resample.conf.j2
+    dest: /usr/share/pipewire/pipewire.conf.d/resample.conf
+
+- name: Disable node suspension
+  template:
+    src: 51-disable-suspension.conf.j2
+    dest: /usr/share/wireplumber/wireplumber.conf.d/51-disable-suspension.conf
+
+- name: Restart PipeWire
+  systemd:
+    name: pipewire
+    state: restarted
+    scope: user
+  become: False
+
+- name: Restart WirePlumber
+  systemd:
+    name: wireplumber
+    state: restarted
+    scope: user
+  become: False
+
+- name: Remove old PipeWire user configuration
+  file:
+    path: "/home/{{ user.home }}/.config/pipewire"
+    state: absent
+  become: False
+
+- name: Install required packages
+  pacman:
+    name:
+      - ladspa
+      - swh-plugins
+    state: present
+
+- name: Create PulseAudio config directory
+  file:
+    path: /etc/pulse/default.pa.d
+    state: directory
+    mode: '0755'
+
+- name: Configure always-on mic with noise reduction
+  copy:
+    dest: /etc/pulse/default.pa.d/99-powermic-always-on.pa
+    content: |
+      # Load the LADSPA noise reduction plugin
+      load-module module-ladspa-sink sink_name=noise_reduced_mic_sink plugin=noise_suppressor_mono label=noise_suppressor_mono control=50
+
+      # Create a loopback from the PowerMicII-NS to the noise reduction sink
+      load-module module-loopback source=alsa_input.usb-PowerMicII-NS_PowerMicII-NS_000000000000-00.analog-mono sink=noise_reduced_mic_sink
+
+      # Set the default source to the noise-reduced mic
+      set-default-source noise_reduced_mic_sink.monitor
+# 
+# - name: restart pulseaudio
 #   systemd:
 #     name: "{{ item }}"
-#     state: started
-#     enabled: yes
-#     scope: user
-#   loop:
-#     - pipewire
-#     - pipewire-pulse
-#     - wireplumber
-
-#
-#
-# - block:
-#     - name: Stop pipewire service
-#       systemd:
-#         name: "{{ item }}"
-#         state: stopped
-#         enabled: no
-#         scope: user
-#       with_items:
-#         - wireplumber.service
-#         - pipewire-pulse.service
-#         - pipewire-pulse.socket
-#         - pipewire.service
-#         - pipewire-session-manager.service
-#         - pipewire.socket
-#       environment:
-#         XDG_RUNTIME_DIR: "/run/user/1000"
-#       become: False
-#       register: servicestat
-#       failed_when: (servicestat.state is defined and servicestat.state != 'stopped') or (servicestat.msg is defined and not 'Could not find the requested service' in servicestat.msg and servicestat.rc != 0)
-#       ignore_errors: "{{ ansible_check_mode }}"
-#
-#     # - name: debug
-#     #   debug:
-#     #     msg: "{{ servicestat.results[0] }}"
-#
-#     - name: Remove pipewire packages
-#       pacman:
-#         name: "{{ packages.pipewire }}"
-#         state: absent
-#         force: yes
-#         extra_args: --noconfirm
-#       register: uninstall
-#       failed_when: uninstall.packages | length > 0
-#       tags: ['packages']
-#
-#     - name: Install pipewire and wireplumber libs
-#       aur:
-#         use: paru
-#         name: "{{ item }}"
-#         state: present
-#       loop:
-#         - libpipewire
-#         - libwireplumber
-#       become: False
-#       ignore_errors: "{{ ansible_check_mode }}"
-#       tags: ['packages']
-#
-#   when:
-#     - initialInstall|default(false)|bool == True
-#     - audio == 'jack'
-#
-#
-#
-# - name: Stop pipewire service
-#   systemd:
-#     name: "{{ item }}"
-#     state: stopped
-#     enabled: no
-#     scope: user
+#     state: restarted
 #   with_items:
-#     - wireplumber.service
-#     - pipewire-pulse.service
-#     - pipewire-pulse.socket
-#     - pipewire.service
-#     - pipewire-session-manager.service
-#     - pipewire.socket
-#   environment:
-#     XDG_RUNTIME_DIR: "/run/user/1000"
+#     - pulseaudio.service
+#     - pulseaudio.socket
 #   become: False
-#   register: servicestat
-#   failed_when: (servicestat.state is defined and servicestat.state != 'stopped') or (servicestat.msg is defined and not 'Could not find the requested service' in servicestat.msg and servicestat.rc != 0)
+#   environment:
+#     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
 #   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Ensure PulseAudio starts on boot
+  copy:
+    dest: /etc/systemd/system/pulseaudio.service
+    content: |
+      [Unit]
+      Description=PulseAudio Sound System
+      After=syslog.target network.target
+
+      [Service]
+      Type=simple
+      ExecStart=/usr/bin/pulseaudio --system --realtime --disallow-exit --no-cpu-limit
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Enable and start PulseAudio service
+  systemd:
+    name: pulseaudio
+    enabled: yes
+    state: started
+
+- name: Inform user about next steps
+  debug:
+    msg:
+      - "Configuration complete. Your PowerMicII-NS should now be always on with noise reduction."
+      - "You may need to restart your system or log out and back in for changes to take effect."
+      - "Use 'pactl list sources' to verify the new source is available."
+      - "You can adjust noise reduction level by modifying the 'control' parameter in the config file."
