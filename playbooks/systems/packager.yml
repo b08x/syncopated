@@ -19,12 +19,6 @@
       - "{{ lookup('env','HOME') }}/.local/bin"
       - "{{ lookup('env','HOME') }}/.cargo/bin"
 
-    environment:
-      PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
-      PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
-      ZSH: "/usr/share/oh-my-zsh"
-      DISPLAY: ":0"
-
   pre_tasks:
 
     - name: Set admin group name

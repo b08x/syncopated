@@ -40,4 +40,4 @@
       tags: ["docker"]
 
 
-docker network create -d macvlan -o parent=eno1 \\n--subnet 192.168.41.0/24 --gateway 192.168.41.1 \\n--ip-range 192.168.41.40/28 \\n--aux-address 'host=192.168.41.40' \\nmacvlan0
+#docker network create -d macvlan -o parent=eno1 \\n--subnet 192.168.41.0/24 --gateway 192.168.41.1 \\n--ip-range 192.168.41.40/28 \\n--aux-address 'host=192.168.41.40' \\nmacvlan0

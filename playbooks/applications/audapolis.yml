@@ -75,18 +75,18 @@
 
       when: ansible_facts['distribution'] != 'Archlinux'
 
-    - name: Install 'pyenv' (Arch Linux)
-      when: ansible_facts['distribution'] == 'Archlinux'
-      aur:
-        use: auto
-        name: "{{ item }}"
-        state: present
-      with_items:
-        - pyenv
-        - pyenv-virtualenv
-        - python-wheel
-        - opentimelineio
-        - python-distutils-extra
+#    - name: Install 'pyenv' (Arch Linux)
+#      when: ansible_facts['distribution'] == 'Archlinux'
+#      aur:
+#        use: auto
+#        name: "{{ item }}"
+#        state: present
+#      with_items:
+#        - pyenv
+#        - pyenv-virtualenv
+#        - python-wheel
+#        - opentimelineio
+#        - python-distutils-extra
 
     - name: Add pyenv configurations to shell (optional, recommended)
       block:
