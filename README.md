@@ -1,10 +1,18 @@
 <img src="https://github.com/b08x/SyncopatedOS/blob/development/assets/workspace07.jpeg?raw=true"><h2>Syncopated OS</h2>
 
+[ARCHIVED PROJECT]
+
 An exercise in using Ansible for Workstation Provisioning & Configuration Management
 
-## Introduction
+## Update
 
-This whole thing, I had to decide, sometime in or around about 2021 as a personal "solution" to "manage" the complex configurations and package dependencies in Linux audio environments. Given the time and effort I was putting into the system, I felt it necessary to start leveraging DevOps principles, and so the project evolved into an Ansible collection aimed at streamlining the Linux audio experience.
+As of August the 8th of "2024", this project has been archived. After years of testing and experimentation, the focus is shifting back to the Fedora project to apply the knowledge and insights gained from this endeavor.
+
+While this project is now archived, the experience and knowledge gained have been invaluable. The insights from working with Arch Linux, developing Ansible roles for audio configurations, and exploring AI integration will be applied to future contributions to the Fedora project.
+
+## About
+
+This project was initiated in 2021 as a personal "solution" to "manage" the complex configurations and package dependencies in Linux audio environments. Given the time and effort invested into the system, it leveraged DevOps principles, evolving into an Ansible collection aimed at streamlining the Linux audio experience. 
 
 ### 2021: Project Inception
 
