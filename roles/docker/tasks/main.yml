@@ -5,6 +5,15 @@
   debug:
     msg: "Starting docker tasks"
 
+- name: Check if Docker is installed
+  command: docker --version
+  register: docker_check
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Print Docker version if installed
+  debug:
+    msg: "Docker version: {{ docker_check.msg }}"
+  when: docker_check.rc == 0
 
 - block:
 
@@ -61,8 +70,8 @@
     #     - ansible_os_family == 'Archlinux'
     #     - nvidia is defined
 
+  when: docker_check.rc != 0
   tags: ['packages']
-
 
 # https://discuss.python.org/t/getting-requirements-to-build-wheel-did-not-run-successfully-exit-code-1/30365/2
 # - block:

@@ -1,0 +1,12 @@
+---
+# tasks file for alsa
+- name: Alsa Tasks
+  debug:
+    msg: "Starting alsa tasks"
+
+- name: Set alsa card order
+  lineinfile:
+    path: /etc/modprobe.d/10-alsa_usb.conf
+    line: "options snd slots=snd-hda-intel,snd-usb-audio"
+    create: yes
+    backup: yes

@@ -1,5 +1,11 @@
 ---
 # tasks file for roles/distro
+# at this point, packages will be set as a variable....
+
+- setup:
+- debug:
+    msg: "{{ ansible_os_family }}"
+  tags: ['always']
 
 - name: Load a variable file based on the OS type, or a default if not found. the file.
   include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
@@ -13,6 +19,9 @@
       paths:
         - 'vars'
   tags: ['always']
+
+
+
 
 - block:
     - import_tasks:

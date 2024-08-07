@@ -31,6 +31,7 @@
         - virt-manager
         - virt-viewer
 
+  when: ansible_os_family == 'Archlinux'
   tags: ['packages']
 
 - name: Set socket group and perms to allow for remote access

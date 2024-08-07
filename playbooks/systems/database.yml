@@ -1,5 +1,5 @@
 ---
-- hosts: workstation
+- hosts:
   become: True
   gather_subset:
     - hardware
@@ -30,16 +30,3 @@
       set_fact:
         suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
       tags: ["always"]
-
-  tasks:
-    - import_tasks:
-        file: ../tasks/redis.yml
-      tags: ["redis"]
-
-    - import_tasks:
-        file: ../tasks/pgvector.yml
-      tags: ["pgvector"]
-
-    - import_tasks:
-        file: ../tasks/chromadb.yml
-      tags: ["chromadb"]

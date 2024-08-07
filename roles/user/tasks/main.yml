@@ -41,14 +41,17 @@
       when:
         - not keys.stat.exists
         - newInstall is defined
-      tags: ["keys"]
+
+  tags: ["keys"]
+
 
 # dotfiles
-- name: Install .gitconfig
-  template:
-    src: home/.gitconfig
-    dest: "{{ user.home }}/.gitconfig"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-  tags: ['dots']
+# user defined tasks here
+# - name: Install .gitconfig
+#   template:
+#     src: home/.gitconfig
+#     dest: "{{ user.home }}/.gitconfig"
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+#     mode: '0644'
+#   tags: ['dots']

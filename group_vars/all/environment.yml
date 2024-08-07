@@ -1,0 +1,7 @@
+---
+
+env:
+  vars:
+    storage: "/mnt/ninjabot/storage"
+    workspace: "{{ lookup('env','HOME') }}/Workspace"
+    asset_folder: "{{ lookup('env','HOME') }}/Library"

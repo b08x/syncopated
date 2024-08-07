@@ -1,0 +1,4 @@
+---
+# roles/barrier
+packages:
+  - barrier

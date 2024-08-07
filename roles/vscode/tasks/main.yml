@@ -1,0 +1,103 @@
+---
+
+# - name: Check repository version
+#   shell: "paru -Si code | grep -w 'extra/code' | awk '{print $2}' | sed 's/-1$//' | xargs"
+#   register: desired_version
+#   changed_when: false
+#
+# - name: Get installed application version
+#   shell: "code --version | head -1 |awk '{print $1}'"
+#   register: current_version
+#   changed_when: false
+
+- block:
+    - name: Install vscode
+      aur:
+        use: auto
+        name: "{{ item }}"
+        state: present
+      with_items:
+          - code
+          - code-marketplace
+      register: vscode_install
+      tags: ['packages']
+
+    - name: Check currently installed extensions
+      shell: code --list-extensions
+      register: installed_extensions
+      changed_when: installed_extensions.rc != 0
+      ignore_errors: "{{ ansible_check_mode }}"
+
+    # - name: something
+    #   debug:
+    #     var: extensions|difference(installed_extensions.stdout_lines)
+
+    - name: Set list of extensions to install
+      set_fact:
+        _extensions: "{{ extensions|difference(installed_extensions.stdout_lines) }}"
+
+    - name: Install VSCode extensions
+      shell: "code --install-extension {{ item }}"
+      with_items:
+        - "{{ _extensions }}"
+      when: _extensions | length > 0
+
+  rescue:
+    - name: Handle installation failure
+      debug:
+        msg: "Failed to install VSCode extension: {{ item }}"
+      loop: "{{ ansible_failed_result.results | map(attribute='item') | list }}"
+
+  always:
+    - name: Continue execution
+      debug:
+        msg: "Continuing with playbook execution"
+
+  become: False
+  vars:
+    extensions:
+      - "10nates.ollama-autocoder"
+      - "beardedbear.beardedicons"
+      - "beardedbear.beardedtheme"
+      - "bradlc.vscode-tailwindcss"
+      - "byi8220.indented-block-highlighting"
+      - "castwide.solargraph"
+      - "darkriszty.markdown-table-prettify"
+      - "esbenp.prettier-vscode"
+      - "foxundermoon.shell-format"
+      - "github.vscode-github-actions"
+      - "gruntfuggly.todo-tree"
+      - "heybourn.headwind"
+      - "huggingFace.huggingface-vscode"
+      - "james-Yu.latex-workshop"
+      - "jokela.vscode-sfz"
+      - "kentor.sort-indentation-group"
+      - "kevinrose.vsc-python-indent"
+      - "leodevbro.blockman"
+      - "mblode.pretty-formatter"
+      - "miladfathy.html-color-theme"
+      - "ms-azuretools.vscode-docker"
+      - "ms-azuretools.vscode-docker"
+      - "ms-python.debugpy"
+      - "ms-python.python"
+      - "ms-python.vscode-pylance"
+      - "ms-toolsai.jupyter"
+      - "ms-toolsai.jupyter-keymap"
+      - "ms-toolsai.jupyter-renderers"
+      - "ms-toolsai.vscode-jupyter-cell-tags"
+      - "ms-toolsai.vscode-jupyter-slideshow"
+      - "ms-vscode-remote.remote-ssh"
+      - "ms-vscode-remote.remote-ssh-edit"
+      - "ms-vscode.remote-explorer"
+      - "njpwerner.autodocstring"
+      - "redhat.vscode-yaml"
+      - "renxzen.google-monokai-theme"
+      - "samuelcolvin.jinjahtml"
+      - "shopify.ruby-lsp"
+      - "textworld.textworld-vscode"
+      - "the-e3n.block-highlighter"
+      - "tomoki1207.pdf"
+      - "yzane.markdown-pdf"
+      - "zjffun.snippetsmanager"
+
+#TODO: update desktop entry to use --password-store="gnome"

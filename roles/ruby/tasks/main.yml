@@ -4,6 +4,23 @@
   debug:
     msg: "Starting ruby tasks"
 
+- name: Load a variable file based on the OS type, or a default if not found. the file.
+  include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        # - '{{ansible_distribution}}.yml'
+        - '{{ansible_os_family}}.yml'
+        # - Archlinux.yml
+        # - main.yml
+      paths:
+        - 'vars'
+  tags: ['packages']
+
+- setup:
+- debug:
+    msg: "{{ packages }}"
+
 # by default /etc/gemrc is set to --user-install
 # set --no-user-install in /root/.gemrc
 # to install gems system wide using sudo
@@ -27,6 +44,12 @@
       gem: --user-install
     dest: "/etc/gemrc"
     owner: root
+
+- name: Install Ruby dev packages
+  package:
+    name: "{{ packages }}"
+    state: present
+  tags: ['packages']
 
 - import_tasks:
     file: asdf.yml

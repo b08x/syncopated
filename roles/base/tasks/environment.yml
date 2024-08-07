@@ -9,24 +9,11 @@
     mode: '0644'
     backup: yes
 
-- name: Adjust /etc/profile
-  copy:
-    src: "etc/profile"
-    dest: "/etc/profile"
+- name: Set /etc/profile
+  template:
+    src: etc/profile.j2
+    dest: /etc/profile
     owner: root
     group: root
     mode: '0644'
     backup: yes
-
-# - name:  Set .aliases and .profile
-#   template:
-#     src: "home/{{ item }}.j2"
-#     dest: "{{ user.home }}/{{ item }}"
-#     owner: "{{ user.name }}"
-#     group: "{{ user.group }}"
-#     mode: '0644'
-#     backup: True
-#   with_items:
-#     - .aliases
-#     - .profile
-#   tags: ['profile']

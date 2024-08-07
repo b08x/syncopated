@@ -1,0 +1,11 @@
+---
+# roles/alsa
+packages:
+  - alsa-card-profiles
+  - alsa-firmware
+  - alsa-lib
+  - alsa-plugins
+  - alsa-topology-conf
+  - alsa-ucm-conf
+  - alsa-utils
+  - a2jmidid

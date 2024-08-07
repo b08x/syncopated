@@ -1,13 +1,13 @@
 ---
-# - name: show expected_value
-#   debug:
-#     msg: "{{ expected_value }}"
-#   tags: ['testing']
 
 - name: Base Tasks
   debug:
     msg: "Starting base tasks"
   register: expected_value
+
+- import_tasks:
+    file: packages.yml
+  tags: ['packages']
 
 - name: Ensure root directories exist
   file:
@@ -20,20 +20,28 @@
   loop: "{{ root_directory_definitions }}"
 
 - import_tasks:
-    file: sudoers.yml
-  tags: ["sudoers"]
+    file: sshd.yml
+  tags: ["sshd"]
 
 - import_tasks:
     file: environment.yml
   tags: ["env", "profile"]
 
 - import_tasks:
-    file: sshd.yml
-  tags: ["sshd"]
+    file: grub.yml
+  tags: ["grub"]
 
 - import_tasks:
     file: updatedb.yml
   tags: ["updatedb"]
+
+- import_tasks:
+    file: ranger.yml
+  tags: ['ranger']
+
+# - import_tasks:
+#     file: lnav.yml
+#   tags: ['lnav']
 
 # - import_tasks:
 #     file: zram.yml
@@ -43,15 +51,7 @@
 #     file: autofs.yml
 #   tags: ["autofs"]
 
-- import_tasks:
-    file: utils.yml
-  tags: ['utils']
-
-- import_tasks:
-    file: grub.yml
-  tags: ["grub"]
-
-- import_tasks:
-    file: autologin.yml
-  tags: ['autologin']
-  when: autologin is defined
+# - import_tasks:
+#     file: autologin.yml
+#   tags: ['autologin']
+#   when: autologin is defined

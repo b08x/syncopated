@@ -1,0 +1,14 @@
+---
+# defaults file for tuning
+
+tune_for_realtime: True
+
+cpupower:
+  governor: powersave
+  perf_bias: 4
+
+tuned:
+  profile: powersave
+
+packages:
+  - x86_energy_perf_policy

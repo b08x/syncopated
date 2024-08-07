@@ -1,0 +1,45 @@
+---
+# defaults file for jackd
+
+packages:
+  - jack2
+  - jack2-dbus
+  - jack-example-tools
+  - jack-keyboard
+  - jack_capture
+  - jack_link
+  - jack_mixer
+  - jack_snapshot
+  - jack_utils
+  - jacktrip
+
+jack_control:
+  dps:
+    device: hw:0
+    capture: none
+    playback: none
+    rate: 48000
+    period: 1024
+    nperiods: 2
+    hwmon: False
+    hwmeter: False
+    duplex: True
+    softmode: False
+    monitor: True
+    dither: n
+    shorts: False
+    mididriver: seq
+  eps:
+    driver: alsa
+    name: default
+    realtime: True
+    realtimepriority: 89
+    temporary: False
+    verbose: False
+    # client-timeout: Client timeout limit in milliseconds. (sint:notset:0:0)
+    # clock-source: Clocksource type : c(ycle) | h(pet) | s(ystem). (uint:notset:0:0)
+    port-max: 2048
+    replaceregistry: False
+    sync: False
+    # self-connect-mode: Self connect mode. (char:notset: : )
+    # slave-drivers: Slave drivers to use (str:notset::)

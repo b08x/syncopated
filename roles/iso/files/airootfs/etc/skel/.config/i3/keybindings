@@ -115,9 +115,9 @@ bindsym XF86RotateWindows $exec /mnt/bender/backup/weather.sh
 # bindsym XF86Search+d $exec /usr/local/bin/search_devdocs.sh
 # bindsym XF86Search+w $exec /usr/local/bin/search_web.sh
 #
-# bindsym XF86AudioRecord $exec kitty --class "notepad" -e /usr/local/bin/# scriber.rb
+# bindsym XF86AudioRecord $exec terminator --class "notepad" -e /usr/local/bin/# scriber.rb
 #
-# bindsym $mod+XF86AudioRecord $exec kitty --class "notepad" -e /usr/local/# bin/scriber.rb --new-file
+# bindsym $mod+XF86AudioRecord $exec terminator --class "notepad" -e /usr/local/# bin/scriber.rb --new-file
 #
 # bindsym XF86Paste $exec xclip -o
 
@@ -145,7 +145,7 @@ bindsym $mod+F9 [class="^VMPK"] scratchpad show
 ##### bindsym <var> focus output HDMI-2
 ##### bindsym XF86LaunchB nop dropdown
 
-bindsym $mod+Return $exec kitty
+bindsym $mod+Return $exec terminator
 
 #############################
 #### ---{ other }--- ###

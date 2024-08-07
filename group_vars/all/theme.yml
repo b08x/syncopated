@@ -1,0 +1,21 @@
+---
+
+gtk:
+  theme:
+    name: oomox-soundbot
+    icons: oomox-soundbot
+    cursor: ArchLabs-Dark
+kvantum: KvGnomeDark
+qtstyle: Fusion
+
+backgrounds: /usr/share/backgrounds/syncopated
+
+font:
+  primary:
+    name: Hack Nerd Font
+    size: 12
+    hintstyle: hintsfull
+  glyphs:
+    name: Font Awesome 6 Free Regular
+  mono:
+    name: Hack Nerd Font Mono
