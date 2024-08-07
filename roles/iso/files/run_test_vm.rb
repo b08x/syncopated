@@ -44,7 +44,7 @@ class VirtInstallCommand < QemuCommand
   end
 
   def execute
-    command = "sudo virt-install --osinfo detect=on,name=archlinux --cdrom #{@selected_iso} --disk #{@selected_drive} --cpu host --memory #{@memory} --vcpus #{@vcpus} --network bridge=br0"
+    command = "sudo virt-install --osinfo detect=on,name=archlinux --cdrom #{@selected_iso} --disk #{@selected_drive} --cpu host --memory #{@memory} --vcpus #{@vcpus} --network default"
     puts "Executing command: #{command}"
 
     # Fork the process to execute the command
@@ -94,8 +94,8 @@ prompt = TTY::Prompt.new
 #   q.messages[:required?] = "Folder name must not be empty"
 # end
 
-iso_folder = File.join(HOME, 'Workspace', 'syncopatedOS', 'iso', 'out')
-drive_folder = File.join(HOME, 'Workspace', 'syncopatedOS', 'iso', 'qcow2')
+iso_folder = File.join(HOME, 'Workspace', 'Ansible', 'syncopatedOS', 'roles', 'iso', 'files', 'out')
+drive_folder = File.join(HOME, 'Workspace', 'Ansible', 'syncopatedOS', 'roles', 'iso', 'files', 'qcow2')
 
 FileUtils.mkdir_p(drive_folder) unless Dir.exist?(drive_folder)
 
