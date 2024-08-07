@@ -22,10 +22,10 @@ super + d
   ~/.config/rofi/scripts/launcher_t1.sh
 
 super + F5
-  kitty --class "htop" -e htop
+  terminator --class "htop" -e htop
 
 super + alt + n
-  kitty --class "notepad" -e notepad.sh
+  terminator --class "notepad" -e notepad.sh
 
 F12
   search_web.sh
@@ -82,7 +82,7 @@ super + shift + Home
   google-chrome-stable --disable-gpu --incognito %U /usr/share/nginx/html/homepage/index.html
 
 super + KP_Enter
-  kitty -e ranger
+  terminator -e ranger
 
 super + shift + KP_Enter
   thunar

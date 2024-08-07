@@ -1,0 +1,10 @@
+---
+
+- name: Install Theme packages
+  aur:
+    use: paru
+    name: "{{ theme__packages }}"
+    state: present
+    extra_args: "--overwrite '*'"
+  become: False
+  when: ansible_os_family == "Archlinux"

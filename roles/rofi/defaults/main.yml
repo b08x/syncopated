@@ -31,3 +31,6 @@ rofi_directory_definitions:
   - dest: ".config/rofi/powermenu/type-5/shared"
   - dest: ".config/rofi/powermenu/type-6/shared"
   - dest: ".config/rofi/scripts"
+
+packages:
+  - rofi

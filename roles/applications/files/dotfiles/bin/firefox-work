@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+firefox --name=firefox-work -p work $@

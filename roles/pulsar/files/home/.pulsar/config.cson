@@ -88,7 +88,7 @@
   "one-dark-ui":
     stickyHeaders: true
   "open-terminal-here":
-    command: "kitty"
+    command: "blackbox"
   "project-colorize":
     "/home/b08x/Workspace/gptclients:/home/b08x/Workspace/syncopated/cfgmgmt": "/home/b08x/Workspace/gptclients:/home/b08x/Workspace/syncopated/cfgmgmt"
     "/home/b08x/Workspace/websites/b08x": "/home/b08x/Workspace/websites/b08x"
@@ -100,8 +100,8 @@
     showPath: true
   "ruby-solargraph": {}
   "run-in-terminal":
-    launchdir: "kitty -d \"{working_directory}\""
-    launchfile: "kitty -d \"{working_directory}\" --hold --execute \"{file_path}\" {args}"
+    launchdir: "blackbox -w \"{working_directory}\""
+    launchfile: "blackbox -d \"{working_directory}\" -c \"{file_path}\" {args};sleep 5"
   "seti-syntax":
     dynamicColor: false
     themeColor: "Purple"

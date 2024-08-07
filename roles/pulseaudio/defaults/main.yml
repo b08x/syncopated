@@ -19,3 +19,8 @@ pulse_directory_definitions:
     mode: "0700"
 
 use_bluetooth: False
+
+packages:
+  - pulseaudio-alsa
+  - pulseaudio-jack
+  - pulsemixer

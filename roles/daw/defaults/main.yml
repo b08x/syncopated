@@ -72,83 +72,115 @@ protokol:
 
 packages:
   - ambdec
-  - arandr
+  - ambix-o1
+  - ambix-o3
+  - ambix-o5
+  - audacity
+  - baudline-bin
+  - bipscript
+  - bipscript-ide
+  - bitwig-studio
+  - calf
   - caps-lv2-git
   - carla
+  - cpod-appimage
+  - darktable
+  - distrho-ports
+  - distrho-ports-lv2
+  - distrho-ports-vst
+  - distrho-ports-vst3
+  - djvulibre
+  - dragonfly-reverb
+  - dragonfly-reverb-clap
+  - dragonfly-reverb-lv2
+  - dragonfly-reverb-standalone
+  - dragonfly-reverb-vst
+  - dragonfly-reverb-vst3
+  - drumrox
   - ecasound
-  - faac
-  - faad2
+  - ffmpeg4.4
+  - ffmpegthumbnailer
   - fftw
   - fluidsynth
-  - fmit
+  - fontforge
   - geonkick
   - geonkick-common
   - geonkick-lv2
   - geonkick-standalone
+  - gimp
   - helm-synth
   - helm-synth-common
   - helm-synth-lv2
   - helm-synth-standalone
   - helm-synth-vst
+  - hydrogen-git
+  - iempluginsuite
+  - ingen-git
   - intersect.lv2-git
   - jaaa
   - jalv
   - jalv-select-git
+  - japa
+  - jc
   - jconvolver
   - jnoisemeter
   - ladspa
   - lame
   - libaudec
   - libcaca
-  - libpipewire
+  - linuxsampler
+  - linuxsampler-svn
   - lsp-dsp-lib
-  - lsparu
   - lv2-c++-tools
-  - mediainfo
+  - mcfx-o1
+  - mcfx-o3
+  - mcfx-o5
   - mediamtx
-  - metagedit-git
   - midieditor
   - mixxx
-  - mojave-gtk-theme
-  - mpv
-  - mpv-plugin-excerpt-git
-  - mupdf-tools
+  - mtr
   - non-mixer-lv2-git
   - non-sequencer
   - ocenaudio-bin
-  - opus
-  - opus-tools
-  - opusfile
-  - pamixer
+  - patchage
+  - patchance
   - qmidinet
-  - qpdf
   - qsampler
-  # - raysession-git
+  - raul
+  - raysession
   - rnnoise
-  - sampler
+  - rtaudio
+  - rtmidi
   - sc3-plugins
+  - scala-music
+  - scala-music-scales
+  - sendmidi
+  - sonic-pi-git
+  - sonic-visualiser
+  - sonic-visualiser-git
+  - sononym
   - sooperlooper-git
   - sound-gambit
-  - sox
-  - sparta-plugins-lv2-git
+  - sparta-plugins
+  - supercollider
+  - swh-lv2-git
   - tap-plugins-lv2-git
-  - teiler-git
-  - termpdf.py-git
-  - vamp-plugin-sdk
-  - vidcutter
-  - vlc
+  - tonsespace
+  - vital-synth-git
+  - vmpk
+  - vst2sdk
   - x42-plugins
   - x42-plugins-lv2
   - x42-plugins-standalone
-  - x264
-  - x265
   - zita-ajbridge
   - zita-alsa-pcmi
   - zita-convolver
   - zita-dpl1
   - zita-lrx
   - zita-mu1
+  - zita-resampler
   - zita-rev1
+
 
 # audio_packages:
 #   utilities_and_tools:

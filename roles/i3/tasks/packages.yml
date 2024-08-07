@@ -1,0 +1,10 @@
+---
+
+- name: install i3 packages
+  aur:
+    use: auto
+    name: "{{ i3__packages }}"
+    state: present
+  become: False    
+  when: ansible_os_family == "Archlinux"
+  tags: ['packages']

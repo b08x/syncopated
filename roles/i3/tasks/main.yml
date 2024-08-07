@@ -1,9 +1,12 @@
 ---
-# tasks file for i3
 
 - name: i3 Tasks
   debug:
     msg: "Starting i3 tasks"
+
+- import_tasks:
+    file: packages.yml
+  tags: ['packages']
 
 - name: Ensure i3 directories exist
   file:
@@ -16,6 +19,16 @@
   loop: "{{ i3_directory_definitions }}"
   check_mode: no
   tags: ['profile']
+
+# if this file does not exist, lightdm will fail to start
+- name: Set dmrc to selected window manager
+  copy:
+    content: |
+      [Desktop]
+      Session={{ window_manager }}
+    dest: "{{ user.home }}/.dmrc"
+    owner: "{{ user.name }}"
+    mode: '0644'
 
 - name: Install i3ipc module
   pip:
@@ -36,7 +49,7 @@
     - name: Set i3status-rs configuration
       template:
         src: "{{ item }}.j2"
-        dest: "{{ user.home }}/{{ item }}"
+        dest: "{{ user.home }}/.config/{{ item }}"
         owner: "{{ user.name }}"
         group: "{{ user.group }}"
         mode: '0644'
@@ -49,7 +62,7 @@
     - name: Set i3 configuration
       template:
         src: "{{ item }}.j2"
-        dest: "{{ user.home }}/{{ item }}"
+        dest: "{{ user.home }}/.config/i3/{{ item }}"
         owner: "{{ user.name }}"
         group: "{{ user.group }}"
         mode: '0644'

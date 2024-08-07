@@ -24,73 +24,139 @@ root_directory_definitions:
 
 expected_value: "role_base_defaults"
 
-base_packages:
-  - acpi
-  - at
+base__packages:
+  # - asciiquarium-transparent-git
+  # - crossguid
+  # - html2md
+  # - lnav-git
+  # - nyan-lang-git
+  # - python-conda-package-handling
+  - ascii-image-converter
+  - asciiquarium-git
+  - aspell
+  - aspell-en
+  - atool
+  - audiofile
+  - autofs
   - await
+  - bandwhich
   - bash-completion
   - bash-language-server
   - bat
-  - btop
+  - beautysh
+  - bottom
+  - choose
+  - chromaprint
+  - cmake
+  - cpupower
+  - curlie
+  - dex
+  - doggo
+  - downgrade
   - duf
   - dust
+  - elinks
+  - eza
+  - faac
+  - faad2
   - fd
+  - figlet
+  - firewalld
   - fsarchiver
   - fuse3
   - fuse-common
-  - gksu
-  - inxi
-  - iotop
-  - ncdu
-  - neofetch
-  - numlockx
-  - rsync
-  - smartmontools
-  - sudo
-  - sysstat
-  - tree
-  - tuned
-  - unzip
-  - wget
-  - xterm
-  - yadm
-  - zenity
-
-Development_Tools:
-  - aspell-en
-  - atool
-  - autoconf
-  - automake
-  - bat
-  - bash-completion
-  - bash-language-server
-  - cmake
-  - code-marketplace
-  - figlet
-  - gcc
-  - gconf
   - git
+  - git-delta
   - git-lfs
-  - gitflow-avh
-  - gitflow-zshcompletion-avh
   - github-cli
   - gitui
-  - gksu
+  - glow
+  - gnome-keyring
   - gnuplot
-  - go
   - gource
+  - gping
+  - graphicsmagick
+  - gst-libav
+  - gstreamer
+  - gum
+  - highlight
   - hspell
+  - htop
+  - i7z
+  - imagemagick
+  - inetutils
+  - inxi
+  - iotop
   - jq
+  - libcyaml
+  - libgit2
+  - libgit2-glib
+  - libvips
+  - libvoikko
+  - links
+  - lnav
   - lynx
-  - make
+  - mako
+  - mediainfo
+  - meld
+  - micro
+  - mlocate
+  - most
+  - mupdf-tools
   - nano-syntax-highlighting
+  - ncdu
+  - net-tools
+  - nodejs
   - npm
+  - numlockx
+  - nuspell
+  - odt2txt
+  - openssl
+  - opus
+  - opus-tools
+  - opusfile
+  - pamixer
+  - pandoc-cli
+  - pdf2htmlex-appimage
+  - pdfjs
+  - perl-image-exiftool
+  - pgvector
+  - platformfolders
+  - playerctl
+  - pod2man
+  - poppler
+  - postgresql-libs
+  - poweralertd
+  - python-adblock
+  - python-chardet
+  - python-j2cli
+  - python-pagelabels
+  - python-pillow
+  - python-pygments
+  - python-pympler
   - python-setuptools
-  - ruby-psych
+  - python-sphinx-intl
+  - python-sphinxcontrib-svg2pdfconverter
+  - qpdf
+  - ranger
+  - ripgrep
+  - ripgrep-all
+  - rsync
+  - rxvt-unicode
+  - sd
+  - smartmontools
+  - socat
+  - speech-dispatcher
+  - sshpass
   - stunnel
   - sudo
-  - texlive-bin
+  - swappy
+  - sysstat
+  - taglib
+  - teiler-git
   - texlive-basic
+  - texlive-bin
+  # - texlive-coffee-stains
   - texlive-doc
   - texlive-fontsextra
   - texlive-fontsrecommended
@@ -99,8 +165,23 @@ Development_Tools:
   - texlive-latexrecommended
   - texlive-pictures
   - texlive-xetex
+  - tldr
+  - transmission-cli
+  - tree
+  - ueberzug
+  - unrar
   - unzip
+  - v4l-utils
+  - vorbis-tools
+  - wavpack
   - wget
+  - wkhtmltopdf-static
+  - wmctrl
+  - wordnet-cli
+  - wordnet-common
   - x264
   - x265
-  - zsh
+  - xterm
+  - yad
+  - yt-dlp
+  - zoxide

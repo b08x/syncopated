@@ -1,5 +1,21 @@
 ---
 
+- name: install sxhkd
+  aur:
+    use: paru
+    name: sxhkd
+    state: present
+  become: False
+  tags: ["packages"]
+
+- name: Create sxhkd config folder
+  file:
+    path: "{{ user.home }}/.config/sxhkd"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    recurse: False
+
 - name: Install sxhkd reload function
   copy:
     content: |

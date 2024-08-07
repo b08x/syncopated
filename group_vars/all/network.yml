@@ -1,0 +1,27 @@
+---
+
+lan:
+  domain: syncopated.net
+  gateway: 192.168.41.1
+  nameserver01: 192.168.41.41
+  nameserver02: 192.168.41.1
+  dns:
+    search: syncopated.net
+  wireless:
+    ssid: invisiblemagic
+
+# etc_hosts:
+#   - ip: 192.168.36.3
+#     host: tinybot
+#   - ip: 192.168.36.9
+#     host: soundbot
+#   - ip: 192.168.36.21
+#     host: ninjabot
+#   - ip: 192.168.36.23
+#     host: isabella
+#   - ip: 192.168.36.25
+#     host: lapbot
+#   - ip: 192.168.36.37
+#     host: bender
+#   - ip: 192.168.41.7
+#     host: flowbot

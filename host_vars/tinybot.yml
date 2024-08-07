@@ -3,6 +3,7 @@
 use_docker: True
 use_libvirt: True
 
+tuned_profile: powersave
 # share:
 #   nfs:
 #     parent: "{{ user.home }}"
@@ -39,6 +40,7 @@ x:
     # - "jacktrip -s -n 4 -q auto -b 24 -D --udprt &"
 i3:
   autostart:
+    - "keepassxc"
     - "barrier"
     # - "tilda -g ~/.config/tilda/config_0"
     - "tilda -g ~/.config/tilda/config_1"

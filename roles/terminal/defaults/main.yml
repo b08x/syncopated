@@ -1,2 +1,32 @@
 ---
 # defaults file for terminal
+
+# The default directory permission mode when creating directories using `terminal_directory_definitions`
+terminal_directory_default_mode: '0750'
+
+# The default directory owner when creating directories using `terminal_directory_definitions`
+terminal_directory_default_owner: "{{ user.name }}"
+
+# The default directory group when creating directories using `terminal_directory_definitions`
+terminal_directory_default_group: "{{ user.name }}"
+
+terminal_directory_default_location: "{{ user.home }}"
+
+terminal_directory_default_recurse: False
+
+terminal_directory_definitions:
+  - dest: ".config/alacritty"
+  - dest: ".config/terminator"
+  - dest: ".config/kitty"
+  - dest: ".config/tilda"
+  - dest: ".guake"
+
+terminal__packages:
+  - blackbox-terminal
+  - guake
+  - kitty-shell-integration
+  - kitty-terminfo
+  - termdown
+  - terminator
+  - termpdf.py-git
+  - tilda

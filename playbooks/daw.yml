@@ -1,0 +1,30 @@
+- hosts: daw
+  become: True
+  gather_facts: yes
+  vars:
+    path:
+      - "{{ lookup('env','HOME') }}/.asdf/bin"
+      - "{{ lookup('env','HOME') }}/.local/bin"
+      - "{{ lookup('env','HOME') }}/Utils/bin"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+
+  roles:
+
+    - role: tuning
+      tags: ["tunig"]
+
+    - role: alsa
+      tags: ["alsa"]
+
+    - role: jackd
+      tags: ["jackd"]
+
+    - role: pulseaudio
+      tags: ["pulseaudio"]
+
+    - role: pipewire
+      tags: ["pipewire"]
+
+    - role: daw
+      tags: ["daw"]

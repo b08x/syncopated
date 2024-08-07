@@ -23,23 +23,23 @@
 
 
 
-# - block:
-#     - import_tasks:
-#         file: "Archlinux/main.yml"
-#       tags: ['repo', 'mirrors']
-#
-#     # - name: Current packages installed
-#     #   shell: |
-#     #     paru -Q |awk '{print $1}'
-#     #   become: False
-#     #   register: installed_packages
-#     #   check_mode: no
-#     #   tags: ['packages']
-#     #
-#     # - name: Set packages to be installed
-#     #   set_fact:
-#     #     arch_packages: "{{ packages|difference(arch_installed_packages.stdout) }}"
-#     #   check_mode: no
-#     #   tags: ['packages']
-#
-#   when: ansible_os_family == 'Archlinux'
+- block:
+    - import_tasks:
+        file: "Archlinux/main.yml"
+      tags: ['repo', 'mirrors']
+
+    # - name: Current packages installed
+    #   shell: |
+    #     paru -Q |awk '{print $1}'
+    #   become: False
+    #   register: installed_packages
+    #   check_mode: no
+    #   tags: ['packages']
+    #
+    # - name: Set packages to be installed
+    #   set_fact:
+    #     arch_packages: "{{ packages|difference(arch_installed_packages.stdout) }}"
+    #   check_mode: no
+    #   tags: ['packages']
+
+  when: ansible_os_family == 'Archlinux'

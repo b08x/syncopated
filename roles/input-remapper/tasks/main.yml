@@ -1,5 +1,19 @@
 ---
 
+- name: Ensure input-remapper config directories exist
+  file:
+    dest: "{{ user.home }}/{{ item }}"
+    state: directory
+    owner: "{{ user.owner | default(omit) }}"
+    group: "{{ user.group | default(omit) }}"
+    mode: '0744'
+    recurse: false
+  loop:
+    - ".config/input-remapper-2"
+    - ".config/input-remapper-2/presets"
+  check_mode: no
+  tags: ['profile']
+
 - name: Sync input-remapper presets folder
   synchronize:
     src: presets/

@@ -1,9 +1,21 @@
 ---
 #setup repositories
-# - name: show expected_value
-#   debug:
-#     var: ansible_os_family
-#   tags: ['always']
+- name: Starting distro tasks
+  debug:
+    var: ansible_os_family
+  tags: ['always']
+
+- name: install reflector package
+  pacman:
+    name: "{{ item }}"
+    state: present
+    force: yes
+    extra_args: --noconfirm
+  with_items:
+    - aria2
+    - fd
+    - reflector
+    - ripgrep
 
 - block:
     # - name: Import syncopated repo key
@@ -56,9 +68,9 @@
   tags: ["paru"]
   # check_mode: yes
 
-- import_tasks:
-    file: packages.yml
-  tags: ["packages"]
+# - import_tasks:
+#     file: packages.yml
+#   tags: ["packages"]
 
 # - name: install packages
 #   aur:

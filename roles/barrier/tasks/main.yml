@@ -1,0 +1,46 @@
+---
+
+# tasks file for Barrier
+- name: Barrier Tasks
+  debug:
+    msg: "Starting Barrier tasks"
+
+- name: Ensure folders for barrier configs exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+  with_items:
+    - "{{ user.home }}/.config/Debauchee"
+    - "{{ user.home }}/.config/autostart"
+
+- name: Set barrier server config
+  copy:
+    src: home/.config/Debauchee/{{ inventory_hostname }}.conf
+    dest: "{{ user.home }}/.config/Debauchee/{{ inventory_hostname }}.conf"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: yes
+  when: barrier.server is defined
+
+# - name: Set barrier server autostart
+#   template:
+#     src: "home/.config/autostart/barrier-server.desktop.j2"
+#     dest: "{{ user.home }}/.config/autostart/barrier-server.desktop"
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+#     mode: '0644'
+#     backup: True
+#   when: barrier.server is defined
+#
+# - name: Set barrier client autostart
+#   template:
+#     src: "home/.config/autostart/barrier-client.desktop.j2"
+#     dest: "{{ user.home }}/.config/autostart/barrier-client.desktop"
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+#     mode: '0644'
+#     backup: True
+#   when: barrier.client is defined

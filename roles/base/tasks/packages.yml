@@ -1,0 +1,10 @@
+---
+
+- name: install base packages
+  aur:
+    use: auto
+    name: "{{ base__packages }}"
+    state: present
+  become: False
+  when: ansible_os_family == "Archlinux"
+  tags: ['packages']

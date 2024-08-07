@@ -1,5 +1,7 @@
 ---
 
+#  - dest: ".config/autostart"
+
 - name: Ensure /etc/xdg exists
   file:
     path: /etc/xdg
@@ -52,7 +54,7 @@
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
   become: False
-  when: ansible_distribution != 'Debian'
+  when: ansible_os_family != 'Debian'
 
 - name: Remove existing user-dirs.dirs
   file:

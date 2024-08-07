@@ -29,13 +29,13 @@ block = "menu"
 text = ""
 [[block.items]]
 display = " -&gt;   dots   &lt;-"
-cmd = "kitty --class 'noteinfo' -e dots.sh"
+cmd = "terminator --class 'noteinfo' -e dots.sh"
 [[block.items]]
 display = " -&gt;   noteinfo   &lt;-"
-cmd = "kitty --class 'noteinfo' -e noteinfo.rb"
+cmd = "terminator --class 'noteinfo' -e noteinfo.rb"
 [[block.items]]
 display = " -&gt; brightness &lt;-"
-cmd = "kitty --class 'brightness' -e brightness.rb"
+cmd = "terminator --class 'brightness' -e brightness.rb"
 #confirm_msg = "Are you sure you want to power off?"
 # [[block.items]]
 # display = " -&gt;  Reboot   &lt;-"
@@ -61,10 +61,10 @@ warning = 0.8
 critical = 2.0
 [[block.click]]
 button = "left"
-cmd = "kitty --class 'govna' -e /usr/local/bin/set-govna.sh performance"
+cmd = "terminator --class 'govna' -e /usr/local/bin/set-govna.sh performance"
 [[block.click]]
 button = "right"
-cmd = "kitty --class 'govna' -e /usr/local/bin/set-govna.sh powersave"
+cmd = "terminator --class 'govna' -e /usr/local/bin/set-govna.sh powersave"
 [[block.click]]
 button = "middle"
 cmd = "alacritty --class 'htop' --title 'htop' -e htop"
@@ -72,7 +72,7 @@ cmd = "alacritty --class 'htop' --title 'htop' -e htop"
 # [[block]]
 # block = "custom"
 # format = " \uf0c2 "
-# cycle = ["kitty --class 'govna' -e /usr/local/bin/set-govna.sh performance", "kitty --class 'govna' -e /usr/local/bin/# set-govna.sh powersave"]
+# cycle = ["terminator --class 'govna' -e /usr/local/bin/set-govna.sh performance", "terminator --class 'govna' -e /usr/local/bin/# set-govna.sh powersave"]
 # interval = "once"
 # [[block.click]]
 # button = "left"
@@ -84,10 +84,10 @@ cmd = "alacritty --class 'htop' --title 'htop' -e htop"
 # interval = 300
 # [[block.click]]
 # button = "left"
-# cmd = "kitty --class 'weather' --hold -e wthrr"
+# cmd = "terminator --class 'weather' --hold -e wthrr"
 # [[block.click]]
 # button = "right"
-# cmd = "kitty --class 'weather' --hold -e wthrr -f w"
+# cmd = "terminator --class 'weather' --hold -e wthrr -f w"
 
 [[block]]
 block = "time"
