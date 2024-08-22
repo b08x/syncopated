@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 # --- Error Handling ---
 ctrl_c() {
@@ -46,7 +45,7 @@ setup_sudoers() {
   fi
 
   case $DISTRO in
-    Arch|ArchLabs|cachyos|EndeavourOS)
+    Fedora|Arch|ArchLabs|cachyos|EndeavourOS)
       cat << EOF | sudo tee /etc/polkit-1/rules.d/49-nopasswd_global.rules
 polkit.addRule(function(action, subject) {
   if (subject.isInGroup("${USER}")) {
@@ -196,8 +195,14 @@ declare -rx CONFIG_DIR="${USER_HOME}/.config"
 declare -rx DOTFILES_DIR="${CONFIG_DIR}/dotfiles"
 declare -rx ANSIBLE_HOME="${DOTFILES_DIR}"
 
-install_packages
+echo $DISTRO
 
+# Install gum if not present
+# if ! command -v gum &> /dev/null; then
+#   say "gum not found. Installing..." $YELLOW
+# fi
+install_packages
+# Move this line after install_packages
 gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This bootstrap script is about to configure some shit. Welcome to $(gum style --foreground 212 'synflow')."
 
 sleep 1
