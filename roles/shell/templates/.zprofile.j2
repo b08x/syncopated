@@ -8,6 +8,10 @@ fi
 
 export -U PATH
 
+export QT_QPA_PLATFORMTHEME=qt5ct
+export QT_PLATFORMTHEME=qt5ct
+export QT_PLATFORM_PLUGIN=qt5ct
+
 #TODO: so, with autologin, something needs to be done with unlocking the gnome-keyring....
 if [ -x "$(command -v gnome-keyring-daemon)" ]; then
 
