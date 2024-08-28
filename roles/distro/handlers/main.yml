@@ -12,7 +12,3 @@
     --latest 20 --sort rate --score 15 --fastest 12 \
     --save /etc/pacman.d/mirrorlist
   ignore_errors: True
-
-- name: Rebuild initramfs
-  ansible.builtin.command:
-    cmd: dracut -f

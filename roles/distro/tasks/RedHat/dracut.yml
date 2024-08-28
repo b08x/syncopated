@@ -26,7 +26,12 @@
     src: etc/dracut.conf.j2
     dest: /etc/dracut.conf.d/custom.conf
     mode: '0644'
-  notify: Rebuild initramfs
+  register: config_dracut
+
+- name: Rebuild initramfs
+  ansible.builtin.command:
+    cmd: dracut -f
+  when: config_dracut.changed
 
 # - name: Ensure dracut-regenerate-initramfs.service is enabled
 #   ansible.builtin.systemd:
