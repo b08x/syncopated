@@ -33,7 +33,9 @@
       shell: mkinitcpio -P
       when: mkinitcpio_conf.changed
 
-  when: (ansible_distribution != 'EndeavourOS' or ansible_facts["lsb"]["id"] != 'EndeavourOS')
+  when:
+    - (ansible_distribution != 'EndeavourOS' or ansible_facts["lsb"]["id"] != 'EndeavourOS')
+    - ansible_os_family == 'Archlinux'
   tags: ['video', 'mkinitcpio']
 
 - name: Disable vblank

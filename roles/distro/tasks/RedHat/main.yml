@@ -46,3 +46,7 @@
 
   when: ansible_os_family == 'RedHat'
   tags: ['repo', 'mirrors']
+
+- import_tasks:
+    file: dracut.yml
+  tags: ['dracut']

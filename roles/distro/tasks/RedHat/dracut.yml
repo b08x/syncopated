@@ -1,0 +1,34 @@
+---
+
+- name: Install dracut
+  ansible.builtin.package:
+    name: dracut
+    state: present
+
+- name: Create dracut configuration directory
+  ansible.builtin.file:
+    path: /etc/dracut.conf.d
+    state: directory
+    mode: '0755'
+
+- name: Configure dracut
+  ansible.builtin.template:
+    src: etc/dracut.conf.j2
+    dest: /etc/dracut.conf.d/custom.conf
+    mode: '0644'
+  notify: Rebuild initramfs
+
+- name: Ensure dracut-regenerate-initramfs.service is enabled
+  ansible.builtin.systemd:
+    name: dracut-regenerate-initramfs.service
+    enabled: yes
+    state: started
+
+- name: Install additional dracut modules
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - dracut-network
+    - dracut-live
+  when: install_additional_modules | default(false)
