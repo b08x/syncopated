@@ -31,7 +31,7 @@ homepage_directory: "{{ user.home }}/Documents/homepage"
 audio: "jack"
 
 de: gnome
-window_manager:
+window_manager: i3
 # x:
 #   autostart:
 #     - bash ~/.screenlayout/soundbot.sh

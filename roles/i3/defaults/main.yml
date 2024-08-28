@@ -65,4 +65,7 @@ i3_packages:
   fedora:
     - i3
     - i3status
+    - lm_sensors
+    - lm_sensors-devel
+    - lm_sensors-libs
     # - i3status-rust  # Not available in Fedora repos

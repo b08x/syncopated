@@ -196,6 +196,7 @@ base_packages:
     # - bottom
     # choose is not available in Fedora repos
     # - chromaprint
+    - cargo
     - cmake
     - kernel-tools
     # curlie is not available in Fedora repos

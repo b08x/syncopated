@@ -11,7 +11,7 @@
         path: /etc/dnf/dnf.conf
         line: "fastestmirror=true"
         regexp: "^fastestmirror="
-      notify: Clean DNF and update
+      notify: clean dnf and update
 
 
     - name: Configure fastestmirror plugin
@@ -25,7 +25,7 @@
           maxhostfileage=10
           maxthreads=15
         dest: /etc/dnf/plugins/fastestmirror.conf
-      notify: Clean DNF and update
+      notify: clean dnf and update
 
     # - name: Ensure fastestmirror plugin is enabled
     #   command: dnf config-manager --set-enabled fastestmirror
