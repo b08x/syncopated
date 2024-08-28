@@ -12,17 +12,3 @@
     --latest 20 --sort rate --score 15 --fastest 12 \
     --save /etc/pacman.d/mirrorlist
   ignore_errors: True
-
-- name: clean dnf and update
-  block:
-    - name: Clean DNF cache
-      command: dnf clean all
-      args:
-        warn: false
-
-    - name: Update packages
-      dnf:
-        name: "*"
-        state: latest
-        update_cache: yes
-  when: ansible_os_family == 'RedHat'
