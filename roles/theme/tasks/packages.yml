@@ -1,10 +1,30 @@
 ---
 
 - name: Install Theme packages
-  aur:
-    use: paru
-    name: "{{ theme__packages }}"
-    state: present
-    extra_args: "--overwrite '*'"
-  become: False
-  when: ansible_os_family == "Archlinux"
+  block:
+    - name: Install Theme packages from official repositories
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - "{{ theme_packages[ansible_distribution | lower] }}"
+
+    - name: Install additional Theme packages on Arch Linux
+      pacman:
+        name:
+          - numix-circle-icon-theme-git
+          - numix-icon-theme-git
+        state: present
+      when: ansible_distribution == "Archlinux"
+
+    - name: Install additional Theme packages on Fedora
+      block:
+        - name: Install COPR for Numix themes
+          command: dnf copr enable -y numix/numix
+        - name: Install Numix themes
+          dnf:
+            name:
+              - numix-icon-theme-circle
+              - numix-icon-theme
+            state: present
+      when: ansible_distribution == "Fedora"

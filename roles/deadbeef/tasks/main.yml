@@ -6,6 +6,11 @@
   register: result
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: Install Deadbeef
+  package:
+    name: "{{ deadbeef_packages[ansible_distribution | lower] }}"
+    state: present
+
 # - block:
 #     - name: Install deadbeef
 #       aur:

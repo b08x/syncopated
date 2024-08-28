@@ -7,3 +7,13 @@ docker:
   storage: /var/lib/docker
 
 use_docker: False
+
+docker_packages:
+  archlinux:
+    - docker
+    - docker-compose
+  fedora:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-compose-plugin

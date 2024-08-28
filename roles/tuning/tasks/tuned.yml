@@ -25,6 +25,7 @@
     - name: Show tuned_service variable
       debug:
         msg: "{{ tuned_profile }}"
+      ignore_errors: True
 
     - name: Set tuned profile
       shell: |

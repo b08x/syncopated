@@ -5,3 +5,13 @@ libvirt:
   service: 'disabled'
 
 use_libvirt: False
+
+libvirt_packages:
+  archlinux:
+    - libvirt
+    - qemu
+    - virt-manager
+  fedora:
+    - libvirt
+    - qemu-kvm
+    - virt-manager

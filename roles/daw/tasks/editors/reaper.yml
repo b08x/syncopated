@@ -1,5 +1,12 @@
 ---
 
+- name: Ensure .local/bin exists
+  file:
+    path: "{{ user.home }}/.local/bin"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+
 - name: Install backup_reaper.sh
   copy:
     src: home/.local/bin/backup_reaper.sh

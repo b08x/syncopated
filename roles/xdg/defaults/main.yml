@@ -1,4 +1,7 @@
 ---
 # defaults file for xdg
-packages:
-  - xdg
+xdg_packages:
+  archlinux:
+    - xdg-utils
+  fedora:
+    - xdg-utils

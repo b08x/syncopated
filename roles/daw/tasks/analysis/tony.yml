@@ -13,6 +13,15 @@
     state: present
     force: yes
     extra_args: --noconfirm
+  when: ansible_os_family == 'archlinux'
+  tags: ['packages']
+
+- name: install libxcrypt-compat
+  dnf:
+    name: libxcrypt-compat
+    state: present
+    update_cache: yes
+  when: ansible_os_family == 'RedHat'
   tags: ['packages']
 
 - block:

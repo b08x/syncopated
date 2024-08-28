@@ -1,57 +1,98 @@
 ---
-# defaults file for utils
 
-applications__packages:
-  # - antimicrox
-  # - calibre
-  # - flashfocus
-  # - gconf
-  # - gksu
-  # - jupyter-nbconvert
-  # - nwg-wrapper
-  # - qutebrowser
-  - arandr
-  - broot
-  - btop
-  - calcurse
-  - cbonsai
-  - dconf
-  - devdocs-desktop
-  - dunst
-  - feh
-  - gedit
-  - gedit-markdownpreview-git
-  - gedit-plugins
-  - gedit-smart-home
-  - geoclue
-  - gnu-free-fonts
-  - google-chrome
-  - gpick
-  - gtk-update-icon-cache
-  - gucharmap
-  - gummi
-  - gvfs-smb
-  - imv
-  - keepassxc
-  - maim
-  - metagedit-git
-  - mpv
-  - nitrogen
-  - nvtop
-  - obsidian
-  - openscad
-  - openslide
-  - pgmodeler
-  - qpdfview
-  - radiotray-ng
-  - seahorse
-  - shotcut
-  - sxiv
-  - thunar
-  - thunar-archive-plugin
-  - thunar-volman
-  - timeshift
-  - vlc
-  - wmfocus
-  - wordnet-tk
-  - zenity
+applications_packages:
+  archlinux:
+    - arandr
+    - broot
+    - btop
+    - calcurse
+    - cbonsai
+    - dconf
+    - devdocs-desktop
+    - dunst
+    - feh
+    - gedit
+    - gedit-markdownpreview-git
+    - gedit-plugins
+    - gedit-smart-home
+    - geoclue
+    - gnu-free-fonts
+    - google-chrome
+    - gpick
+    - gtk-update-icon-cache
+    - gucharmap
+    - gummi
+    - gvfs-smb
+    - imv
+    - keepassxc
+    - maim
+    - metagedit-git
+    - mpv
+    - nitrogen
+    - nvtop
+    - obsidian
+    - openscad
+    - openslide
+    - pgmodeler
+    - qpdfview
+    - radiotray-ng
+    - seahorse
+    - shotcut
+    - sxiv
+    - thunar
+    - thunar-archive-plugin
+    - thunar-volman
+    - timeshift
+    - vlc
+    - wmfocus
+    - wordnet-tk
+    - zenity
+  fedora:
+    - arandr
+    # - broot
+    - btop
+    - calcurse
+    # cbonsai is not in official repos, can be installed via cargo
+    - dconf
+    # devdocs-desktop is not available, can be installed via npm
+    - dunst
+    - feh
+    - gedit
+    # gedit-markdownpreview-git is not available
+    - gedit-plugins
+    # gedit-smart-home is not available
+    # - geoclue
+    # - gnu-free-fonts
+    # google-chrome needs to be installed from Google's website
+    - gpick
+    - gtk-update-icon-cache
+    - gucharmap
+    - gummi
+    - gvfs-smb
+    # imv is not available, can use feh as an alternative
+    - keepassxc
+    - maim
+    # metagedit-git is not available
+    - mpv
+    - nitrogen
+    - nvtop
+    # obsidian needs to be installed from their website
+    - openscad
+    - openslide-tools  # Equivalent to openslide
+    # pgmodeler is not in official repos, can be installed from source
+    - qpdfview-qt6
+    # radiotray-ng is not in official repos, can be installed from source
+    - seahorse
+    - shotcut
+    # sxiv is not available, can use feh as an alternative
+    - thunar
+    - thunar-archive-plugin
+    - thunar-volman
+    # timeshift is not in official repos, can be installed from COPR
+    - vlc
+    # wmfocus is not available
+    - wordnet
+    - zenity
+
+# Note: Some packages are not available in Fedora's official repositories.
+# They may need to be installed from alternative sources or built from source.

@@ -3,12 +3,12 @@
   become: True
   gather_facts: yes
   vars:
-    path:
+    custom_path:
       - "{{ lookup('env','HOME') }}/.asdf/bin"
       - "{{ lookup('env','HOME') }}/.local/bin"
       - "{{ lookup('env','HOME') }}/Utils/bin"
   environment:
-    PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+    PATH: "{{ (ansible_env.PATH.split(':') + custom_path) | unique | join(':') }}"
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
     ZSH: "/usr/share/oh-my-zsh"
     DISPLAY: ":0"
@@ -90,13 +90,6 @@
 - hosts: virt
   become: True
   gather_facts: yes
-  vars:
-    path:
-      - "{{ lookup('env','HOME') }}/.asdf/bin"
-      - "{{ lookup('env','HOME') }}/.local/bin"
-      - "{{ lookup('env','HOME') }}/Utils/bin"
-  # environment:
-  #   PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
 
   roles:
 
@@ -111,13 +104,6 @@
 - hosts: workstation
   become: True
   gather_facts: yes
-  vars:
-    path:
-      - "{{ lookup('env','HOME') }}/.asdf/bin"
-      - "{{ lookup('env','HOME') }}/.local/bin"
-      - "{{ lookup('env','HOME') }}/Utils/bin"
-  # environment:
-  #   PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
 
   roles:
 
@@ -167,13 +153,6 @@
 - hosts: daw
   become: True
   gather_facts: yes
-  vars:
-    path:
-      - "{{ lookup('env','HOME') }}/.asdf/bin"
-      - "{{ lookup('env','HOME') }}/.local/bin"
-      - "{{ lookup('env','HOME') }}/Utils/bin"
-  # environment:
-  #   PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
 
   roles:
 

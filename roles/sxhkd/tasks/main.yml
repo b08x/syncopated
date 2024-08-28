@@ -1,20 +1,26 @@
 ---
 
-- name: install sxhkd
-  aur:
-    use: paru
-    name: sxhkd
-    state: present
-  become: False
-  tags: ["packages"]
+# - name: install sxhkd
+#   aur:
+#     use: paru
+#     name: sxhkd
+#     state: present
+#   become: False
+#   tags: ["packages"]
 
-- name: Create sxhkd config folder
-  file:
-    path: "{{ user.home }}/.config/sxhkd"
-    state: directory
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    recurse: False
+- name: Install SXHKD package
+  block:
+    - name: Install SXHKD on Arch Linux
+      pacman:
+        name: "{{ sxhkd_packages.archlinux }}"
+        state: present
+      when: ansible_distribution == "Archlinux"
+
+    - name: Install SXHKD on Fedora
+      dnf:
+        name: "{{ sxhkd_packages.fedora }}"
+        state: present
+      when: ansible_distribution == "Fedora"
 
 - name: Install sxhkd reload function
   copy:
@@ -40,22 +46,39 @@
     owner: "{{ user.name }}"
     mode: '0755'
 
-- name: Create sxhkd config folder
+- name: Ensure SXHKD configuration directory exists
   file:
-    path: "{{ user.home }}/.config/sxhkd"
+    path: "{{ ansible_env.HOME }}/.config/sxhkd"
     state: directory
+    mode: '0755'
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
 
-- name: Install sxhkd keybindings
+# - name: Create sxhkd config folder
+#   file:
+#     path: "{{ user.home }}/.config/sxhkd"
+#     state: directory
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+
+- name: Copy SXHKD configuration file
   template:
-    src: "sxhkdrc.j2"
-    dest: "{{ user.home }}/.config/sxhkd/sxhkdrc"
+    src: sxhkdrc.j2
+    dest: "{{ ansible_env.HOME }}/.config/sxhkd/sxhkdrc"
+    mode: '0644'
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
-    mode: '0644'
-    backup: false
-  notify:
-    - Reload i3
-    - Reload sxhkd
-  tags: ["profile", "keybindings"]
+  notify: Restart sxhkd
+
+# - name: Install sxhkd keybindings
+#   template:
+#     src: "sxhkdrc.j2"
+#     dest: "{{ user.home }}/.config/sxhkd/sxhkdrc"
+#     owner: "{{ user.name }}"
+#     group: "{{ user.group }}"
+#     mode: '0644'
+#     backup: false
+#   notify:
+#     - Reload i3
+#     - Reload sxhkd
+#   tags: ["profile", "keybindings"]

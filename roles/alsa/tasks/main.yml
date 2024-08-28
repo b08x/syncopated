@@ -10,3 +10,9 @@
     line: "options snd slots=snd-hda-intel,snd-usb-audio"
     create: yes
     backup: yes
+
+- name: Install ALSA packages
+  package:
+    name: "{{ alsa_packages[ansible_distribution | lower] }}"
+    state: present
+  when: ansible_distribution | lower in alsa_packages

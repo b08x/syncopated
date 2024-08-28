@@ -10,6 +10,48 @@
 #   register: current_version
 #   changed_when: false
 
+- name: Install Visual Studio Code on Fedora
+  block:
+    - name: Import Microsoft GPG key
+      rpm_key:
+        key: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+
+    - name: Add Visual Studio Code repository
+      copy:
+        dest: /etc/yum.repos.d/vscode.repo
+        content: |
+          [code]
+          name=Visual Studio Code
+          baseurl=https://packages.microsoft.com/yumrepos/vscode
+          enabled=1
+          gpgcheck=1
+          gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+
+    - name: Update package cache (dnf)
+      dnf:
+        update_cache: yes
+      when: ansible_distribution_major_version | int >= 22
+
+    - name: Update package cache (yum)
+      yum:
+        update_cache: yes
+      when: ansible_distribution_major_version | int < 22
+
+    - name: Install Visual Studio Code (dnf)
+      dnf:
+        name: code
+        state: present
+      when: ansible_distribution_major_version | int >= 22
+
+    - name: Install Visual Studio Code (yum)
+      yum:
+        name: code
+        state: present
+      when: ansible_distribution_major_version | int < 22
+
+  when: ansible_distribution == "Fedora"
+
 - block:
     - name: Install vscode
       aur:
@@ -20,6 +62,7 @@
           - code
           - code-marketplace
       register: vscode_install
+      when: ansible_os_family == 'Archlinux'
       tags: ['packages']
 
     - name: Check currently installed extensions

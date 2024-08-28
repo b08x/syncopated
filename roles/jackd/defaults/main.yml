@@ -1,17 +1,30 @@
 ---
 # defaults file for jackd
 
-packages:
-  - jack2
-  - jack2-dbus
-  - jack-example-tools
-  - jack-keyboard
-  - jack_capture
-  - jack_link
-  - jack_mixer
-  - jack_snapshot
-  - jack_utils
-  - jacktrip
+# JACK role packages
+jack_packages:
+  archlinux:
+    - jack2
+    - jack2-dbus
+    - jack-example-tools
+    - jack-keyboard
+    - jack_capture
+    - jack_link
+    - jack_mixer
+    - jack_snapshot
+    - jack_utils
+    - jacktrip
+  fedora:
+    - jack-audio-connection-kit
+    - jack-audio-connection-kit-dbus
+    # - jack-example-tools  # Not available in Fedora repos
+    - jack-keyboard
+    # - jack_capture  # Not available in Fedora repos
+    # - jack_link  # Not available in Fedora repos
+    # - jack_mixer  # Not available in Fedora repos
+    # - jack_snapshot  # Not available in Fedora repos
+    # - jack_utils  # Not available in Fedora repos
+    # - jacktrip  # Not available in Fedora repos
 
 jack_control:
   dps:

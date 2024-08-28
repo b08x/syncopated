@@ -25,20 +25,24 @@
   check_mode: no
   tags: ['profile']
 
-- name: Copy theme package to temp
-  copy:
-    src: usr/local/share/themes/syncopated-theme-1.0-6-x86_64.pkg.tar.zst
-    dest: /tmp/syncopated-theme-1.0-6-x86_64.pkg.tar.zst
-  ignore_errors: "{{ ansible_check_mode }}"
+- block:
+    - name: Copy theme package to temp
+      copy:
+        src: usr/local/share/themes/syncopated-theme-1.0-6-x86_64.pkg.tar.zst
+        dest: /tmp/syncopated-theme-1.0-6-x86_64.pkg.tar.zst
+      ignore_errors: "{{ ansible_check_mode }}"
+
+    - name: Install syncopated theme
+      pacman:
+        name: /tmp/syncopated-theme-1.0-6-x86_64.pkg.tar.zst
+        state: present
+        extra_args: --overwrite '*'
+      ignore_errors: "{{ ansible_check_mode }}"
+
+  when: ansible_os_family == 'Archlinux'
   tags: ['packages']
 
-- name: Install syncopated theme
-  pacman:
-    name: /tmp/syncopated-theme-1.0-6-x86_64.pkg.tar.zst
-    state: present
-    extra_args: --overwrite '*'
-  ignore_errors: "{{ ansible_check_mode }}"
-  tags: ['packages']
+
 
 # - import_tasks:
 #     file: fonts.yml
@@ -69,7 +73,7 @@
 #   when: themesdir.changed
 
 
-- name: Install sxhkd reload function
+- name: Install gtk 2 configurations
   copy:
     content: |
       # DO NOT EDIT! This file will be overwritten by LXAppearance.
@@ -93,7 +97,7 @@
     owner: "{{ user.name }}"
     mode: '0644'
 
-- name: Install gtk configurations
+- name: Install gtk 3 and 4 configurations
   template:
     src: "{{ item }}.j2"
     dest: "{{ user.home }}/.config/{{ item }}"
@@ -108,7 +112,7 @@
     - 'gtk-4.0/settings.ini'
   tags: ['profile', 'gtk']
 
-- name: Install qt configurations
+- name: Install qt 5 and 6 configurations
   template:
     src: "{{ item }}.j2"
     dest: "{{ user.home }}/.config/{{ item }}"

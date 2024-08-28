@@ -34,6 +34,13 @@
   when: ansible_os_family == 'Archlinux'
   tags: ['packages']
 
+- name: Install Libvirt packages
+  package:
+    name: "{{ libvirt_packages[ansible_distribution | lower] }}"
+    state: present
+  become: true
+  when: use_libvirt | default(false) | bool
+
 - name: Set socket group and perms to allow for remote access
   copy:
     src: etc/libvirt/libvirtd.conf

@@ -1,10 +1,38 @@
 ---
 
-- name: install xorg packages
-  aur:
-    use: auto
-    name: "{{ xorg__packages }}"
-    state: present
-  become: False
-  when: ansible_os_family == "Archlinux"
-  tags: ['packages']
+- name: Install X11 packages
+  block:
+    - name: Install X11 packages from official repositories
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - "{{ x11_packages[ansible_distribution | lower] }}"
+
+    - name: Install additional X11 packages on Arch Linux
+      pacman:
+        name:
+          - xkill-shortcut
+          - xob
+        state: present
+      when: ansible_distribution == "Archlinux"
+
+    # - name: Install xbacklight alternative on Fedora
+    #   dnf:
+    #     name: acpilight
+    #     state: present
+    #   when: ansible_distribution == "Fedora"
+
+- name: Handle missing packages
+  block:
+    - name: Warn about missing xob on Fedora
+      debug:
+        msg: "xob is not available in Fedora repositories. Consider finding an alternative or installing from source."
+      when: ansible_distribution == "Fedora"
+
+    - name: Warn about missing xkill-shortcut on Fedora
+      debug:
+        msg: "xkill-shortcut is not available in Fedora repositories. Consider setting up a custom shortcut for xkill."
+      when: ansible_distribution == "Fedora"
+
+  when: ansible_distribution == "Fedora"

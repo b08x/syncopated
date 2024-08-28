@@ -1,0 +1,35 @@
+---
+
+- block:
+    - name: Ensure dnf-plugins-core is installed
+      dnf:
+        name: dnf-plugins-core
+        state: present
+
+    - name: Enable fastestmirror in DNF configuration
+      lineinfile:
+        path: /etc/dnf/dnf.conf
+        line: "fastestmirror=true"
+        regexp: "^fastestmirror="
+      notify: Clean DNF and update
+
+
+    - name: Configure fastestmirror plugin
+      copy:
+        content: |
+          [main]
+          enabled=1
+          verbose=true
+          socket_timeout=3
+          hostfilepath=timedhosts.txt
+          maxhostfileage=10
+          maxthreads=15
+        dest: /etc/dnf/plugins/fastestmirror.conf
+      notify: Clean DNF and update
+
+    # - name: Ensure fastestmirror plugin is enabled
+    #   command: dnf config-manager --set-enabled fastestmirror
+    #   changed_when: false
+
+  when: ansible_os_family == 'RedHat'
+  tags: ['repo', 'mirrors']

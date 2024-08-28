@@ -32,5 +32,8 @@ rofi_directory_definitions:
   - dest: ".config/rofi/powermenu/type-6/shared"
   - dest: ".config/rofi/scripts"
 
-packages:
-  - rofi
+rofi_packages:
+  archlinux:
+    - rofi
+  fedora:
+    - rofi

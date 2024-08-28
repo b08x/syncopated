@@ -9,6 +9,11 @@
     filter:
       - 'ansible_system_vendor'
 
+- name: Install JACK packages
+  package:
+    name: "{{ jack_packages[ansible_distribution | lower] }}"
+    state: present
+
 - name: Create environment file for jack_control.service
   copy:
     content: |

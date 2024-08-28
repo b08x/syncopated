@@ -13,7 +13,9 @@
       service:
         name: cpupower
         enabled: True
-      when: ansible_system_vendor != "QEMU"
+      when:
+        - ansible_system_vendor != "QEMU"
+        - ansible_os_family == 'Archlinux'
       ignore_errors: "{{ ansible_check_mode }}"
 
   tags: ['cpupower']

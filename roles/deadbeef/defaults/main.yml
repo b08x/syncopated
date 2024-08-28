@@ -1,4 +1,7 @@
 ---
 # defaults file for deadbeef
-packages:
-  - deadbeef
+deadbeef_packages:
+  archlinux:
+    - deadbeef
+  fedora:
+    - deadbeef

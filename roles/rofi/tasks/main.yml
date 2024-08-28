@@ -4,6 +4,11 @@
   debug:
     msg: "Starting rofi tasks"
 
+- name: Install Rofi packages
+  package:
+    name: "{{ rofi_packages[ansible_distribution | lower] }}"
+    state: present
+
 - name: Ensure rofi directories exist
   file:
     dest: "{{ rofi_directory_default_location }}/{{ item.dest }}"

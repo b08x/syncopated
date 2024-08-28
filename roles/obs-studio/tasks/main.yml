@@ -1,2 +1,72 @@
 ---
 # tasks file for obs-studio
+
+# - name: Set up OBS Studio package list
+#   set_fact:
+#     obs_packages_to_install: "{{ obs_studio_packages[ansible_distribution | lower] | difference(ansible_facts.packages.keys()) }}"
+- name: OBS Studio Tasks
+  debug:
+    msg: "Starting OBS Studio tasks"
+
+- name: Install obs_studio_packages packages
+  block:
+    - name: Install Arch Linux Base packages
+      pacman:
+        name: "{{ obs_studio_packages.archlinux }}"
+        state: present
+      when: ansible_distribution == "Archlinux"
+
+    - name: Install Fedora Base packages
+      dnf:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - "{{ obs_studio_packages.fedora }}"
+      when: ansible_distribution == "Fedora"
+
+  rescue:
+    - name: Handle package installation failures
+      debug:
+        msg: "Failed to install some Base packages. Please check the error message above."
+
+
+# - name: Install obs-rtspserver on Fedora (if needed)
+#   block:
+#     - name: Check if obs-rtspserver is installed
+#       command: rpm -q obs-rtspserver
+#       register: obs_rtspserver_check
+#       failed_when: false
+#       changed_when: false
+#
+#     - name: Install obs-rtspserver from source
+#       when: obs_rtspserver_check.rc != 0
+#       block:
+#         - name: Install build dependencies
+#           dnf:
+#             name:
+#               - cmake
+#               - gcc-c++
+#               - obs-studio-devel
+#             state: present
+#
+#         - name: Clone obs-rtspserver repository
+#           git:
+#             repo: 'https://github.com/iamscottxu/obs-rtspserver.git'
+#             dest: /tmp/obs-rtspserver
+#             version: master
+#
+#         - name: Build and install obs-rtspserver
+#           command:
+#             cmd: "{{ item }}"
+#             chdir: /tmp/obs-rtspserver
+#           loop:
+#             - cmake -S . -B build
+#             - cmake --build build
+#             - cmake --install build
+#
+#         - name: Clean up build directory
+#           file:
+#             path: /tmp/obs-rtspserver
+#             state: absent
+#
+#   when: ansible_distribution == 'Fedora' and 'obs-rtspserver' in obs_studio_packages.archlinux

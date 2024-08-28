@@ -1,10 +1,22 @@
 ---
 
-- name: install base packages
-  aur:
-    use: auto
-    name: "{{ base__packages }}"
-    state: present
-  become: False
-  when: ansible_os_family == "Archlinux"
-  tags: ['packages']
+- name: Install Base packages
+  block:
+    - name: Install Arch Linux Base packages
+      pacman:
+        name: "{{ base_packages.archlinux }}"
+        state: present
+      when: ansible_distribution == "Archlinux"
+
+    - name: Install Fedora Base packages
+      dnf:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - "{{ base_packages.fedora }}"
+      when: ansible_distribution == "Fedora"
+
+  rescue:
+    - name: Handle package installation failures
+      debug:
+        msg: "Failed to install some Base packages. Please check the error message above."

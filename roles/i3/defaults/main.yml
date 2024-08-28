@@ -58,6 +58,11 @@ i3_directory_definitions:
   - dest: ".config/i3/modes"
   - dest: ".config/i3status-rust/themes"
 
-i3__packages:
-  - i3-wm
-  - i3status-rust
+i3_packages:
+  archlinux:
+    - i3-wm
+    - i3status-rust
+  fedora:
+    - i3
+    - i3status
+    # - i3status-rust  # Not available in Fedora repos
