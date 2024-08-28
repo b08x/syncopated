@@ -25,12 +25,12 @@
         dest: "/tmp/Linux.pulsar-1.120.0.x86_64.rpm"
       register: pulsar_download
 
-    # - name: Install Pulsar from RPM
-    #   shell: |
-    #     rpm -i Linux.pulsar-1.120.0.x86_64.rpm
-    #   args:
-    #     chdir: /tmp
-    #   when: pulsar_download.changed
+    - name: Install Pulsar from RPM
+      shell: |
+        rpm -i Linux.pulsar-1.120.0.x86_64.rpm
+      args:
+        chdir: /tmp
+      when: pulsar_download.changed
 
     - name: Clean up Pulsar RPM
       file:
