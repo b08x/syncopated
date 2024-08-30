@@ -6,8 +6,6 @@ An exercise in using Ansible for Workstation Provisioning & Configuration Manage
 
 ## Update
 
-As of August the 8th of "2024", this project has been archived. After years of testing and experimentation, the focus is shifting back to the Fedora project to apply the knowledge and insights gained from this endeavor.
-
 While this project is now archived, the experience and knowledge gained have been invaluable. The insights from working with Arch Linux, developing Ansible roles for audio configurations, and exploring AI integration will be applied to future contributions to the Fedora project.
 
 # demo playbook run
