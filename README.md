@@ -10,6 +10,10 @@ As of August the 8th of "2024", this project has been archived. After years of t
 
 While this project is now archived, the experience and knowledge gained have been invaluable. The insights from working with Arch Linux, developing Ansible roles for audio configurations, and exploring AI integration will be applied to future contributions to the Fedora project.
 
+# demo playbook run
+
+[![asciicast](https://asciinema.org/a/654626.svg)](https://asciinema.org/a/654626)
+
 ## About
 
 This project was initiated in 2021 as a personal "solution" to "manage" the complex configurations and package dependencies in Linux audio environments. Given the time and effort invested into the system, it leveraged DevOps principles, evolving into an Ansible collection aimed at streamlining the Linux audio experience. 
@@ -125,9 +129,7 @@ The immediate goal is to lay out a clear plan and documentation, which will enab
 
 This approach aims to develop a robust, flexible, and user-friendly system that can potentially meet the demands of both studio production and live performance environments, subject to thorough testing and community validation.
 
-# demo playbook run
 
-[![asciicast](https://asciinema.org/a/654626.svg)](https://asciinema.org/a/654626)
 
 * * *
 
