@@ -1,107 +1,338 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
 
-# set a trap to exit with CTRL+C
+# --- Error Handling ---
 ctrl_c() {
-        echo "** End."
-        sleep 1
+  echo "** End."
+  sleep 1
 }
-
 trap ctrl_c INT SIGINT SIGTERM ERR EXIT
 
-# Check if the user is root
-if [[ $(id -u) -eq 0 ]]; then
-   echo "Run this as user"
-   exit 1
-fi
+# --- Colors ---
+ALL_OFF="\e[1;0m"
+BBOLD="\e[1;1m"
+BLUE="${BBOLD}\e[1;34m"
+GREEN="${BBOLD}\e[1;32m"
+RED="${BBOLD}\e[1;31m"
+YELLOW="${BBOLD}\e[1;33m"
+export GUM_INPUT_WIDTH=0
 
-# declare colors!
-declare -rx ALL_OFF="\e[1;0m"
-declare -rx BBOLD="\e[1;1m"
-declare -rx BLUE="${BOLD}\e[1;34m"
-declare -rx GREEN="${BOLD}\e[1;32m"
-declare -rx RED="${BOLD}\e[1;31m"
-declare -rx YELLOW="${BOLD}\e[1;33m"
+DISTRO=$(lsb_release -si)
 
-# cli display functions
-say () {
-  local statement=$1
-  local color=$2
-
-  echo -e "${color}${statement}${ALL_OFF}"
+# --- Display Function ---
+say() {
+  echo -e "${2}${1}${ALL_OFF}"
+  sleep 1
 }
 
-prompt_for_userid() {
-    read -p "Please enter the user id: " USERNAME
-    echo $USERNAME
+# --- Gum Installation ---
+install_gum() {
+  if command -v gum &> /dev/null; then
+    say "gum is already installed." $GREEN
+    return 0
+  fi
+
+  say "Installing gum..." $YELLOW
+
+  case $DISTRO in
+    Arch|ArchLabs|cachyos|EndeavourOS)
+      sudo pacman -S --noconfirm gum
+      ;;
+    Fedora)
+      echo '[charm]
+      name=Charm
+      baseurl=https://repo.charm.sh/yum/
+      enabled=1
+      gpgcheck=1
+      gpgkey=https://repo.charm.sh/yum/gpg.key' | sudo tee /etc/yum.repos.d/charm.repo
+      sudo dnf -y install gum
+      ;;
+    Debian|Raspbian|MX|Pop)
+      sudo mkdir -p /etc/apt/keyrings
+      curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+      echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+      sudo apt-get update --quiet
+      sudo apt-get install -y gum
+      ;;
+    *)
+      say "Unsupported distribution for gum installation." $RED
+      exit 1
+      ;;
+  esac
+
+  if command -v gum &> /dev/null; then
+    say "gum installed successfully." $GREEN
+  else
+    say "Failed to install gum. Exiting." $RED
+    exit 1
+  fi
 }
 
-fetch_keys() {
-  # set remote host
-	local REMOTE_HOST="${USERNAME}@${KEYSERVER}"
-	# sync ssh keys
-	cd /home/$USERNAME && rsync -avP --delete $REMOTE_HOST:~/.ssh .
-	# pull gitconfig
-	rsync -avP --chown=$USERNAME:$USERNAME $REMOTE_HOST:~/.gitconfig .
-	# ensure perms
-	chown -R $USERNAME:$USERGROUP /home/$USERNAME/
+# --- Sudoers Setup (Idempotent) ---
+setup_sudoers() {
+  echo "Setting up sudoers for ${USER}..."
+
+  # Check if sudoers entry already exists
+  if grep -q "${USER} ALL=(ALL:ALL) NOPASSWD: ALL" /etc/sudoers.d/99-${USER}; then
+    say "Sudoers entry already exists.\n" $GREEN
+  else
+    echo "${USER} ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/99-${USER}"
+  fi
+
+  sudo visudo -cf "/etc/sudoers.d/99-${USER}"
+
+  if [ $? -eq 0 ]; then
+    say "Sudoers file is valid" $GREEN
+  else
+    say "Sudoers file is invalid" $RED
+    return 1
+  fi
+
+  case $DISTRO in
+    Fedora|Arch|ArchLabs|cachyos|EndeavourOS)
+      cat << EOF | sudo tee /etc/polkit-1/rules.d/49-nopasswd_global.rules
+polkit.addRule(function(action, subject) {
+  if (subject.isInGroup("${USER}")) {
+    return polkit.Result.YES;
+  }
+});
+EOF
+      sudo chmod 0644 /etc/polkit-1/rules.d/49-nopasswd_global.rules
+      ;;
+    Debian|Raspbian|MX|Pop)
+      cat << EOF | sudo tee /etc/polkit-1/localauthority/50-local.d/admin_group.pkla
+[set admin_group privs]
+Identity=unix-group:sudo
+Action=*
+ResultActive=yes
+EOF
+      ;;
+    *)
+      say "Unsupported distribution for polkit setup." $RED
+      return 1
+  esac
+
+  say "Sudoers and polkit setup completed." $GREEN
 }
 
+# --- Git Configuration (Idempotent) ---
+setup_gitconfig() {
+
+  # Check if git config already exists
+  if git config --global --get user.name && git config --global --get user.email; then
+    gum log --time rfc822 --level info "Git configuration already exists."
+  else
+    git_name=$(gum input --value "b08x" --prompt "Enter your Git username: ")
+    git_email=$(gum input --value "rwpannick@gmail.com" --prompt "Enter your Git email: ")
+
+    gum log --time rfc822 --level info "Setting up .gitconfig..."
+
+    git config --global user.name "${git_name}"
+    git config --global user.email "${git_email}"
+  fi
+
+  gum log --time rfc822 --level debug "Name: $(git config --global user.name)"
+  gum log --time rfc822 --level debug "Email: $(git config --global user.email)"
+}
+
+# --- SSH Key Setup (Idempotent) ---
+setup_ssh_keys() {
+  if [ -f "${HOME}/.ssh/id_ed25519" ] && [ -f "${HOME}/.ssh/id_ed25519.pub" ]; then
+    say "SSH keys already exist." $GREEN
+    return 0
+  fi
+
+  say "SSH keys not found. Attempting to transfer from another host." $YELLOW
+
+  REMOTE_HOST=$(gum input --placeholder "hostname.domain.net" --prompt "Enter the hostname where SSH keys are stored: ")
+  ssh_folder=$(gum input --value "${HOME}/.ssh" --prompt "Enter the folder name for SSH keys: ")
+
+  # Copy SSH keys
+  if rsync -avP --delete "${REMOTE_HOST}:~/.ssh/" "${HOME}/.ssh/"; then
+    # Set proper permissions for SSH keys
+    chmod 700 "${HOME}/.ssh"
+    chmod 600 "${HOME}/.ssh"/*
+    say "SSH keys successfully transferred and set up." $GREEN
+    return 0
+  else
+    say "Failed to transfer SSH keys." $RED
+    return 1
+  fi
+}
+
+# --- Package Installation (Idempotent) ---
+install_packages() {
+
+  case $DISTRO in
+    Arch|ArchLabs|cachyos|EndeavourOS)
+      # Check if packages are already installed
+      if ! pacman -Qi openssh base-devel rsync openssh python-pip \
+      firewalld python-setuptools fd rubygems net-tools htop \
+      most ranger nodejs npm ansible efibootmgr inxi fzf &> /dev/null; then
+        say "Installing essential packages..." $GREEN
+        sudo pacman -Syu --noconfirm --downloadonly --quiet
+        sudo pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
+        firewalld python-setuptools fd rubygems \
+        net-tools htop most ranger \
+        nodejs npm ansible inxi efibootmgr fzf --overwrite '*'
+      fi
+      ;;
+    Fedora)
+      # Check if packages are already installed
+      if ! dnf list installed ansible inxi efibootmgr fzf &> /dev/null; then
+        say "Installing essential packages..." $GREEN
+        sudo dnf -y install ansible inxi efibootmgr fzf
+      fi
+      ;;
+    Debian|Raspbian|MX|Pop)
+      # Check if packages are already installed
+      if ! dpkg -l openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev ansible inxi efibootmgr fzf &> /dev/null; then
+        say "Installing essential packages..." $GREEN
+        sudo apt-get update --quiet && \
+        sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev ansible inxi efibootmgr fzf
+      fi
+      ;;
+    *)
+      say "Unsupported distribution." $RED
+      exit 1
+  esac
+}
+
+# --- Repository Cloning (Idempotent) ---
+clone_repository() {
+  # Check if repository is already cloned
+  if [ -d "${DOTFILES_DIR}" ]; then
+    say "Repository already cloned.\n" $GREEN
+    cd $ANSIBLE_HOME && git fetch && git pull
+  else
+    say "Select branch" $BLUE
+    branch=$(gum choose --selected="development" "main" "development")
+    say "Cloning SyncopatedOS repository..." $BLUE
+    git clone --recursive -b "${branch}" git@github.com:b08x/SyncopatedOS "${DOTFILES_DIR}"
+  fi
+}
+
+# --- Wipe Screen Function ---
 wipe() {
-tput -S <<!
+  tput -S <<!
 clear
 cup 1
 !
 }
 
-wipe="false"
+# --- Display Welcome Message ---
+display_welcome_message() {
+  wipe
+  # Now we can use gum for the rest of the script
+  gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This bootstrap script is about to configure some shit. Welcome to $(gum style --foreground 212 'synflow')."
+  sleep 1
+}
 
-# and so it begins...
-wipe && say "hello!\n" $GREEN && sleep 1
+# --- Ask for Sudoers Setup ---
+ask_for_sudoers_setup() {
+  if gum confirm "Do you want to set up sudoers for passwordless sudo?" --default="Yes"; then
+    setup_sudoers
+    if [ $? -ne 0 ]; then
+      say "Sudoers setup failed. Continuing with the rest of the script." $RED
+    fi
+  else
+    say "Skipping sudoers setup.\n" $BLUE
+  fi
+}
 
-pacman -Syu --noconfirm --downloadonly --quiet
+# --- Get Environment Variables ---
+get_environment_variables() {
+  say "Enter additional environment variables (press Enter with empty input to finish): \n" $BLUE
 
-export PATH="/usr/local/bin:$PATH"
+  declare -A env_vars
+  declare var_name=""
 
-gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "Hello, there! Welcome to $(gum style --foreground 212 'Gum')."
+  while true; do
+    var_name=$(gum input --width=0 --prompt "Variable name (or Enter to finish): ")
 
-USERNAME=$(prompt_for_userid)
-echo "You entered: $USERNAME"
+    if [[ -z "${var_name}" ]]; then
+      break
+    else
+      var_value=$(gum input --prompt "Value for ${var_name}: ")
+      env_vars["${var_name}"]="${var_value}"
+    fi
+  done
 
-USERGROUP="${USERNAME}"
-USERGROUPID=1000
+  echo "$env_vars"
+}
 
-if getent group "$USERGROUP" > /dev/null; then
-  echo "Group '$USERGROUP' already exists."
-else
-  groupadd -g "$USERGROUPID" "$USERGROUP"
-  usermod -a -G "$USERGROUPID" "$USERNAME"
-  echo "Group '$USERGROUP' created and user '$USERNAME' added to it."
-fi
+# --- Execute Ansible Playbook ---
+execute_ansible_playbook() {
+  local env_vars=$1
 
-if [[ ! -f "/home/${USERNAME}/.ssh/id_ed25519.pub" ]]; then
+  # --- Ansible Playbook Execution ---
+  # wipe
+  say "Settting env vars and setup inventory for Playbook Execution...\n" $BLUE
 
-	KEYSERVER=$(gum input --placeholder "enter KEYSERVER hostname")
+  env_command="env ANSIBLE_HOME=${ANSIBLE_HOME}"
 
-	while true; do
-		gum confirm "is ${KEYSERVER} correct?" && fetch_keys
-		if [ $? -eq 0 ]; then
-			break # Exit the loop when affirmative response is received
-		else
-			KEYSERVER=$(gum input --placeholder "enter KEYSERVER hostname")
-		fi
-	done
+  for var in "${!env_vars[@]}"; do
+    env_command+=" $var=${env_vars[$var]}"
+  done
 
-fi
+  say "And so it begins...\n" $BLUE
 
-wipe && say "setting default toolchain!\n" $GREEN && sleep 1
+  eval "${env_command} ansible-playbook -i ${ANSIBLE_HOME}/hosts ${ANSIBLE_HOME}/playbooks/full.yml"
+}
 
-su - $USERNAME -c "rustup default stable"
+# --- Display Completion Message and Ask for Reboot ---
+display_completion_message() {
+  sleep 5
 
-echo -e "Finished, $(gum style --foreground 212 "...")."
+  gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This shit has been $(gum style --foreground 212 'configured')."
 
-say "\n-----------------------------------------------" $BLUE
-say "bootstrap complete. reboot & run ansible playbook...." $BLUE
-say "-----------------------------------------------\n" $BLUE
+  sleep 1
 
-sleep 4
+  if gum confirm "Wanna reboot?" --default="Yes"; then
+    say "rebooting..." $GREEN
+    shutdown -r now
+  else
+    say "not rebooting...." $YELLOW
+    sleep 2
+  fi
+}
+
+# --- Main Script ---
+# Set up variables
+declare -rx USER_HOME="${HOME}"
+declare -rx CONFIG_DIR="${USER_HOME}/.config"
+declare -rx DOTFILES_DIR="${CONFIG_DIR}/dotfiles"
+declare -rx ANSIBLE_HOME="${DOTFILES_DIR}"
+
+echo $DISTRO
+
+# Install gum first
+install_gum
+
+display_welcome_message
+
+install_packages
+setup_ssh_keys
+setup_gitconfig
+
+sleep 1
+
+ask_for_sudoers_setup
+
+clone_repository
+sleep 1
+
+HOSTNAME=$(/usr/bin/hostnamectl --transient 2>/dev/null) || \
+HOSTNAME=$(/usr/bin/hostname 2>/dev/null) || \
+HOSTNAME=$(/usr/bin/uname -n)
+
+# --- set the inventory file for intial boostrapin'
+cat << EOF | tee "${ANSIBLE_HOME}/hosts"
+[workstation]
+${HOSTNAME} ansible_connection=local
+EOF
+
+env_vars=$(get_environment_variables)
+
+execute_ansible_playbook "$env_vars"
+
+display_completion_message

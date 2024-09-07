@@ -6,6 +6,7 @@
       pacman:
         name: "{{ applications_packages.archlinux }}"
         state: present
+        extra_args: "--overwrite '*'"
       when: ansible_distribution == "Archlinux"
 
     - name: Install Fedora packages
