@@ -211,11 +211,89 @@ clone_repository() {
   fi
 }
 
+# --- Wipe Screen Function ---
 wipe() {
-tput -S <<!
+  tput -S <<!
 clear
 cup 1
 !
+}
+
+# --- Display Welcome Message ---
+display_welcome_message() {
+  wipe
+  # Now we can use gum for the rest of the script
+  gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This bootstrap script is about to configure some shit. Welcome to $(gum style --foreground 212 'synflow')."
+  sleep 1
+}
+
+# --- Ask for Sudoers Setup ---
+ask_for_sudoers_setup() {
+  if gum confirm "Do you want to set up sudoers for passwordless sudo?" --default="Yes"; then
+    setup_sudoers
+    if [ $? -ne 0 ]; then
+      say "Sudoers setup failed. Continuing with the rest of the script." $RED
+    fi
+  else
+    say "Skipping sudoers setup.\n" $BLUE
+  fi
+}
+
+# --- Get Environment Variables ---
+get_environment_variables() {
+  say "Enter additional environment variables (press Enter with empty input to finish): \n" $BLUE
+
+  declare -A env_vars
+  declare var_name=""
+
+  while true; do
+    var_name=$(gum input --width=0 --prompt "Variable name (or Enter to finish): ")
+
+    if [[ -z "${var_name}" ]]; then
+      break
+    else
+      var_value=$(gum input --prompt "Value for ${var_name}: ")
+      env_vars["${var_name}"]="${var_value}"
+    fi
+  done
+
+  echo "$env_vars"
+}
+
+# --- Execute Ansible Playbook ---
+execute_ansible_playbook() {
+  local env_vars=$1
+
+  # --- Ansible Playbook Execution ---
+  # wipe
+  say "Settting env vars and setup inventory for Playbook Execution...\n" $BLUE
+
+  env_command="env ANSIBLE_HOME=${ANSIBLE_HOME}"
+
+  for var in "${!env_vars[@]}"; do
+    env_command+=" $var=${env_vars[$var]}"
+  done
+
+  say "And so it begins...\n" $BLUE
+
+  eval "${env_command} ansible-playbook -i ${ANSIBLE_HOME}/hosts ${ANSIBLE_HOME}/playbooks/full.yml"
+}
+
+# --- Display Completion Message and Ask for Reboot ---
+display_completion_message() {
+  sleep 5
+
+  gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This shit has been $(gum style --foreground 212 'configured')."
+
+  sleep 1
+
+  if gum confirm "Wanna reboot?" --default="Yes"; then
+    say "rebooting..." $GREEN
+    shutdown -r now
+  else
+    say "not rebooting...." $YELLOW
+    sleep 2
+  fi
 }
 
 # --- Main Script ---
@@ -230,11 +308,7 @@ echo $DISTRO
 # Install gum first
 install_gum
 
-wipe
-# Now we can use gum for the rest of the script
-gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This bootstrap script is about to configure some shit. Welcome to $(gum style --foreground 212 'synflow')."
-
-sleep 1
+display_welcome_message
 
 install_packages
 setup_ssh_keys
@@ -242,15 +316,7 @@ setup_gitconfig
 
 sleep 1
 
-# --- Sudoers Setup (Optional) ---
-if gum confirm "Do you want to set up sudoers for passwordless sudo?" --default="Yes"; then
-  setup_sudoers
-  if [ $? -ne 0 ]; then
-    say "Sudoers setup failed. Continuing with the rest of the script." $RED
-  fi
-else
-  say "Skipping sudoers setup.\n" $BLUE
-fi
+ask_for_sudoers_setup
 
 clone_repository
 sleep 1
@@ -265,47 +331,8 @@ cat << EOF | tee "${ANSIBLE_HOME}/hosts"
 ${HOSTNAME} ansible_connection=local
 EOF
 
-# --- Environment Variables ---
-say "Enter additional environment variables (press Enter with empty input to finish): \n" $BLUE
+env_vars=$(get_environment_variables)
 
-declare -A env_vars
-declare var_name=""
+execute_ansible_playbook "$env_vars"
 
-while true; do
-  var_name=$(gum input --width=0 --prompt "Variable name (or Enter to finish): ")
-
-  if [[ -z "${var_name}" ]]; then
-    break
-  else
-    var_value=$(gum input --prompt "Value for ${var_name}: ")
-    env_vars["${var_name}"]="${var_value}"
-  fi
-done
-
-# --- Ansible Playbook Execution ---
-# wipe
-say "Settting env vars and setup inventory for Playbook Execution...\n" $BLUE
-
-env_command="env ANSIBLE_HOME=${ANSIBLE_HOME}"
-
-for var in "${!env_vars[@]}"; do
-  env_command+=" $var=${env_vars[$var]}"
-done
-
-say "And so it begins...\n" $BLUE
-
-eval "${env_command} ansible-playbook -i ${ANSIBLE_HOME}/hosts ${ANSIBLE_HOME}/playbooks/full.yml"
-
-sleep 5
-
-gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 "This shit has been $(gum style --foreground 212 'configured')."
-
-sleep 1
-
-if gum confirm "Wanna reboot?" --default="Yes"; then
-  say "rebooting..." $GREEN
-  shutdown -r now
-else
-  say "not rebooting...." $YELLOW
-  sleep 2
-fi
+display_completion_message

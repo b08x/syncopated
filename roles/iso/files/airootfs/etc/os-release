@@ -1,7 +1,7 @@
 NAME="ArchLabs"
 ID=ArchLabs
 ID_LIKE="arch"
-VERSION_ID=2024.08.06
+VERSION_ID=2024.09.07
 PRETTY_NAME="ArchLabs Linux"
 ANSI_COLOR="0;36"
 HOME_URL="https://archlabslinux.com"
