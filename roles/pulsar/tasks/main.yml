@@ -15,6 +15,7 @@
     use: auto
     name: pulsar-bin
     state: present
+  become: False
   when: ansible_os_family == 'Archlinux'
 
 - name: Install Pulsar on Fedora
