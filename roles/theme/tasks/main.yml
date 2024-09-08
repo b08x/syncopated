@@ -144,7 +144,5 @@
     delete: no
     rsync_opts:
       - "--update"
-      - "--backup"
-      - "--suffix={{ suffix }}"
   ignore_errors: "{{ ansible_check_mode }}"
   tags: ['backgrounds']
