@@ -1,6 +1,16 @@
 ---
 
 - name: Install Theme packages
+  aur:
+    use: auto
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ theme_packages[ansible_distribution | lower] }}"
+  become: False
+  when: ansible_distribution == "Archlinux"
+
+- name: Install Theme packages
   block:
     - name: Install Theme packages from official repositories
       package:
@@ -8,14 +18,15 @@
         state: present
       with_items:
         - "{{ theme_packages[ansible_distribution | lower] }}"
+      when: ansible_distribution == "Fedora"
 
-    - name: Install additional Theme packages on Arch Linux
-      pacman:
-        name:
-          - numix-circle-icon-theme-git
-          - numix-icon-theme-git
-        state: present
-      when: ansible_distribution == "Archlinux"
+    # - name: Install additional Theme packages on Arch Linux
+    #   pacman:
+    #     name:
+    #       - numix-circle-icon-theme-git
+    #       - numix-icon-theme-git
+    #     state: present
+    #   when: ansible_distribution == "Archlinux"
 
     - name: Install additional Theme packages on Fedora
       block:
