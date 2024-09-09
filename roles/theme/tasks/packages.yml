@@ -1,14 +1,5 @@
 ---
 
-- name: Install Theme packages
-  aur:
-    use: auto
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - "{{ theme_packages[ansible_distribution | lower] }}"
-  become: False
-  when: ansible_distribution == "Archlinux"
 
 - name: Install Theme packages
   block:

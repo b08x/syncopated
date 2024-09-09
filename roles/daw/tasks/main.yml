@@ -23,10 +23,6 @@
   tags: ['profile']
 
 - import_tasks:
-    file: packages.yml
-  tags: ['packages']
-
-- import_tasks:
     file: controllers/main.yml
   tags: ['controllers']
 

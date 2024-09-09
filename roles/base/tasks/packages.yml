@@ -2,12 +2,6 @@
 
 - name: Install Base packages
   block:
-    - name: Install Arch Linux Base packages
-      pacman:
-        name: "{{ base_packages.archlinux }}"
-        state: present
-      when: ansible_distribution == "Archlinux"
-
     - name: Install Fedora Base packages
       dnf:
         name: "{{ item }}"

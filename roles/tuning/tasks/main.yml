@@ -16,19 +16,20 @@
       package:
         name: "{{ tuning_packages[ansible_distribution | lower] }}"
         state: present
+      when: ansible_distribution == "Fedora"
+      
 
-    - name: Install additional Tuning packages
-      package:
-        name: "{{ additional_tuning_packages[ansible_distribution | lower] }}"
-        state: present
+    # - name: Install additional Tuning packages
+    #   package:
+    #     name: "{{ additional_tuning_packages[ansible_distribution | lower] }}"
+    #     state: present
+    #
+    # - name: Install optional Tuning packages
+    #   package:
+    #     name: "{{ optional_tuning_packages[ansible_distribution | lower] }}"
+    #     state: present
+    #   when: install_optional_tuning_packages | default(false) | bool
 
-    - name: Install optional Tuning packages
-      package:
-        name: "{{ optional_tuning_packages[ansible_distribution | lower] }}"
-        state: present
-      when: install_optional_tuning_packages | default(false) | bool
-
-  become: true
 
 - name: Handle missing packages
   block:

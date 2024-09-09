@@ -29,7 +29,7 @@ terminal_packages:
     - kitty-terminfo
     - termdown
     - terminator
-    - termpdf.py-git
+#    - termpdf.py-git
     - tilda
   fedora:
     # - blackbox-terminal  # Not available in Fedora repos

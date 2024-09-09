@@ -1,0 +1,2 @@
+[workstation]
+tinybot ansible_connection=local

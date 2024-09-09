@@ -2,13 +2,6 @@
 
 - name: Install application packages
   block:
-    - name: Install Arch Linux packages
-      pacman:
-        name: "{{ applications_packages.archlinux }}"
-        state: present
-        extra_args: "--overwrite '*'"
-      when: ansible_distribution == "Archlinux"
-
     - name: Install Fedora packages
       dnf:
         name: "{{ applications_packages.fedora }}"

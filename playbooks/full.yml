@@ -168,8 +168,8 @@
     - role: pulseaudio
       tags: ["pulseaudio"]
 
-    - role: pipewire
-      tags: ["pipewire"]
+    # - role: pipewire
+    #   tags: ["pipewire"]
 
     - role: daw
       tags: ["daw"]

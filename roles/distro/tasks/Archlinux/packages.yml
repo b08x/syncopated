@@ -8,16 +8,73 @@
   check_mode: no
   tags: ['packages']
 
+- name: arch_installed_packages
+  set_fact:
+    installed_packages: "{{ arch_installed_packages.stdout }}"
+
 - block:
-    - name: install packages
+    - name: Install Base packages
       aur:
         use: paru
-        name: "{{ packages|difference(arch_installed_packages.stdout) }}"
+        name: "{{ item }}"
         state: present
         extra_args: "--overwrite '*'"
-      become: False
-      when: arch_installed_packages | length > 0
-      tags: ['packages']
+      with_items:
+        - "{{ base_packages|difference(installed_packages) }}"
+
+    - name: Install Desktop packages
+      aur:
+        use: paru
+        name: "{{ item }}"
+        state: present
+        extra_args: "--overwrite '*'"
+      with_items:
+        - "{{ desktop_packages|difference(installed_packages) }}"
+
+    - name: Install Docker packages
+      aur:
+        use: paru
+        name: "{{ item }}"
+        state: present
+        extra_args: "--overwrite '*'"
+      with_items:
+        - "{{ desktop_packages|difference(installed_packages) }}"
+
+    - name: Install Theme packages
+      aur:
+        use: paru
+        name: "{{ item }}"
+        state: present
+        extra_args: "--overwrite '*'"
+      with_items:
+        - "{{ theme_packages|difference(installed_packages) }}"
+
+    - name: Install Tuning packages
+      aur:
+        use: paru
+        name: "{{ item }}"
+        state: present
+        extra_args: "--overwrite '*'"
+      with_items:
+        - "{{ tuning_packages|difference(installed_packages) }}"
+
+    - name: Install X11 packages
+      aur:
+        use: paru
+        name: "{{ item }}"
+        state: present
+        extra_args: "--overwrite '*'"
+      with_items:
+        - "{{ x11_packages|difference(installed_packages) }}"
+
+    - name: Install DAW packages
+      aur:
+        use: paru
+        name: "{{ item }}"
+        state: present
+        extra_args: "--overwrite '*'"
+      with_items:
+        - "{{ daw_packages.archlinux|difference(installed_packages) }}"
 
   rescue:
     - name: Handle installation failure
@@ -30,8 +87,6 @@
         msg: "Continuing with playbook execution."
 
   become: False
-  tags: ['packages']
-
 
 - block:
     - name: Install host specific xorg packages
@@ -50,7 +105,7 @@
   always:
     - name: Continue executions
       debug:
-        msg: "Continuing with playbook execution."      
+        msg: "Continuing with playbook execution."
 
   become: False
-  tags: ["x"]
+  tags: ["x11"]

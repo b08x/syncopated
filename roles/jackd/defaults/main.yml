@@ -9,7 +9,7 @@ jack_packages:
     - jack-example-tools
     - jack-keyboard
     - jack_capture
-    - jack_link
+    # - jack_link
     - jack_mixer
     - jack_snapshot
     - jack_utils

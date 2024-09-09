@@ -27,9 +27,9 @@
     file: environment.yml
   tags: ["env", "profile"]
 
-# - import_tasks:
-#     file: grub.yml
-#   tags: ["grub"]
+- import_tasks:
+    file: grub.yml
+  tags: ["grub"]
 
 - import_tasks:
     file: updatedb.yml

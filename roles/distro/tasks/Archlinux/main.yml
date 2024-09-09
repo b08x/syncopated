@@ -68,9 +68,9 @@
   tags: ["paru"]
   # check_mode: yes
 
-# - import_tasks:
-#     file: packages.yml
-#   tags: ["packages"]
+- import_tasks:
+    file: packages.yml
+  tags: ["packages"]
 
 # - name: install packages
 #   aur:
