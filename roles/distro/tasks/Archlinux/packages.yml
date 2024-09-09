@@ -6,75 +6,63 @@
   become: False
   register: arch_installed_packages
   check_mode: no
-  tags: ['packages']
+  tags: ['always']
 
 - name: arch_installed_packages
   set_fact:
     installed_packages: "{{ arch_installed_packages.stdout }}"
+  tags: ['always']
 
 - block:
     - name: Install Base packages
       aur:
         use: paru
-        name: "{{ item }}"
+        name: "{{ base_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
-      with_items:
-        - "{{ base_packages|difference(installed_packages) }}"
 
     - name: Install Desktop packages
       aur:
         use: paru
-        name: "{{ item }}"
+        name: "{{ desktop_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
-      with_items:
-        - "{{ desktop_packages|difference(installed_packages) }}"
 
     - name: Install Docker packages
       aur:
         use: paru
-        name: "{{ item }}"
+        name: "{{ desktop_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
-      with_items:
-        - "{{ desktop_packages|difference(installed_packages) }}"
 
     - name: Install Theme packages
       aur:
         use: paru
-        name: "{{ item }}"
+        name: "{{ theme_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
-      with_items:
-        - "{{ theme_packages|difference(installed_packages) }}"
 
     - name: Install Tuning packages
       aur:
         use: paru
-        name: "{{ item }}"
+        name: "{{ tuning_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
-      with_items:
-        - "{{ tuning_packages|difference(installed_packages) }}"
 
     - name: Install X11 packages
       aur:
         use: paru
-        name: "{{ item }}"
+        name: "{{ x11_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
-      with_items:
-        - "{{ x11_packages|difference(installed_packages) }}"
+      tags: ['x11_packages']
 
     - name: Install DAW packages
       aur:
         use: paru
-        name: "{{ item }}"
+        name: "{{ daw_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
-      with_items:
-        - "{{ daw_packages.archlinux|difference(installed_packages) }}"
 
   rescue:
     - name: Handle installation failure
@@ -92,7 +80,7 @@
     - name: Install host specific xorg packages
       aur:
         use: paru
-        name: "{{ host.xorg.video|difference(arch_installed_packages.stdout) }}"
+        name: "{{ host.xorg.video|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
       when: host.xorg.video is defined
@@ -108,4 +96,4 @@
         msg: "Continuing with playbook execution."
 
   become: False
-  tags: ["x11"]
+  tags: ['x11_packages']

@@ -235,8 +235,8 @@ x11_packages:
   - xf86-video-fbdev
   - xf86-video-intel
   - xf86-video-vesa
-   - xkill-shortcut
-   - xob
+  - xkill-shortcut
+  - xob
   - xorg-bdftopcf
   - xorg-fonts-alias-75dpi
   - xorg-fonts-alias-100dpi

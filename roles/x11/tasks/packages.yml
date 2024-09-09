@@ -1,7 +1,7 @@
 ---
 
-- name: Install X11 packages
-  block:
+# - name: Install X11 packages
+#   block:
     # - name: Install X11 packages from official repositories
     #   package:
     #     name: "{{ item }}"

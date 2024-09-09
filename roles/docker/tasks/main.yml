@@ -43,19 +43,6 @@
 
       when: ansible_distribution == 'Fedora'
 
-    - name: Install docker packages
-      aur:
-        use: paru
-        name: "{{ item }}"
-        state: present
-        extra_args: "--overwrite '*'"
-      loop:
-        - docker
-        - docker-compose
-        - lazydocker-bin
-      become: False
-      when: ansible_os_family == 'Archlinux'
-
     # - name: Install docker packages
     #   aur:
     #     use: paru
