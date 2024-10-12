@@ -1,14 +1,10 @@
 ---
 
-ansible_distribution: EndeavourOS
-
 share:
   nfs:
     parent: "{{ user.home }}"
     exports:
-      - LLMOS
-      - Recordings
-      - Workspace
+      - Storage
 
 bind_share_exports: True
 
@@ -21,8 +17,6 @@ cpupower:
   perf_bias: 0
 
 browser: "google-chrome-stable"
-
-homepage_directory: "{{ user.home }}/Documents/homepage"
 
 #TODO: this
 # tuned:
