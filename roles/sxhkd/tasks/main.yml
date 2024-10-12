@@ -48,7 +48,7 @@
 
 - name: Ensure SXHKD configuration directory exists
   file:
-    path: "{{ ansible_env.HOME }}/.config/sxhkd"
+    path: "{{ user.home }}/.config/sxhkd"
     state: directory
     mode: '0755'
     owner: "{{ user.name }}"
@@ -64,7 +64,7 @@
 - name: Copy SXHKD configuration file
   template:
     src: sxhkdrc.j2
-    dest: "{{ ansible_env.HOME }}/.config/sxhkd/sxhkdrc"
+    dest: "{{ user.home }}/.config/sxhkd/sxhkdrc"
     mode: '0644'
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
