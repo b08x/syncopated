@@ -171,6 +171,9 @@ base_packages:
   - zoxide
 
 desktop_packages:
+  - libgepub
+  - libgsf
+  - libopenraw
   - arandr
   - broot
   - btop
