@@ -21,7 +21,7 @@ ZSH_CUSTOM="$HOME/.local/share/zsh"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #consider adding common-aliases, copybuffer
-plugins=(asdf ansible bundler docker-compose copypath fd fzf ripgrep zsh-navigation-tools ruby history systemd web-search)
+plugins=(ansible bundler docker-compose copypath fd fzf ripgrep zsh-navigation-tools ruby history systemd web-search)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -159,3 +159,5 @@ if [[ -d $PYENV_ROOT/bin ]]; then
   export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init -)"
 fi
+
+export PATH="$PATH:$HOME/.rvm/bin"

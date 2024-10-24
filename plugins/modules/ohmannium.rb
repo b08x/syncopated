@@ -2,48 +2,48 @@
 # WANT_JSON
 
 require 'json'
-require 'logging'
+require 'logger'
 require 'open3'
 require 'rubygems'
 
 $logfile = File.join("/tmp", "ohmannium-#{Time.now.strftime("%Y-%m-%d")}-packageinstall.log")
 
-Logging.color_scheme( 'bright',
-  :levels => {
-    :info  => :green,
-    :warn  => :yellow,
-    :error => :red,
-    :fatal => [:white, :on_red]
-  },
-  :date => :blue,
-  :logger => :cyan,
-  :message => :magenta
-)
-
-Logging.appenders.stdout(
-  'stdout',
-  :layout => Logging.layouts.pattern(
-    :pattern => '[%d] %-5l %c: %m\n',
-    :color_scheme => 'bright'
-  ),
-  :level => :info
-)
-
-Logging.appenders.file(
-  $logfile,
-  :layout => Logging.layouts.pattern(
-    :pattern => '[%d] %-5l %c: %m\n',
-    :color_scheme => 'bright'
-  ),
-  :level => :info
-)
-
-$logger = Logging.logger['ohm::pkgInstall']
-
-$logger.add_appenders(
-        Logging.appenders.stdout,
-        Logging.appenders.file($logfile))
-
+# Logging.color_scheme( 'bright',
+#   :levels => {
+#     :info  => :green,
+#     :warn  => :yellow,
+#     :error => :red,
+#     :fatal => [:white, :on_red]
+#   },
+#   :date => :blue,
+#   :logger => :cyan,
+#   :message => :magenta
+# )
+#
+# Logging.appenders.stdout(
+#   'stdout',
+#   :layout => Logging.layouts.pattern(
+#     :pattern => '[%d] %-5l %c: %m\n',
+#     :color_scheme => 'bright'
+#   ),
+#   :level => :info
+# )
+#
+# Logging.appenders.file(
+#   $logfile,
+#   :layout => Logging.layouts.pattern(
+#     :pattern => '[%d] %-5l %c: %m\n',
+#     :color_scheme => 'bright'
+#   ),
+#   :level => :info
+# )
+#
+# $logger = Logging.logger['ohm::pkgInstall']
+#
+# $logger.add_appenders(
+#         Logging.appenders.stdout,
+#         Logging.appenders.file($logfile))
+$logger = Logger.new($logfile)
 $logger.level = :info
 
 currently_installed_packages = `paru -Q | awk '{print $1}'`.split("\n")

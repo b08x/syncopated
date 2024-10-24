@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Install packages
+      action: ohmannium packages="{{ packages_to_install|to_json }}"
+      register: action_output
+      vars:
+        packages_to_install:
+          - [ 'base', ['base-devel', 'git'] ]
+          - [ 'xorg', ['xorg-server', 'xorg-xinit', 'xorg-utils','xorg-fonts-75dpi', 'xorg-fonts-100dpi'] ]
+          - [ 'desktop', ['i3-wm', 'i3status-rust', 'dmenu', 'rofi', 'feh', 'picom'] ]
+
+    - name: print results
+      debug:
+        msg: "{{ action_output}}"
