@@ -58,18 +58,19 @@ base_packages:
     - fd-find
     - figlet
     - firewalld
-    - fsarchiver
+    # - fsarchiver
     - fuse3
     - fuse
+    - fzf
     - git
     # git-delta is not available in Fedora repos
     - git-lfs
-    - gh
+    # - gh
     # gitui is not available in Fedora repos
     # glow is not available in Fedora repos
     - gnome-keyring
     - gnuplot
-    - gource
+    # - gource
     # gping is not available in Fedora repos
     - GraphicsMagick
     - gstreamer1-libav
@@ -86,8 +87,8 @@ base_packages:
     - jq
     # libcyaml is not available in Fedora repos
     - libgit2
-    - libgit2-glib
-    - vips-devel
+    # - libgit2-glib
+    # - vips-devel
     - libvoikko-devel
     - links
     # lnav is not available in Fedora repos
@@ -105,11 +106,11 @@ base_packages:
     - nodejs
     - npm
     - numlockx
-    - nuspell
+    # - nuspell
     - odt2txt
     - openssl
     - opus
-    - opus-tools
+    # - opus-tools
     - opusfile
     # pamixer is not available in Fedora repos
     - pandoc
@@ -150,15 +151,15 @@ base_packages:
     - sysstat
     - taglib
     # teiler-git is not available in Fedora repos
-    - texlive-scheme-basic
-    - texlive-scheme-full
+    # - texlive-scheme-basic
+    # - texlive-scheme-full
     - tldr
     - transmission-cli
     - tree
     # ueberzug is not available in Fedora repos
     - unrar
     - unzip
-    - v4l-utils
+    # - v4l-utils
     - vorbis-tools
     - wavpack
     - wget
@@ -168,7 +169,7 @@ base_packages:
     # - x264
     # - x265
     - xterm
-    - yad
+    # - yad
     - yt-dlp
     - zoxide
 

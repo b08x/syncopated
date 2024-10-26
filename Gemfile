@@ -19,3 +19,5 @@ gem 'sorbet-runtime', '0.5.11116'
 gem 'stringio', '3.0.8'
 gem 'tty-progressbar'
 gem 'logging'
+
+gem "solargraph", "~> 0.50.0"

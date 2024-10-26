@@ -11,14 +11,14 @@
         group: root
         recurse: True
 
-    # - name: Set NOPASSWD for user in sudoers
-    #   lineinfile:
-    #     path: /etc/sudoers.d/99-user
-    #     line: '{{ user.name }} ALL=(ALL:ALL) NOPASSWD: ALL'
-    #     validate: '/usr/sbin/visudo -cf %s'
-    #     create: yes
-    #     backup: yes
-    #   when: user.name != 'root'
+    - name: Set NOPASSWD for user in sudoers
+      lineinfile:
+        path: /etc/sudoers.d/99-user
+        line: '{{ user.name }} ALL=(ALL:ALL) NOPASSWD: ALL'
+        validate: '/usr/sbin/visudo -cf %s'
+        create: yes
+        backup: yes
+      when: user.name != 'root'
 
     - name: Set NOPASSWD for user in polkit
       copy:
@@ -33,7 +33,7 @@
           });
         dest: "/etc/polkit-1/rules.d/49-nopasswd_global.rules"
         mode: '0644'
-      when: ansible_os_family == 'Archlinux' or ansible_distribution == 'Fedora'
+      when: ansible_os_family == 'Archlinux' or ansible_distribution == 'Rocky'
 
     - name: Set NOPASSWD for user in polkit
       copy:

@@ -8,7 +8,7 @@
 - name: Check if Docker is installed
   command: docker --version
   register: docker_check
-  ignore_errors: "{{ ansible_check_mode }}"
+  ignore_errors: True
 
 - name: Print Docker version if installed
   debug:
@@ -23,6 +23,15 @@
             dnf config-manager --add-repo \
             https://download.docker.com/linux/fedora/docker-ce.repo
           register: result
+          when: ansible_distribution == 'Fedora'
+
+        - name: Add Docker repository
+          shell: |
+            dnf config-manager --add-repo \
+            https://download.docker.com/linux/centos/docker-ce.repo
+          register: result
+          when: ansible_distribution == 'Rocky'
+
 
         - name: Install Docker packages
           dnf:
@@ -42,7 +51,7 @@
             dest: /etc/profile.d/compose.sh
             mode: '0644'
 
-      when: ansible_distribution == 'Fedora'
+      when: ansible_os_family == 'RedHat'
 
     # - name: Install docker packages
     #   aur:
@@ -58,7 +67,7 @@
     #     - ansible_os_family == 'Archlinux'
     #     - nvidia is defined
 
-  when: docker_check.rc != 0
+  when: docker_check.rc != 0 or docker_check.rc == 2
   tags: ['packages']
 
 # https://discuss.python.org/t/getting-requirements-to-build-wheel-did-not-run-successfully-exit-code-1/30365/2

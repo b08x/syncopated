@@ -1,4 +1,3 @@
----
 
 - block:
     - name: Ensure dnf-plugins-core is installed
@@ -30,8 +29,6 @@
       block:
         - name: Clean DNF cache
           command: dnf clean all
-          args:
-            warn: false
 
         - name: Update packages
           dnf:
@@ -42,10 +39,26 @@
       when: enable_fastestmirror.changed or configure_fastestmirror.changed
     # - name: Ensure fastestmirror plugin is enabled
     #   command: dnf config-manager --set-enabled fastestmirror
-    #   changed_when: false
+    #   delegate_to: localhost
 
   when: ansible_os_family == 'RedHat'
-  tags: ['repo', 'mirrors']
+  tags: ['mirrors', 'repo']
+
+- block:
+    # Download and install latest epel-release rpm
+    - name: Download epel-release rpm
+      get_url:
+        url: https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/e/epel-release-9-8.el9.noarch.rpm
+        dest: /tmp/epel-release.rpm
+
+    - name: Install epel-release rpm
+      shell: |
+        rpm -i epel-release.rpm && crb enable
+      args:
+        chdir: /tmp
+
+  when: ansible_distribution == 'Rocky'
+  tags: ['repo', 'epel']
 
 - import_tasks:
     file: dracut.yml

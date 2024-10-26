@@ -44,6 +44,13 @@
     - ripgrep
   tags: ['ohmyzsh']
 
+- name: Ensure user local exists
+  file:
+    path: "{{ user.home }}/.local/share"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+
 - name: Install zsh custom functions
   synchronize:
     src: home/.local/share/zsh

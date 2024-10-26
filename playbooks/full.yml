@@ -1,7 +1,8 @@
 ---
-- hosts: all
-  become: True
-  gather_facts: yes
+- name: Run Full Playbook
+  hosts: all
+  become: true
+  gather_facts: true
   vars:
     custom_path:
       - "{{ lookup('env','HOME') }}/.asdf/bin"
@@ -15,16 +16,16 @@
   # variables from vars_files are available starting here...
   pre_tasks:
     # the task will run if `check_mode` to 'no'
-    - name: Register timestamp
-      shell: "date +'%s.%Y-%m-%d@%H:%M:%S~'"
-      register: timestamp
-      check_mode: no
+    - name: Get current timestamp
+      set_fact:
+        timestamp: "{{ lookup('pipe', 'date +%s.%Y-%m-%d@%H:%M:%S~') }}"
+      check_mode: false
       tags: ["always"]
 
     - name: Set suffix
       set_fact:
         suffix: "{{ timestamp.stdout_lines[0] }}"
-      tags: ["always"]
+      tags: ["always", "timestamp"]
 
     - name: Set distro name
       set_fact:
@@ -58,8 +59,8 @@
         dest: /etc/sudoers
         regexp: "^Defaults    requiretty"
         line: "Defaults:{{ user.name }}    !requiretty"
-        backrefs: yes
-        backup: yes
+        backrefs: false
+        backup: false
         validate: 'visudo -cf %s'
       when: user.name != 'root'
       tags: ['sudoers']
@@ -87,9 +88,10 @@
     - role: networking
       tags: ["networking"]
 
-- hosts: virt
-  become: True
-  gather_facts: yes
+- name: Run Container and Virt roles
+  hosts: virt
+  become: true
+  gather_facts: true
 
   roles:
 
@@ -101,9 +103,10 @@
       when: use_libvirt == True
       tags: ["libvirt"]
 
-- hosts: workstation
-  become: True
-  gather_facts: yes
+- name: Run Workstation roles
+  hosts: workstation
+  become: true
+  gather_facts: true
 
   roles:
 
@@ -150,9 +153,10 @@
     - role: theme
       tags: ["theme"]
 
-- hosts: daw
-  become: True
-  gather_facts: yes
+- name: Run DAW roles
+  hosts: daw
+  become: true
+  gather_facts: true
 
   roles:
 
@@ -193,7 +197,7 @@
 
       rescue:
         # Do not assume the inventory_hostname is resolvable and delay 10 seconds at start
-        - name: Wait 600 seconds for port 22 to become open"
+        - name: Wait 600 seconds for port 22 to become open
           ansible.builtin.wait_for:
             port: 22
             host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
