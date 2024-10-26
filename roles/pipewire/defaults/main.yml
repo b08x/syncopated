@@ -1,16 +1,28 @@
 ---
 # roles/pipewire
-packages:
-  - pipewire
-  - pipewire-alsa
-  - pipewire-audio
-  - pipewire-jack
-  - pipewire-pulse
-  - gst-plugin-pipewire
-  - gst-plugins-bad
-  - gst-plugins-bad-libs
-  - gst-plugins-base
-  - gst-plugins-base-libs
-  - gst-plugins-good
-  - libpipewire
-  - wireplumber
+pipewire_packages:
+  archlinux:
+    - pipewire
+    - pipewire-alsa
+    - pipewire-audio
+    - pipewire-jack
+    - pipewire-pulse
+    - gst-plugin-pipewire
+    - gst-plugins-bad
+    - gst-plugins-bad-libs
+    - gst-plugins-base
+    - gst-plugins-base-libs
+    - gst-plugins-good
+    - libpipewire
+    - wireplumber
+  fedora:
+    - pipewire
+    - pipewire-alsa
+    - pipewire-pulseaudio
+    - pipewire-jack-audio-connection-kit
+    # - gstreamer1-plugin-pipewire
+    - gstreamer1-plugins-bad-free
+    - gstreamer1-plugins-base
+    - gstreamer1-plugins-good
+    - pipewire-libs
+    - wireplumber

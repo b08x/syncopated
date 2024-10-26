@@ -10,6 +10,48 @@
     filter:
     - 'ansible_system_vendor'
 
+- name: Install Tuning packages
+  block:
+    - name: Install main Tuning packages
+      package:
+        name: "{{ tuning_packages[ansible_distribution | lower] }}"
+        state: present
+      when: ansible_distribution == "Fedora"
+      
+
+    # - name: Install additional Tuning packages
+    #   package:
+    #     name: "{{ additional_tuning_packages[ansible_distribution | lower] }}"
+    #     state: present
+    #
+    # - name: Install optional Tuning packages
+    #   package:
+    #     name: "{{ optional_tuning_packages[ansible_distribution | lower] }}"
+    #     state: present
+    #   when: install_optional_tuning_packages | default(false) | bool
+
+
+- name: Handle missing packages
+  block:
+    - name: Warn about missing rtirq on Fedora
+      debug:
+        msg: "rtirq is not available in Fedora repositories. Consider finding an alternative or installing from source."
+      when: ansible_distribution == "Fedora"
+
+    - name: Warn about missing bpftune on Fedora
+      debug:
+        msg: "bpftune is not available in Fedora repositories. Consider finding an alternative or installing from source."
+      when: ansible_distribution == "Fedora"
+
+  when: ansible_distribution == "Fedora"
+
+- name: Ensure tuned profile directory exists
+  file:
+    path: /etc/tuned/realtime-modified
+    state: directory
+    mode: '0755'
+  become: true
+
 - name: Ensure utillity config folders exist
   file:
     path: "{{ item }}"
@@ -18,7 +60,7 @@
     - /etc/security/limits.d
     - /etc/sysctl.d
     - /etc/tuned/realtime-modified
-  
+
 - name: Ensure user belongs to audio group
   user:
     name: "{{ user.name }}"

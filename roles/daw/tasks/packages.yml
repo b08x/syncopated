@@ -1,5 +1,16 @@
 ---
 
+# - name: Install DAW packages
+#   block:
+    # - name: Install DAW packages from official repositories
+    #   package:
+    #     name: "{{ daw_packages[ansible_distribution | lower] }}"
+    #     state: present
+
+
+    # - name: Install DAW applications from alternative sources
+    #   include_tasks: install_daw_apps.yml
+
 # - block:
 #     - name: Install ambisonics packages
 #       aur:

@@ -24,3 +24,5 @@ roles/utils/files/dotfiles/
 roles/llmops/files/*.agi.json
 file.log
 /.venv/
+**/.vscode/
+*.code-workspace

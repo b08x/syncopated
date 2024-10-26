@@ -24,50 +24,49 @@ theme_directory_definitions:
   - dest: ".config/qt6ct/colors"
   - dest: ".config/Kvantum"
 
-theme__packages:
-  # - kvantum-theme-nordic-git
-  # - syncopated-theme
-  # - ttf-tw
-  - arc-icon-theme
-  - awesome-terminal-fonts
-  - breeze-gtk
-  - cantarell-fonts
-  - gedit-dark-variant
-  - kvantum
-  - kvantum-qt5
-  - kvantum-theme-matcha
-  - matcha-gtk-theme
-  - mojave-gtk-theme
-  - noto-color-emoji-fontconfig
-  - noto-fonts
-  - noto-fonts-cjk
-  - noto-fonts-emoji
-  - numix-circle-icon-theme-git
-  - numix-icon-theme-git
-  - open-chinese-fonts
-  - opendesktop-fonts
-  - qscintilla-qt5
-  - qt5-base
-  - qt5-declarative
-  - qt5-graphicaleffects
-  - qt5-location
-  - qt5-quickcontrols2
-  - qt5-tools
-  - qt5-x11extras
-  - qt5ct
-  - qt6-base
-  - qt6-declarative
-  - qt6-multimedia
-  - qt6-tools
-  - qt6ct
-  - ttf-bitstream-vera
-  - ttf-dejavu
-  - ttf-devicons
-  - ttf-firacode-nerd
-  - ttf-font-awesome
-  - ttf-input
-  - ttf-jetbrains-mono
-  - ttf-liberation
-  - ttf-meslo-nerd
-  - ttf-opensans
-  - ttf-ubuntu-font-family
+theme_packages:
+  fedora:
+    - arc-theme
+    # - awesome-terminal-fonts
+    - breeze-gtk
+    # - cantarell-fonts
+    # - gedit-dark-variant  # Not available in Fedora repos
+    # - kvantum  # Not available in Fedora repos
+    # - kvantum-qt5  # Not available in Fedora repos
+    # - kvantum-theme-matcha  # Not available in Fedora repos
+    # - matcha-gtk-theme  # Not available in Fedora repos
+    # - mojave-gtk-theme  # Not available in Fedora repos
+    - google-noto-emoji-color-fonts
+    - google-noto-sans-fonts
+    - google-noto-sans-cjk-fonts
+    - google-noto-emoji-fonts
+    # - numix-circle-icon-theme-git  # Not available in Fedora repos
+    # - numix-icon-theme-git  # Not available in Fedora repos
+    # - open-chinese-fonts  # Not available in Fedora repos
+    # - opendesktop-fonts  # Not available in Fedora repos
+    - qscintilla-qt5
+    - qt5-qtbase
+    - qt5-qtdeclarative
+    - qt5-qtgraphicaleffects
+    - qt5-qtlocation
+    - qt5-qtquickcontrols2
+    - qt5-qttools
+    - qt5-qtx11extras
+    # - qt5ct  # Not available in Fedora repos
+    - qt6-qtbase
+    - qt6-qtdeclarative
+    - qt6-qtmultimedia
+    - qt6-qttools
+    # - qt6ct  # Not available in Fedora repos
+    - bitstream-vera-fonts
+    - dejavu-sans-fonts
+    - dejavu-serif-fonts
+    # - devicons-fonts
+    - fira-code-fonts
+    - fontawesome-fonts
+    # - ttf-input  # Not available in Fedora repos
+    - jetbrains-mono-fonts
+    - liberation-fonts
+    # - ttf-meslo-nerd  # Not available in Fedora repos
+    - open-sans-fonts
+    # - ubuntu-fonts

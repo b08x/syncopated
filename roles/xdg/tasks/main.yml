@@ -1,6 +1,10 @@
 ---
 
 #  - dest: ".config/autostart"
+- name: Install XDG packages
+  package:
+    name: "{{ xdg_packages[ansible_distribution | lower] }}"
+    state: present
 
 - name: Ensure /etc/xdg exists
   file:
@@ -54,7 +58,7 @@
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ user.uid }}"
   become: False
-  when: ansible_os_family != 'Debian'
+  when: ansible_os_family == 'Archlinux'
 
 - name: Remove existing user-dirs.dirs
   file:

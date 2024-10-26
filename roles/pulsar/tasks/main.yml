@@ -10,13 +10,36 @@
 #   register: current_version
 #   changed_when: false
 
-- block:
-    - name: Install pulsar
-      aur:
-        use: auto
-        name: pulsar-bin
-        state: present
+- name: Install pulsar
+  aur:
+    use: auto
+    name: pulsar-bin
+    state: present
+  become: False
+  when: ansible_os_family == 'Archlinux'
 
+- name: Install Pulsar on Fedora
+  block:
+    - name: Download Pulsar RPM
+      get_url:
+        url: "https://github.com/pulsar-edit/pulsar/releases/download/v1.120.0/Linux.pulsar-1.120.0.x86_64.rpm"
+        dest: "/tmp/Linux.pulsar-1.120.0.x86_64.rpm"
+      register: pulsar_download
+
+    - name: Install Pulsar from RPM
+      shell: |
+        rpm -i Linux.pulsar-1.120.0.x86_64.rpm
+      args:
+        chdir: /tmp
+      when: pulsar_download.changed
+
+    - name: Clean up Pulsar RPM
+      file:
+        path: "/tmp/Linux.pulsar-1.120.0.x86_64.rpm"
+        state: absent
+  when: ansible_os_family == 'RedHat'
+
+- block:
     - name: Check currently installed extensions
       shell: "pulsar -p ls |awk -F ' ' '{print $2}'|awk -F '@' '{print $1}'"
       register: installed_packages

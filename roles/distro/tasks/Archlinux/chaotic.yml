@@ -46,3 +46,4 @@
   pacman:
     update_cache: True
     upgrade: False
+  when: pacman_conf_add.changed

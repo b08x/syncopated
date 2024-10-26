@@ -7,6 +7,13 @@
 - name: Set alsa card order
   lineinfile:
     path: /etc/modprobe.d/10-alsa_usb.conf
+    mode: '0644'
     line: "options snd slots=snd-hda-intel,snd-usb-audio"
-    create: yes
-    backup: yes
+    create: true
+    backup: true
+
+- name: Install ALSA packages
+  package:
+    name: "{{ alsa_packages[ansible_distribution | lower] }}"
+    state: present
+  when: ansible_distribution | lower in alsa_packages

@@ -43,3 +43,13 @@
     #   tags: ['packages']
 
   when: ansible_os_family == 'Archlinux'
+
+- block:
+    - import_tasks:
+        file: "RedHat/main.yml"
+      tags: ['repo', 'mirrors']
+
+  when: ansible_os_family == 'RedHat'
+
+
+  

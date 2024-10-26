@@ -5,6 +5,11 @@
   debug:
     msg: "Starting pulseaudio tasks"
 
+- name: Install PulseAudio packages
+  package:
+    name: "{{ pulseaudio_packages[ansible_distribution | lower] }}"
+    state: present
+
 - name: Create pulseaudio user config folder
   file:
     path: "{{ user.home }}/.config/pulse"

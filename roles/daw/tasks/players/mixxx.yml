@@ -7,4 +7,4 @@
     line: '#KERNEL=="hiddev*", NAME="usb/%k", GROUP="uaccess"'
     backrefs: yes
     backup: yes
-  ignore_errors: "{{ ansible_check_mode }}"
+  ignore_errors: True

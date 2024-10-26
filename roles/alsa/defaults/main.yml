@@ -1,11 +1,20 @@
 ---
-# roles/alsa
-packages:
-  - alsa-card-profiles
-  - alsa-firmware
-  - alsa-lib
-  - alsa-plugins
-  - alsa-topology-conf
-  - alsa-ucm-conf
-  - alsa-utils
-  - a2jmidid
+
+alsa_packages:
+  archlinux:
+    - alsa-card-profiles
+    - alsa-firmware
+    - alsa-lib
+    - alsa-plugins
+    - alsa-topology-conf
+    - alsa-ucm-conf
+    - alsa-utils
+    - a2jmidid
+  fedora:
+    - alsa-sof-firmware  # Equivalent to alsa-firmware
+    - alsa-lib
+    # - alsa-plugins
+    # - alsa-ucm-configs
+    - alsa-utils
+    - a2jmidid
+    # Note: alsa-card-profiles and alsa-topology-conf are typically part of other packages in Fedora

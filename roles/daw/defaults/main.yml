@@ -70,117 +70,117 @@ protokol:
   file: "protokol-0.5.4.105-linux-x64.zip"
   version: 0.5.4.105
 
-packages:
-  - ambdec
-  - ambix-o1
-  - ambix-o3
-  - ambix-o5
-  - audacity
-  - baudline-bin
-  - bipscript
-  - bipscript-ide
-  - bitwig-studio
-  - calf
-  - caps-lv2-git
-  - carla
-  - cpod-appimage
-  - darktable
-  - distrho-ports
-  - distrho-ports-lv2
-  - distrho-ports-vst
-  - distrho-ports-vst3
-  - djvulibre
-  - dragonfly-reverb
-  - dragonfly-reverb-clap
-  - dragonfly-reverb-lv2
-  - dragonfly-reverb-standalone
-  - dragonfly-reverb-vst
-  - dragonfly-reverb-vst3
-  - drumrox
-  - ecasound
-  - ffmpeg4.4
-  - ffmpegthumbnailer
-  - fftw
-  - fluidsynth
-  - fontforge
-  - geonkick
-  - geonkick-common
-  - geonkick-lv2
-  - geonkick-standalone
-  - gimp
-  - helm-synth
-  - helm-synth-common
-  - helm-synth-lv2
-  - helm-synth-standalone
-  - helm-synth-vst
-  - hydrogen-git
-  - iempluginsuite
-  - ingen-git
-  - intersect.lv2-git
-  - jaaa
-  - jalv
-  - jalv-select-git
-  - japa
-  - jc
-  - jconvolver
-  - jnoisemeter
-  - ladspa
-  - lame
-  - libaudec
-  - libcaca
-  - linuxsampler
-  - linuxsampler-svn
-  - lsp-dsp-lib
-  - lv2-c++-tools
-  - mcfx-o1
-  - mcfx-o3
-  - mcfx-o5
-  - mediamtx
-  - midieditor
-  - mixxx
-  - mtr
-  - non-mixer-lv2-git
-  - non-sequencer
-  - ocenaudio-bin
-  - patchage
-  - patchance
-  - qmidinet
-  - qsampler
-  - raul
-  - raysession
-  - rnnoise
-  - rtaudio
-  - rtmidi
-  - sc3-plugins
-  - scala-music
-  - scala-music-scales
-  - sendmidi
-  - sonic-pi-git
-  - sonic-visualiser
-  - sonic-visualiser-git
-  - sononym
-  - sooperlooper-git
-  - sound-gambit
-  - sparta-plugins
-  - supercollider
-  - swh-lv2-git
-  - tap-plugins-lv2-git
-  - tonsespace
-  - vital-synth-git
-  - vmpk
-  - vst2sdk
-  - x42-plugins
-  - x42-plugins-lv2
-  - x42-plugins-standalone
-  - zita-ajbridge
-  - zita-alsa-pcmi
-  - zita-convolver
-  - zita-dpl1
-  - zita-lrx
-  - zita-mu1
-  - zita-resampler
-  - zita-rev1
-
+daw_packages:
+  fedora:
+    # - ambdec
+    - audacity
+    # - ambix-o1  # Not available in Fedora repos
+    # - ambix-o3  # Not available in Fedora repos
+    # - ambix-o5  # Not available in Fedora repos
+    # - baudline-bin  # Not available in Fedora repos
+    # - bipscript  # Not available in Fedora repos
+    # - bipscript-ide  # Not available in Fedora repos
+    # - bitwig-studio  # Not available in Fedora repos
+    - calf
+    # - caps-lv2-git  # Not available in Fedora repos
+    # - carla
+    # - cpod-appimage  # Not available in Fedora repos
+    - darktable
+    # - distrho-ports  # Not available in Fedora repos
+    # - distrho-ports-lv2  # Not available in Fedora repos
+    # - distrho-ports-vst  # Not available in Fedora repos
+    # - distrho-ports-vst3  # Not available in Fedora repos
+    - djvulibre
+    # - dragonfly-reverb  # Not available in Fedora repos
+    # - dragonfly-reverb-clap  # Not available in Fedora repos
+    # - dragonfly-reverb-lv2  # Not available in Fedora repos
+    # - dragonfly-reverb-standalone  # Not available in Fedora repos
+    # - dragonfly-reverb-vst  # Not available in Fedora repos
+    # - dragonfly-reverb-vst3  # Not available in Fedora repos
+    # - drumrox  # Not available in Fedora repos
+    # - ecasound
+    # - ffmpeg
+    # - ffmpegthumbnailer
+    - fftw
+    - fluidsynth
+    - fontforge
+    # - geonkick  # Not available in Fedora repos
+    # - geonkick-common  # Not available in Fedora repos
+    # - geonkick-lv2  # Not available in Fedora repos
+    # - geonkick-standalone  # Not available in Fedora repos
+    - gimp
+    # - helm-synth  # Not available in Fedora repos
+    # - helm-synth-common  # Not available in Fedora repos
+    # - helm-synth-lv2  # Not available in Fedora repos
+    # - helm-synth-standalone  # Not available in Fedora repos
+    # - helm-synth-vst  # Not available in Fedora repos
+    - hydrogen
+    # - iempluginsuite  # Not available in Fedora repos
+    # - ingen-git  # Not available in Fedora repos
+    # - intersect.lv2-git  # Not available in Fedora repos
+    - jaaa
+    - jalv
+    # - jalv-select-git  # Not available in Fedora repos
+    - japa
+    # - jc  # Not available in Fedora repos
+    # - jconvolver  # Not available in Fedora repos
+    # - jnoisemeter  # Not available in Fedora repos
+    - ladspa
+    - lame
+    # - libaudec  # Not available in Fedora repos
+    - libcaca
+    # - linuxsampler  # Not available in Fedora repos
+    # - linuxsampler-svn  # Not available in Fedora repos
+    # - lsp-dsp-lib
+    # - lv2-c++-tools  # Not available in Fedora repos
+    # - mcfx-o1  # Not available in Fedora repos
+    # - mcfx-o3  # Not available in Fedora repos
+    # - mcfx-o5  # Not available in Fedora repos
+    # - mediamtx  # Not available in Fedora repos
+    # - midieditor  # Not available in Fedora repos
+    # - mixxx
+    - mtr
+    # - non-mixer-lv2-git  # Not available in Fedora repos
+    # - non-sequencer  # Not available in Fedora repos
+    # - ocenaudio-bin  # Not available in Fedora repos
+    # - patchage
+    # - patchance  # Not available in Fedora repos
+    # - qmidinet
+    # - qsampler
+    # - raul  # Not available in Fedora repos
+    # - raysession  # Not available in Fedora repos
+    - rnnoise
+    - rtaudio
+    - rtmidi
+    # - sc3-plugins  # Not available in Fedora repos
+    # - scala-music  # Not available in Fedora repos
+    # - scala-music-scales  # Not available in Fedora repos
+    # - sendmidi
+    # - sonic-pi-git  # Not available in Fedora repos
+    - sonic-visualiser
+    # - sonic-visualiser-git  # Not available in Fedora repos
+    # - sononym  # Not available in Fedora repos
+    # - sooperlooper-git  # Not available in Fedora repos
+    # - sound-gambit  # Not available in Fedora repos
+    # - sparta-plugins  # Not available in Fedora repos
+    - supercollider
+    # - swh-lv2-git  # Not available in Fedora repos
+    # - tap-plugins-lv2-git  # Not available in Fedora repos
+    # - tonsespace  # Not available in Fedora repos
+    # - vital-synth-git  # Not available in Fedora repos
+    - vmpk
+    # - vst2sdk  # Not available in Fedora repos
+    # - x42-plugins  # Not available in Fedora repos
+    # - x42-plugins-lv2  # Not available in Fedora repos
+    # - x42-plugins-standalone  # Not available in Fedora repos
+    - zita-ajbridge
+    - zita-alsa-pcmi
+    - zita-convolver
+    # - zita-dpl1  # Not available in Fedora repos
+    # - zita-lrx  # Not available in Fedora repos
+    # - zita-mu1  # Not available in Fedora repos
+    - zita-resampler
+    # - zita-rev1  # Not available in Fedora repos
 
 # audio_packages:
 #   utilities_and_tools:

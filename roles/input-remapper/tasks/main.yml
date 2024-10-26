@@ -4,8 +4,8 @@
   file:
     dest: "{{ user.home }}/{{ item }}"
     state: directory
-    owner: "{{ user.owner | default(omit) }}"
-    group: "{{ user.group | default(omit) }}"
+    owner: "{{ user.owner }}"
+    group: "{{ user.group }}"
     mode: '0744'
     recurse: false
   loop:

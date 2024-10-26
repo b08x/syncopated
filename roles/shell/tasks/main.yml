@@ -11,7 +11,7 @@
     shell: "{{ user.shell }}"
   with_items:
     - "{{ user.name }}"
-    - root
+    # - root
   tags: ['profile']
 
 - name: Set user aliases

@@ -1,16 +1,13 @@
 # roles/pipewire_config/tasks/main.yml
 ---
 
-- name: Install necessary packages
-  pacman:
-    name:
-      - pipewire
-      - pipewire-audio
-      - pipewire-alsa
-      - pipewire-jack
-      - wireplumber
-      - rtkit
-      - easyeffects
+- name: PipeWire Tasks
+  debug:
+    msg: "Starting pipewire tasks"
+
+- name: Install PipeWire packages
+  package:
+    name: "{{ pipewire_packages[ansible_distribution | lower] }}"
     state: present
 
 - name: Ensure pipewire is real
@@ -81,19 +78,19 @@
     state: directory
     mode: '0755'
 
-- name: Configure always-on mic with noise reduction
-  copy:
-    dest: /etc/pulse/default.pa.d/99-powermic-always-on.pa
-    content: |
-      # Load the LADSPA noise reduction plugin
-      load-module module-ladspa-sink sink_name=noise_reduced_mic_sink plugin=noise_suppressor_mono label=noise_suppressor_mono control=50
-
-      # Create a loopback from the PowerMicII-NS to the noise reduction sink
-      load-module module-loopback source=alsa_input.usb-PowerMicII-NS_PowerMicII-NS_000000000000-00.analog-mono sink=noise_reduced_mic_sink
-
-      # Set the default source to the noise-reduced mic
-      set-default-source noise_reduced_mic_sink.monitor
-# 
+# - name: Configure always-on mic with noise reduction
+#   copy:
+#     dest: /etc/pulse/default.pa.d/99-powermic-always-on.pa
+#     content: |
+#       # Load the LADSPA noise reduction plugin
+#       load-module module-ladspa-sink sink_name=noise_reduced_mic_sink plugin=noise_suppressor_mono label=noise_suppressor_mono control=50
+#
+#       # Create a loopback from the PowerMicII-NS to the noise reduction sink
+#       load-module module-loopback source=alsa_input.usb-PowerMicII-NS_PowerMicII-NS_000000000000-00.analog-mono sink=noise_reduced_mic_sink
+#
+#       # Set the default source to the noise-reduced mic
+#       set-default-source noise_reduced_mic_sink.monitor
+#
 # - name: restart pulseaudio
 #   systemd:
 #     name: "{{ item }}"

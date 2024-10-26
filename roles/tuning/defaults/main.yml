@@ -10,5 +10,29 @@ cpupower:
 tuned:
   profile: powersave
 
-packages:
-  - x86_energy_perf_policy
+tuning_packages:
+  fedora:
+    - kernel-tools  # Includes x86_energy_perf_policy and cpupower
+    # - rtirq  # Not available in Fedora repos
+    - rtkit
+    - tuned
+    - irqbalance
+    - kernel-devel  # Equivalent to linux-headers
+
+# Additional packages that might be needed based on the tasks
+additional_tuning_packages:
+  archlinux:
+    - udev
+    - systeroid
+  fedora:
+    - systemd-udev
+    - procps-ng  # Includes sysctl
+
+# Packages that are mentioned in comments or might be optionally used
+optional_tuning_packages:
+  archlinux:
+    - ananicy-cpp
+    - bpftune
+  fedora:
+    - ananicy
+    # - bpftune  # Not available in Fedora repos

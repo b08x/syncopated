@@ -9,6 +9,20 @@
     filter:
       - 'ansible_system_vendor'
 
+# - name: Install JACK packages
+#   package:
+#     name: "{{ jack_packages[ansible_distribution | lower] }}"
+#     state: present
+
+- name: Install JACK packages
+  aur:
+    use: paru
+    name: "{{ jack_packages.archlinux }}"
+    state: present
+  become: False
+  when:
+   - ansible_distribution == "Archlinux"
+
 - name: Create environment file for jack_control.service
   copy:
     content: |

@@ -5,6 +5,12 @@
   debug:
     msg: "Starting Barrier tasks"
 
+# Task for Barrier role
+- name: Install Barrier packages
+  package:
+    name: "{{ barrier_packages[ansible_distribution | lower] }}"
+    state: present
+
 - name: Ensure folders for barrier configs exist
   file:
     path: "{{ item }}"

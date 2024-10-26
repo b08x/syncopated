@@ -8,7 +8,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "KEY_PAGEUP",
+        "output_symbol": "Super_L + KEY_PAGEUP",
         "mapping_type": "key_macro"
     },
     {

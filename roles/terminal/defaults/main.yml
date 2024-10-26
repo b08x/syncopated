@@ -21,12 +21,23 @@ terminal_directory_definitions:
   - dest: ".config/tilda"
   - dest: ".guake"
 
-terminal__packages:
-  - blackbox-terminal
-  - guake
-  - kitty-shell-integration
-  - kitty-terminfo
-  - termdown
-  - terminator
-  - termpdf.py-git
-  - tilda
+terminal_packages:
+  archlinux:
+    - blackbox-terminal
+    - guake
+    - kitty-shell-integration
+    - kitty-terminfo
+    - termdown
+    - terminator
+#    - termpdf.py-git
+    - tilda
+  fedora:
+    # - blackbox-terminal  # Not available in Fedora repos
+    - guake
+    - kitty
+    # - kitty-shell-integration  # Not available in Fedora repos
+    - kitty-terminfo
+    # - termdown  # Not available in Fedora repos
+    - terminator
+    # - termpdf.py-git  # Not available in Fedora repos
+    - tilda
