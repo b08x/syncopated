@@ -19,6 +19,8 @@ export GUM_INPUT_WIDTH=0
 
 DISTRO=$(lsb_release -si)
 
+declare -rx ANSIBLE_HOME="${HOME}/.config/dotfiles"
+
 # --- Display Function ---
 say() {
   echo -e "${2}${1}${ALL_OFF}"
@@ -112,7 +114,7 @@ view_log() {
 
 # Function to select playbook
 select_playbook() {
-    selected_playbook=$(find playbooks/ -name "*.yml" | \
+    selected_playbook=$(find "${ANSIBLE_HOME}/playbooks/" -name "*.yml" | \
         fzf --preview 'bat --style=numbers --color=always {}' \
             --preview-window=right:60% \
             --layout="reverse" \
@@ -123,7 +125,7 @@ select_playbook() {
 
 # Function to select hosts
 select_hosts() {
-    selected_hosts=$(awk '/^[^ ]/ {gsub(/[\[\]]/, ""); print}' inventory.ini |uniq|choose 0|grep -Ev ':vars|=' | \
+    selected_hosts=$(awk '/^[^ ]/ {gsub(/[\[\]]/, ""); print}' $ANSIBLE_HOME/inventory.ini |uniq|choose 0|grep -Ev ':vars|=' | \
         choose -f ':' 0 | \
         fzf --multi \
             --layout="reverse" \
@@ -135,7 +137,7 @@ select_hosts() {
 # Function to select tags
 select_tags() {
     if [[ -n "$selected_playbook" ]]; then
-        selected_tags=$(ansible-playbook -i inventory.ini "$selected_playbook" --list-tags | \
+        selected_tags=$(ansible-playbook -i "${ANSIBLE_HOME}/inventory.ini" "$selected_playbook" --list-tags | \
             grep "TASK TAGS" | cut -d':' -f2 | tr '[' ' ' | tr ']' ' ' | tr ',' '\n' | \
             fzf --multi \
                 --layout="reverse" \
@@ -155,7 +157,7 @@ select_task() {
     if [[ -n "$selected_playbook" ]]; then
         # Create a temporary file to store all tasks
         temp_file=$(mktemp)
-        find roles/ -type f -wholename "**/tasks/*.yml" -exec bash -c 'extract_tasks "$0"' {} \; > "$temp_file"
+        find "${ANSIBLE_HOME}/roles/" -type f -wholename "**/tasks/*.yml" -exec bash -c 'extract_tasks "$0"' {} \; > "$temp_file"
 
         selected_task=$(cat "$temp_file" | \
             fzf --preview 'line=$(echo {} | cut -d: -f2); file=$(echo {} | cut -d: -f1); bash -c "preview_task \"$file\" \"$line\""' \
@@ -207,9 +209,9 @@ execute_playbook() {
     fi
 
     if [[ $EXECUTE_MODE ]]; then
-      command="ansible-playbook -i inventory.ini $selected_playbook"
+      command="ansible-playbook -i $ANSIBLE_HOME/inventory.ini $selected_playbook"
     else
-      command="ansible-playbook -C -i inventory.ini $selected_playbook"
+      command="ansible-playbook -C -i $ANSIBLE_HOME/inventory.ini $selected_playbook"
     fi
 
     if [[ -n "$selected_hosts" ]]; then
@@ -326,7 +328,7 @@ export -f preview_task
 
 # Main menu
 while true; do
-    action=$(echo -e "Select Playbook\nPreview Command\nExecute Playbook\nSelect Host(s)\nSelect Tags\nSelect Task\nReset\nExit" | \
+    action=$(echo -e "Select Playbook\nSelect Host(s)\nSelect Tags\nSelect Task\nPreview Command\nExecute Playbook\nReset\nExit" | \
           gum filter)
         # fzf --header="Ansible Menu" \
         #     --layout="reverse" \

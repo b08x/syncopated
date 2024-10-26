@@ -16,17 +16,12 @@
   # variables from vars_files are available starting here...
   pre_tasks:
     # the task will run if `check_mode` to 'no'
-    - name: Get current timestamp
+    - name: Set current timestamp as rsync backup suffix
       set_fact:
-        timestamp: "{{ lookup('pipe', 'date +%s.%Y-%m-%d@%H:%M:%S~') }}"
+        suffix: "{{ lookup('pipe', 'date +%s.%Y-%m-%d@%H:%M:%S~') }}"
       check_mode: false
       tags: ["always"]
-
-    - name: Set suffix
-      set_fact:
-        suffix: "{{ timestamp.stdout_lines[0] }}"
-      tags: ["always", "timestamp"]
-
+  
     - name: Set distro name
       set_fact:
         ansible_distribution: "{{ distro }}"
