@@ -21,3 +21,11 @@ gem 'tty-progressbar'
 gem 'logging'
 
 gem "solargraph", "~> 0.50.0"
+
+gem "tty-pager", "~> 0.14.0"
+
+gem "tty-prompt", "~> 0.23.1"
+
+gem "tty-box", "~> 0.7.0"
+
+gem "tty-spinner", "~> 0.9.3"
