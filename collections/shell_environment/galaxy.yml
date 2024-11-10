@@ -1,0 +1,13 @@
+authors:
+- Robert Pannick <rwpannick@gmail.com>
+dependencies: {}
+description: Shell and terminal environment configuration roles
+license:
+- MIT
+name: shell_environment
+namespace: b08x
+readme: README.md
+repository: https://github.com/b08x/ansible-collections
+tags:
+- shell environment
+version: 1.0.0

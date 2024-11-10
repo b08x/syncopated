@@ -1,0 +1,103 @@
+---
+
+# - name: Check repository version
+#   shell: "paru -Si pulsar-bin | grep Version | awk '{print $3}' | sed 's/-1$//' | xargs"
+#   register: desired_version
+#   changed_when: false
+#
+# - name: Get installed application version
+#   shell: "pulsar -v | head -1 | awk -F ':' '{ print $2 }' | xargs"
+#   register: current_version
+#   changed_when: false
+
+- name: Install pulsar
+  aur:
+    use: auto
+    name: pulsar-bin
+    state: present
+  become: False
+  when: ansible_os_family == 'Archlinux'
+
+- name: Install Pulsar on Fedora
+  block:
+    - name: Download Pulsar RPM
+      get_url:
+        url: "https://github.com/pulsar-edit/pulsar/releases/download/v1.120.0/Linux.pulsar-1.120.0.x86_64.rpm"
+        dest: "/tmp/Linux.pulsar-1.120.0.x86_64.rpm"
+      register: pulsar_download
+
+    - name: Install Pulsar from RPM
+      shell: |
+        rpm -i Linux.pulsar-1.120.0.x86_64.rpm
+      args:
+        chdir: /tmp
+      when: pulsar_download.changed
+
+    - name: Clean up Pulsar RPM
+      file:
+        path: "/tmp/Linux.pulsar-1.120.0.x86_64.rpm"
+        state: absent
+  when: ansible_os_family == 'RedHat'
+
+- block:
+    - name: Check currently installed extensions
+      shell: "pulsar -p ls |awk -F ' ' '{print $2}'|awk -F '@' '{print $1}'"
+      register: installed_packages
+      changed_when: installed_packages.rc != 0
+      ignore_errors: "{{ ansible_check_mode }}"
+
+    - name: Set list of extensions to install
+      set_fact:
+        _packages: "{{ pulsar_pkgs|difference(installed_packages.stdout_lines) }}"
+
+    - name: Install pulsar packages
+      shell: pulsar -p install {{ item }}
+      with_items:
+        - "{{ _packages }}"
+      when: _packages | length > 0
+
+    - name: Install config, snippets and styles
+      copy:
+        src: "home/.pulsar/{{ item }}"
+        dest: "{{ user.home }}/.pulsar/{{ item }}"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
+        mode: '0644'
+        backup: yes
+      with_items:
+        - config.cson
+        - snippets.cson
+        - styles.less
+
+  become: False
+  vars:
+    pulsar_pkgs:
+      - atom-beautify
+      - atom-jinja2
+      - atom-material-syntax
+      - blocky
+      - color-picker
+      - file-type-icons
+      - file-types
+      - fix-indent-on-paste
+      - highlight-colors
+      - indent-sort
+      - language-ansible
+      - language-diff
+      - language-docker
+      - language-dotfiles
+      - language-generic-config
+      - language-ini
+      - language-markdown
+      - markdown-pdf
+      - markdown-writer
+      - open-terminal-here
+      - permanent-delete
+      - project-icons
+      - ruby-solargraph
+      - sb-atom-sonic-pi
+      - spacegray-atom-dark-syntax
+      - tool-bar
+      - vibrant-ink-ruby
+
+  # when: current_version.stdout != desired_version.stdout

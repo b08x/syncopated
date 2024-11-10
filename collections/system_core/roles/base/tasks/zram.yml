@@ -1,0 +1,30 @@
+---
+
+# - name: Disable swap
+#   shell: swapoff -a
+#
+# - block:
+#
+#     - name: Install zram-generator
+#       package:
+#         name: zram-generator
+#         state: present
+#       tags: ['packages']
+#
+#     - name: Install zram-generator.conf
+#       copy:
+#         src: etc/systemd/zram-generator.conf
+#         dest: /etc/systemd/zram-generator.conf
+#         mode: '0644'
+#
+#     - name: Install sysctl zram parameters
+#       copy:
+#         src: etc/sysctl.d/99-vm-zram-parameters.conf
+#         dest: /etc/sysctl.d/99-vm-zram-parameters.conf
+#         mode: '0644'
+#
+#     - name: Reload systemd daemon
+#       systemd:
+#         daemon_reload: true
+#
+#   when: ansible_distribution != 'Debian'

@@ -1,0 +1,43 @@
+---
+
+- name: Check if the vamp plugins currently exist
+  stat:
+    path: "/usr/local/share/vamp/vamp-example-plugins.so"
+  register: vamp_installed
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- block:
+
+    - name: Fetch vamp plugin installer
+      get_url:
+        url: "https://code.soundsoftware.ac.uk/attachments/download/2696/vamp-plugin-pack-installer-1.0"
+        dest: /tmp
+        mode: '0755'
+
+    - name: Set user perms for /usr/local/share/vamp
+      file:
+        path: /usr/local/share/vamp
+        state: directory
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
+        mode: '0755'
+
+    - name: Run vamp plugin pack installer
+      script: |
+        /usr/bin/uxterm -class 'backup' -e /usr/bin/env DISPLAY=:0 /usr/bin/env VAMP_PATH="/usr/local/share/vamp" ./vamp-plugin-pack-installer-1.0
+      args:
+        chdir: /tmp
+      run_once: True
+      become: False
+      ignore_errors: True
+
+
+  when: not vamp_installed.stat.exists
+
+# - name: add vamp_path to /etc/environment
+#   lineinfile:
+#     path: /etc/environment
+#     regexp: '^VAMP_PATH '
+#     insertafter: '\n'
+#     line: VAMP_PATH=/usr/local/share/vamp
+#   become: True

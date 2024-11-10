@@ -1,0 +1,45 @@
+---
+
+- name: Install application packages
+  block:
+    - name: Install Fedora packages
+      dnf:
+        name: "{{ applications_packages.fedora }}"
+        state: present
+      when: ansible_distribution == "Fedora"
+
+  rescue:
+    - name: Handle package installation failures
+      debug:
+        msg: "Failed to install some packages. Please check the error message above."
+
+- name: Install packages from alternative sources
+  block:
+    # - name: Install Google Chrome (Fedora)
+    #   dnf:
+    #     name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+    #     state: present
+    #   when: ansible_distribution == "Fedora"
+    - name: Install Fedora workstation repositories
+      dnf:
+        name: fedora-workstation-repositories
+        state: present
+
+    - name: Enable Google Chrome repository
+      command: dnf config-manager --set-enabled google-chrome
+      changed_when: false
+
+    - name: Install Google Chrome
+      dnf:
+        name: google-chrome-stable
+        state: present
+
+    - name: Install Timeshift (Fedora)
+      shell: |
+        dnf copr enable -y frankcrawford/timeshift
+        dnf install -y timeshift
+      when: ansible_distribution == "Fedora"
+
+    # Add more tasks here for other packages that need special handling
+
+  when: ansible_distribution == "Fedora"

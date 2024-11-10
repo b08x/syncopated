@@ -1,0 +1,24 @@
+---
+
+# - name: Install terminal packages
+#   aur:
+#     use: paru
+#     name: "{{ terminal__packages }}"
+#     state: present
+#     extra_args: "--overwrite '*'"
+#   become: False
+#   when: ansible_os_family == "Archlinux"
+
+- name: Install Terminal packages
+  block:
+    - name: Install Terminal packages from official repositories
+      package:
+        name: "{{ terminal_packages[ansible_distribution | lower] }}"
+        state: present
+
+    - name: Install additional Terminal packages on Fedora
+      pip:
+        name:
+          - termdown
+        state: present
+      when: ansible_distribution == "Fedora"

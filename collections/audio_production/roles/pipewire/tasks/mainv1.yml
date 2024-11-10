@@ -1,0 +1,175 @@
+---
+# tasks file for pipewire
+
+# Below is a complete Ansible playbook that automates the installation and configuration of PipeWire, including setting up a custom JSON configuration for your sound card and configuring a noise-reduction filter for a USB handheld microphone using PipeWire's filter-chain module.
+#
+# https://www.perplexity.ai/search/let-s-work-on-migrating-from-j-_TZudN6TQbS1inb0KNHW4g
+
+### Playbook: `setup_pipewire.yml`
+
+- name: Setup PipeWire with custom configuration and noise reduction
+  hosts: localhost
+  become: true
+  vars:
+    pipewire_user: "{{ ansible_user }}"
+    pipewire_group: "pipewire"
+    realtime_group: "realtime"
+    noise_reduction_plugin: "librnnoise_ladspa.so"
+    noise_reduction_label: "noise_suppressor_stereo"
+    vad_threshold: 0.5
+
+  tasks:
+    - name: Install required packages
+      pacman:
+        name:
+          - pipewire
+          - pipewire-alsa
+          - pipewire-pulse
+          - pipewire-jack
+          - wireplumber
+          - easyeffects
+        state: present
+
+    - name: Create PipeWire group
+      group:
+        name: "{{ pipewire_group }}"
+        gid: 200
+        state: present
+
+    - name: Add user to PipeWire group
+      user:
+        name: "{{ pipewire_user }}"
+        groups: "{{ pipewire_group }}"
+        append: yes
+
+    - name: Create configuration directory
+      file:
+        path: "/home/{{ pipewire_user }}/.config/pipewire"
+        state: directory
+        owner: "{{ pipewire_user }}"
+        group: "{{ pipewire_user }}"
+
+    - name: Copy default PipeWire configuration files
+      copy:
+        src: "/usr/share/pipewire/"
+        dest: "/home/{{ pipewire_user }}/.config/pipewire/"
+        owner: "{{ pipewire_user }}"
+        group: "{{ pipewire_user }}"
+        remote_src: yes
+      notify: Restart PipeWire
+
+    - name: Set real-time priorities in limits.conf
+      lineinfile:
+        path: /etc/security/limits.conf
+        line: "{{ item }}"
+        state: present
+      loop:
+        - "@{{ pipewire_group }} - rtprio 95"
+        - "@{{ pipewire_group }} - memlock 4194304"
+        - "@{{ pipewire_group }} - priority -19"
+
+    - name: Create custom JSON configuration for sound card
+      copy:
+        dest: "/home/{{ pipewire_user }}/.config/wireplumber/wireplumber.conf.d/51-disable-suspension.conf"
+        content: |
+          {
+            "monitor.alsa.rules": [
+              {
+                "matches": [
+                  { "node.name": "~alsa_input.*" },
+                  { "node.name": "~alsa_output.*" }
+                ],
+                "actions": {
+                  "update-props": {
+                    "session.suspend-timeout-seconds": 0
+                  }
+                }
+              }
+            ]
+          }
+        owner: "{{ pipewire_user }}"
+        group: "{{ pipewire_user }}"
+      notify: Restart WirePlumber
+
+    - name: Create filter-chain configuration for noise reduction
+      copy:
+        dest: "/home/{{ pipewire_user }}/.config/pipewire/filter-chain.conf.d/noise-reduction.conf"
+        content: |
+          {
+            "name": "noise_reduction",
+            "description": "Noise Reduction Filter Chain",
+            "filter.graph": [
+              {
+                "type": "ladspa",
+                "name": "noise_reduction",
+                "plugin": "{{ noise_reduction_plugin }}",
+                "label": "{{ noise_reduction_label }}",
+                "control": {
+                  "VAD Threshold": {{ vad_threshold }}
+                }
+              }
+            ],
+            "capture.props": {
+              "node.name": "alsa_input.usb-*.*",
+              "media.class": "Audio/Source"
+            },
+            "playback.props": {
+              "node.name": "filtered_noise_reduction",
+              "media.class": "Audio/Sink"
+            }
+          }
+        owner: "{{ pipewire_user }}"
+        group: "{{ pipewire_user }}"
+      notify: Restart PipeWire
+
+    - name: Enable and start PipeWire services
+      systemd:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+        scope: user
+      loop:
+        - pipewire
+        - pipewire-pulse
+        - wireplumber
+
+  handlers:
+    - name: Restart PipeWire
+      systemd:
+        name: pipewire
+        state: restarted
+        scope: user
+
+    - name: Restart WirePlumber
+      systemd:
+        name: wireplumber
+        state: restarted
+        scope: user
+
+# ### Explanation
+#
+# - **Install required packages**: Installs PipeWire, WirePlumber, and EasyEffects.
+# - **Create PipeWire group**: Creates a group for PipeWire and adds the user to it.
+# - **Copy default configuration files**: Copies default PipeWire configuration files to the user's config directory.
+# - **Set real-time priorities**: Configures real-time priorities in `/etc/security/limits.conf`.
+# - **Create custom JSON configuration**: Disables suspension for ALSA devices.
+# - **Create filter-chain configuration**: Sets up a noise-reduction filter using the RNNoise LADSPA plugin.
+# - **Enable and start services**: Ensures PipeWire and WirePlumber services are enabled and started.
+# - **Handlers**: Restart services when configuration files are changed.
+#
+# ### Running the Playbook
+#
+# To run the playbook, save it to a file named `setup_pipewire.yml` and execute the following command:
+#
+# ```bash
+# ansible-playbook setup_pipewire.yml --ask-become-pass
+# ```
+#
+# This playbook will automate the entire process of setting up PipeWire with custom configurations and noise reduction for your USB handheld microphone.
+#
+# Citations:
+# [1] https://www.reddit.com/r/linux4noobs/comments/uu9r79/how_do_i_install_pipewire_in_arch/
+# [2] https://wiki.archlinux.org/title/Talk:PulseAudio
+# [3] https://discussion.fedoraproject.org/t/pipewire-configuration-for-low-latency/32221
+# [4] https://wiki.archlinux.org/title/Ansible
+# [5] https://www.reddit.com/r/Fedora/comments/ugl5qp/how_to_add_noise_cancellation_in_pipewire/

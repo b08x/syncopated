@@ -1,0 +1,10 @@
+---
+# defaults file for obs-studio
+
+obs_studio_packages:
+  archlinux:
+    - obs-studio
+    - obs-rtspserver
+  fedora:
+    - obs-studio
+    # - obs-rtspserver  # Commented out as it may not be available in Fedora's default repositories

@@ -1,0 +1,32 @@
+# tasks file for ollama
+
+- name: OllamaHome
+  set_fact:
+    ollama_home: "{{ user.home }}/ollama"
+
+- name: CreateDestinationPath
+  file:
+    path: "{{ ollama_home }}"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group}}"
+
+- name: CopyOverDockerfileAndDockerComposeYml
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ollama_home }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: true
+  when: 
+    - "'docker-compose.yml' not in lookup('file', '{{ ollama_home }}/docker-compose.yml')"
+    - item in ['docker-compose.yml', 'Dockerfile']
+
+- name: BringTheDockerContainer
+  shell: |
+    docker compose up -d
+  args:
+    chdir: "{{ ollama_home }}"
+  when:
+    - "'docker-compose.yml' in lookup('file', '{{ ollama_home }}/docker-compose.yml')"
