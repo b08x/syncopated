@@ -26,3 +26,6 @@ file.log
 /.venv/
 **/.vscode/
 *.code-workspace
+/venv/
+/assets/dotfiles/
+*.iso

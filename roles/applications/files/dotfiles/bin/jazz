@@ -1,3 +1,0 @@
-#!/bin/bash
-
-chromium --app="https://www.abc.net.au/jazz/listen-live/player/"
