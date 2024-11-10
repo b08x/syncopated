@@ -1,7 +1,0 @@
----
-# defaults file for deadbeef
-deadbeef_packages:
-  archlinux:
-    - deadbeef-git
-  fedora:
-    - deadbeef

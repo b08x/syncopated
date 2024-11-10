@@ -29,3 +29,4 @@ file.log
 /venv/
 /assets/dotfiles/
 *.iso
+roles.tar.gz

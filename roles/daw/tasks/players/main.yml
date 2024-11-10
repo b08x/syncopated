@@ -1,5 +1,0 @@
----
-
-- import_tasks:
-    file: mixxx.yml
-  tags: ['mixxx']
