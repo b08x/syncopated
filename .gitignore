@@ -32,3 +32,4 @@ file.log
 roles.tar.gz
 /ansible-collections/
 /dist/
+/.vscode/
