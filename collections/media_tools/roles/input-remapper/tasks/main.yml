@@ -4,7 +4,7 @@
   file:
     dest: "{{ user.home }}/{{ item }}"
     state: directory
-    owner: "{{ user.owner }}"
+    owner: "{{ user.name }}"
     group: "{{ user.group }}"
     mode: '0744'
     recurse: false

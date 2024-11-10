@@ -38,8 +38,7 @@ build_collection() {
     if [ ! -f "galaxy.yml" ]; then
         print_error "galaxy.yml not found in $collection_name"
         return 1
-    }
-    
+    fi
     # Build the collection
     ansible-galaxy collection build --force
     
@@ -79,7 +78,7 @@ main() {
     if [ ! -d "$collections_dir" ]; then
         print_error "Collections directory not found. Run this script from the root of your ansible collections repository."
         exit 1
-    }
+    fi
     
     # Create dist directory if it doesn't exist
     mkdir -p dist
@@ -101,7 +100,15 @@ main() {
             
             # Move built collection to dist directory
             mv "$collection"/*.tar.gz dist/
+            
         fi
+    done
+
+    cd dist
+
+    for collection in *.tar.gz; do
+        ansible-galaxy collection install $collection --force
+        sleep 1
     done
     
     print_success "All collections built and tested successfully!"

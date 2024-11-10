@@ -3,6 +3,13 @@
   hosts: all
   become: true
   gather_facts: true
+  collections:
+    - b08x.system_core
+    - b08x.desktop_environment
+    - b08x.development_tools
+    - b08x.media_tools
+    - b08x.storage
+    - b08x.shell_environment
   vars:
     custom_path:
       - "{{ lookup('env','HOME') }}/.asdf/bin"
@@ -62,39 +69,50 @@
 
   roles:
 
-    - role: distro
+    - name: distro
+      import_role: distro
       tags: ["distro"]
 
-    - role: base
+    - name: base
+      import_role: base
       tags: ["base"]
 
-    - role: user
+    - name: user
+      import_role: user
       tags: ["user"]
 
-    - role: shell
+    - name: shell
+      import_role: shell
       tags: ["shell"]
 
-    - role: sudoers
+    - name: sudoers
+      import_role: sudoers
       tags: ["sudoers"]
 
-    - role: ruby
+    - name: ruby
+      import_role: ruby
       tags: ["ruby"]
 
-    - role: networking
+    - name: networking
+      import_role: networking
       tags: ["networking"]
 
 - name: Run Container and Virt roles
   hosts: virt
   become: true
   gather_facts: true
+  collections:
+    - b08x.development_tools
 
   roles:
 
-    - role: docker
+    - name: docker
+      import_role: docker
       when: use_docker == True
       tags: ["docker"]
 
-    - role: libvirt
+    - name: libvirt
+      import_role: libvirt
       when: use_libvirt == True
       tags: ["libvirt"]
 
@@ -102,75 +120,103 @@
   hosts: workstation
   become: true
   gather_facts: true
+  collections:
+    - b08x.system_core
+    - b08x.desktop_environment
+    - b08x.development_tools
+    - b08x.media_tools
 
   roles:
 
-    - role: input-remapper
+    - name: input-remapper
+      import_role: input-remapper
       tags: ["input-remapper", "keybindings"]
 
-    - role: x11
+    - name: x11
+      import_role: x11
       tags: ["x11"]
 
-    - role: sxhkd
+    - name: sxhkd
+      import_role: sxhkd
       tags: ["sxhkd", "keybindings"]
 
-    - role: terminal
+    - name: terminal
+      import_role: terminal
       tags: ["terminal"]
 
-    - role: xdg
+    - name: xdg
+      import_role: xdg
       tags: ["xdg"]
 
-    - role: rofi
+    - name: rofi
+      import_role: rofi
       tags: ["rofi"]
 
-    - role: i3
+    - name: i3
+      import_role: i3
       when: de is defined and window_manager == 'i3'
       tags: ["i3", "keybindings"]
 
-    - role: applications
+    - name: applications
+      import_role: applications
       tags: ["applications"]
 
-    - role: barrier
+    - name: barrier
+      import_role: barrier
       tags: ["barrier"]
 
-    - role: pulsar
+    - name: pulsar
+      import_role: pulsar
       tags: ["pulsar"]
 
-    - role: vscode
+    - name: vscode
+      import_role: vscode
       tags: ["vscode"]
 
-    - role: deadbeef
-      tags: ["deadbeef"]
-
-    - role: obs-studio
+    - name: obs-studio
+      import_role: obs-studio
       tags: ["obs-studio"]
 
-    - role: theme
+    - name: deadbeef
+      import_role: deadbeef
+      tags: ["deadbeef"]
+      
+    - name: theme
+      import_role: theme
       tags: ["theme"]
 
 - name: Run DAW roles
   hosts: daw
   become: true
   gather_facts: true
+  collections:
+    - b08x.system_core
+    - b08x.audio_production
 
   roles:
 
-    - role: tuning
+    - name: tuning
+      import_role: tuning
       tags: ["tunig"]
 
-    - role: alsa
+    - name: alsa
+      import_role: alsa
       tags: ["alsa"]
 
-    - role: jackd
+    - name: jackd
+      import_role: jackd
       tags: ["jackd"]
 
-    - role: pulseaudio
+    - name: pulseaudio
+      import_role: pulseaudio
       tags: ["pulseaudio"]
 
-    # - role: pipewire
+    # - name: pipewire
+    #   import_role: pipewire
     #   tags: ["pipewire"]
 
-    - role: daw
+    - name: daw
+      import_role: daw
       tags: ["daw"]
 
 

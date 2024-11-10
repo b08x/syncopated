@@ -30,3 +30,5 @@ file.log
 /assets/dotfiles/
 *.iso
 roles.tar.gz
+/ansible-collections/
+/dist/
