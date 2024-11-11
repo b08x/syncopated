@@ -2,7 +2,7 @@
 
 - name: Install ranger configs
   synchronize:
-    src: home/ranger/
+    src: etc/skel/.config/ranger/
     dest: "{{ user.home }}/.config/ranger/"
     recursive: yes
     mode: push
