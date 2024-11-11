@@ -1,0 +1,262 @@
+---
+
+# The default directory permission mode when creating directories using `application_directory_definitions`
+application_directory_default_mode: '0755'
+
+# The default directory owner when creating directories using `application_directory_definitions`
+application_directory_default_owner: "{{ user.name }}"
+
+# The default directory group when creating directories using `application_directory_definitions`
+application_directory_default_group: "{{ user.group }}"
+
+application_directory_default_location: "{{ user.home }}"
+
+application_directory_default_recurse: False
+
+application_directory_definitions:
+  - dest: ".sonic-pi/config"
+  - dest: ".config/RaySession/session_templates/sound/XXX_SESSION_NAME_XXX.hydrogen"
+
+baudline:
+  url: "https://www.baudline.com"
+  file: "baudline_1.08_linux_x86_64.tar.gz"
+
+jacktrip:
+  git: "https://github.com/jacktrip/jacktrip.git"
+
+ocenaudio:
+  url:
+    debian: "https://www.ocenaudio.com/start_download/ocenaudio_debian9_64.deb"
+    fedora: "https://www.ocenaudio.com/downloads/index.php/ocenaudio_centos8.rpm?"
+
+patchage:
+  git: "https://gitlab.com/drobilla/patchage.git"
+
+polyphone:
+  git: "https://github.com/davy7125/polyphone.git"
+
+qmidinet:
+  git: "https://github.com/rncbc/qmidinet.git"
+
+reaper:
+  url: "https://www.reaper.fm/files/7.x/"
+  file: reaper717_linux_x86_64.tar.xz
+  version: v7.17
+
+scala:
+  url: "http://www.huygens-fokker.org/software/"
+  file: "scala-22-pc64-linux.tar.bz2"
+
+swami:
+  git: "https://github.com/swami/swami.git"
+
+libinstpatch:
+  git: "https://github.com/swami/libinstpatch.git"
+
+timemachine:
+  git: "https://github.com/swh/timemachine.git"
+
+tony:
+  url: "https://code.soundsoftware.ac.uk/attachments/download/2617"
+  file: "Tony-2.1.1-x86_64.AppImage"
+
+touchosc:
+  url: "https://hexler.net/pub/touchosc"
+  file: "touchosc-1.2.8.194-linux-x64.zip"
+  version: 1.2.8.194
+
+protokol:
+  url: "https://hexler.net/pub/protokol/"
+  file: "protokol-0.5.4.105-linux-x64.zip"
+  version: 0.5.4.105
+
+daw_packages:
+  fedora:
+    # - ambdec
+    - audacity
+    # - ambix-o1  # Not available in Fedora repos
+    # - ambix-o3  # Not available in Fedora repos
+    # - ambix-o5  # Not available in Fedora repos
+    # - baudline-bin  # Not available in Fedora repos
+    # - bipscript  # Not available in Fedora repos
+    # - bipscript-ide  # Not available in Fedora repos
+    # - bitwig-studio  # Not available in Fedora repos
+    - calf
+    # - caps-lv2-git  # Not available in Fedora repos
+    # - carla
+    # - cpod-appimage  # Not available in Fedora repos
+    - darktable
+    # - distrho-ports  # Not available in Fedora repos
+    # - distrho-ports-lv2  # Not available in Fedora repos
+    # - distrho-ports-vst  # Not available in Fedora repos
+    # - distrho-ports-vst3  # Not available in Fedora repos
+    - djvulibre
+    # - dragonfly-reverb  # Not available in Fedora repos
+    # - dragonfly-reverb-clap  # Not available in Fedora repos
+    # - dragonfly-reverb-lv2  # Not available in Fedora repos
+    # - dragonfly-reverb-standalone  # Not available in Fedora repos
+    # - dragonfly-reverb-vst  # Not available in Fedora repos
+    # - dragonfly-reverb-vst3  # Not available in Fedora repos
+    # - drumrox  # Not available in Fedora repos
+    # - ecasound
+    # - ffmpeg
+    # - ffmpegthumbnailer
+    - fftw
+    - fluidsynth
+    - fontforge
+    # - geonkick  # Not available in Fedora repos
+    # - geonkick-common  # Not available in Fedora repos
+    # - geonkick-lv2  # Not available in Fedora repos
+    # - geonkick-standalone  # Not available in Fedora repos
+    - gimp
+    # - helm-synth  # Not available in Fedora repos
+    # - helm-synth-common  # Not available in Fedora repos
+    # - helm-synth-lv2  # Not available in Fedora repos
+    # - helm-synth-standalone  # Not available in Fedora repos
+    # - helm-synth-vst  # Not available in Fedora repos
+    - hydrogen
+    # - iempluginsuite  # Not available in Fedora repos
+    # - ingen-git  # Not available in Fedora repos
+    # - intersect.lv2-git  # Not available in Fedora repos
+    - jaaa
+    - jalv
+    # - jalv-select-git  # Not available in Fedora repos
+    - japa
+    # - jc  # Not available in Fedora repos
+    # - jconvolver  # Not available in Fedora repos
+    # - jnoisemeter  # Not available in Fedora repos
+    - ladspa
+    - lame
+    # - libaudec  # Not available in Fedora repos
+    - libcaca
+    # - linuxsampler  # Not available in Fedora repos
+    # - linuxsampler-svn  # Not available in Fedora repos
+    # - lsp-dsp-lib
+    # - lv2-c++-tools  # Not available in Fedora repos
+    # - mcfx-o1  # Not available in Fedora repos
+    # - mcfx-o3  # Not available in Fedora repos
+    # - mcfx-o5  # Not available in Fedora repos
+    # - mediamtx  # Not available in Fedora repos
+    # - midieditor  # Not available in Fedora repos
+    # - mixxx
+    - mtr
+    # - non-mixer-lv2-git  # Not available in Fedora repos
+    # - non-sequencer  # Not available in Fedora repos
+    # - ocenaudio-bin  # Not available in Fedora repos
+    # - patchage
+    # - patchance  # Not available in Fedora repos
+    # - qmidinet
+    # - qsampler
+    # - raul  # Not available in Fedora repos
+    # - raysession  # Not available in Fedora repos
+    - rnnoise
+    - rtaudio
+    - rtmidi
+    # - sc3-plugins  # Not available in Fedora repos
+    # - scala-music  # Not available in Fedora repos
+    # - scala-music-scales  # Not available in Fedora repos
+    # - sendmidi
+    # - sonic-pi-git  # Not available in Fedora repos
+    - sonic-visualiser
+    # - sonic-visualiser-git  # Not available in Fedora repos
+    # - sononym  # Not available in Fedora repos
+    # - sooperlooper-git  # Not available in Fedora repos
+    # - sound-gambit  # Not available in Fedora repos
+    # - sparta-plugins  # Not available in Fedora repos
+    - supercollider
+    # - swh-lv2-git  # Not available in Fedora repos
+    # - tap-plugins-lv2-git  # Not available in Fedora repos
+    # - tonsespace  # Not available in Fedora repos
+    # - vital-synth-git  # Not available in Fedora repos
+    - vmpk
+    # - vst2sdk  # Not available in Fedora repos
+    # - x42-plugins  # Not available in Fedora repos
+    # - x42-plugins-lv2  # Not available in Fedora repos
+    # - x42-plugins-standalone  # Not available in Fedora repos
+    - zita-ajbridge
+    - zita-alsa-pcmi
+    - zita-convolver
+    # - zita-dpl1  # Not available in Fedora repos
+    # - zita-lrx  # Not available in Fedora repos
+    # - zita-mu1  # Not available in Fedora repos
+    - zita-resampler
+    # - zita-rev1  # Not available in Fedora repos
+
+# audio_packages:
+#   utilities_and_tools:
+#     - a2jmidid  # MIDI bridge
+#     - aria2     # Downloader with some audio streaming capabilities
+#     - audiofile  # Python audio file I/O library
+#     - ecasound  # Audio server for ALSA/OSS
+#     - faac      # Free Audio Codec library (encoding)
+#     - faad2     # Free Audio Codec library (decoding)
+#     - ffmpeg     # Powerful multimedia framework (can handle audio encoding/decoding)
+#     - fluidsynth  # Software synthesizer
+#     - fmit      # Lightweight MIDI sequencer
+#     - jack2      # JACK Audio Connection Kit (low-latency audio server)
+#     - jack2-dbus  # JACK Audio Connection Kit D-Bus bridge
+#     - lame      # MP3 encoding library
+#     - librosa    # Python library for music and audio analysis
+#     - midieditor # MIDI sequencer
+#     - mixxx     # Open-source DJ software
+#     - qsampler  # Sample playback synthesizer
+#     - qtractor  # Digital audio workstation
+#     - recorder   # Simple command-line audio recorder
+#     - sox        # Lightweight audio converter and editor
+#     - timidity++ # Software MIDI synthesizer
+#     - vorbis-tools # Ogg Vorbis encoder/decoder
+#
+#   libraries_and_development_tools:
+#     - aubio     # Audio signal processing library
+#     - csound     # Sound synthesis and audio programming language
+#     - lsp-dsp-lib # Digital Signal Processing library
+#     - rtaudio    # Real-time audio library
+#     - rtmidi     # Real-time MIDI library
+#     - scala-music # Scala music theory library
+#     - scala-music-scales # Scala musical scales library
+#     - vamp-plugin-sdk # Development kit for creating Vamp audio plugins
+#
+#   plugins_and_effects:
+#     - ambdec    # Ambisonic audio decoder
+#     - calf      # Collection of Modular Audio Processing Software (LV2 plugins)
+#     - dragonfly-reverb  # Collection of audio effects
+#     - jalv       # JACK Audio Level Meter
+#     - jconvolver # JACK convolution reverb plugin
+#     - jnoisemeter # JACK noise meter
+#     - ladspa     # Linux Audio Developers Simple Plugin API (collection of audio plugins)
+#     - sc3-plugins # SuperCollider audio plugins
+#     - spat       # Spatial audio plugin for JACK
+#     - swh-lv2-git # Supernova Workstation Host (LV2 audio plugin host)
+#
+#   music_creation_and_editing_software:
+#     - audacity  # Audio editor and recorder
+#     - carla     # Software modular synthesizer
+#     - guitarix   # Real-time guitar effects processor
+#     - helm-synth  # Software synthesizer with Helm graphical interface
+#     - hydrogen-git # Hydrogen drum machine
+#     - linuxsampler # Software sampler
+#     - ocenaudio-bin # Audio editor with spectral editing features
+#     - pavucontrol # PulseAudio volume control
+#     - pulseaudio-alsa # PulseAudio ALSA module
+#     - pulseaudio-jack # PulseAudio JACK module
+#     - sonic-pi-git # Live coding environment for music creation
+#     - sound-juicer # Audio extractor from videos
+#     - soundconverter  # Audio format converter
+#     - supercollider # Open-source audio programming language
+#
+#   miscellaneous:
+#     - cantarell-fonts  # Font that can be useful for musical notation
+#     - chromecast  # Consider if using chromecast for casting audio
+#     - fontforge  # Font editor (useful for creating custom musical notation fonts)
+#     - sendmidi   # Send MIDI messages from the command line
+#     - sound-font-converter # MIDI soundfont converter
+#     - soundproxy  # Audio proxy server
+#     - speech-dispatcher # Audio routing and processing tool
+#     - timidity-opus  # Ogg Vorbis output plugin for Timidity++
+#     - timidity-pd  # Pure Data output plugin for Timidity++
+#     - tonespace  # Real-time audio processing framework
+#     - vmpk       # Virtual MIDI Piano Keyboard
+#     - vorbis-tools # Ogg Vorbis encoder/decoder
+#     - zita-ajbridge # JACK-ALSA bridge for Zita software
+#     - zita-alsa-pcmi # ALSA PCM audio driver for Zita software
+#     - zita-convolver # Convolution reverb plugin for Zita software

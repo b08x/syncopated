@@ -1,0 +1,98 @@
+[
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 2,
+                "origin_hash": "c0c7014af7fcf51312af7659eefe2f2a"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "Alt_L + XF86LaunchB",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 3,
+                "origin_hash": "c0c7014af7fcf51312af7659eefe2f2a"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "Shift_L + XF86LaunchB",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 4,
+                "origin_hash": "c0c7014af7fcf51312af7659eefe2f2a"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "XF86Launch3",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 5,
+                "origin_hash": "c0c7014af7fcf51312af7659eefe2f2a"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "if_tap(then=key(XF86AudioMicMute), else=modify(Super_L, key(comma)))",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 6,
+                "origin_hash": "c0c7014af7fcf51312af7659eefe2f2a"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "Super_L",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 7,
+                "origin_hash": "c0c7014af7fcf51312af7659eefe2f2a"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "XF86Launch6",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 8,
+                "origin_hash": "c0c7014af7fcf51312af7659eefe2f2a"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "Super_L + XF86LaunchA",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 9,
+                "origin_hash": "c0c7014af7fcf51312af7659eefe2f2a"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "XF86LaunchA",
+        "mapping_type": "key_macro"
+    }
+]

@@ -1,0 +1,106 @@
+---
+# tasks file for zsh
+
+- name: ZSH Tasks
+  debug:
+    msg: "Starting zsh tasks"
+
+- name: Install zsh
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - zsh
+    - zoxide
+  tags: ['packages']
+
+- name: Install oh-my-zsh
+  shell: |
+    if [ ! -d "/usr/local/share/oh-my-zsh" ]; then
+      export ZSH="/usr/local/share/oh-my-zsh"
+      sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    fi
+  tags: ['ohmyzsh']
+
+- name: Install fd and ripgrep ohmyzsh plugins
+  synchronize:
+    src: "usr/local/share/oh-my-zsh/plugins/{{ item }}"
+    dest: /usr/local/share/oh-my-zsh/plugins/
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--progress"
+      - "--itemize-changes"
+      - "--chown=root:root"
+      - "--backup"
+      - "--suffix={{ suffix }}"
+  with_items:
+    - fd
+    - ripgrep
+  tags: ['ohmyzsh']
+
+- name: Ensure user local exists
+  file:
+    path: "{{ user.home }}/.local/share"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+
+- name: Install zsh custom functions
+  synchronize:
+    src: home/.local/share/zsh
+    dest: "{{ user.home }}/.local/share/"
+    recursive: yes
+    mode: push
+    delete: no
+    checksum: yes
+    perms: no
+    owner: False
+    group: False
+    rsync_opts:
+      - "--update"
+      - "--omit-dir-times"
+      - "--progress"
+      - "--itemize-changes"
+      - "--chown={{ user.name }}:{{ user.group }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags: ['env', 'profile']
+
+# - name: Set permissions on zsh cutom function folder
+#   file:
+#     path: /usr/local/share/zsh
+#     state: directory
+#     owner: root
+#     group: root
+#     recurse: True
+
+- name: Set zsh profile configs
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ user.home }}/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: True
+  with_items:
+    - .zprofile
+    - .zshenv
+    - .zshrc
+    - .zlogin
+  tags: ['env', 'profile']
+
+
+# add asdf plugin to oh-my-zsh plugins var
+# - name: Add asdf plugin to oh-my-zsh plugins
+#   lineinfile:
+#     path: "{{ user.home }}/.zshrc"
+#     regexp: "^plugins="
+#     line: "plugins=(asdf ansible bundler docker-compose copypath fd fzf ripgrep zsh-navigation-tools ruby history systemd web-search)"
+#     insertafter: 'ZSH_CUSTOM="$HOME/.local/share/zsh"'
+#     firstmatch: True
+#   when: use_asdf is defined

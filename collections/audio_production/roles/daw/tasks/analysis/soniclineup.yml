@@ -1,0 +1,48 @@
+---
+
+- name: Check if Sonic-Lineup is already installed
+  stat:
+    path: /usr/local/bin/sonic-lineup
+  register: result
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- block:
+    - name: Fetch Sonic-Lineup
+      get_url:
+        url: "{{ url }}/{{ file }}"
+        dest: "/tmp"
+        validate_certs: no
+
+    - name: Link Sonic-Lineup to bin
+      shell: |
+        chmod +x {{ file }}
+        mv -v {{ file }} /usr/local/bin/
+      args:
+        chdir: "/tmp"
+
+    - name: Create symlink
+      file:
+        src: "/usr/local/bin/SonicLineup-1.1-x86_64.AppImage"
+        dest: "/usr/local/bin/sonic-lineup"
+        state: link
+        force: yes
+
+  when: not result.stat.exists and not uninstall_soniclineup|default(false)|bool
+  vars:
+    url: "https://code.soundsoftware.ac.uk/attachments/download/2766"
+    file: "SonicLineup-1.1-x86_64.AppImage"
+
+
+- name: Uninstall Sonic-Lineup
+  file:
+    path: "/usr/local/bin/sonic-lineup"
+    state: absent
+    follow: yes
+  when: result.stat.exists and uninstall_soniclineup|default(false)|bool
+
+# when: not result.stat.exists and not uninstall_soniclineup|default(false)|bool
+#
+# If the software package is already installed (the result.stat.exists condition is true),
+# the pipeline should not proceed with the installation.
+# Additionally, if there is a request to uninstall "SonicLineup" (uninstall_soniclineup|default(false)|bool is true),
+# the pipeline should not proceed with the installation, even if the package is not currently installed.
