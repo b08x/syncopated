@@ -1,5 +1,0 @@
----
-# defaults file for sonic-pi
-
-packages:
-  - sonic-pi-git

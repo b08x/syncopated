@@ -1,7 +1,0 @@
----
-# roles/barrier
-barrier_packages:
-  archlinux:
-    - barrier
-  fedora:
-    - barrier

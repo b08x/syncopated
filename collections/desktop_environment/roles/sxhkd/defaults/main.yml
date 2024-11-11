@@ -1,8 +1,0 @@
----
-# defaults file for sxhkd
-
-sxhkd_packages:
-  archlinux:
-    - sxhkd
-  fedora:
-    - sxhkd

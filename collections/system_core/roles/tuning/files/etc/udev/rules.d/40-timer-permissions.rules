@@ -1,3 +1,0 @@
-# To account for any hardware timers, such as a tuning clock (/dev/rtc) or high-precision event timer (/dev/hpet), there should also be a file in /etc/udev/rules.d/ dealing with these devices, and it should contain:
-KERNEL=="rtc0", GROUP="audio"
-KERNEL=="hpet", GROUP="audio"

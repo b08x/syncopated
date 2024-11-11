@@ -1,4 +1,0 @@
-'atom-workspace atom-text-editor:not([mini])':
-  'alt-shift-l': 'markdown-writer:insert-link'
-  'alt-shift-d': 'markdown-writer:new-draft'
-  'ctrl-6': 'indent-sort:sort'

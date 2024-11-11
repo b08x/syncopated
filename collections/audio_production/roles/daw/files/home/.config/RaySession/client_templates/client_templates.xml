@@ -1,5 +1,0 @@
-<RAY-CLIENT-TEMPLATES VERSION="0.14.2">
-  <Client-Template executable="zita-mu1" name="zita-mu1" icon="soundbot" template-name="zita-mu1" client_id="z_mu1" />
-  <Client-Template executable="x42-meter" name="x42-meter" label="x42-meter EBU 128 Meter (Stereo)" description="EBU 128 Meter (Stereo)" check_last_save="false" protocol="Ray-Hack" config_file="" save_signal="0" stop_signal="15" wait_win="false" no_save_level="0" template-name="x42-meter EBU 128" client_id="x_meter" />
-  <Client-Template executable="x42-meter" arguments="1" name="x42-meter" label="x42-meter K20" description="k20 Meter (Stereo)" protocol="Ray-Hack" config_file="" save_signal="0" stop_signal="15" wait_win="false" no_save_level="0" template-name="x42-meter K20" client_id="x_meter" />
-</RAY-CLIENT-TEMPLATES>
