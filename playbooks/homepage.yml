@@ -5,6 +5,8 @@
   gather_subset:
     - hardware
     - network
+  collections:
+    - b08x.desktop_environment    
   vars:
     path:
       - "{{ lookup('env','HOME') }}/.local/bin"
@@ -25,7 +27,8 @@
 
   roles:
 
-    - role: homepage
+    - name: homepage
+      import_role: homepage
       tags: ["homepage"]
 
   post_tasks:

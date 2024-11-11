@@ -2,7 +2,7 @@
 
 share:
   nfs:
-    parent: "/srv"
+    parent: "/srv/exports"
     exports:
       - storage
 
