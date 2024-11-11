@@ -81,9 +81,9 @@
       import_role: user
       tags: ["user"]
 
-    - name: shell
-      import_role: shell
-      tags: ["shell"]
+    - name: zsh
+      import_role: zsh
+      tags: ["shell", "zsh"]
 
     - name: sudoers
       import_role: sudoers
