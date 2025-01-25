@@ -13,6 +13,7 @@
     - b08x.media_tools
 
   vars:
+    desktop_environment: "{{ desktop_environment | default('gnome') }}"
     custom_path:
       - "{{ lookup('env','HOME') }}/.asdf/bin"
       - "{{ lookup('env','HOME') }}/.local/bin"
@@ -25,12 +26,12 @@
     GROQ_API_KEY: "{{ lookup('env', 'GROQ_API_KEY') }}"
   # variables from vars_files are available starting here...
   pre_tasks:
-    # the task will run if `check_mode` to 'no'
-    - name: Set current timestamp as rsync backup suffix
+
+    - name: "Generate backup timestamp suffix"
       set_fact:
-        suffix: "{{ lookup('pipe', 'date +%s.%Y-%m-%d@%H:%M:%S~') }}"
-      check_mode: false
-      tags: ["always"]
+        suffix: "{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
+      tags:
+        - always
   
     - name: Set distro name
       set_fact:
@@ -73,27 +74,39 @@
   roles:
 
     - name: distro
-      import_role: distro
+      import_role:
+        name: distro
+      from: b08x.system_core
       tags: ["distro"]
 
     - name: base
-      import_role: base
+      import_role:
+        name: base
+      from: b08x.system_core
       tags: ["base"]
 
     - name: user
-      import_role: user
+      import_role:
+        name: user
+      from: b08x.system_core
       tags: ["user"]
 
     - name: zsh
-      import_role: zsh
+      import_role:
+        name: zsh
+      from: b08x.shell_environment
       tags: ["shell", "zsh"]
 
     - name: sudoers
-      import_role: sudoers
+      import_role:
+        name: sudoers
+      from: b08x.system_core
       tags: ["sudoers"]
 
     - name: networking
-      import_role: networking
+      import_role:
+        name: networking
+      from: b08x.system_core
       tags: ["networking"]
 
 - name: Run Container and Virt roles
@@ -118,13 +131,9 @@
       when: use_libvirt == True
       tags: ["libvirt"]
 
-    - name: pulsar
-      import_role: pulsar
-      tags: ["pulsar"]
-
-    - name: vscode
-      import_role: vscode
-      tags: ["vscode"]
+    - name: ide
+      import_role: ide
+      tags: ["ide"]
 
 - name: Run Workstation roles
   hosts: workstation
@@ -138,21 +147,13 @@
 
   roles:
 
-    - name: input-remapper
-      import_role: input-remapper
-      tags: ["input-remapper", "keybindings"]
-
-    - name: x11
-      import_role: x11
-      tags: ["x11"]
+    - name: terminal
+      import_role: terminal
+      tags: ["terminal"]
 
     - name: sxhkd
       import_role: sxhkd
       tags: ["sxhkd", "keybindings"]
-
-    - name: terminal
-      import_role: terminal
-      tags: ["terminal"]
 
     - name: xdg
       import_role: xdg
@@ -163,9 +164,24 @@
       tags: ["rofi"]
 
     - name: i3
-      import_role: i3
-      when: de is defined and window_manager == 'i3'
+      import_role:
+        name: i3
+      from: b08x.desktop_environment
+      when: desktop_environment == 'i3'
       tags: ["i3", "keybindings"]
+
+    - name: gnome
+      import_role:
+        name: gnome
+      from: b08x.desktop_environment
+      when: desktop_environment == 'gnome'
+      tags: ["gnome"]
+
+    - name: input-remapper
+      import_role:
+        name: input-remapper
+      from: b08x.desktop_environment
+      tags: ["input-remapper"]
 
     - name: applications
       import_role: applications
