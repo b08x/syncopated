@@ -1,3 +1,74 @@
-#SPDX-License-Identifier: MIT-0
 ---
-# defaults file for gnome
+# Package names by distribution
+gnome_packages:
+  Debian:
+    - gnome-shell
+    - gnome-control-center
+    - gnome-tweaks
+    - gdm3
+    - xorg
+  Ubuntu:
+    - gnome-shell
+    - gnome-control-center
+    - gnome-tweaks
+    - gdm3
+    - xorg
+  Fedora:
+    - gnome-shell
+    - gnome-control-center
+    - gnome-tweaks
+    - gdm
+    - xorg
+  Archlinux:
+    - gnome-shell
+    - gnome-control-center
+    - gnome-tweaks
+    - gdm
+    - xorg
+
+# GNOME settings
+gnome_settings:
+  interface:
+    clock_format: "24h"
+    enable_animations: true
+    show_battery_percentage: true
+    cursor_size: 24
+    font_antialiasing: "rgba"
+    font_hinting: "slight"
+    gtk_theme: "Adwaita"
+    icon_theme: "Adwaita"
+  privacy:
+    remember_recent_files: true
+    remove_old_trash_files: true
+    remove_old_temp_files: true
+    old_files_age: 30
+  power:
+    sleep_inactive_ac_timeout: 3600
+    sleep_inactive_battery_timeout: 1800
+    power_button_action: "suspend"
+  desktop:
+    show_home: true
+    show_trash: true
+    show_mounted_volumes: true
+  session:
+    idle_delay: 300
+    lock_enabled: true
+    lock_delay: 0
+  sound:
+    theme_enabled: true
+    event_sounds: true
+    input_feedback_sounds: true
+
+# Display Manager settings
+gdm_settings:
+  autologin_enabled: false
+  wayland_enabled: false  # Force X11 session
+
+# Additional GNOME Shell extensions
+gnome_extensions_enabled:
+  - "user-theme@gnome-shell-extensions.gcampax.github.com"
+  - "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
+  - "apps-menu@gnome-shell-extensions.gcampax.github.com"
+
+# Whether to install GNOME Shell extensions
+install_extensions: true

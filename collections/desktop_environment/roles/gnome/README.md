@@ -1,38 +1,131 @@
-Role Name
-=========
+# GNOME Role
 
-A brief description of the role goes here.
+This role installs and configures GNOME desktop environment with X11 support across different Linux distributions.
 
-Requirements
-------------
+## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+- Ansible 2.9 or later
+- One of the supported distributions:
+  - Debian
+  - Ubuntu
+  - Fedora
+  - Arch Linux
+- X11 role (automatically included as a dependency)
 
-Role Variables
---------------
+## Role Variables
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-Dependencies
-------------
+```yaml
+# Package names are distribution-specific
+gnome_packages:
+  Debian:
+    - gnome-shell
+    - gnome-control-center
+    # ... (see defaults/main.yml for full list)
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+# GNOME interface settings
+gnome_settings:
+  interface:
+    clock_format: "24h"
+    enable_animations: true
+    # ... (see defaults/main.yml for full list)
 
-Example Playbook
-----------------
+# Display Manager settings
+gdm_settings:
+  autologin_enabled: false
+  wayland_enabled: false  # Force X11 session
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+# GNOME Shell extensions
+gnome_extensions_enabled:
+  - "user-theme@gnome-shell-extensions.gcampax.github.com"
+  # ... (see defaults/main.yml for full list)
+```
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+## Dependencies
 
-License
--------
+- x11 role (included in this collection)
 
-BSD
+## Example Playbook
 
-Author Information
-------------------
+```yaml
+- hosts: workstations
+  roles:
+    - role: gnome
+      vars:
+        gnome_settings:
+          interface:
+            clock_format: "12h"
+            gtk_theme: "Adwaita-dark"
+        gdm_settings:
+          wayland_enabled: false
+```
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+## Capturing Current Settings
+
+This role includes a Python script that can capture your current GNOME settings and automatically configure the role to use them. To use it:
+
+1. Ensure you have Python 3 and PyYAML installed:
+   ```bash
+   pip3 install pyyaml
+   ```
+
+2. Run the capture script from within the role directory:
+   ```bash
+   ./files/capture_settings.py
+   ```
+
+The script will:
+- Detect your current distribution
+- Capture all relevant GNOME settings via dconf
+- List installed GNOME packages
+- Save the settings directly to the role's vars/main.yml
+
+After running the script, you can simply use the role in your playbook and it will apply your captured settings:
+```yaml
+- hosts: workstations
+  roles:
+    - gnome
+```
+
+## Customization
+
+### Desktop Environment Settings
+
+The role provides extensive customization options for various aspects of the GNOME desktop environment:
+
+- Interface appearance (themes, fonts, icons)
+- Privacy settings
+- Power management
+- Desktop behavior
+- Session management
+- Sound settings
+
+### Display Manager
+
+- Configures GDM (GNOME Display Manager)
+- Supports both gdm and gdm3 (distribution-dependent)
+- Can force X11 session by disabling Wayland
+
+### Distribution Support
+
+The role automatically detects the distribution and uses the appropriate:
+- Package manager (apt, dnf, pacman)
+- Package names
+- Service names (gdm vs gdm3)
+
+## Tags
+
+- `packages`: Package installation tasks
+- `gnome`: GNOME configuration tasks
+- `settings`: Desktop environment settings
+- `services`: Service management tasks
+- `x11`: X11-specific configuration
+
+## License
+
+MIT
+
+## Author
+
+Robert Pannick
