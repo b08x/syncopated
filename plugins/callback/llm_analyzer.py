@@ -21,7 +21,7 @@ DOCUMENTATION = '''
     options:
       provider:
         description: AI provider to use
-        choices: ['openai', 'gemini', 'groq', 'openrouter', 'cohere']
+        choices: ['openai', 'gemini', 'groq', 'openrouter', 'cohere', 'anthropic']
         default: openai
         env:
           - name: AI_PROVIDER
@@ -36,6 +36,7 @@ DOCUMENTATION = '''
           - name: GROQ_API_KEY
           - name: OPENROUTER_API_KEY
           - name: COHERE_API_KEY
+          - name: ANTHROPIC_API_KEY
         ini:
           - section: callback_llm_analyzer
             key: api_key
@@ -100,6 +101,12 @@ try:
 except ImportError:
     AVAILABLE_PROVIDERS['cohere'] = False
 
+try:
+    import anthropic
+    AVAILABLE_PROVIDERS['anthropic'] = True
+except ImportError:
+    AVAILABLE_PROVIDERS['anthropic'] = False
+
 # OpenRouter uses OpenAI's client
 AVAILABLE_PROVIDERS['openrouter'] = AVAILABLE_PROVIDERS['openai']
 
@@ -128,6 +135,8 @@ class AIProvider:
             self.client = groq.Client(api_key=self.api_key)
         elif self.provider == 'cohere':
             self.client = cohere.ClientV2(api_key=self.api_key)
+        elif self.provider == 'anthropic':
+            self.client = anthropic.Anthropic(api_key=self.api_key)
 
     def _create_prompt(self, task_text: Optional[str] = None, play_text: Optional[str] = None) -> str:
         if task_text:
@@ -192,6 +201,16 @@ class AIProvider:
                     max_tokens=self.max_tokens if self.max_tokens else None
                 )
                 return to_text(response.generations[0].text.strip())
+            
+            elif self.provider == 'anthropic':
+                message = self.client.messages.create(
+                    model=self.model,
+                    max_tokens=self.max_tokens if self.max_tokens else 1024,
+                    temperature=self.temperature if self.temperature is not None else 0.4,
+                    system="You are a helpful assistant and Ansible expert.",
+                    messages=[{"role": "user", "content": prompt}]
+                )
+                return to_text(message.content[0].text.strip())
 
         except Exception as e:
             return to_text(f"Error with {self.provider}: {str(e)}")

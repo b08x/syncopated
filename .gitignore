@@ -34,3 +34,6 @@ roles.tar.gz
 /dist/
 /.vscode/
 *.code-workspace
+full.json
+full.svg
+/llm_analysis/archive/**
