@@ -1,0 +1,6 @@
+ansible
+pyyaml
+openai
+google-generativeai
+groq
+cohere
