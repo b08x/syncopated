@@ -17,16 +17,16 @@ homepage:
       # - name: pkgrepo
       #   url: "http://bender.syncopated.net"
       # - name: plex
-      #   url: "http://ninjabot.syncopated.net:32400/web"
+      #   url: "http://tinybot.syncopated.net:32400/web"
       # - name: qbittorrent
       #   url: "http://bender.syncopated.net:8080"
     intranetLLM:
       - name: Dify
-        url: "http://ninjabot"
+        url: "http://tinybot"
       - name: Flowise
-        url: "http://ninjabot:3002"
+        url: "http://tinybot:3002"
       - name: Langfuse
-        url: "http://ninjabot:3000"
+        url: "http://tinybot:3000"
       - name: Open WebUI
         url: "http://localhost:3019"
       - name: SillyTavern
@@ -40,7 +40,7 @@ homepage:
       - name: Lobe-Chat
         url: "http://localhost:3210"
       # - name: ArchiveBox
-      #   url: "http://ninjabot.syncopated.net:8000"
+      #   url: "http://tinybot.syncopated.net:8000"
     webtools:
       - name: gmail
         url: "https://gmail.google.com"

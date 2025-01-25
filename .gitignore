@@ -33,3 +33,4 @@ roles.tar.gz
 /ansible-collections/
 /dist/
 /.vscode/
+*.code-workspace
