@@ -40,8 +40,8 @@
       shell: "{{ user.home }}/.local/bin/backup_reaper.sh"
       register: reaper_backup
       become_user: "{{ user.name }}"
-      environment:
-        PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
+      # environment:
+      #   PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
       tags: ['backup']
 
     - name: Debug msg

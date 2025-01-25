@@ -5,8 +5,6 @@
   gather_subset:
     - hardware
     - network
-  collections:
-    - b08x.desktop_environment    
   vars:
     path:
       - "{{ lookup('env','HOME') }}/.local/bin"

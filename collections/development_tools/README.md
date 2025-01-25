@@ -7,9 +7,8 @@ Development environment setup roles
 The following roles are included in this collection:
 
 - docker
-- vscode
-- ruby
-- pulsar
+- ide
+- libvirt
 - ollama
 
 ## Usage

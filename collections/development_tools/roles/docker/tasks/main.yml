@@ -6,9 +6,9 @@
     msg: "Starting docker tasks"
 
 - name: Check if Docker is installed
-  command: docker --version
+  shell: |
+     which docker
   register: docker_check
-  ignore_errors: True
 
 - name: Print Docker version if installed
   debug:
@@ -16,91 +16,13 @@
   when: docker_check.rc == 0
 
 - block:
+  - import_tasks:
+      file: debian.yml
+    when: ansible_os_family == 'Debian'
 
-    - block:
-        - name: Add Docker repository
-          shell: |
-            dnf config-manager --add-repo \
-            https://download.docker.com/linux/fedora/docker-ce.repo
-          register: result
-          when: ansible_distribution == 'Fedora'
+  when: docker_check.rc == 0
+  tags: ["packages"]
 
-        - name: Add Docker repository
-          shell: |
-            dnf config-manager --add-repo \
-            https://download.docker.com/linux/centos/docker-ce.repo
-          register: result
-          when: ansible_distribution == 'Rocky'
-
-
-        - name: Install Docker packages
-          dnf:
-            name: "{{ item }}"
-            state: present
-          loop:
-            - containerd.io
-            - docker-buildx-plugin
-            - docker-ce
-            - docker-ce-cli
-            - docker-compose-plugin
-          when: result is success
-
-        - name: Add docker cli-plugins to path
-          copy:
-            src: etc/profile.d/compose.sh
-            dest: /etc/profile.d/compose.sh
-            mode: '0644'
-
-      when: ansible_os_family == 'RedHat'
-
-    # - name: Install docker packages
-    #   aur:
-    #     use: paru
-    #     name: "{{ item }}"
-    #     state: present
-    #     extra_args: "--overwrite '*'"
-    #   loop:
-    #     - nvidia-container-toolkit
-    #     - nvidia-docker-compose
-    #   become: False
-    #   when:
-    #     - ansible_os_family == 'Archlinux'
-    #     - nvidia is defined
-
-  when: docker_check.rc != 0 or docker_check.rc == 2
-  tags: ['packages']
-
-# https://discuss.python.org/t/getting-requirements-to-build-wheel-did-not-run-successfully-exit-code-1/30365/2
-# - block:
-#     - name: Echo the pip constraint variable into a file
-#       shell: echo "Cython<3" > cython_constraint.txt
-#       args:
-#         chdir: /tmp/
-#
-#     - name: Install python docker modules
-#       pip:
-#         name: "{{ item }}"
-#         executable: pip3
-#         state: present
-#         extra_args: --break-system-packages
-#       with_items:
-#         - docker
-#         - docker-compose
-#       environment:
-#         PIP_CONSTRAINT: "/tmp/cython_constraint.txt"
-#       when: ansible_os_family == 'Archlinux'
-#
-#     - name: Install python docker modules
-#       pip:
-#         name: "{{ item }}"
-#         executable: pip3
-#         state: present
-#       with_items:
-#         - docker
-#         - docker-compose
-#       when: ansible_distribution == 'Fedora'
-#
-#   tags: ['packages']
 
 - name: Ensure group "docker" exists
   group:
@@ -117,8 +39,8 @@
   ignore_errors: "{{ ansible_check_mode }}"
   # register: dockergroup
   # failed_when: "not 'Group docker does not exist' in dockergroup.msg"
-  tags: ['groups']
+  tags: ["groups"]
 
 - import_tasks:
     file: setup.yml
-  tags: ['setup']
+  tags: ["setup"]

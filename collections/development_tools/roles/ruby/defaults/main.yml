@@ -6,10 +6,10 @@
 # rvm1_rubies:
 #   - 'ruby-3.0.0'
 rubies:
-  - 3.3.0
+  - 3.0.2
 
 rvm2_rubies:
-  - 'ruby-3.1.4'
+  - 'ruby-3.0.2'
 
 # Install bundler
 rvm1_bundler_install: True

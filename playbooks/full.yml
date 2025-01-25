@@ -22,6 +22,7 @@
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
     ZSH: "/usr/share/oh-my-zsh"
     DISPLAY: ":0"
+    GROQ_API_KEY: "{{ lookup('env', 'GROQ_API_KEY') }}"
   # variables from vars_files are available starting here...
   pre_tasks:
     # the task will run if `check_mode` to 'no'
