@@ -12,6 +12,7 @@ DOCUMENTATION = '''
     description:
       - Analyzes Ansible tasks and playbooks using different AI providers
       - Prints explanations for the tasks and playbooks
+      - Saves explanations to markdown files in llm_analysis directory
       - Suggests improvements to the tasks and playbooks if any
     requirements:
       - enable in configuration - see examples section below for details
@@ -66,6 +67,8 @@ DOCUMENTATION = '''
 import os
 import json
 import yaml
+import datetime
+from pathlib import Path
 from typing import Optional, Dict, Any
 from ansible.plugins.callback import CallbackBase
 from ansible.module_utils._text import to_text
@@ -124,7 +127,7 @@ class AIProvider:
         elif self.provider == 'groq':
             self.client = groq.Client(api_key=self.api_key)
         elif self.provider == 'cohere':
-            self.client = cohere.Client(api_key=self.api_key)
+            self.client = cohere.ClientV2(api_key=self.api_key)
 
     def _create_prompt(self, task_text: Optional[str] = None, play_text: Optional[str] = None) -> str:
         if task_text:
@@ -204,6 +207,10 @@ class CallbackModule(CallbackBase):
     def __init__(self):
         super(CallbackModule, self).__init__()
         self.ai_provider = None
+        self.analysis_dir = Path("llm_analysis")
+        self.analysis_dir.mkdir(exist_ok=True)
+        self.task_count = 0
+        self.play_count = 0
 
     def set_options(self, task_keys=None, var_options=None, direct=None):
         super(CallbackModule, self).set_options(task_keys=task_keys,
@@ -225,10 +232,43 @@ class CallbackModule(CallbackBase):
             max_tokens=self.get_option('max_tokens')
         )
 
+    def _save_to_markdown(self, content: str, analysis_type: str, name: str = None):
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        count = self.task_count if analysis_type == "task" else self.play_count
+        filename = f"{timestamp}_{analysis_type}_{count}"
+        if name:
+            # Replace spaces and special characters with underscores
+            safe_name = "".join(c if c.isalnum() else "_" for c in name)
+            filename = f"{filename}_{safe_name}"
+        filename = f"{filename}.md"
+        
+        filepath = self.analysis_dir / filename
+        with open(filepath, 'w') as f:
+            f.write(f"# {analysis_type.title()} Analysis\n\n")
+            if name:
+                f.write(f"**Name:** {name}\n\n")
+            f.write(f"**Timestamp:** {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+            f.write("## Analysis\n\n")
+            f.write(content)
+
     def v2_playbook_on_task_start(self, task, is_conditional):
+        self.task_count += 1
         task_text = yaml.dump([json.loads(json.dumps(task._ds))])
-        print(f"Explanation: \n{self.ai_provider.get_description(task_text=task_text)}")
+        explanation = self.ai_provider.get_description(task_text=task_text)
+        
+        # Print to console
+        print(f"Explanation: \n{explanation}")
+        
+        # Save to markdown file
+        self._save_to_markdown(explanation, "task", task.get_name())
 
     def v2_playbook_on_play_start(self, play):
+        self.play_count += 1
         play_text = yaml.dump(json.loads(json.dumps(play.get_ds())))
-        print(f"Explanation: \n{self.ai_provider.get_description(play_text=play_text)}")
+        explanation = self.ai_provider.get_description(play_text=play_text)
+        
+        # Print to console
+        print(f"Explanation: \n{explanation}")
+        
+        # Save to markdown file
+        self._save_to_markdown(explanation, "play", play.get_name())
