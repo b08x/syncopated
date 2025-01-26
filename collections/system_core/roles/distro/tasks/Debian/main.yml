@@ -1,2 +1,40 @@
 ---
 
+# tasks/Debian/main.yml
+
+- name: Add Docker apt source
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable
+    state: present
+
+- name: Add OBS Studio apt source
+  apt_repository:
+    repo: ppa:obsproject/obs-studio
+    state: present
+
+- name: Install Intel graphics GPG public key
+  apt_key:
+    url: https://repositories.intel.com/gpu/intel-graphics.key
+    state: present
+
+- name: Configure the repositories.intel.com package repository
+  apt_repository:
+    repo: deb [arch=amd64,i386 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/gpu/ubuntu jammy client
+    filename: intel-gpu-jammy.list
+    state: present
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install compute-related packages
+  apt:
+    name:
+      - libze-intel-gpu1
+      - libze1
+      - intel-opencl-icd
+      - clinfo
+      - libze-dev
+      - intel-ocloc
+    state: present
+

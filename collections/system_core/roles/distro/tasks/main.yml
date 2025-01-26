@@ -47,9 +47,14 @@
 - block:
     - import_tasks:
         file: "RedHat/main.yml"
-      tags: ['repo', 'mirrors']
+      tags: ['repo', 'dnf']
 
   when: ansible_os_family == 'RedHat'
 
+- block:
+    - import_tasks:
+        file: "Debian/main.yml"
+      tags: ['repo', 'apt']
 
+  when: ansible_os_family == 'Debian'
   
