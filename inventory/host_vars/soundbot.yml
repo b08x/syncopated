@@ -25,7 +25,7 @@ browser: "google-chrome-stable"
 audio: "jack"
 
 de: gnome
-window_manager: i3
+desktop_environment: gnome
 # x:
 #   autostart:
 #     - bash ~/.screenlayout/soundbot.sh

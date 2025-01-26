@@ -36,4 +36,4 @@ roles.tar.gz
 *.code-workspace
 full.json
 full.svg
-/llm_analysis/archive/**
+/llm_analysis/
