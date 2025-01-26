@@ -5,6 +5,10 @@ obs_studio_packages:
   archlinux:
     - obs-studio
     - obs-rtspserver
+  debian:
+    - obs-studio
+    - v4l2loopback-dkms  # For virtual camera support
+    - ffmpeg             # Required for recording and streaming
   fedora:
     - obs-studio
     # - obs-rtspserver  # Commented out as it may not be available in Fedora's default repositories

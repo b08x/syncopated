@@ -1,7 +1,15 @@
 ---
 - hosts: workstation
-  become: True
-  gather_facts: yes
+  become: true
+  gather_facts: true
+  collections:
+    - b08x.llmops_dev
+    - b08x.system_core
+    - b08x.shell_environment
+    - b08x.storage
+    - b08x.development_tools
+    - b08x.desktop_environment
+    - b08x.media_tools
   vars:
     path:
       - "{{ lookup('env','HOME') }}/.asdf/bin"
@@ -12,41 +20,41 @@
 
   roles:
 
-    - role: input-remapper
-      tags: ["input-remapper"]
-
-    - role: x11
-      tags: ["x11"]
-
-    - role: terminal
+    - name: terminal
+      import_role: terminal
       tags: ["terminal"]
 
-    - role: xdg
-      tags: ["xdg"]
+    - name: theme
+      import_role: theme
+      tags: ["theme"]
 
-    - role: rofi
-      tags: ["rofi"]
-
-    - role: i3
+    - name: i3
+      import_role: i3
+      when: desktop_environment == 'i3'
       tags: ["i3"]
 
-    - role: applications
-      tags: ["applications"]
+    - name: gnome
+      import_role: gnome
+      when: desktop_environment == 'gnome'
+      tags: ["gnome"]
 
-    - role: barrier
+    - name: barrier
+      import_role: barrier
       tags: ["barrier"]
 
-    - role: pulsar
-      tags: ["pulsar"]
+    - name: input-remapper
+      import_role: input-remapper
+      from: b08x.desktop_environment
+      tags: ["input-remapper"]
 
-    - role: vscode
-      tags: ["vscode"]
+    - name: applications
+      import_role: applications
+      tags: ["applications"]
 
-    - role: deadbeef
-      tags: ["deadbeef"]
-
-    - role: obs-studio
+    - name: obs-studio
+      import_role: obs-studio
       tags: ["obs-studio"]
 
-    - role: theme
-      tags: ["theme"]
+    - name: deadbeef
+      import_role: deadbeef
+      tags: ["deadbeef"]

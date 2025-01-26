@@ -233,7 +233,7 @@ class AIProvider:
             self.client = genai.GenerativeModel(self.model)
             self.api_callers['gemini'] = self._call_gemini_api
         elif self.provider == 'groq':
-            # Groq client handles the API key directly, no need to set environment variable
+            os.environ['GROQ_API_KEY'] = self.api_key
             self.client = groq.Groq(api_key=self.api_key)
             self.api_callers['groq'] = self._call_groq_api
         elif self.provider == 'cohere':
@@ -247,11 +247,13 @@ class AIProvider:
 
     def _create_prompt(self, task_text: Optional[str] = None, play_text: Optional[str] = None) -> str:
         if task_text:
-            return ("Review the following Ansible code, "
-                    "focusing on best practices, potential issues, "
-                    "inefficiencies, and improvements for performance and readability:"
+            return ("Review the following Ansible code: "
                     f"\n```\n{task_text}```\n"
-                    "Explain its function. Suggestions:")
+                    "Analyze its function, adherence to best practices, potential issues, "
+                    "inefficiencies, and suggest readability improvements. "
+                    "Provide specific examples and concrete suggestions. "
+                    "Consider Ansible best practices and general programming principles (DRY, least astonishment). "
+                    "Summarize your key findings and recommendations.")
         elif play_text:
             return ("Review the following Ansible playbook, "
                     "focusing on overall purpose and effectiveness, not individual tasks:"

@@ -1,94 +1,99 @@
 ---
-
 - name: Check if deadbeef is already installed
-  stat:
+  ansible.builtin.stat:
     path: /usr/bin/deadbeef
   register: result
   ignore_errors: "{{ ansible_check_mode }}"
 
-- name: Add Deadbeef apt source
-  apt_repository:
-    repo: ppa:spvkgn/deadbeef
+- name: Install Deadbeef for Debian/Ubuntu
+  when: ansible_os_family == "Debian"
+  block:
+    - name: Add Deadbeef PPA (Ubuntu)
+      ansible.builtin.apt_repository:
+        repo: ppa:spvkgn/deadbeef
+        state: present
+
+    - name: Install Deadbeef package
+      ansible.builtin.apt:
+        name: "{{ deadbeef_packages.debian }}"
+        state: present
+        update_cache: true
+      ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Install Deadbeef for Fedora
+  ansible.builtin.dnf:
+    name: "{{ deadbeef_packages.fedora }}"
     state: present
+  when: ansible_distribution == "Fedora"
 
-- name: Install Deadbeef
-  package:
-    name: "{{ deadbeef_packages[ansible_os_family | lower] }}"
+- name: Install Deadbeef for Arch Linux
+  ansible.builtin.package:
+    name: "{{ deadbeef_packages.archlinux }}"
     state: present
+  when: ansible_distribution == "Archlinux"
 
-# - block:
-#     - name: Install deadbeef
-#       aur:
-#         use: auto
-#         name: deadbeef-git
-#         state: present
-#       become: False
-#       when: ansible_os_family == 'Archlinux'
-#
-#     - name: Install deadbeef
-#       dnf:
-#         name: deadbeef-static
-#         state: present
-#         update_cache: yes
-#       when: ansible_distribution == 'Fedora'
-#
-#   tags: ['packages']
+- name: Install deadbeef configs
+  ignore_errors: "{{ ansible_check_mode }}"
+  block:
+    - name: Create deadbeef config and plugin folders
+      ansible.builtin.file:
+        path: "{{ user.home }}/{{ __deadbeef_dir }}"
+        state: directory
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
+        mode: '0755'
+      loop:
+        - ".config/deadbeef"
+        - ".config/deadbeef/playlists"
+        - ".local/lib/deadbeef"
+      loop_control:
+        loop_var: __deadbeef_dir
 
-- name: Create deadbeef config and plugin folders
-  file:
-    path: "{{ user.home }}/{{ item }}"
-    state: directory
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-  loop:
-    - ".config/deadbeef"
-    - ".config/deadbeef/playlists"
-    - ".local/lib/deadbeef"
+    - name: Sync deadbeef plugins
+      ansible.posix.synchronize:
+        src: plugins/
+        dest: "{{ user.home }}/.local/lib/deadbeef/"
+        recursive: true
+        mode: push
+        delete: false
+        checksum: true
+        perms: false
+        rsync_opts:
+          - "--update"
+          - "--omit-dir-times"
+          - --chown={{ user.name }}:{{ user.group }}
 
-- name: Sync deadbeef plugins
-  synchronize:
-    src: plugins/
-    dest: "{{ user.home }}/.local/lib/deadbeef/"
-    recursive: yes
-    mode: push
-    delete: no
-    checksum: yes
-    perms: no
-    rsync_opts:
-      - "--update"
-      - "--omit-dir-times"
+    - name: Set deadbeef configs
+      ansible.builtin.copy:
+        src: "{{ __deadbeef_config }}"
+        dest: "{{ user.home }}/.config/deadbeef/{{ __deadbeef_config }}"
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
+        mode: '0644'
+        backup: true
+      loop:
+        - config
+        - dspconfig
+      loop_control:
+        loop_var: __deadbeef_config
 
-- name: Set deadbeef configs
-  copy:
-    src: "{{ item }}"
-    dest: "{{ user.home }}/.config/deadbeef/{{ item }}"
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0644'
-    backup: True
-  with_items:
-    - config
-    - dspconfig
+    - name: Sync deadbeef playlists
+      ansible.posix.synchronize:
+        src: playlists/
+        dest: "{{ user.home }}/.config/deadbeef/playlists/"
+        recursive: true
+        mode: push
+        delete: false
+        checksum: true
+        perms: false
+        rsync_opts:
+          - "--update"
+          - "--omit-dir-times"
+          - --chown={{ user.name }}:{{ user.group }}
 
-- name: Sync deadbeef playlists
-  synchronize:
-    src: playlists/
-    dest: "{{ user.home }}/.config/deadbeef/playlists/"
-    recursive: yes
-    mode: push
-    delete: no
-    checksum: yes
-    perms: no
-    rsync_opts:
-      - "--update"
-      - "--omit-dir-times"
-
-
-# deadbeef shellexec commands
-#
-# shellexec_config_wip [{"command": "audacity %F", "flags": ["local", "single"], "title": "Edit/Audacity", "name": "new_cmd"},
-# {"command": "mkdir -pv %D/converted && sox %F -r 48k %D/converted/%f", "flags": ["local", "single", "multiple"], "title": "Edit/Sox/Resample", "name": "sox_resample"}, {"command": "normalize-audio -m %F", "flags": ["local", "single", "multiple"], "title": "Edit/Normalize", "name": "norm_audos"}, {"command": "puddletag %D", "flags": ["local", "single"], "title": "Edit/Puddletag", "name": "puddle_tag"},
-#
-# {"command": "mkdir -pv %D/converted && sox %F -r 48k %D/converted/%f channels 1", "flags": ["local", "single", "multiple"], "title": "Edit/Sox/To Mono and Resample", "name": "sox_mixres"}]
-#
-# xterm -bg black -hold -title MakeSFZ -font 9x15 -e "mkdir -pv %D/converted && sox %F -r 48k %d/converted/%N"
+# Note: The following are example shellexec commands for reference
+# - Edit audio in Audacity: audacity %F
+# - Resample to 48kHz: mkdir -pv %D/converted && sox %F -r 48k %D/converted/%f
+# - Normalize audio: normalize-audio -m %F
+# - Edit tags in Puddletag: puddletag %D
+# - Convert to mono and resample: mkdir -pv %D/converted && sox %F -r 48k %D/converted/%f channels 1

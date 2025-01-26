@@ -1,6 +1,36 @@
 ---
 
 applications_packages:
+  debian:
+    - arandr
+    - btop
+    - calcurse
+    - dconf-cli
+    - dunst
+    - feh
+    - gedit
+    - gedit-plugins
+    - gpick
+    - gtk-update-icon-cache
+    - gucharmap
+    - gummi
+    - gvfs-backends
+    - keepassxc
+    - maim
+    - mpv
+    - nitrogen
+    - nvtop
+    - openscad
+    - openslide-tools
+    - qpdfview
+    - seahorse
+    - shotcut
+    - thunar
+    - thunar-archive-plugin
+    - thunar-volman
+    - vlc
+    - wordnet
+    - zenity
   fedora:
     - arandr
     # - broot

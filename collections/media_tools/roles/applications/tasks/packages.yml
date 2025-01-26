@@ -2,6 +2,13 @@
 
 - name: Install application packages
   block:
+    - name: Install Debian packages
+      apt:
+        name: "{{ applications_packages.debian }}"
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
     - name: Install Fedora packages
       dnf:
         name: "{{ applications_packages.fedora }}"
@@ -15,31 +22,60 @@
 
 - name: Install packages from alternative sources
   block:
-    # - name: Install Google Chrome (Fedora)
-    #   dnf:
-    #     name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-    #     state: present
-    #   when: ansible_distribution == "Fedora"
+    # Debian/Ubuntu specific tasks
+    - name: Add Google Chrome repository key (Debian)
+      apt_key:
+        url: https://dl.google.com/linux/linux_signing_key.pub
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Add Google Chrome repository (Debian)
+      apt_repository:
+        repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+        filename: google-chrome
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install Google Chrome (Debian)
+      apt:
+        name: google-chrome-stable
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Add Timeshift PPA (Ubuntu)
+      apt_repository:
+        repo: ppa:teejee2008/timeshift
+        state: present
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Install Timeshift (Debian/Ubuntu)
+      apt:
+        name: timeshift
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    # Fedora specific tasks
     - name: Install Fedora workstation repositories
       dnf:
         name: fedora-workstation-repositories
         state: present
+      when: ansible_distribution == "Fedora"
 
-    - name: Enable Google Chrome repository
+    - name: Enable Google Chrome repository (Fedora)
       command: dnf config-manager --set-enabled google-chrome
       changed_when: false
+      when: ansible_distribution == "Fedora"
 
-    - name: Install Google Chrome
+    - name: Install Google Chrome (Fedora)
       dnf:
         name: google-chrome-stable
         state: present
+      when: ansible_distribution == "Fedora"
 
     - name: Install Timeshift (Fedora)
       shell: |
         dnf copr enable -y frankcrawford/timeshift
         dnf install -y timeshift
       when: ansible_distribution == "Fedora"
-
-    # Add more tasks here for other packages that need special handling
-
-  when: ansible_distribution == "Fedora"
