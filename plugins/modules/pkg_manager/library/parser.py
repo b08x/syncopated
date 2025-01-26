@@ -25,6 +25,7 @@ parsers = {
     'pamac': parse_default,
     'pip': parse_default,
     'yay': parse_source,
+    'paru': parse_source,
     'source': parse_source
 }
 

@@ -11,11 +11,13 @@
     PATH: "{{ ansible_env.PATH }}:/sbin:/bin:{{ path|join(':') }}"
 
   roles:
-
-    - role: docker
+  
+    - name: Install and configure Docker
+      import_role: docker
       when: use_docker == True
       tags: ["docker"]
 
-    - role: libvirt
+    - name: Install and configure KVM
+      import_role: libvirt
       when: use_libvirt == True
       tags: ["libvirt"]

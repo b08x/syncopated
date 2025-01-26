@@ -1,0 +1,154 @@
+---
+- name: Set facts for package management
+  ansible.builtin.set_fact:
+    pkg_mgr: "{{ ansible_pkg_mgr }}"
+    os_family: "{{ ansible_distribution }}"
+
+- name: Install GNOME packages (apt-based)
+  ansible.builtin.apt:
+    name: "{{ gnome_packages[os_family] }}"
+    state: present
+    update_cache: yes
+  become: true
+  when: pkg_mgr == 'apt'
+  tags:
+    - packages
+    - gnome
+
+- name: Install GNOME packages (dnf-based)
+  ansible.builtin.dnf:
+    name: "{{ gnome_packages[os_family] }}"
+    state: present
+  become: true
+  when: pkg_mgr == 'dnf'
+  tags:
+    - packages
+    - gnome
+
+- name: Install GNOME packages (pacman-based)
+  community.general.pacman:
+    name: "{{ gnome_packages[os_family] }}"
+    state: present
+    update_cache: yes
+  become: true
+  when: pkg_mgr == 'pacman'
+  tags:
+    - packages
+    - gnome
+
+- name: Configure GNOME interface settings
+  community.general.dconf:
+    key: "/org/gnome/desktop/interface/{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+  loop:
+    - { key: "clock-format", value: "'{{ gnome_settings.interface.clock_format }}'" }
+    - { key: "enable-animations", value: "{{ gnome_settings.interface.enable_animations | string | lower }}" }
+    - { key: "show-battery-percentage", value: "{{ gnome_settings.interface.show_battery_percentage | string | lower }}" }
+    - { key: "cursor-size", value: "{{ gnome_settings.interface.cursor_size }}" }
+    - { key: "font-antialiasing", value: "'{{ gnome_settings.interface.font_antialiasing }}'" }
+    - { key: "font-hinting", value: "'{{ gnome_settings.interface.font_hinting }}'" }
+    - { key: "gtk-theme", value: "'{{ gnome_settings.interface.gtk_theme }}'" }
+    - { key: "icon-theme", value: "'{{ gnome_settings.interface.icon_theme }}'" }
+  tags:
+    - gnome
+    - settings
+
+- name: Configure GNOME privacy settings
+  community.general.dconf:
+    key: "/org/gnome/desktop/privacy/{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+  loop:
+    - { key: "remember-recent-files", value: "{{ gnome_settings.privacy.remember_recent_files | string | lower }}" }
+    - { key: "remove-old-trash-files", value: "{{ gnome_settings.privacy.remove_old_trash_files | string | lower }}" }
+    - { key: "remove-old-temp-files", value: "{{ gnome_settings.privacy.remove_old_temp_files | string | lower }}" }
+    - { key: "old-files-age", value: "{{ gnome_settings.privacy.old_files_age }}" }
+  tags:
+    - gnome
+    - settings
+
+- name: Configure GNOME power settings
+  community.general.dconf:
+    key: "/org/gnome/settings-daemon/plugins/power/{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+  loop:
+    - { key: "sleep-inactive-ac-timeout", value: "{{ gnome_settings.power.sleep_inactive_ac_timeout }}" }
+    - { key: "sleep-inactive-battery-timeout", value: "{{ gnome_settings.power.sleep_inactive_battery_timeout }}" }
+    - { key: "power-button-action", value: "'{{ gnome_settings.power.power_button_action }}'" }
+  tags:
+    - gnome
+    - settings
+
+- name: Configure GNOME desktop settings
+  community.general.dconf:
+    key: "/org/gnome/nautilus/desktop/{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+  loop:
+    - { key: "home-icon-visible", value: "{{ gnome_settings.desktop.show_home | string | lower }}" }
+    - { key: "trash-icon-visible", value: "{{ gnome_settings.desktop.show_trash | string | lower }}" }
+    - { key: "volumes-visible", value: "{{ gnome_settings.desktop.show_mounted_volumes | string | lower }}" }
+  tags:
+    - gnome
+    - settings
+
+- name: Configure GNOME session settings
+  community.general.dconf:
+    key: "/org/gnome/desktop/session/{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+  loop:
+    - { key: "idle-delay", value: "{{ gnome_settings.session.idle_delay }}" }
+  tags:
+    - gnome
+    - settings
+
+- name: Configure GNOME screensaver settings
+  community.general.dconf:
+    key: "/org/gnome/desktop/screensaver/{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+  loop:
+    - { key: "lock-enabled", value: "{{ gnome_settings.session.lock_enabled | string | lower }}" }
+    - { key: "lock-delay", value: "{{ gnome_settings.session.lock_delay }}" }
+  tags:
+    - gnome
+    - settings
+
+- name: Configure GNOME sound settings
+  community.general.dconf:
+    key: "/org/gnome/desktop/sound/{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+  loop:
+    - { key: "theme-name", value: "{{ gnome_settings.sound.theme_enabled | string | lower }}" }
+    - { key: "event-sounds", value: "{{ gnome_settings.sound.event_sounds | string | lower }}" }
+    - { key: "input-feedback-sounds", value: "{{ gnome_settings.sound.input_feedback_sounds | string | lower }}" }
+  tags:
+    - gnome
+    - settings
+
+- name: Configure GDM to use X11
+  ansible.builtin.lineinfile:
+    path: /etc/gdm/custom.conf
+    regexp: "^#?WaylandEnable="
+    line: "WaylandEnable=false"
+    create: yes
+  become: true
+  when: not gdm_settings.wayland_enabled
+  notify: restart gdm
+  tags:
+    - gnome
+    - x11
+
+- name: Enable GDM service
+  ansible.builtin.systemd:
+    name: "{{ 'gdm3' if os_family in ['Debian', 'Ubuntu'] else 'gdm' }}"
+    enabled: yes
+    state: started
+  become: true
+  tags:
+    - services
+    - gnome

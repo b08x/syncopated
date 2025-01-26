@@ -1,0 +1,11 @@
+---
+- name: restart gdm
+  ansible.builtin.systemd:
+    name: "{{ 'gdm3' if ansible_distribution in ['Debian', 'Ubuntu'] else 'gdm' }}"
+    state: restarted
+  become: true
+
+- name: reload dconf
+  ansible.builtin.command: dconf update
+  become: true
+  changed_when: false

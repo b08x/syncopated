@@ -26,3 +26,14 @@ file.log
 /.venv/
 **/.vscode/
 *.code-workspace
+/venv/
+/assets/dotfiles/
+*.iso
+roles.tar.gz
+/ansible-collections/
+/dist/
+/.vscode/
+*.code-workspace
+full.json
+full.svg
+/llm_analysis/

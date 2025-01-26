@@ -1,0 +1,46 @@
+---
+# tasks file for docker
+
+- name: Docker Tasks
+  debug:
+    msg: "Starting docker tasks"
+
+- name: Check if Docker is installed
+  shell: |
+     which docker
+  register: docker_check
+
+- name: Print Docker version if installed
+  debug:
+    msg: "Docker version: {{ docker_check.msg }}"
+  when: docker_check.rc == 0
+
+- block:
+  - import_tasks:
+      file: debian.yml
+    when: ansible_os_family == 'Debian'
+
+  when: docker_check.rc == 0
+  tags: ["packages"]
+
+
+- name: Ensure group "docker" exists
+  group:
+    name: docker
+    state: present
+
+#TODO: add failed_when logic
+- name: Add user to docker group
+  user:
+    name: "{{ user.name }}"
+    groups: docker
+    append: yes
+  # check_mode: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  # register: dockergroup
+  # failed_when: "not 'Group docker does not exist' in dockergroup.msg"
+  tags: ["groups"]
+
+- import_tasks:
+    file: setup.yml
+  tags: ["setup"]

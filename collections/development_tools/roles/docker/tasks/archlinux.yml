@@ -1,0 +1,16 @@
+---
+
+
+- name: Install docker packages
+  aur:
+    use: paru
+    name: "{{ item }}"
+    state: present
+    extra_args: "--overwrite '*'"
+  loop:
+    - nvidia-container-toolkit
+    - nvidia-docker-compose
+  become: False
+  when:
+    - ansible_os_family == 'Archlinux'
+    - nvidia is defined

@@ -3,7 +3,17 @@
   hosts: all
   become: true
   gather_facts: true
+  collections:
+    - b08x.llmops_dev
+    - b08x.system_core
+    - b08x.shell_environment
+    - b08x.storage
+    - b08x.development_tools
+    - b08x.desktop_environment
+    - b08x.media_tools
+
   vars:
+    desktop_environment: "{{ desktop_environment | default('gnome') }}"
     custom_path:
       - "{{ lookup('env','HOME') }}/.asdf/bin"
       - "{{ lookup('env','HOME') }}/.local/bin"
@@ -13,14 +23,15 @@
     PKG_CONFIG_PATH: "/usr/share/pkgconfig:/usr/lib/pkgconfig:/usr/local/lib/pkgconfig"
     ZSH: "/usr/share/oh-my-zsh"
     DISPLAY: ":0"
+    GROQ_API_KEY: "{{ lookup('env', 'GROQ_API_KEY') }}"
   # variables from vars_files are available starting here...
   pre_tasks:
-    # the task will run if `check_mode` to 'no'
-    - name: Set current timestamp as rsync backup suffix
+
+    - name: "Generate backup timestamp suffix"
       set_fact:
-        suffix: "{{ lookup('pipe', 'date +%s.%Y-%m-%d@%H:%M:%S~') }}"
-      check_mode: false
-      tags: ["always"]
+        suffix: "{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
+      tags:
+        - always
   
     - name: Set distro name
       set_fact:
@@ -62,115 +73,140 @@
 
   roles:
 
-    - role: distro
+    - name: distro
+      import_role: distro
       tags: ["distro"]
 
-    - role: base
+    - name: base
+      import_role: base
       tags: ["base"]
 
-    - role: user
+    - name: user
+      import_role: user
       tags: ["user"]
 
-    - role: shell
-      tags: ["shell"]
+    - name: zsh
+      import_role: zsh
+      tags: ["shell", "zsh"]
 
-    - role: sudoers
+    - name: sudoers
+      import_role: sudoers
       tags: ["sudoers"]
 
-    - role: ruby
-      tags: ["ruby"]
-
-    - role: networking
+    - name: networking
+      import_role: networking
       tags: ["networking"]
 
 - name: Run Container and Virt roles
   hosts: virt
   become: true
   gather_facts: true
+  collections:
+    - b08x.development_tools
 
   roles:
+    - name: ruby
+      import_role: ruby
+      tags: ["ruby"]
 
-    - role: docker
+    - name: docker
+      import_role: docker
       when: use_docker == True
       tags: ["docker"]
 
-    - role: libvirt
+    - name: libvirt
+      import_role: libvirt
       when: use_libvirt == True
       tags: ["libvirt"]
+
+    - name: ide
+      import_role: ide
+      tags: ["ide"]
 
 - name: Run Workstation roles
   hosts: workstation
   become: true
   gather_facts: true
+  collections:
+    - b08x.system_core
+    - b08x.desktop_environment
+    - b08x.development_tools
+    - b08x.media_tools
 
   roles:
 
-    - role: input-remapper
-      tags: ["input-remapper", "keybindings"]
-
-    - role: x11
-      tags: ["x11"]
-
-    - role: sxhkd
-      tags: ["sxhkd", "keybindings"]
-
-    - role: terminal
+    - name: terminal
+      import_role: terminal
       tags: ["terminal"]
 
-    - role: xdg
-      tags: ["xdg"]
+    - name: theme
+      import_role: theme
+      tags: ["theme"]
 
-    - role: rofi
-      tags: ["rofi"]
+    - name: i3
+      import_role: i3
+      when: desktop_environment == 'i3'
+      tags: ["i3"]
 
-    - role: i3
-      when: de is defined and window_manager == 'i3'
-      tags: ["i3", "keybindings"]
+    - name: gnome
+      import_role: gnome
+      when: desktop_environment == 'gnome'
+      tags: ["gnome"]
 
-    - role: applications
-      tags: ["applications"]
-
-    - role: barrier
+    - name: barrier
+      import_role: barrier
       tags: ["barrier"]
 
-    - role: pulsar
-      tags: ["pulsar"]
+    - name: input-remapper
+      import_role: input-remapper
+      from: b08x.desktop_environment
+      tags: ["input-remapper"]
 
-    - role: vscode
-      tags: ["vscode"]
+    - name: applications
+      import_role: applications
+      tags: ["applications"]
 
-    - role: deadbeef
-      tags: ["deadbeef"]
-
-    - role: obs-studio
+    - name: obs-studio
+      import_role: obs-studio
       tags: ["obs-studio"]
 
-    - role: theme
-      tags: ["theme"]
+    - name: deadbeef
+      import_role: deadbeef
+      tags: ["deadbeef"]
+      
 
 - name: Run DAW roles
   hosts: daw
   become: true
   gather_facts: true
+  collections:
+    - b08x.system_core
+    - b08x.audio_production
 
   roles:
 
-    - role: tuning
+    - name: tuning
+      import_role: tuning
       tags: ["tunig"]
 
-    - role: alsa
+    - name: alsa
+      import_role: alsa
       tags: ["alsa"]
 
-    - role: jackd
+    - name: jackd
+      import_role: jackd
       tags: ["jackd"]
 
-    - role: pulseaudio
+    - name: pulseaudio
+      import_role: pulseaudio
       tags: ["pulseaudio"]
 
-    # - role: pipewire
+    # - name: pipewire
+    #   import_role: pipewire
     #   tags: ["pipewire"]
 
-    - role: daw
+    - name: daw
+      import_role: daw
       tags: ["daw"]
 
 

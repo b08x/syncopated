@@ -8,7 +8,7 @@ homepage:
     intranet:
       # - name: hookerbot
       #   url: "http://hookerbot"
-      - name: invisiblemagic
+      - name: hookerbot
         url: "http://192.168.41.1"
       # - name: linkding
       #   url: "http://bender.syncopated.net:9090/bookmarks"
@@ -17,28 +17,30 @@ homepage:
       # - name: pkgrepo
       #   url: "http://bender.syncopated.net"
       # - name: plex
-      #   url: "http://ninjabot.syncopated.net:32400/web"
+      #   url: "http://tinybot.syncopated.net:32400/web"
       # - name: qbittorrent
       #   url: "http://bender.syncopated.net:8080"
     intranetLLM:
       - name: Dify
-        url: "http://localhost"
+        url: "http://tinybot"
       - name: Flowise
-        url: "http://localhost:3002"
+        url: "http://tinybot:3002"
       - name: Langfuse
-        url: "http://localhost:3000"
+        url: "http://tinybot:3000"
+      - name: Open WebUI
+        url: "http://localhost:3019"
       - name: SillyTavern
-        url: "http://localhost:8007"
-      - name: Lobe-Chat
-        url: "http://localhost:3210"
+        url: "http://localhost:8000"
       - name: Big-AGI
         url: "http://localhost:3001"
-      - name: LocalAI
+      - name: Stirling PDF
         url: "http://localhost:8080"
       - name: Redis
         url: "http://localhost:8001"
+      - name: Lobe-Chat
+        url: "http://localhost:3210"
       # - name: ArchiveBox
-      #   url: "http://ninjabot.syncopated.net:8000"
+      #   url: "http://tinybot.syncopated.net:8000"
     webtools:
       - name: gmail
         url: "https://gmail.google.com"

@@ -1,0 +1,111 @@
+---
+
+share:
+  nfs:
+    parent: "{{ user.home }}"
+    exports:
+      - Storage
+
+bind_share_exports: True
+
+services:
+  mediamtx:
+    enabled: True
+
+cpupower:
+  governor: performance
+  perf_bias: 0
+
+browser: "google-chrome-stable"
+
+#TODO: this
+# tuned:
+#   profile: powersave
+
+audio: "jack"
+
+de: gnome
+desktop_environment: gnome
+# x:
+#   autostart:
+#     - bash ~/.screenlayout/soundbot.sh
+#
+# i3:
+#   autostart:
+#     - "tilda"
+#     - "ray-daemon --session-root ~/Studio/NetworkSessions -p 7777"
+#     - "sleep 0.5"
+#     - "barrierc -f --no-tray --debug INFO --name soundbot --disable-crypto [tinybot]:24800"
+#   tray_output: "primary"
+#   assignments: "default"
+#   workspaces:
+#     - "$ws1 output eDP-1"
+#     - "$ws2 output eDP-1"
+#     - "$ws3 output eDP-1"
+#     - "$ws4 output DP-1-1"
+#     - "$ws5 output DP-1-1"
+#     - "$ws6 output DP-1-1"
+#     - "$ws7 output DP-1-1"
+#     - "$ws8 output DP-1-1"
+#     - "$ws9 output DP-1-1"
+#     - "$ws10 output DP-1-1"
+#   keybindings: "default"
+
+# network_interfaces:
+#   - device: eth0
+#     type: ethernet
+#     ifname: eth0
+#     conn_name: eth0
+#     mac: 54:ee:75:fd:46:30
+#     autoconnect: False
+#     state: present
+#     method4: auto
+#   - device: eth1
+#     type: ethernet
+#     ifname: eth1
+#     conn_name: eth1
+#     mac: 00:50:b6:91:fc:4d
+#     ip4: 192.168.41.42/24
+#     gw4: 192.168.41.1
+#     dns4:
+#       - 192.168.41.41
+#       - 192.168.41.1
+#     dns4_search: syncopated.net
+#     autoconnect: True
+#     state: present
+#     method4: manual
+#   - device: eth2
+#     type: ethernet
+#     ifname: eth2
+#     conn_name: audio
+#     mac: 00:e0:4d:78:b7:7c
+#     ip4: 192.168.36.1/24
+#     autoconnect: True
+#     state: present
+#     method4: manual
+
+host:
+  xorg:
+    video:
+      # intel:
+      - intel-gpu-tools
+      - intel-media-driver
+      - intel-ucode
+      - libva-intel-driver
+      - libva-mesa-driver
+      # - libvdpau-va-gl-i965
+      - vulkan-headers
+      - vulkan-icd-loader
+      - vulkan-intel
+      - xf86-video-intel
+      # opengl:
+      - libva-utils
+      - libvdpau-va-gl
+      - libva-mesa-driver
+      - mesa
+      - mesa-utils
+      - mesa-vdpau
+      - vdpauinfo
+      # opencl:
+      - opencl-clover-mesa
+      - opencl-rusticl-mesa

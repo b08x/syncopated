@@ -1,0 +1,24 @@
+---
+
+admin_group: wheel
+
+packages:
+  utility:
+    - aria2
+    - gnome-keyring
+    - gnome-keyring-pam
+    - htop
+    - inxi
+    - neovim
+    - ranger
+    - systemd-timesyncd
+  ruby:
+    - cmake
+    - g++
+    - git
+    - libgit2-devel
+    - openssl-devel
+    - postgresql-devel
+    - ruby-devel
+    - rubygem-psych
+    - rubygems

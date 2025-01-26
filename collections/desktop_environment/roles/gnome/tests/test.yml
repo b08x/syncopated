@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  become: true
+  collections:
+  - b08x.desktop_environment
+  roles:
+    - role: gnome
+      vars:
+        gnome_settings:
+          interface:
+            gtk_theme: "Adwaita"
+            icon_theme: "Adwaita"
+            clock_format: "24h"
+          power:
+            sleep_inactive_ac_timeout: 3600
+          desktop:
+            show_home: true
+            show_trash: true
+        gdm_settings:
+          wayland_enabled: false

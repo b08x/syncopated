@@ -25,7 +25,8 @@
 
   roles:
 
-    - role: homepage
+    - name: homepage
+      import_role: homepage
       tags: ["homepage"]
 
   post_tasks:

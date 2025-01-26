@@ -1,0 +1,13 @@
+authors:
+- Robert Pannick <rwpannick@gmail.com>
+dependencies: {}
+description: Core system configuration roles
+license:
+- MIT
+name: system_core
+namespace: b08x
+readme: README.md
+repository: https://github.com/b08x/ansible-collections
+tags:
+- system core
+version: 1.1.6
