@@ -30,6 +30,19 @@ gnome_settings:
     clock_format: "24h"
     enable_animations: true
     # ... (see defaults/main.yml for full list)
+  
+  # Custom keybindings for window management and media keys
+  keybindings:
+    keybindings:  # Window manager keybindings
+      switch-to-workspace-1: ["<Super>1"]
+      switch-to-workspace-2: ["<Super>2"]
+      switch-to-workspace-3: ["<Super>3"]
+      switch-to-workspace-4: ["<Super>4"]
+    media-keys:  # Media and system control keybindings
+      volume-up: ["<Super>Up"]
+      volume-down: ["<Super>Down"]
+      play: ["<Super>p"]
+      screenshot: ["<Super>Print"]
 
 # Display Manager settings
 gdm_settings:
@@ -100,6 +113,28 @@ The role provides extensive customization options for various aspects of the GNO
 - Desktop behavior
 - Session management
 - Sound settings
+- Custom keybindings (window management and media keys)
+
+### Keybindings
+
+The role supports configuring both window management and media key bindings:
+
+- Window Management Keybindings:
+  - Workspace switching
+  - Window control (maximize, minimize, etc.)
+  - Window movement and resizing
+
+- Media Key Bindings:
+  - Volume control
+  - Media playback
+  - Screen capture
+  - Custom system commands
+
+Keybindings can be configured in the standard GNOME format using modifiers like:
+- `<Super>` (Windows/Command key)
+- `<Alt>`
+- `<Ctrl>`
+- `<Shift>`
 
 ### Display Manager
 

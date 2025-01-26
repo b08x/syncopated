@@ -58,6 +58,32 @@ gnome_settings:
     theme_enabled: true
     event_sounds: true
     input_feedback_sounds: true
+  keybindings:
+    keybindings:  # Window manager keybindings
+      switch-to-workspace-1: ["<Super>1"]
+      switch-to-workspace-2: ["<Super>2"]
+      switch-to-workspace-3: ["<Super>3"]
+      switch-to-workspace-4: ["<Super>4"]
+      move-to-workspace-1: ["<Super><Shift>1"]
+      move-to-workspace-2: ["<Super><Shift>2"]
+      move-to-workspace-3: ["<Super><Shift>3"]
+      move-to-workspace-4: ["<Super><Shift>4"]
+      toggle-maximized: ["<Super>m"]
+      close: ["<Super>q"]
+      toggle-fullscreen: ["<Super>f"]
+    media-keys:  # Media and system control keybindings
+      volume-up: ["<Super>Up"]
+      volume-down: ["<Super>Down"]
+      volume-mute: ["<Super>0"]
+      play: ["<Super>p"]
+      next: ["<Super>bracketright"]
+      previous: ["<Super>bracketleft"]
+      screenshot: ["Print"]
+      window-screenshot: ["<Alt>Print"]
+      area-screenshot: ["<Shift>Print"]
+      terminal: ["<Super>t"]
+      home: ["<Super>e"]
+      www: ["<Super>w"]
 
 # Display Manager settings
 gdm_settings:

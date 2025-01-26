@@ -89,7 +89,8 @@ def map_to_role_vars(settings, packages):
             'power': {},
             'desktop': {},
             'session': {},
-            'sound': {}
+            'sound': {},
+            'keybindings': {}
         },
         'gdm_settings': {
             'wayland_enabled': False
@@ -162,6 +163,34 @@ def map_to_role_vars(settings, packages):
             'event_sounds': sound.get('event-sounds', True),
             'input_feedback_sounds': sound.get('input-feedback-sounds', True)
         }
+    
+    # Map keybinding settings
+    keybindings = {}
+    for section in settings:
+        if section.startswith('org/gnome/desktop/wm/keybindings') or section.startswith('org/gnome/settings-daemon/plugins/media-keys'):
+            section_name = section.split('/')[-1]
+            if section_name not in keybindings:
+                keybindings[section_name] = {}
+            
+            for key, value in settings[section].items():
+                # Convert list-style strings to actual lists
+                if value.startswith('@as'):
+                    try:
+                        # Parse the string representation of the list
+                        value = value.replace('@as', '').strip()
+                        if value == '[]':
+                            value = []
+                        else:
+                            # Remove brackets and split by comma, then clean up each item
+                            value = [item.strip(" '\"") for item in value[1:-1].split(',')]
+                    except Exception as e:
+                        print(f"Error parsing keybinding value: {e}")
+                        continue
+                
+                keybindings[section_name][key] = value
+    
+    if keybindings:
+        role_vars['gnome_settings']['keybindings'] = keybindings
     
     return role_vars
 
