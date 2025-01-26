@@ -6,6 +6,10 @@
   register: expected_value
 
 - import_tasks:
+    file: distro/main.yml
+  tags: ['distro']
+
+- import_tasks:
     file: packages.yml
   tags: ['packages']
 

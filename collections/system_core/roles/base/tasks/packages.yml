@@ -10,6 +10,15 @@
         - "{{ base_packages.fedora }}"
       when: ansible_os_family == 'RedHat'
 
+    - name: Install Debian Base packages
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items:
+        - "{{ base_packages.debian }}"
+      when: ansible_os_family == 'Debian'
+
   rescue:
     - name: Handle package installation failures
       debug:

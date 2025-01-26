@@ -25,6 +25,8 @@ root_directory_definitions:
 expected_value: "role_base_defaults"
 
 base_packages:
+  debian:
+    - python3-psutil
   fedora:
     # Many packages have the same name in Fedora
     - aspell

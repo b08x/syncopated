@@ -1,13 +1,13 @@
 ---
 
-# - name: Install X11 packages
-#   block:
-    # - name: Install X11 packages from official repositories
-    #   package:
-    #     name: "{{ item }}"
-    #     state: present
-    #   with_items:
-    #     - "{{ x11_packages[ansible_distribution | lower] }}"
+- name: Install X11 packages
+  block:
+    - name: Install X11 packages from official repositories
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - "{{ x11_packages[ansible_os_family | lower ] }}"
 
     # - name: Install xbacklight alternative on Fedora
     #   dnf:

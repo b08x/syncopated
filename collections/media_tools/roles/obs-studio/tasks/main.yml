@@ -8,6 +8,19 @@
   debug:
     msg: "Starting OBS Studio tasks"
 
+- block:
+    - name: Add OBS Studio apt source
+      apt_repository:
+        repo: ppa:obsproject/obs-studio
+        state: present
+
+    - name: Install obs-studio Debian
+      apt:
+        name: obs-studio
+        state: present
+
+  when: ansible_os_family == "Debian"
+
 - name: Install obs_studio_packages packages
   block:
     - name: Install Arch Linux Base packages

@@ -1,3 +1,18 @@
+{% if ansible_os_family == 'Debian' %}
+
+# This is the sshd server system-wide configuration file.  See
+# sshd_config(5) for more information.
+
+# This sshd was compiled with PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+
+# The strategy used for options in the default sshd_config shipped with
+# OpenSSH is to specify options with their default value where
+# possible, but leave them commented.  Uncommented options override the
+# default value.
+
+Include /etc/ssh/sshd_config.d/*.conf
+
+{% else %}
 #	$OpenBSD: sshd_config,v 1.104 2021/07/02 05:11:21 dtucker Exp $
 
 # This is the sshd server system-wide configuration file.  See
@@ -9,7 +24,7 @@
 # OpenSSH is to specify options with their default value where
 # possible, but leave them commented.  Uncommented options override the
 # default value.
-
+{% endif %}
 #Port 22
 #AddressFamily any
 #ListenAddress 0.0.0.0
@@ -107,7 +122,7 @@ PrintMotd no
 #PidFile /var/run/sshd.pid
 {% endif %}
 {% if ansible_os_family == 'Debian' %}
-#PidFile /var/run/sshd.pid
+#PidFile /run/sshd.pid
 {% endif %}
 #MaxStartups 10:30:100
 #PermitTunnel no

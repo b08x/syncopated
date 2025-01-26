@@ -72,11 +72,6 @@
       tags: ['sudoers']
 
   roles:
-
-    - name: distro
-      import_role: distro
-      tags: ["distro"]
-
     - name: base
       import_role: base
       tags: ["base"]

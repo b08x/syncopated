@@ -5,3 +5,15 @@
     name: sshd
     state: restarted
     enabled: True
+
+- name: Update pacman cache
+  pacman:
+    update_cache: True
+    upgrade: False
+
+- name: Update pacman mirrors
+  shell: |
+    reflector --download-timeout 2 --protocol https \
+    --latest 20 --sort rate --score 15 --fastest 12 \
+    --save /etc/pacman.d/mirrorlist
+  ignore_errors: True

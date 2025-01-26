@@ -2,7 +2,7 @@
 - name: Set facts for package management
   ansible.builtin.set_fact:
     pkg_mgr: "{{ ansible_pkg_mgr }}"
-    os_family: "{{ ansible_distribution }}"
+    os_family: "{{ ansible_os_family | lower }}"
 
 - name: Install GNOME packages (apt-based)
   ansible.builtin.apt:
@@ -81,18 +81,18 @@
     - gnome
     - settings
 
-- name: Configure GNOME desktop settings
-  community.general.dconf:
-    key: "/org/gnome/nautilus/desktop/{{ item.key }}"
-    value: "{{ item.value }}"
-    state: present
-  loop:
-    - { key: "home-icon-visible", value: "{{ gnome_settings.desktop.show_home | string | lower }}" }
-    - { key: "trash-icon-visible", value: "{{ gnome_settings.desktop.show_trash | string | lower }}" }
-    - { key: "volumes-visible", value: "{{ gnome_settings.desktop.show_mounted_volumes | string | lower }}" }
-  tags:
-    - gnome
-    - settings
+# - name: Configure GNOME desktop settings
+#   community.general.dconf:
+#     key: "/org/gnome/nautilus/desktop/{{ item.key }}"
+#     value: "{{ item.value }}"
+#     state: present
+#   loop:
+#     # - { key: "home-icon-visible", value: "{{ gnome_settings.desktop.show_home | string | lower }}" }
+#     - { key: "trash-icon-visible", value: "{{ gnome_settings.desktop.show_trash | string | lower }}" }
+#     - { key: "volumes-visible", value: "{{ gnome_settings.desktop.show_mounted_volumes | string | lower }}" }
+#   tags:
+#     - gnome
+#     - settings
 
 - name: Configure GNOME session settings
   community.general.dconf:
@@ -117,18 +117,18 @@
     - gnome
     - settings
 
-- name: Configure GNOME sound settings
-  community.general.dconf:
-    key: "/org/gnome/desktop/sound/{{ item.key }}"
-    value: "{{ item.value }}"
-    state: present
-  loop:
-    - { key: "theme-name", value: "{{ gnome_settings.sound.theme_enabled | string | lower }}" }
-    - { key: "event-sounds", value: "{{ gnome_settings.sound.event_sounds | string | lower }}" }
-    - { key: "input-feedback-sounds", value: "{{ gnome_settings.sound.input_feedback_sounds | string | lower }}" }
-  tags:
-    - gnome
-    - settings
+# - name: Configure GNOME sound settings
+#   community.general.dconf:
+#     key: "/org/gnome/desktop/sound/{{ item.key }}"
+#     value: "{{ item.value }}"
+#     state: present
+#   loop:
+#     - { key: "theme-name", value: "{{ gnome_settings.sound.theme_enabled | string | lower }}" }
+#     - { key: "event-sounds", value: "{{ gnome_settings.sound.event_sounds | string | lower }}" }
+#     - { key: "input-feedback-sounds", value: "{{ gnome_settings.sound.input_feedback_sounds | string | lower }}" }
+#   tags:
+#     - gnome
+#     - settings
 
 - name: Configure GDM to use X11
   ansible.builtin.lineinfile:

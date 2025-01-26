@@ -6,9 +6,14 @@
   register: result
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: Add Deadbeef apt source
+  apt_repository:
+    repo: ppa:spvkgn/deadbeef
+    state: present
+
 - name: Install Deadbeef
   package:
-    name: "{{ deadbeef_packages[ansible_distribution | lower] }}"
+    name: "{{ deadbeef_packages[ansible_os_family | lower] }}"
     state: present
 
 # - block:

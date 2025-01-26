@@ -1,5 +1,6 @@
 ansible
 pyyaml
+psutil
 openai
 google-generativeai
 groq

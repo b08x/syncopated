@@ -3,5 +3,7 @@
 deadbeef_packages:
   archlinux:
     - deadbeef-git
+  debian:
+    - deadbeef
   fedora:
     - deadbeef

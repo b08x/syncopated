@@ -3,5 +3,7 @@
 barrier_packages:
   archlinux:
     - barrier
+  debian:
+    - barrier
   fedora:
     - barrier

@@ -8,7 +8,7 @@
 # Task for Barrier role
 - name: Install Barrier packages
   package:
-    name: "{{ barrier_packages[ansible_distribution | lower] }}"
+    name: "{{ barrier_packages[ansible_os_family | lower] }}"
     state: present
 
 - name: Ensure folders for barrier configs exist
