@@ -16,41 +16,48 @@
   pre_tasks:
     # the task will run if `check_mode` to 'no'
     - name: Register timestamp
-      shell: "date +'%s.%Y-%m-%d@%H:%M:%S~'"
       register: timestamp
-      check_mode: no
-      tags: ["always"]
+      check_mode: false
+      tags:
+      - always
+      ansible.builtin.shell: "date +'%s.%Y-%m-%d@%H:%M:%S~'"
 
     - name: Set suffix
-      set_fact:
+      tags:
+      - always
+      ansible.builtin.set_fact:
         suffix: "{{ timestamp.stdout_lines[0] }}"
-      tags: ["always"]
 
     - name: Set distro name
-      set_fact:
-        ansible_distribution: "{{ distro }}"
       when: distro is defined
-      tags: ["always", "testing"]
+      tags:
+      - always
+      - testing
+      ansible.builtin.set_fact:
+        ansible_distribution: "{{ distro }}"
 
     - name: Display distro name
-      debug:
+      tags:
+      - always
+      ansible.builtin.debug:
         msg: System {{ inventory_hostname }} has distro {{ ansible_distribution }}
-      tags: ['always']
 
     - name: Symlink /etc/os-release to /etc/system-release
-      file:
+      ansible.builtin.file:
         src: /etc/os-release
         dest: /etc/system-release
         state: link
 
     - name: Set admin group name
-      set_fact:
+      tags:
+      - always
+      ansible.builtin.set_fact:
         admin_group: wheel
-      tags: ["always"]
 
-    # to allow for ansible pipelining functionality
-    # https://docs.ansible.com/ansible/2.4/intro_configuration.html#pipelining
-    # while this requirement was removed in RHEL, many other distros leave this option enabled
+        # to allow for ansible pipelining functionality
+        # https://docs.ansible.com/ansible/2.4/intro_configuration.html#pipelining
+        # while this requirement was removed in RHEL, many other distros leave this option enabled
+
     - name: Disable requiretty for user so automation can run without interruption
       lineinfile:
         dest: /etc/sudoers
