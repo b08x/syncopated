@@ -1,31 +1,42 @@
 ---
 
-- name: Ensure input-remapper config directories exist
-  file:
-    dest: "{{ user.home }}/{{ item }}"
-    state: directory
-    owner: "{{ user.name }}"
-    group: "{{ user.group }}"
-    mode: '0744'
-    recurse: false
-  loop:
-    - ".config/input-remapper-2"
-    - ".config/input-remapper-2/presets"
-  check_mode: no
-  tags: ['profile']
+- name: Ensure input-remapper preset synchronization
+  block:
+    - name: Check presets source directory exists
+      ansible.builtin.stat:
+        path: presets/
+      register: source_dir
+      delegate_to: localhost
 
-- name: Sync input-remapper presets folder
-  synchronize:
-    src: presets/
-    dest: "{{ user.home }}/.config/input-remapper-2/presets/"
-    recursive: yes
-    mode: push
-    delete: no
-    checksum: yes
-    perms: no
-    rsync_opts:
-      - "--update"
-      - "--omit-dir-times"
-      - "--progress"
-      - "--itemize-changes"
-      - "--chown={{ user.name }}:{{ user.group }}"
+    - name: Ensure destination directory exists
+      ansible.builtin.file:
+        path: '{{ user.home }}/.config/input-remapper-2/presets/'
+        state: directory
+        mode: '0755'
+        owner: "{{ user.name }}"
+        group: "{{ user.group }}"
+      when: source_dir.stat.exists
+
+    - name: Sync input-remapper presets folder
+      ansible.posix.synchronize:
+        checksum: true
+        delete: false
+        dest: '{{ user.home }}/.config/input-remapper-2/presets/'
+        mode: push
+        perms: false
+        recursive: true
+        rsync_opts:
+          - --compress
+          - --update
+          - --omit-dir-times
+          - --progress
+          - --itemize-changes
+          - --chown={{ user.name }}:{{ user.group }}
+        src: presets/
+      when: source_dir.stat.exists
+      register: sync_result
+
+  rescue:
+    - name: Handle synchronization failure
+      ansible.builtin.debug:
+        msg: "Failed to sync input-remapper presets: {{ ansible_failed_result }}"
