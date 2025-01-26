@@ -4,8 +4,6 @@
   gather_subset:
     - hardware
     - network
-  collections:
-    - b08x.storage
   vars:
     path:
       - "{{ lookup('env','HOME') }}/.local/bin"

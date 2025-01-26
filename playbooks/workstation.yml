@@ -6,7 +6,6 @@
     - b08x.llmops_dev
     - b08x.system_core
     - b08x.shell_environment
-    - b08x.storage
     - b08x.development_tools
     - b08x.desktop_environment
     - b08x.media_tools
