@@ -74,39 +74,27 @@
   roles:
 
     - name: distro
-      import_role:
-        name: distro
-      from: b08x.system_core
+      import_role: distro
       tags: ["distro"]
 
     - name: base
-      import_role:
-        name: base
-      from: b08x.system_core
+      import_role: base
       tags: ["base"]
 
     - name: user
-      import_role:
-        name: user
-      from: b08x.system_core
+      import_role: user
       tags: ["user"]
 
     - name: zsh
-      import_role:
-        name: zsh
-      from: b08x.shell_environment
+      import_role: zsh
       tags: ["shell", "zsh"]
 
     - name: sudoers
-      import_role:
-        name: sudoers
-      from: b08x.system_core
+      import_role: sudoers
       tags: ["sudoers"]
 
     - name: networking
-      import_role:
-        name: networking
-      from: b08x.system_core
+      import_role: networking
       tags: ["networking"]
 
 - name: Run Container and Virt roles
@@ -151,45 +139,32 @@
       import_role: terminal
       tags: ["terminal"]
 
-    - name: sxhkd
-      import_role: sxhkd
-      tags: ["sxhkd", "keybindings"]
-
-    - name: xdg
-      import_role: xdg
-      tags: ["xdg"]
-
-    - name: rofi
-      import_role: rofi
-      tags: ["rofi"]
+    - name: theme
+      import_role: theme
+      tags: ["theme"]
 
     - name: i3
-      import_role:
-        name: i3
-      from: b08x.desktop_environment
+      import_role: i3
       when: desktop_environment == 'i3'
-      tags: ["i3", "keybindings"]
+      tags: ["i3"]
 
     - name: gnome
-      import_role:
-        name: gnome
-      from: b08x.desktop_environment
+      import_role: gnome
       when: desktop_environment == 'gnome'
       tags: ["gnome"]
 
+    - name: barrier
+      import_role: barrier
+      tags: ["barrier"]
+
     - name: input-remapper
-      import_role:
-        name: input-remapper
+      import_role: input-remapper
       from: b08x.desktop_environment
       tags: ["input-remapper"]
 
     - name: applications
       import_role: applications
       tags: ["applications"]
-
-    - name: barrier
-      import_role: barrier
-      tags: ["barrier"]
 
     - name: obs-studio
       import_role: obs-studio
@@ -199,9 +174,6 @@
       import_role: deadbeef
       tags: ["deadbeef"]
       
-    - name: theme
-      import_role: theme
-      tags: ["theme"]
 
 - name: Run DAW roles
   hosts: daw
