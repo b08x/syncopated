@@ -5,14 +5,14 @@
   debug:
     msg: "Starting zsh tasks"
 
-- name: Install zsh
-  package:
-    name: "{{ item }}"
+- name: Install shell packages
+  ansible.builtin.package:
+    name:
+      - zsh
+      - zoxide
     state: present
-  with_items:
-    - zsh
-    - zoxide
-  tags: ['packages']
+  tags:
+    - packages
 
 - name: Install oh-my-zsh
   shell: |
@@ -23,26 +23,15 @@
   tags: ['ohmyzsh']
 
 - name: Install fd and ripgrep ohmyzsh plugins
-  synchronize:
+  copy:
     src: "usr/local/share/oh-my-zsh/plugins/{{ item }}"
-    dest: /usr/local/share/oh-my-zsh/plugins/
-    recursive: yes
-    mode: push
-    delete: no
-    checksum: yes
-    perms: no
-    rsync_opts:
-      - "--update"
-      - "--omit-dir-times"
-      - "--progress"
-      - "--itemize-changes"
-      - "--chown=root:root"
-      - "--backup"
-      - "--suffix={{ suffix }}"
+    dest: "/usr/local/share/oh-my-zsh/plugins/"
+    owner: root
+    group: root
+    backup: yes
   with_items:
     - fd
     - ripgrep
-  tags: ['ohmyzsh']
 
 - name: Ensure user local exists
   file:
