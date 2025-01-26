@@ -41,3 +41,5 @@ terminal_packages:
     - terminator
     # - termpdf.py-git  # Not available in Fedora repos
     - tilda
+  debian:
+    - tilix
