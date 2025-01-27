@@ -61,12 +61,12 @@
 
   pre_tasks:
     - name: Gather system facts
-      setup:
+      ansible.builtin.setup:
         gather_subset: network
 
     - block:
         - name: Install 'pyenv' (if not already installed)
-          shell: curl https://pyenv.run | bash
+          ansible.builtin.shell: curl https://pyenv.run | bash
 
         - name: Install 'pyenv-virtualenv' plugin
           git:
@@ -90,54 +90,56 @@
 
     - name: Add pyenv configurations to shell (optional, recommended)
       block:
-       - lineinfile:
-           path: "{{ ansible_env.HOME }}/.zshrc"  # Or .zshrc if Zsh is used
+       - ansible.builtin.lineinfile:
+           path: "{{ ansible_env.HOME }}/.zshrc"         # Or .zshrc if Zsh is used
            line: 'export PYENV_ROOT="$HOME/.pyenv"'
-       - lineinfile:
-           path: "{{ ansible_env.HOME }}/.zshrc"  # Or .zshrc if Zsh is used
+
+       - ansible.builtin.lineinfile:
+           path: "{{ ansible_env.HOME }}/.zshrc"         # Or .zshrc if Zsh is used
            line: '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"'
+
        - lineinfile:
            path: "{{ ansible_env.HOME }}/.zshrc"  # Or .zshrc if Zsh is used
            line: 'eval "$(pyenv init -)"'
 
   tasks:
     - name: Clone Audapolis Repository
-      git:
+      ansible.builtin.git:
         repo: "{{ repo_url }}"
         dest: "{{ project_dir }}"
 
     - setup:
-    - debug:
+    - ansible.builtin.debug:
         msg: Installing Python 3.10.0
 
     - name: check if 3.10.0 is already installed
-      stat:
-        path: "{{ ansible_env.HOME }}/.pyenv/versions/3.10.0"
       register: python_check
       ignore_errors: "{{ ansible_check_mode }}"
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.pyenv/versions/3.10.0"
 
     - name: Install Python 3.10
       when: not python_check.stat.exists
-      shell: pyenv install 3.10.0
       args:
-        chdir: "{{ project_dir }}"
+        chdir: '{{ project_dir }}'
+      ansible.builtin.shell: pyenv install 3.10.0
 
     - name: List existing Python virtualenvs
-      command: pyenv versions --bare
       register: existing_venvs
+      ansible.builtin.command: pyenv versions --bare
 
     - name: Check if Python Virtual Environment Already Exists
-      stat:
-        path: "{{ ansible_env.HOME }}/.pyenv/versions/3.10.0/envs/audapolisenv"
       register: venv_check
       ignore_errors: "{{ ansible_check_mode }}"
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.pyenv/versions/3.10.0/envs/audapolisenv"
 
     - name: Create Python Virtual Environment
       when: not venv_check.stat.exists
-      shell: |
-        eval "$(pyenv init -)" && pyenv virtualenv 3.10.0 {{ virtualenv_name }}
       args:
-        chdir: "{{ project_dir }}"
+        chdir: '{{ project_dir }}'
+      ansible.builtin.shell: |
+        eval "$(pyenv init -)" && pyenv virtualenv 3.10.0 {{ virtualenv_name }}
 
     - name: Install Server Dependencies (poetry)
       when: python_check.stat.exists
@@ -148,36 +150,37 @@
         chdir: "{{ project_dir }}/server"
 
     - name: Install Server Dependencies (poetry)
-      shell: |
+      args:
+        chdir: '{{ project_dir }}/server'
+      ansible.builtin.shell: |
         eval "$(pyenv init -)" && pyenv activate {{ virtualenv_name }} && \
         poetry install
-      args:
-        chdir: "{{ project_dir }}/server"
+      when: python_check.stat.exists
 
     - name: Install requirements
       when: python_check.stat.exists
-      shell: |
-        eval "$(pyenv init -)" && pyenv activate {{ virtualenv_name }} && \
-        pip install --no-cache-dir "{{ item }}"
       with_items: "{{ pyrequirements }}"
       args:
-        chdir: "{{ project_dir }}"
+        chdir: '{{ project_dir }}'
+      ansible.builtin.shell: |
+        eval "$(pyenv init -)" && pyenv activate {{ virtualenv_name }} && \
+        pip install --no-cache-dir "{{ item }}"
 
     - setup:
-    - debug:
+    - ansible.builtin.debug:
         msg: "Installing App Dependencies..."
 
     - name: Install App Dependencies
-      npm:
+      community.general.npm:
         path: "{{ project_dir }}/app"
         state: present
 
-    # - name: Start Audapolis Server (in background)
-    #   shell: nohup poetry run uvicorn app.main:app --reload &
-    #   args:
-    #     chdir: "{{ project_dir }}/server"
-    #
-    # - name: Start Audapolis Electron App
-    #   shell: npm start
-    #   args:
-    #     chdir: "{{ project_dir }}/app"
+        # - name: Start Audapolis Server (in background)
+        #   shell: nohup poetry run uvicorn app.main:app --reload &
+        #   args:
+        #     chdir: "{{ project_dir }}/server"
+        #
+        # - name: Start Audapolis Electron App
+        #   shell: npm start
+        #   args:
+        #     chdir: "{{ project_dir }}/app"

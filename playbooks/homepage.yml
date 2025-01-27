@@ -14,9 +14,10 @@
 
   pre_tasks:
     - name: Set datetime
-      set_fact:
+      tags:
+      - always
+      ansible.builtin.set_fact:
         datetime: ansible_date_time.epoch
-      tags: ["always"]
 
     - name: Set suffix
       set_fact:
@@ -31,6 +32,7 @@
 
   post_tasks:
     - name: Cleanup old backup files
-      script: "cleanup.sh"
       when: cleanup is defined
-      tags: ["cleanup"]
+      tags:
+      - cleanup
+      ansible.builtin.script: "cleanup.sh"

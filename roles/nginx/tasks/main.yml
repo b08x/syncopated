@@ -1,74 +1,82 @@
 ---
 
-- include_tasks: tasks/ssl.yml
-  when: use_ssl is defined
-  tags: ['ssl']
+- when: use_ssl is defined
+  tags:
+  - ssl
+  ansible.builtin.include_tasks: tasks/ssl.yml
 
 - name: copy rsyslog config for nginx
-  copy: >
-    src=90-nginx_rsyslog.conf
-    dest=/etc/rsyslog.d/90-nginx_rsyslog.conf
-    owner=root
-    group=root
-    mode=0644
   notify: restart rsyslog
-  tags: [configuration,nginx]
+  tags:
+  - configuration
+  - nginx
+  ansible.builtin.copy:
+    src: 90-nginx_rsyslog.conf
+    dest: /etc/rsyslog.d/90-nginx_rsyslog.conf
+    owner: root
+    group: root
+    mode: '0644'
 
-- import_tasks:
+- when: nginx_official_repo == True
+  ansible.builtin.import_tasks:
     file: nginx-official-repo.yml
-  when: nginx_official_repo == True
 
-- import_tasks:
+- when: nginx_passenger == True
+  ansible.builtin.import_tasks:
     file: passenger-phusion-repo.yml
-  when: nginx_passenger == True
 
-- import_tasks:
+- when: nginx_installation_type == "packages"
+  ansible.builtin.import_tasks:
     file: installation.packages.yml
-  when: nginx_installation_type == "packages"
 
-- import_tasks:
+- when: nginx_installation_type == "source"
+  ansible.builtin.import_tasks:
     file: installation.source.yml
-  when: nginx_installation_type == "source"
 
-- import_tasks:
+- ansible.builtin.import_tasks:
     file: ensure-dirs.yml
 
-- import_tasks:
+- when: not keep_only_specified
+  ansible.builtin.import_tasks:
     file: remove-defaults.yml
-  when: not keep_only_specified
 
-- import_tasks:
+- when: keep_only_specified
+  ansible.builtin.import_tasks:
     file: remove-extras.yml
-  when: keep_only_specified
 
-- import_tasks:
+- ansible.builtin.import_tasks:
     file: remove-unwanted.yml
 
-- import_tasks:
+- ansible.builtin.import_tasks:
     file: configuration.yml
 
 - name: Create /usr/share/nginx/html
-  file:
+  ansible.builtin.file:
     path: /usr/share/nginx/html
     state: directory
     owner: root
     group: root
-    recurse: True
+    recurse: true
 
 - name: create blank index.html for default traffic
-  copy: >
-    src=index.html
-    dest=/usr/share/nginx/html/index.html
-    backup=yes
-    owner=root
-    group=root
-    mode=0644
   when: nginx_create_blank_index
+  ansible.builtin.copy:
+    src: index.html
+    dest: /usr/share/nginx/html/index.html
+    backup: true
+    owner: root
+    group: root
+    mode: '0644'
 
-- import_tasks:
+- ansible.builtin.import_tasks:
     file: selinux.yml
 
 - name: Start the nginx service
-  service: name={{ nginx_service_name }} state=started enabled=yes
   when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode == "on"
-  tags: [service,nginx]
+  tags:
+  - service
+  - nginx
+  ansible.builtin.service:
+    name: '{{ nginx_service_name }}'
+    state: started
+    enabled: true

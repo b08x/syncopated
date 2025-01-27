@@ -1,59 +1,59 @@
 ---
 
 - name: install nginx dependencies
-  dnf:
+  with_items:
+  - git
+  - '@Development Tools'
+  - pcre2-devel
+  - pcre-devel
+  when: ansible_distribution == 'Fedora'
+  ansible.builtin.dnf:
     name: "{{ item }}"
     state: present
-    update_cache: yes
-  with_items:
-    - git
-    - "@Development Tools"
-    - pcre2-devel
-    - pcre-devel
-  when: ansible_distribution == 'Fedora'
+    update_cache: true
 
 - name: install nginx dependencies
-  pacman:
+  with_items:
+  - base-devel
+  - git
+  - pcre
+  - pcre2
+  when: ansible_os_family == 'Archlinux'
+  community.general.pacman:
     name: "{{ item }}"
     state: present
-    force: yes
+    force: true
     extra_args: --noconfirm
-  with_items:
-    - base-devel
-    - git
-    - pcre
-    - pcre2
-  when: ansible_os_family == 'Archlinux'
 
 - name: fetch nginx source
-  get_url:
+  ansible.builtin.get_url:
     url: http://nginx.org/download/nginx-1.22.1.tar.gz
     dest: "/tmp"
-    validate_certs: no
+    validate_certs: false
 
 - name: extract nginx source
-  unarchive:
+  ansible.builtin.unarchive:
     src: /tmp/nginx-1.22.1.tar.gz
     dest: "/tmp"
-    remote_src: yes
+    remote_src: true
 
 - name: clone fancyindex
-  git:
+  ansible.builtin.git:
     repo: "https://github.com/aperezdc/ngx-fancyindex.git"
     dest: "/tmp/ngx-fancyindex"
-    accept_hostkey: yes
-    update: no
-    force: no
-    recursive: yes
+    accept_hostkey: true
+    update: false
+    force: false
+    recursive: true
 
 - name: configure nginx with modules
-  shell: |
-    ./configure --prefix=/usr --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log --pid-path=/run/nginx.pid --conf-path=/etc/nginx/nginx.conf --modules-path=/usr/share/nginx/modules --add-module=../ngx-fancyindex --with-http_addition_module --with-http_mp4_module --without-http_autoindex_module --without-http_gzip_module
   args:
     chdir: /tmp/nginx-1.22.1
+  ansible.builtin.shell: |
+    ./configure --prefix=/usr --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log --pid-path=/run/nginx.pid --conf-path=/etc/nginx/nginx.conf --modules-path=/usr/share/nginx/modules --add-module=../ngx-fancyindex --with-http_addition_module --with-http_mp4_module --without-http_autoindex_module --without-http_gzip_module
 
 - name: make and install nginx
-  shell: |
-      make && make install
   args:
     chdir: /tmp/nginx-1.22.1
+  ansible.builtin.shell: |
+    make && make install
