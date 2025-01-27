@@ -22,28 +22,29 @@
   pre_tasks:
 
     - name: Set admin group name
-      set_fact:
+      tags:
+      - always
+      ansible.builtin.set_fact:
         admin_group: wheel
-      tags: ['always']
 
     - name: set packager_workspace fact
-      set_fact:
+      ansible.builtin.set_fact:
         packager_workspace: "{{ packager.workspace }}"
 
 
     - block:
         - name: check -march support
-          shell: /lib/ld-linux-x86-64.so.2 --help | grep supported|xargs|awk '{print $1}'
           register: supported_march
+          ansible.builtin.shell: /lib/ld-linux-x86-64.so.2 --help | grep supported|xargs|awk '{print $1}'
 
         - name: check output from grep command
-          debug:
+          ansible.builtin.debug:
             msg: "{{ supported_march }}"
 
         - name: set architecture
-          set_fact:
-            architecture: "x86-64-v3"
           when: supported_march.stdout_lines[0] == 'x86-64-v3'
+          ansible.builtin.set_fact:
+            architecture: "x86-64-v3"
 
         - name: set architecture
           set_fact:

@@ -14,9 +14,10 @@
 
   pre_tasks:
     - name: Set datetime
-      set_fact:
+      tags:
+      - always
+      ansible.builtin.set_fact:
         datetime: ansible_date_time.epoch
-      tags: ["always"]
 
     - name: Set suffix
       set_fact:
@@ -25,24 +26,24 @@
 
   tasks:
     - name: Clone Utils Repository
-      git:
+      ansible.builtin.git:
         repo: git@github.com:b08x/Utils.git
         dest: "{{ user.home }}/Utils"
-        recursive: yes
-        accept_hostkey: yes
-        force: no
+        recursive: true
+        accept_hostkey: true
+        force: false
         version: main
-    #   register: utilsClone
-    #   changed_when: utilsClone.before != "null"
-    #
-    # - setup:
-    # - debug:
-    #     msg: "{{ utilsClone.before }}"
-    #   tags: ['always']
+        #   register: utilsClone
+        #   changed_when: utilsClone.before != "null"
+        #
+        # - setup:
+        # - debug:
+        #     msg: "{{ utilsClone.before }}"
+        #   tags: ['always']
 
     - name: Checkout development Branch
-      git:
+      when: branch == 'development'
+      ansible.builtin.git:
         repo: git@github.com:b08x/Utils.git
         dest: "{{ user.home }}/Utils"
         version: development
-      when: branch == 'development'

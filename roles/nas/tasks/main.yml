@@ -1,16 +1,18 @@
 ---
 - name: NAS Tasks
-  debug:
+  ansible.builtin.debug:
     msg: "Starting NAS tasks"
 
-- import_tasks:
+- tags:
+  - nfs
+  ansible.builtin.import_tasks:
     file: nfs.yml
-  tags: ['nfs']
 
-- import_tasks:
+- when: samba_host|bool
+  tags:
+  - samba
+  ansible.builtin.import_tasks:
     file: samba.yml
-  when: samba_host|bool
-  tags: ['samba']
 
 # - import_tasks:
 #     file: rsyncd.yml
