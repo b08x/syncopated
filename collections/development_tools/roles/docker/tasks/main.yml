@@ -6,9 +6,10 @@
     msg: "Starting docker tasks"
 
 - name: Check if Docker is installed
-  shell: |
-     which docker
+  command: docker --version
   register: docker_check
+  changed_when: false
+  ignore_errors: true
 
 - name: Print Docker version if installed
   debug:
@@ -18,7 +19,7 @@
 - block:
   - import_tasks:
       file: debian.yml
-    when: ansible_os_family == 'Debian'
+    when: (ansible_os_family == 'Debian' or ansible_distribution == "Pop!_OS")
 
   when: docker_check.rc == 0
   tags: ["packages"]

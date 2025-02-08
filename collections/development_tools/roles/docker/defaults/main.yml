@@ -14,3 +14,10 @@ docker_packages:
     - docker-ce-cli
     - containerd.io
     - docker-compose-plugin
+    - docker-buildx-plugin
+  debian:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
