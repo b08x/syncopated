@@ -1,5 +1,5 @@
 gnome_packages:
-  debian:
+  Pop:
   - adwaita-icon-theme
   - adwaita-icon-theme-full
   - baobab
@@ -23,6 +23,7 @@ gnome_packages:
   - gnome-bluetooth
   - gnome-bluetooth-3-common
   - gnome-bluetooth-common
+  - gnome-boxes
   - gnome-calculator
   - gnome-calendar
   - gnome-contacts
@@ -107,8 +108,6 @@ gnome_packages:
   - libgnome-bluetooth13:amd64
   - libgnome-desktop-3-19:amd64
   - libgnome-desktop-4-1:amd64
-  - libgnomecanvas2-0:amd64
-  - libgnomecanvas2-common
   - libgnomekbd-common
   - libgnomekbd8:amd64
   - libgoa-1.0-0b:amd64
@@ -125,6 +124,7 @@ gnome_packages:
   - libxml++2.6-2v5:amd64
   - libxml2:amd64
   - libxml2-dev:amd64
+  - libxml2-utils
   - libyelp0:amd64
   - nautilus
   - nautilus-extension-gnome-terminal
@@ -136,6 +136,7 @@ gnome_packages:
   - pop-gnome-initial-setup
   - pop-gnome-shell-theme
   - pop-session
+  - python3-libxml2:amd64
   - rygel
   - seahorse
   - terminator
@@ -171,25 +172,53 @@ gnome_settings:
   sound: {}
   keybindings:
     keybindings:
-      move-to-monitor-left: '[''<Alt><Super>Left'']'
-      move-to-monitor-right: '[''<Alt><Super>Right'']'
+      begin-move: '[''<Alt>F7'', ''<Super>m'']'
+      begin-resize: '[''<Super>r'']'
+      maximize: []
+      move-to-monitor-left: []
+      move-to-monitor-right: []
       move-to-workspace-1: '[''<Shift><Super>KP_End'']'
       move-to-workspace-2: '[''<Shift><Super>KP_Down'']'
       move-to-workspace-3: '[''<Shift><Super>KP_Next'']'
       move-to-workspace-4: '[''<Shift><Super>KP_Left'']'
+      switch-applications: '[''<Super>Tab'', ''<Alt>Tab'']'
+      switch-applications-backward: '[''<Shift><Super>Tab'', ''<Shift><Alt>Tab'']'
+      switch-group: '[''<Super>Above_Tab'', ''<Alt>Above_Tab'']'
+      switch-group-backward: '[''<Shift><Super>Above_Tab'', ''<Shift><Alt>Above_Tab'']'
       switch-input-source: []
       switch-input-source-backward: []
       switch-to-workspace-1: '[''<Super>KP_1'']'
       switch-to-workspace-2: '[''<Super>KP_2'']'
       switch-to-workspace-3: '[''<Super>KP_3'']'
       switch-to-workspace-4: '[''<Super>KP_4'']'
+      switch-to-workspace-down: '[''<Primary><Alt>Down'']'
+      switch-to-workspace-last: '[''<Super>End'']'
+      switch-to-workspace-up: '[''<Primary><Alt>Up'']'
+      toggle-fullscreen: '[''F11'']'
+      toggle-maximized: []
     media-keys:
-      custom-keybindings: '[''/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/'']'
-      terminal: '[''<Super>Return'']'
+      custom-keybindings: '[''/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/'',
+        ''/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/'',
+        ''/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/'']'
+      decrease-text-size: []
+      home: []
+      increase-text-size: []
+      mic-mute: '[''AudioMicMute'']'
+      screensaver: '[''<Super>Escape'']'
+      search: []
+      terminal: []
       www: '[''<Super>Home'']'
     custom0:
       binding: <Shift><Super>KP_Enter
-      command: terminator -e ranger
+      command: kitty -e ranger
       name: ranger
+    custom1:
+      binding: <Super>KP_Enter
+      command: nautilus
+      name: nautilus
+    custom2:
+      binding: <Super>Return
+      command: kitty
+      name: kitty
 gdm_settings:
   wayland_enabled: false
