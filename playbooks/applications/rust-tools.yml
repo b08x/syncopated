@@ -1,0 +1,86 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+  vars:
+    desktop_environment: "{{ desktop_environment | default('gnome') }}"
+    custom_path:
+      - "{{ lookup('env','HOME') }}/.local/bin"
+      - "{{ lookup('env','HOME') }}/Utils/bin"  
+  environment:
+    PATH: "{{ (ansible_env.PATH.split(':') + custom_path) | unique | join(':') }}"
+  tasks:
+    - name: Install necessary dependencies
+      apt:
+        name:
+          - curl
+          - git
+          - build-essential
+          - python3-pip
+          - cmake
+          - cmake-curses-gui
+          - ccache
+        state: present
+      become: true
+
+    - name: Check if rust is installed
+      command: which rustc
+      register: rust_check
+      ignore_errors: true
+      become: true
+
+    - name: Install rust
+      shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
+      become: false
+      when: rust_check.rc != 0
+
+    - name: set environment variables for rust
+      become: true
+      blockinfile:
+        path: /etc/environment
+        block: |
+          PATH="/home/{{ user.name }}/.cargo/bin:${PATH}"
+      when: rust_check.rc != 0
+
+- hosts: all
+  become: false
+  tasks:
+    - name: Install exa
+      become: false
+      become_user: "{{ user.name }}"
+      command: cargo install exa
+
+    - name: Install gitui
+      become: false
+      become_user: "{{ user.name }}"
+      command: cargo install gitui
+
+    - name: Install gping
+      become: false
+      become_user: "{{ user.name }}"
+      command: cargo install gping
+
+    - name: Install bottom
+      become: false
+      become_user: "{{ user.name }}"
+      command: cargo install bottom
+
+    - name: Install choose
+      become: false
+      become_user: "{{ user.name }}"
+      command: cargo install choose
+
+    - name: Install fzf
+      become: false
+      become_user: "{{ user.name }}"
+      command: cargo install fzf
+
+    - name: Install sd
+      become: false
+      become_user: "{{ user.name }}"
+      command: cargo install sd
+
+    - name: Install dust
+      become: false
+      become_user: "{{ user.name }}"
+      command: cargo install dust

@@ -1,0 +1,55 @@
+---
+- name: Install Rust-based CLI Tools
+  hosts: all
+  become: true
+  tasks:
+    - name: Install necessary packages
+      apt:
+        name:
+          - curl
+          - git
+          - build-essential
+        state: present
+      become: true
+
+    - name: Download and execute rustup-init
+      become: false
+      shell: "curl https://sh.rustup.rs -sSf | sh -s -- -y"
+      args:
+        executable: /bin/bash
+      register: rustup_output
+      changed_when: "'Rust is installed now' not in rustup_output.stdout"
+      # If rustup is already installed, this task won't change anything
+
+    - name: Set environment variables for rustup (important for subsequent tasks)
+      become: false
+      environment:
+        PATH: "{{ lookup('env', 'HOME') }}/.cargo/bin:{{ lookup('env', 'PATH') }}"
+      run_once: true
+      changed_when: false
+      delegate_to: localhost
+      
+    - name: Define list of tools to install
+      set_fact:
+        tools:
+          - { name: "exa", repo: "ogham/exa" }
+          - { name: "gitui", repo: "extrawurst/gitui" }
+          - { name: "gping", repo: "orf/gping" }
+          - { name: "bottom", repo: "ClementTsang/bottom" }
+          - { name: "choose", repo: "theryangeary/choose" }
+          - { name: "fzf", repo: "junegunn/fzf" }
+          - { name: "sd", repo: "chmln/sd" }
+
+    - name: Install tools using cargo
+      loop: "{{ tools }}"
+      become: false
+      environment:
+        PATH: "{{ lookup('env', 'HOME') }}/.cargo/bin:{{ lookup('env', 'PATH') }}"
+      command: cargo install --locked --git https://github.com/{{ item.repo }}.git {{ item.name }}
+      register: cargo_install_output
+      ignore_errors: true # Some tools might have issues, continue anyway
+
+    - name: Display cargo install output
+      debug:
+        msg: "{{ cargo_install_output }}"
+      when: cargo_install_output is defined
