@@ -1,5 +1,5 @@
 gnome_packages:
-  Pop:
+  debian:
   - adwaita-icon-theme
   - adwaita-icon-theme-full
   - baobab
