@@ -197,3 +197,4 @@ roles.tar.gz
 full.json
 full.svg
 /llm_analysis/
+.ansible/.lock
