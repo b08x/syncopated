@@ -26,7 +26,7 @@ say() {
 
 # --- Gum Installation ---
 install_gum() {
-  if command -v gum &> /dev/null; then
+  if command -v gum &>/dev/null; then
     say "gum is already installed." $GREEN
     return 0
   fi
@@ -34,32 +34,32 @@ install_gum() {
   say "Installing gum..." $YELLOW
 
   case $DISTRO in
-    Arch | ArchLabs | cachyos | EndeavourOS)
-      sudo pacman -S --noconfirm gum
-      ;;
-    Fedora)
-      echo '[charm]
+  Arch | ArchLabs | cachyos | EndeavourOS)
+    sudo pacman -S --noconfirm gum
+    ;;
+  Fedora)
+    echo '[charm]
       name=Charm
       baseurl=https://repo.charm.sh/yum/
       enabled=1
       gpgcheck=1
       gpgkey=https://repo.charm.sh/yum/gpg.key' | sudo tee /etc/yum.repos.d/charm.repo
-      sudo dnf -y install gum
-      ;;
-    Debian | Raspbian | MX | Pop)
-      sudo mkdir -p /etc/apt/keyrings
-      curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
-      echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
-      sudo apt-get update --quiet
-      sudo apt-get install -y gum
-      ;;
-    *)
-      say "Unsupported distribution for gum installation." $RED
-      exit 1
-      ;;
+    sudo dnf -y install gum
+    ;;
+  Debian | Raspbian | MX | Pop)
+    sudo mkdir -p /etc/apt/keyrings
+    curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+    echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+    sudo apt-get update --quiet
+    sudo apt-get install -y gum
+    ;;
+  *)
+    say "Unsupported distribution for gum installation." $RED
+    exit 1
+    ;;
   esac
 
-  if command -v gum &> /dev/null; then
+  if command -v gum &>/dev/null; then
     say "gum installed successfully." $GREEN
   else
     say "Failed to install gum. Exiting." $RED
@@ -88,28 +88,28 @@ setup_sudoers() {
   fi
 
   case $DISTRO in
-    Fedora | Arch | ArchLabs | cachyos | EndeavourOS)
-      cat << EOF | sudo tee /etc/polkit-1/rules.d/49-nopasswd_global.rules
+  Fedora | Arch | ArchLabs | cachyos | EndeavourOS)
+    cat <<EOF | sudo tee /etc/polkit-1/rules.d/49-nopasswd_global.rules
 polkit.addRule(function(action, subject) {
   if (subject.isInGroup("${USER}")) {
     return polkit.Result.YES;
   }
 });
 EOF
-      sudo chmod 0644 /etc/polkit-1/rules.d/49-nopasswd_global.rules
-      ;;
-    Debian | Raspbian | MX | Pop)
-      cat << EOF | sudo tee /etc/polkit-1/localauthority/50-local.d/admin_group.pkla
+    sudo chmod 0644 /etc/polkit-1/rules.d/49-nopasswd_global.rules
+    ;;
+  Debian | Raspbian | MX | Pop)
+    cat <<EOF | sudo tee /etc/polkit-1/localauthority/50-local.d/admin_group.pkla
 [set admin_group privs]
 Identity=unix-group:sudo
 Action=*
 ResultActive=yes
 EOF
-      ;;
-    *)
-      say "Unsupported distribution for polkit setup." $RED
-      return 1
-      ;;
+    ;;
+  *)
+    say "Unsupported distribution for polkit setup." $RED
+    return 1
+    ;;
   esac
 
   say "Sudoers and polkit setup completed." $GREEN
@@ -164,38 +164,38 @@ setup_ssh_keys() {
 install_packages() {
 
   case $DISTRO in
-    Arch | ArchLabs | cachyos | EndeavourOS)
-      # Check if packages are already installed
-      if ! pacman -Qi openssh base-devel rsync openssh python-pip \
-        firewalld python-setuptools fd rubygems net-tools htop \
-        most ranger nodejs npm ansible efibootmgr inxi fzf &> /dev/null; then
-        say "Installing essential packages..." $GREEN
-        sudo pacman -Syu --noconfirm --downloadonly --quiet
-        sudo pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
-          firewalld python-setuptools fd rubygems \
-          net-tools htop most ranger \
-          nodejs npm ansible inxi efibootmgr fzf --overwrite '*'
-      fi
-      ;;
-    Fedora)
-      # Check if packages are already installed
-      if ! dnf list installed ansible inxi efibootmgr fzf &> /dev/null; then
-        say "Installing essential packages..." $GREEN
-        sudo dnf -y install ansible inxi efibootmgr fzf
-      fi
-      ;;
-    Debian | Raspbian | MX | Pop)
-      # Check if packages are already installed
-      if ! dpkg -l openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev ansible inxi efibootmgr fzf &> /dev/null; then
-        say "Installing essential packages..." $GREEN
-        sudo apt-get update --quiet \
-                                    && sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev ansible inxi efibootmgr fzf
-      fi
-      ;;
-    *)
-      say "Unsupported distribution." $RED
-      exit 1
-      ;;
+  Arch | ArchLabs | cachyos | EndeavourOS)
+    # Check if packages are already installed
+    if ! pacman -Qi openssh base-devel rsync openssh python-pip \
+      firewalld python-setuptools fd rubygems net-tools htop \
+      most ranger nodejs npm ansible efibootmgr inxi fzf &>/dev/null; then
+      say "Installing essential packages..." $GREEN
+      sudo pacman -Syu --noconfirm --downloadonly --quiet
+      sudo pacman -S --noconfirm openssh base-devel rsync openssh python-pip \
+        firewalld python-setuptools fd rubygems \
+        net-tools htop most ranger \
+        nodejs npm ansible inxi efibootmgr fzf --overwrite '*'
+    fi
+    ;;
+  Fedora)
+    # Check if packages are already installed
+    if ! dnf list installed ansible inxi efibootmgr fzf &>/dev/null; then
+      say "Installing essential packages..." $GREEN
+      sudo dnf -y install ansible inxi efibootmgr fzf
+    fi
+    ;;
+  Debian | Raspbian | MX | Pop)
+    # Check if packages are already installed
+    if ! dpkg -l openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev ansible inxi efibootmgr fzf &>/dev/null; then
+      say "Installing essential packages..." $GREEN
+      sudo apt-get update --quiet &&
+        sudo apt-get install -y openssh-server build-essential fd-find ruby-rubygems ruby-bundler ruby-dev ansible inxi efibootmgr fzf
+    fi
+    ;;
+  *)
+    say "Unsupported distribution." $RED
+    exit 1
+    ;;
   esac
 }
 
@@ -215,7 +215,7 @@ clone_repository() {
 
 # --- Wipe Screen Function ---
 wipe() {
-  tput -S << !
+  tput -S <<!
 clear
 cup 1
 !
@@ -323,12 +323,12 @@ ask_for_sudoers_setup
 clone_repository
 sleep 1
 
-HOSTNAME=$(/usr/bin/hostnamectl --transient 2> /dev/null) \
-                                                         || HOSTNAME=$(/usr/bin/hostname 2> /dev/null) \
-                                          || HOSTNAME=$(/usr/bin/uname -n)
+HOSTNAME=$(/usr/bin/hostnamectl --transient 2>/dev/null) ||
+  HOSTNAME=$(/usr/bin/hostname 2>/dev/null) ||
+  HOSTNAME=$(/usr/bin/uname -n)
 
 # --- set the inventory file for intial boostrapin'
-cat << EOF | tee "${ANSIBLE_HOME}/hosts"
+cat <<EOF | tee "${ANSIBLE_HOME}/hosts"
 [workstation]
 ${HOSTNAME} ansible_connection=local
 EOF
