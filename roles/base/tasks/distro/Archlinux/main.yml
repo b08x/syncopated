@@ -1,0 +1,78 @@
+---
+#setup repositories
+- name: Starting distro tasks
+  debug:
+    var: ansible_os_family
+  tags: ['always']
+
+- name: install reflector package
+  pacman:
+    name: "{{ item }}"
+    state: present
+    force: true
+    extra_args: --noconfirm
+  with_items:
+    - aria2
+    - fd
+    - reflector
+    - ripgrep
+
+- block:
+    # - name: Import syncopated repo key
+    #   community.general.pacman_key:
+    #     id: DF7A6571781ACB52FA9CF8C1EB4DFE46828DFEDD
+    #     url: http://bender.syncopated.net/syncopated/repo/syncopated.gpg
+    #     state: present
+    #   when: repos.syncopated is defined
+    #   tags: ["repo"]
+
+    - name: Import archaudio repo key
+      community.general.pacman_key:
+        id: 762AE5DB2B38786364BD81C4B9141BCC62D38EE5
+        url: https://arch.osamc.de/proaudio/osamc.gpg
+        state: present
+      register: archaudio_keys
+      tags: ["repo"]
+
+    - name: Set pacman.conf config
+      template:
+        src: etc/pacman.conf.j2
+        dest: /etc/pacman.conf
+        mode: "0644"
+        backup: true
+      tags: ["pacman"]
+
+    - name: Set makepkg to use aria2
+      template:
+        src: etc/makepkg.conf.j2
+        dest: /etc/makepkg.conf
+        mode: "0644"
+        backup: true
+      tags: ["makepkg"]
+
+    - import_tasks:
+        file: chaotic.yml
+      when: chaoticrepo|bool
+      tags: ["repo", "chaotic"]
+
+  # when: "{{ install. }}|bool"
+  notify:
+    - "Update pacman mirrors"
+    - "Update pacman cache"
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- import_tasks:
+    file: paru.yml
+  tags: ["paru"]
+  # check_mode: yes
+
+
+# - name: install packages
+#   aur:
+#     use: paru
+#     name: "{{ arch_packages }}"
+#     state: present
+#   become: False
+#   when: arch_installed_packages | length > 0

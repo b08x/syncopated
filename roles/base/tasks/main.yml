@@ -1,0 +1,61 @@
+---
+
+- name: Base Tasks
+  debug:
+    msg: "Starting base tasks"
+  register: expected_value
+
+- import_tasks:
+    file: distro/main.yml
+  tags: ['distro']
+
+- import_tasks:
+    file: packages.yml
+  tags: ['packages']
+
+- name: Ensure root directories exist
+  file:
+    dest: "{{ item.dest }}"
+    state: directory
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+    recurse: "{{ item.recurse | default(false) }}"
+  loop: "{{ root_directory_definitions }}"
+
+- import_tasks:
+    file: sshd.yml
+  tags: ["sshd"]
+
+- import_tasks:
+    file: environment.yml
+  tags: ["env", "profile"]
+
+- import_tasks:
+    file: grub.yml
+  tags: ["grub"]
+
+- import_tasks:
+    file: updatedb.yml
+  tags: ["updatedb"]
+
+- import_tasks:
+    file: ranger.yml
+  tags: ['ranger']
+
+# - import_tasks:
+#     file: lnav.yml
+#   tags: ['lnav']
+
+# - import_tasks:
+#     file: zram.yml
+#   tags: ["zram"]
+
+# - import_tasks:
+#     file: autofs.yml
+#   tags: ["autofs"]
+
+# - import_tasks:
+#     file: autologin.yml
+#   tags: ['autologin']
+#   when: autologin is defined

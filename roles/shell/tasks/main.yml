@@ -1,0 +1,34 @@
+---
+
+#TODO: 
+# 
+# https://github.com/hyperupcall/autoenv.git
+
+- name: Set user shell
+  user:
+    name: "{{ item }}"
+    shell: "{{ user.shell }}"
+  with_items:
+    - "{{ user.name }}"
+    # - root
+  tags: ['profile']
+
+- name: Set user aliases
+  template:
+    src: .aliases.j2
+    dest: "{{ user.home }}/.aliases"
+    owner: "{{ user.name }}"
+    group: "{{ user.group }}"
+    mode: '0644'
+    backup: true
+  tags: ['aliases', 'profile']
+
+- import_tasks:
+    file: bash.yml
+  when: user.shell == "/usr/bin/bash"
+  tags: ['bash', 'profile']
+
+- import_tasks:
+    file: zsh.yml
+  when: user.shell == "/usr/bin/zsh"
+  tags: ['zsh', 'profile']

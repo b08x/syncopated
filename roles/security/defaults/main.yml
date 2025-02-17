@@ -1,0 +1,5 @@
+---
+# defaults file for security
+
+packages:
+  - sudo

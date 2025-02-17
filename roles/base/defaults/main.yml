@@ -1,0 +1,179 @@
+---
+# defaults file for common
+
+# The default directory permission mode when creating directories using `root_directory_definitions`
+root_directory_default_mode: '0755'
+
+# The default directory owner when creating directories using `root_directory_definitions`
+root_directory_default_owner: root
+
+# The default directory group when creating directories using `root_directory_definitions`
+root_directory_default_group: root
+
+root_directory_default_recurse: False
+
+root_directory_definitions:
+  - dest: /etc/X11/xorg.conf.d
+  - dest: /etc/fonts
+  - dest: /etc/pulse/default.pa.d
+  - dest: /etc/systemd/timesyncd.conf.d
+  - dest: /etc/xdg
+  - dest: /etc/mediamtx
+  - dest: /etc/autofs
+  - dest: /usr/share/backgrounds
+
+expected_value: "role_base_defaults"
+
+base_packages:
+  debian:
+    - python3-psutil
+  fedora:
+    # Many packages have the same name in Fedora
+    - aspell
+    - aspell-en
+    - atool
+    - audiofile
+    - autofs
+    # await is not available in Fedora repos
+    # bandwhich is not available in Fedora repos
+    - bash-completion
+    # - bash-language-server
+    - bat
+    # beautysh is not available in Fedora repos
+    # - bottom
+    # choose is not available in Fedora repos
+    # - chromaprint
+    - cargo
+    - cmake
+    - kernel-tools
+    # curlie is not available in Fedora repos
+    # dex is not available in Fedora repos
+    # doggo is not available in Fedora repos
+    # downgrade is not needed in Fedora
+    # duf is not available in Fedora repos
+    # dust is not available in Fedora repos
+    - elinks
+    # eza is not available in Fedora repos, can use 'exa' instead
+    - exa
+    # - faac
+    # - faad2
+    - fd-find
+    - figlet
+    - firewalld
+    # - fsarchiver
+    - fuse3
+    - fuse
+    - fzf
+    - git
+    # git-delta is not available in Fedora repos
+    - git-lfs
+    # - gh
+    # gitui is not available in Fedora repos
+    # glow is not available in Fedora repos
+    - gnome-keyring
+    - gnuplot
+    # - gource
+    # gping is not available in Fedora repos
+    - GraphicsMagick
+    - gstreamer1-libav
+    - gstreamer1
+    # gum is not available in Fedora repos
+    - highlight
+    # hspell is not available in Fedora repos
+    - htop
+    # i7z is not available in Fedora repos
+    - ImageMagick
+    # - inetutils
+    - inxi
+    - iotop
+    - jq
+    # libcyaml is not available in Fedora repos
+    - libgit2
+    # - libgit2-glib
+    # - vips-devel
+    - libvoikko-devel
+    - links
+    # lnav is not available in Fedora repos
+    - lynx
+    # mako is not available in Fedora repos
+    - mediainfo
+    - meld
+    # micro is not available in Fedora repos
+    - mlocate
+    - most
+    # mupdf-tools is not available in Fedora repos
+    # - nano-syntax-highlighting
+    - ncdu
+    - net-tools
+    - nodejs
+    - npm
+    - numlockx
+    # - nuspell
+    - odt2txt
+    - openssl
+    - opus
+    # - opus-tools
+    - opusfile
+    # pamixer is not available in Fedora repos
+    - pandoc
+    # pdf2htmlex-appimage is not available in Fedora repos
+    # pdfjs is not available in Fedora repos
+    - perl-Image-ExifTool
+    # pgvector is not available in Fedora repos
+    # platformfolders is not available in Fedora repos
+    - playerctl
+    # - perl-Pod-Man
+    - poppler
+    - postgresql-libs
+    # poweralertd is not available in Fedora repos
+    # python-adblock is not available in Fedora repos
+    - python3-chardet
+    # python-j2cli is not available in Fedora repos
+    # python-pagelabels is not available in Fedora repos
+    - python3-pillow
+    - python3-pygments
+    # python-pympler is not available in Fedora repos
+    - python3-setuptools
+    # python-sphinx-intl is not available in Fedora repos
+    # python-sphinxcontrib-svg2pdfconverter is not available in Fedora repos
+    - qpdf
+    - ranger
+    - ripgrep
+    # ripgrep-all is not available in Fedora repos
+    - rsync
+    - rxvt-unicode
+    # sd is not available in Fedora repos
+    - smartmontools
+    - socat
+    - speech-dispatcher
+    - sshpass
+    - stunnel
+    - sudo
+    # swappy is not available in Fedora repos
+    - sysstat
+    - taglib
+    # teiler-git is not available in Fedora repos
+    # - texlive-scheme-basic
+    # - texlive-scheme-full
+    - tldr
+    - transmission-cli
+    - tree
+    # ueberzug is not available in Fedora repos
+    - unrar
+    - unzip
+    # - v4l-utils
+    - vorbis-tools
+    - wavpack
+    - wget
+    # wkhtmltopdf-static is not available in Fedora repos
+    - wmctrl
+    - words
+    # - x264
+    # - x265
+    - xterm
+    # - yad
+    - yt-dlp
+    - zoxide
+
+# Note: Some packages are not available in Fedora's official repositories.
+# They may need to be installed from alternative sources or built from source.
