@@ -1,2 +1,5 @@
 ---
 # defaults file for vscode
+
+vscode_extensions_enabled: true
+vscode_user_settings_enabled: true

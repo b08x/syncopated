@@ -4,9 +4,6 @@
   become: true
   gather_facts: true
   collections:
-    - b08x.llmops_dev
-    - b08x.system_core
-    - b08x.shell_environment
     - b08x.development_tools
     - b08x.desktop_environment
     - b08x.media_tools
@@ -71,25 +68,20 @@
       tags: ['sudoers']
 
   roles:
-    - name: base
-      import_role: base
+    - role: base
       tags: ["base"]
 
-    - name: user
-      import_role: user
-      tags: ["user"]
+    - role: shell
+      tags: ["shell", "zsh", "bash"]
 
-    - name: zsh
-      import_role: zsh
-      tags: ["shell", "zsh"]
+    - role: security
+      tags: ["security", "sudoers"]
 
-    - name: sudoers
-      import_role: sudoers
-      tags: ["sudoers"]
-
-    - name: networking
-      import_role: networking
+    - role: networking
       tags: ["networking"]
+
+    - role: user
+      tags: ["user"]
 
 - name: Run Container and Virt roles
   hosts: virt
@@ -99,23 +91,16 @@
     - b08x.development_tools
 
   roles:
-    - name: ruby
-      import_role: ruby
+    - role: ruby
       tags: ["ruby"]
 
-    - name: docker
-      import_role: docker
+    - role: docker
       when: use_docker == True
       tags: ["docker"]
 
-    - name: libvirt
-      import_role: libvirt
+    - role: libvirt
       when: use_libvirt == True
       tags: ["libvirt"]
-
-    - name: ide
-      import_role: ide
-      tags: ["ide"]
 
 - name: Run Workstation roles
   hosts: workstation
@@ -167,7 +152,9 @@
     - name: deadbeef
       import_role: deadbeef
       tags: ["deadbeef"]
-      
+
+    - role: vscode
+      tags: ["vscode"]      
 
 - name: Run DAW roles
   hosts: daw
