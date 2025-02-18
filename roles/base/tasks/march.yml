@@ -1,17 +1,18 @@
 ---
 
 - name: Check -march support
-  shell: |
-    /lib/ld-linux-x86-64.so.2 --help | grep supported|xargs|awk '{print $1}'
   register: supported_march
-  tags: ["always"]
-  check_mode: False
+  tags:
+  - always
+  check_mode: false
+  ansible.builtin.shell: |
+    /lib/ld-linux-x86-64.so.2 --help | grep supported|xargs|awk '{print $1}'
 
 - block:
     - name: Set architecture
-      set_fact:
-        architecture: "x86-64-v3"
       when: supported_march.stdout_lines[0] == 'x86-64-v3'
+      ansible.builtin.set_fact:
+        architecture: "x86-64-v3"
 
     - name: Set architecture
       set_fact:

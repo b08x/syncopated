@@ -1,30 +1,42 @@
 ---
 - name: Find enabled sites
-  shell: ls -1 {{nginx_conf_dir}}/sites-enabled || true
   register: enabled_sites
-  changed_when: False
-  tags: [configuration,nginx]
+  changed_when: false
+  tags:
+  - configuration
+  - nginx
+  ansible.builtin.shell: ls -1 {{nginx_conf_dir}}/sites-enabled || true
 
 - name: Disable unmanaged sites
-  file: path={{nginx_conf_dir}}/sites-enabled/{{ item }} state=absent
   with_items: "{{ enabled_sites.stdout.split() }}"
   # 'item.conf' => 'item'
   when: item[:-5] not in nginx_sites.keys()
   notify:
-   - reload nginx
-  tags: [configuration,nginx]
+  - reload nginx
+  tags:
+  - configuration
+  - nginx
+  ansible.builtin.file:
+    path: '{{nginx_conf_dir}}/sites-enabled/{{ item }}'
+    state: absent
 
 - name: Find config files
-  shell: ls -1 {{nginx_conf_dir}}/conf.d
   register: config_files
-  changed_when: False
-  tags: [configuration,nginx]
+  changed_when: false
+  tags:
+  - configuration
+  - nginx
+  ansible.builtin.shell: ls -1 {{nginx_conf_dir}}/conf.d
 
 - name: Remove unmanaged config files
-  file: name={{nginx_conf_dir}}/conf.d/{{ item }} state=absent
   with_items: "{{ config_files.stdout.split() }}"
   # 'item.conf' => 'item'
   when: item[:-5] not in nginx_configs.keys()
   notify:
-   - reload nginx
-  tags: [configuration,nginx]
+  - reload nginx
+  tags:
+  - configuration
+  - nginx
+  ansible.builtin.file:
+    name: '{{nginx_conf_dir}}/conf.d/{{ item }}'
+    state: absent

@@ -2,20 +2,20 @@
 
 - block:
     - name: Enable tuned service
-      systemd:
-        name: tuned
-        enabled: yes
-        state: started
       register: tuned_service
       ignore_errors: "{{ ansible_check_mode }}"
+      ansible.builtin.systemd:
+        name: tuned
+        enabled: true
+        state: started
 
     - name: Print tuned_service output
-      debug:
-        msg: "{{ tuned_service }}"
       when: debug is defined
+      ansible.builtin.debug:
+        msg: "{{ tuned_service }}"
 
     - name: Install realtime-modified profile
-      copy:
+      ansible.builtin.copy:
         src: etc/tuned/realtime-modified/tuned.conf
         dest: /etc/tuned/realtime-modified/tuned.conf
         owner: root
@@ -23,9 +23,9 @@
         mode: '0644'
 
     - name: Show tuned_service variable
-      debug:
+      ignore_errors: true
+      ansible.builtin.debug:
         msg: "{{ tuned_profile }}"
-      ignore_errors: True
 
     - name: Set tuned profile
       shell: |

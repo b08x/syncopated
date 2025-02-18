@@ -4,18 +4,14 @@
 # did complete successfully
 
 - name: Set sshd config
-  template:
+  register: sshdconfig
+  ansible.builtin.template:
     src: etc/ssh/sshd_config.j2
     dest: /etc/ssh/sshd_config
-    backup: True
+    backup: true
   # notify: Restart sshd
-  register: sshdconfig
 
 - name: Restart sshd
-  service:
-    name: sshd
-    state: restarted
-    enabled: True
   when: sshdconfig.changed
 
 # - name: Adjust gnome-keyring-service file to include ssh and gpg
@@ -35,3 +31,7 @@
 #   become_user: "{{ user.name }}"
 #   # when: keyringservice.changed
 #   tags: ['gnome-keyring']
+  ansible.builtin.service:
+    name: sshd
+    state: restarted
+    enabled: true

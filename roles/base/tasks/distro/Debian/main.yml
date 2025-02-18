@@ -3,28 +3,28 @@
 # tasks/Debian/main.yml
 
 - name: Install Intel graphics GPG public key
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://repositories.intel.com/gpu/intel-graphics.key
     state: present
 
 - name: Configure the repositories.intel.com package repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb [arch=amd64,i386 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/gpu/ubuntu jammy client
     filename: intel-gpu-jammy.list
     state: present
 
 - name: Update apt cache
-  apt:
+  ansible.builtin.apt:
     update_cache: true
 
 - name: Install compute-related packages
-  apt:
-    name:
-      - libze-intel-gpu1
-      - libze1
-      - intel-opencl-icd
-      - clinfo
-      - libze-dev
-      - intel-ocloc
-    state: present
   ignore_errors: true
+  ansible.builtin.apt:
+    name:
+    - libze-intel-gpu1
+    - libze1
+    - intel-opencl-icd
+    - clinfo
+    - libze-dev
+    - intel-ocloc
+    state: present

@@ -20,15 +20,18 @@
 
   pre_tasks:
     - name: show expected_value
-      debug:
+      tags:
+      - always
+      ansible.builtin.debug:
         var: ansible_facts["date_time"]["epoch"]
-      tags: ['always']
-      # the task will run if `check_mode` to 'no'
+          # the task will run if `check_mode` to 'no'
+
     - name: Register timestamp
-      shell: 'date +"%Y%m%d_%H%M%S"'
       register: timestamp
-      check_mode: no
-      tags: ['always']
+      check_mode: false
+      tags:
+      - always
+      ansible.builtin.shell: 'date +"%Y%m%d_%H%M%S"'
 
     - name: Set suffix
       set_fact:

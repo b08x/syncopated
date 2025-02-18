@@ -2,32 +2,32 @@
 
 - block:
     - name: Clone asdf
-      git:
+      check_mode: false
+      ansible.builtin.git:
         repo: https://github.com/asdf-vm/asdf.git
         dest: "{{ user.home }}/.asdf"
-        recursive: yes
-        accept_hostkey: yes
-        update: no
-        force: no
+        recursive: true
+        accept_hostkey: true
+        update: false
+        force: false
         version: v0.13.1
-      check_mode: no
 
     - name: Set default-gems
-      template:
+      ansible.builtin.template:
         src: home/.default-gems.j2
         dest: "{{ user.home }}/.default-gems"
         owner: "{{ user.name }}"
         group: "{{ user.group }}"
         mode: '0644'
 
-    # - name: Install ruby plugin
-    #   shell: |
-    #     source ~/.zshrc && \
-    #     asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git && \
-    #     asdf install ruby 3.1.4 && \
-    #     asdf global ruby 3.1.4
-    #   args:
-    #     executable: /bin/zsh
+        # - name: Install ruby plugin
+        #   shell: |
+        #     source ~/.zshrc && \
+        #     asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git && \
+        #     asdf install ruby 3.1.4 && \
+        #     asdf global ruby 3.1.4
+        #   args:
+        #     executable: /bin/zsh
 
     - name: Install ruby plugin
       shell: |

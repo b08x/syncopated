@@ -3,12 +3,12 @@
 - name: Install Base packages
   block:
     - name: Install Fedora Base packages
-      dnf:
+      with_items:
+      - '{{ base_packages.fedora }}'
+      when: ansible_os_family == 'RedHat'
+      ansible.builtin.dnf:
         name: "{{ item }}"
         state: present
-      with_items:
-        - "{{ base_packages.fedora }}"
-      when: ansible_os_family == 'RedHat'
 
     - name: Install Debian Base packages
       apt:
@@ -21,5 +21,5 @@
 
   rescue:
     - name: Handle package installation failures
-      debug:
+      ansible.builtin.debug:
         msg: "Failed to install some Base packages. Please check the error message above."

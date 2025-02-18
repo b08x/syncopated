@@ -1,19 +1,20 @@
 ---
 
 - name: Install ranger configs
-  synchronize:
+  ignore_errors: "{{ ansible_check_mode }}"
+  tags:
+  - ranger
+  ansible.posix.synchronize:
     src: etc/skel/.config/ranger/
     dest: "{{ user.home }}/.config/ranger/"
-    recursive: yes
+    recursive: true
     mode: push
-    delete: no
-    checksum: yes
-    perms: no
+    delete: false
+    checksum: true
+    perms: false
     rsync_opts:
-      - "--update"
-      - "--omit-dir-times"
-      - "--progress"
-      - "--itemize-changes"
-      - "--chown={{ user.name }}:{{ user.group }}"
-  ignore_errors: "{{ ansible_check_mode }}"
-  tags: ['ranger']
+    - --update
+    - --omit-dir-times
+    - --progress
+    - --itemize-changes
+    - --chown={{ user.name }}:{{ user.group }}

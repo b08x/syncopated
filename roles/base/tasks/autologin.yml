@@ -1,26 +1,26 @@
 ---
 
 - name: Create getty@tty1.service.d directory
-  file:
+  ansible.builtin.file:
     path: "/etc/systemd/system/getty@tty1.service.d"
     state: directory
     owner: root
     group: root
 
 - name: Create systemd drop-in file for virtual console autologin
-  template:
+  ansible.builtin.template:
     src: "etc/systemd/system/getty@tty1.service.d/autologin.conf.j2"
     dest: "/etc/systemd/system/getty@tty1.service.d/autologin.conf"
     owner: root
     group: root
     mode: '0644'
-    backup: yes
+    backup: true
 
 - name: "Get current systemd default"
-  command: "systemctl get-default"
   changed_when: false
   register: systemdefault
+  ansible.builtin.command: "systemctl get-default"
 
 - name: "Set default to graphical target"
-  command: "systemctl set-default multi-user.target"
   when: "'multi-user' not in systemdefault.stdout"
+  ansible.builtin.command: "systemctl set-default multi-user.target"

@@ -1,64 +1,64 @@
 ---
 - block:
     - name: Add Docker repository
-      shell: |
-        dnf config-manager --add-repo \
-        https://download.docker.com/linux/fedora/docker-ce.repo
       register: result
       when: ansible_distribution == 'Fedora'
+      ansible.builtin.shell: |
+        dnf config-manager --add-repo \
+        https://download.docker.com/linux/fedora/docker-ce.repo
 
     - name: Add Docker repository
-      shell: |
-        dnf config-manager --add-repo \
-        https://download.docker.com/linux/centos/docker-ce.repo
       register: result
       when: ansible_distribution == 'Rocky'
+      ansible.builtin.shell: |
+        dnf config-manager --add-repo \
+        https://download.docker.com/linux/centos/docker-ce.repo
 
     - name: Install Docker packages
-      dnf:
+      loop:
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-ce
+      - docker-ce-cli
+      - docker-compose-plugin
+      when: result is success
+      ansible.builtin.dnf:
         name: "{{ item }}"
         state: present
-      loop:
-        - containerd.io
-        - docker-buildx-plugin
-        - docker-ce
-        - docker-ce-cli
-        - docker-compose-plugin
-      when: result is success
 
     - name: Add docker cli-plugins to path
-      copy:
+      ansible.builtin.copy:
         src: etc/profile.d/compose.sh
         dest: /etc/profile.d/compose.sh
         mode: "0644"
-# https://discuss.python.org/t/getting-requirements-to-build-wheel-did-not-run-successfully-exit-code-1/30365/2
-# - block:
-#     - name: Echo the pip constraint variable into a file
-#       shell: echo "Cython<3" > cython_constraint.txt
-#       args:
-#         chdir: /tmp/
-#
-#     - name: Install python docker modules
-#       pip:
-#         name: "{{ item }}"
-#         executable: pip3
-#         state: present
-#         extra_args: --break-system-packages
-#       with_items:
-#         - docker
-#         - docker-compose
-#       environment:
-#         PIP_CONSTRAINT: "/tmp/cython_constraint.txt"
-#       when: ansible_os_family == 'Archlinux'
-#
-#     - name: Install python docker modules
-#       pip:
-#         name: "{{ item }}"
-#         executable: pip3
-#         state: present
-#       with_items:
-#         - docker
-#         - docker-compose
-#       when: ansible_distribution == 'Fedora'
-#
-#   tags: ['packages']
+    # https://discuss.python.org/t/getting-requirements-to-build-wheel-did-not-run-successfully-exit-code-1/30365/2
+    # - block:
+    #     - name: Echo the pip constraint variable into a file
+    #       shell: echo "Cython<3" > cython_constraint.txt
+    #       args:
+    #         chdir: /tmp/
+    #
+    #     - name: Install python docker modules
+    #       pip:
+    #         name: "{{ item }}"
+    #         executable: pip3
+    #         state: present
+    #         extra_args: --break-system-packages
+    #       with_items:
+    #         - docker
+    #         - docker-compose
+    #       environment:
+    #         PIP_CONSTRAINT: "/tmp/cython_constraint.txt"
+    #       when: ansible_os_family == 'Archlinux'
+    #
+    #     - name: Install python docker modules
+    #       pip:
+    #         name: "{{ item }}"
+    #         executable: pip3
+    #         state: present
+    #       with_items:
+    #         - docker
+    #         - docker-compose
+    #       when: ansible_distribution == 'Fedora'
+    #
+    #   tags: ['packages']

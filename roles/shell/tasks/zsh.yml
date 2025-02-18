@@ -2,7 +2,7 @@
 # tasks file for zsh
 
 - name: ZSH Tasks
-  debug:
+  ansible.builtin.debug:
     msg: "Starting zsh tasks"
 
 - name: Install shell packages
@@ -17,36 +17,39 @@
     - packages
 
 - name: Install oh-my-zsh
-  shell: |
+  tags:
+  - ohmyzsh
+  ansible.builtin.shell: |
     if [ ! -d "/usr/local/share/oh-my-zsh" ]; then
       export ZSH="/usr/local/share/oh-my-zsh"
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     fi
-  tags: ['ohmyzsh']
 
 - name: Install fd and ripgrep ohmyzsh plugins
-  copy:
+  with_items:
+  - fd
+  - ripgrep
+  ansible.builtin.copy:
     src: "usr/local/share/oh-my-zsh/plugins/{{ item }}"
     dest: "/usr/local/share/oh-my-zsh/plugins/"
     owner: root
     group: root
-    backup: yes
-  with_items:
-    - fd
-    - ripgrep
+    backup: true
 
 - name: Set zsh profile configs
-  template:
+  with_items:
+  - .zprofile
+  - .zshenv
+  - .zshrc
+  - .zlogin
+  tags:
+  - env
+  - profile
+  ansible.builtin.template:
     src: "{{ item }}.j2"
     dest: "/etc/skel/{{ item }}"
     mode: '0644'
-    backup: True
-  with_items:
-    - .zprofile
-    - .zshenv
-    - .zshrc
-    - .zlogin
-  tags: ['env', 'profile']
+    backup: true
 
 
 # add asdf plugin to oh-my-zsh plugins var

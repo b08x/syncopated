@@ -3,27 +3,27 @@
 
 - block:
     - name: Ensure docker data directory exists
-      file:
+      ansible.builtin.file:
         path: "{{ docker.storage }}"
         state: directory
         owner: root
         group: root
 
     - name: Set docker storage location
-      lineinfile:
+      ignore_errors: "{{ ansible_check_mode }}"
+      notify: reload systemd daemon
+      ansible.builtin.lineinfile:
         path: "/usr/lib/systemd/system/docker.service"
         regexp: "^ExecStart=/usr/bin/dockerd"
         line: "ExecStart=/usr/bin/dockerd --data-root {{ docker.storage }} -H fd:// --containerd=/run/containerd/containerd.sock"
         insertafter: "[Service]"
-        firstmatch: True
-        backup: True
-      # register: dockerstorage
-      # failed_when: "not 'Destination /usr/lib/systemd/system/docker.service does not exist' in dockerstorage.msg"
-      ignore_errors: "{{ ansible_check_mode }}"
-      notify: reload systemd daemon
+        firstmatch: true
+        backup: true
+          # register: dockerstorage
+          # failed_when: "not 'Destination /usr/lib/systemd/system/docker.service does not exist' in dockerstorage.msg"
 
 - name: Create docker config directory
-  file:
+  ansible.builtin.file:
     path: /etc/docker
     state: directory
     owner: root
@@ -39,7 +39,7 @@
 #     backup: True
 
 - name: Disable overlay redirect
-  copy:
+  ansible.builtin.copy:
     content: |
       options overlay metacopy=off redirect_dir=off
 
@@ -47,9 +47,9 @@
     owner: root
 
 - name: Set docker service preset
-  systemd:
-    name: docker
-    enabled: True
   ignore_errors: "{{ ansible_check_mode }}"
   # register: dockerservice
   # failed_when: "not 'Could not find the requested service' in dockerservice.msg"
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true

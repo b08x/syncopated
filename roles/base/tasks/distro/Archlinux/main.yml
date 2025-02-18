@@ -1,21 +1,22 @@
 ---
 #setup repositories
 - name: Starting distro tasks
-  debug:
+  tags:
+  - always
+  ansible.builtin.debug:
     var: ansible_os_family
-  tags: ['always']
 
 - name: install reflector package
-  pacman:
+  with_items:
+  - aria2
+  - fd
+  - reflector
+  - ripgrep
+  community.general.pacman:
     name: "{{ item }}"
     state: present
     force: true
     extra_args: --noconfirm
-  with_items:
-    - aria2
-    - fd
-    - reflector
-    - ripgrep
 
 - block:
     # - name: Import syncopated repo key
@@ -35,20 +36,22 @@
       tags: ["repo"]
 
     - name: Set pacman.conf config
-      template:
+      tags:
+      - pacman
+      ansible.builtin.template:
         src: etc/pacman.conf.j2
         dest: /etc/pacman.conf
         mode: "0644"
         backup: true
-      tags: ["pacman"]
 
     - name: Set makepkg to use aria2
-      template:
+      tags:
+      - makepkg
+      ansible.builtin.template:
         src: etc/makepkg.conf.j2
         dest: /etc/makepkg.conf
         mode: "0644"
         backup: true
-      tags: ["makepkg"]
 
     - import_tasks:
         file: chaotic.yml
@@ -61,11 +64,12 @@
     - "Update pacman cache"
 
 - name: Flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
-- import_tasks:
+- tags:
+  - paru
+  ansible.builtin.import_tasks:
     file: paru.yml
-  tags: ["paru"]
   # check_mode: yes
 
 

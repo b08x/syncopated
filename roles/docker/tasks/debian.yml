@@ -15,32 +15,33 @@
 
 
 - name: Update package lists
-  apt: update_cache=yes
+  ansible.builtin.apt:
+    update_cache: true
 
 - name: Install required packages
-  apt:
+  ansible.builtin.apt:
     name:
-      - ca-certificates
-      - curl
+    - ca-certificates
+    - curl
     state: present
 
 - name: Create directory for Docker GPG key
-  file:
+  ansible.builtin.file:
     path: /etc/apt/keyrings
     state: directory
-    mode: 0755
+    mode: 493
 
 - block:
     - name: Download Docker GPG key
-      get_url:
+      ansible.builtin.get_url:
         url: https://download.docker.com/linux/debian/gpg
         dest: /etc/apt/keyrings/docker.asc
-        mode: 0644
+        mode: 420
 
     - name: Set permissions for Docker GPG key
-      file:
+      ansible.builtin.file:
         path: /etc/apt/keyrings/docker.asc
-        mode: 0444
+        mode: 292
 
     - name: Add Docker repository
       copy:
@@ -52,10 +53,10 @@
 
 - block:
     - name: Download Docker's GPG key
-      get_url:
+      ansible.builtin.get_url:
         url: https://download.docker.com/linux/ubuntu/gpg
         dest: /etc/apt/keyrings/docker.asc
-        mode: 0644
+        mode: 420
 
     - name: Add Docker repository
       blockinfile:
@@ -69,15 +70,16 @@
 
 
 - name: Update package lists (again)
-  apt: update_cache=yes
+  ansible.builtin.apt:
+    update_cache: true
 
 - name: Install Docker Engine
-  apt:
+  ansible.builtin.apt:
     name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
     state: present
-    update_cache: yes
+    update_cache: true

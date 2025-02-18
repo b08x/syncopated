@@ -2,25 +2,26 @@
 
 - block:
     - name: Set rtirq defaults
-      copy:
-        src: etc/sysconfig/rtirq
-        dest: /etc/rtirq.conf
-        directory_mode: no
-        owner: root
-        group: root
-        mode: '0644'
       register: rtirq_config
 
-    # rtkit package should be Installed before this happens
-    - name: Set rtkit parameters
-      copy:
-        src: etc/rtkit.conf
-        dest: /etc/rtkit.conf
-        directory_mode: no
+        # rtkit package should be Installed before this happens
+      ansible.builtin.copy:
+        src: etc/sysconfig/rtirq
+        dest: /etc/rtirq.conf
+        directory_mode: false
         owner: root
         group: root
         mode: '0644'
+
+    - name: Set rtkit parameters
       register: rtkit_conf
+      ansible.builtin.copy:
+        src: etc/rtkit.conf
+        dest: /etc/rtkit.conf
+        directory_mode: false
+        owner: root
+        group: root
+        mode: '0644'
 
     - name: Set rtkit systemd parameters
       template:

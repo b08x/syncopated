@@ -1,11 +1,12 @@
 ---
 - name: Networking Tasks
-  debug:
+  ansible.builtin.debug:
     msg: "Starting networking tasks"
 
-- import_tasks:
+- tags:
+  - firewall
+  ansible.builtin.import_tasks:
     file: firewall.yml
-  tags: ['firewall']
 
 # https://gitlab.com/klaasjan/vagrant-ansible/-/blob/master/ansible/roles/configure_network/tasks/main.yml?ref_type=heads
 
@@ -23,20 +24,22 @@
 #     file: networkmanager.yml
 #   tags: ['networkmanager']
 
-- import_tasks:
+- tags:
+  - ntp
+  ansible.builtin.import_tasks:
     file: ntp.yml
-  tags: ['ntp']
 
 # TODO: set interface config for .36 network cards betweeen soundbot|ninjabot
 # - include_tasks: interfaces.yml
 
 - name: Set hosts files
-  template:
+  when: etc_hosts is defined
+  tags:
+  - dns
+  ansible.builtin.template:
     src: etc/hosts.j2
     dest: /etc/hosts
     owner: root
     group: root
     mode: '0644'
-    backup: True
-  when: etc_hosts is defined
-  tags: ['dns']
+    backup: true

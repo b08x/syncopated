@@ -2,19 +2,19 @@
 # tasks file for docker
 
 - name: Docker Tasks
-  debug:
+  ansible.builtin.debug:
     msg: "Starting docker tasks"
 
 - name: Check if Docker is installed
-  command: docker --version
   register: docker_check
   changed_when: false
   ignore_errors: true
+  ansible.builtin.command: docker --version
 
 - name: Print Docker version if installed
-  debug:
-    msg: "Docker version: {{ docker_check.msg }}"
   when: docker_check.rc == 0
+  ansible.builtin.debug:
+    msg: "Docker version: {{ docker_check.msg }}"
 
 - block:
   - import_tasks:
@@ -26,22 +26,25 @@
 
 
 - name: Ensure group "docker" exists
-  group:
+  ansible.builtin.group:
     name: docker
     state: present
 
 #TODO: add failed_when logic
+
 - name: Add user to docker group
-  user:
-    name: "{{ user.name }}"
-    groups: docker
-    append: yes
-  # check_mode: yes
   ignore_errors: "{{ ansible_check_mode }}"
   # register: dockergroup
   # failed_when: "not 'Group docker does not exist' in dockergroup.msg"
-  tags: ["groups"]
+  tags:
+  - groups
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    groups: docker
+    append: true
+  # check_mode: yes
 
-- import_tasks:
+- tags:
+  - setup
+  ansible.builtin.import_tasks:
     file: setup.yml
-  tags: ["setup"]

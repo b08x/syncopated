@@ -49,12 +49,12 @@
       - "zjffun.snippetsmanager"
   block:
     - name: Import Microsoft GPG key
-      rpm_key:
+      ansible.builtin.rpm_key:
         key: https://packages.microsoft.com/keys/microsoft.asc
         state: present
 
     - name: Add Visual Studio Code repository
-      copy:
+      ansible.builtin.copy:
         dest: /etc/yum.repos.d/vscode.repo
         content: |
           [code]
@@ -65,20 +65,20 @@
           gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 
     - name: Update package cache (dnf)
-      dnf:
-        update_cache: yes
       when: ansible_distribution_major_version | int >= 22
+      ansible.builtin.dnf:
+        update_cache: true
 
     - name: Update package cache (yum)
-      yum:
-        update_cache: yes
       when: ansible_distribution_major_version | int < 22
+      ansible.builtin.yum:
+        update_cache: true
 
     - name: Install Visual Studio Code (dnf)
-      dnf:
+      when: ansible_distribution_major_version | int >= 22
+      ansible.builtin.dnf:
         name: code
         state: present
-      when: ansible_distribution_major_version | int >= 22
 
     - name: Install Visual Studio Code (yum)
       yum:
@@ -112,25 +112,26 @@
 
 - block:
     - name: Install vscode
-      aur:
+      with_items:
+      - code
+      - code-marketplace
+      register: vscode_install
+      when: ansible_os_family == 'Archlinux'
+      tags:
+      - packages
+      kewlfft.aur.aur:
         use: auto
         name: "{{ item }}"
         state: present
-      with_items:
-        - code
-        - code-marketplace
-      register: vscode_install
-      when: ansible_os_family == 'Archlinux'
-      tags: ['packages']
 
     - name: Check currently installed extensions
-      shell: code --list-extensions
       register: installed_extensions
       changed_when: installed_extensions.rc != 0
-      ignore_errors: yes
+      ignore_errors: true
+      ansible.builtin.shell: code --list-extensions
 
     - name: Set list of extensions to install
-      set_fact:
+      ansible.builtin.set_fact:
         _extensions: "{{ extensions|difference(installed_extensions.stdout_lines) }}"
 
     - name: Install VSCode extensions
@@ -147,5 +148,5 @@
 
   always:
     - name: Continue execution
-      debug:
+      ansible.builtin.debug:
         msg: "Continuing with playbook execution"
