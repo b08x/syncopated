@@ -11,36 +11,36 @@
     PATH: "{{ (ansible_env.PATH.split(':') + custom_path) | unique | join(':') }}"
   tasks:
     - name: Install necessary dependencies
-      apt:
-        name:
-          - curl
-          - git
-          - build-essential
-          - python3-pip
-          - cmake
-          - cmake-curses-gui
-          - ccache
-        state: present
       become: true
+      ansible.builtin.apt:
+        name:
+        - curl
+        - git
+        - build-essential
+        - python3-pip
+        - cmake
+        - cmake-curses-gui
+        - ccache
+        state: present
 
     - name: Check if rust is installed
-      command: which rustc
       register: rust_check
       ignore_errors: true
       become: true
+      ansible.builtin.command: which rustc
 
     - name: Install rust
-      shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
       become: false
       when: rust_check.rc != 0
+      ansible.builtin.shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
 
     - name: set environment variables for rust
       become: true
-      blockinfile:
+      when: rust_check.rc != 0
+      ansible.builtin.blockinfile:
         path: /etc/environment
         block: |
           PATH="/home/{{ user.name }}/.cargo/bin:${PATH}"
-      when: rust_check.rc != 0
 
 - hosts: all
   become: false
@@ -48,39 +48,39 @@
     - name: Install exa
       become: false
       become_user: "{{ user.name }}"
-      command: cargo install exa
+      ansible.builtin.command: cargo install exa
 
     - name: Install gitui
       become: false
       become_user: "{{ user.name }}"
-      command: cargo install gitui
+      ansible.builtin.command: cargo install gitui
 
     - name: Install gping
       become: false
       become_user: "{{ user.name }}"
-      command: cargo install gping
+      ansible.builtin.command: cargo install gping
 
     - name: Install bottom
       become: false
       become_user: "{{ user.name }}"
-      command: cargo install bottom
+      ansible.builtin.command: cargo install bottom
 
     - name: Install choose
       become: false
       become_user: "{{ user.name }}"
-      command: cargo install choose
+      ansible.builtin.command: cargo install choose
 
     - name: Install fzf
       become: false
       become_user: "{{ user.name }}"
-      command: cargo install fzf
+      ansible.builtin.command: cargo install fzf
 
     - name: Install sd
       become: false
       become_user: "{{ user.name }}"
-      command: cargo install sd
+      ansible.builtin.command: cargo install sd
 
     - name: Install dust
       become: false
       become_user: "{{ user.name }}"
-      command: cargo install dust
+      ansible.builtin.command: cargo install dust

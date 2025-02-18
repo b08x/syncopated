@@ -6,19 +6,19 @@
 #       dest: /etc/resolv.conf
 
 - name: Disable systemd-networkd service
-  systemd:
-    name: systemd-networkd
-    enabled: no
-    state: stopped
-  ignore_errors: True
+  ignore_errors: true
 
 # - name: Disable dhcpcd service
 #   service:
 #       name: dhcpcd.service
 #       enabled: no
+  ansible.builtin.systemd:
+    name: systemd-networkd
+    enabled: false
+    state: stopped
 
 - name: Ensure networkmanager connection check is enabled
-  copy:
+  ansible.builtin.copy:
     content: |
       [connectivity]
       enabled=true
@@ -26,17 +26,17 @@
     owner: root
 
 - name: Enable and start networkmanager
-  systemd:
+  ansible.builtin.systemd:
     name: NetworkManager
-    enabled: yes
+    enabled: true
     state: started
 
 - name: Enable and start NetworkManager dispatcher
-  service:
-      name: NetworkManager-dispatcher.service
-      enabled: yes
-      state: started
+  ansible.builtin.service:
+    name: NetworkManager-dispatcher.service
+    enabled: true
+    state: started
 
-- import_tasks:
+- when: network_interfaces is defined
+  ansible.builtin.import_tasks:
     file: interfaces.yml
-  when: network_interfaces is defined

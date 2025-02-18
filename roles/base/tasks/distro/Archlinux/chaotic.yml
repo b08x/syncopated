@@ -11,39 +11,39 @@
 #   changed_when: false
 
 - name: Install chaotic keyring and mirrorlist
-  shell: |
+  changed_when: false
+  ansible.builtin.shell: |
     pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm && \
     pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
-  changed_when: false
 
 - name: Check pacman.conf contents
-  command: cat /etc/pacman.conf
   register: pacman_conf_output
   changed_when: false
+  ansible.builtin.command: cat /etc/pacman.conf
 
 - name: Add chaotic mirror list
-  copy:
+  ansible.builtin.copy:
     src: etc/pacman.d/chaotic-mirrorlist
     dest: /etc/pacman.d/chaotic-mirrorlist
     owner: root
     group: root
     mode: '0644'
-    backup: True
+    backup: true
 
 - name: Add repository to pacman.conf
-  lineinfile:
+  when: "'[chaotic-aur]' not in pacman_conf_output.stdout"
+  changed_when: false
+  failed_when: false
+  register: pacman_conf_add
+  ansible.builtin.lineinfile:
     path: /etc/pacman.conf
     line: |
       [chaotic-aur]
       Include = /etc/pacman.d/chaotic-mirrorlist
     insertafter: EOF
-  when: "'[chaotic-aur]' not in pacman_conf_output.stdout"
-  changed_when: false
-  failed_when: false
-  register: pacman_conf_add
 
 - name: Update cache
-  pacman:
-    update_cache: True
-    upgrade: False
   when: pacman_conf_add.changed
+  community.general.pacman:
+    update_cache: true
+    upgrade: false

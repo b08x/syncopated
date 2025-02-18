@@ -1,18 +1,18 @@
 ---
 
 - name: Ensure lnav config directory exits
-  file:
+  ansible.builtin.file:
     path: "{{ user.home }}/.config/lnav"
     state: directory
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
 
 - name: Install lnav scripts
-  template:
+  with_items:
+  - checklog.lnav
+  ansible.builtin.template:
     src: "home/.config/lnav/{{ item }}.j2"
     dest: "{{ user.home }}/.config/lnav/{{ item }}"
     owner: "{{ user.name }}"
     group: "{{ user.group }}"
     mode: '0644'
-  with_items:
-    - checklog.lnav

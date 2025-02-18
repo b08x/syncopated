@@ -1,47 +1,55 @@
 ---
 
 - name: Base Tasks
-  debug:
-    msg: "Starting base tasks"
   register: expected_value
+  ansible.builtin.debug:
+    msg: "Starting base tasks"
 
-- import_tasks:
+- tags:
+  - distro
+  ansible.builtin.import_tasks:
     file: distro/main.yml
-  tags: ['distro']
 
-- import_tasks:
+- tags:
+  - packages
+  ansible.builtin.import_tasks:
     file: packages.yml
-  tags: ['packages']
 
 - name: Ensure root directories exist
-  file:
+  loop: "{{ root_directory_definitions }}"
+  ansible.builtin.file:
     dest: "{{ item.dest }}"
     state: directory
     owner: "{{ item.owner | default(omit) }}"
     group: "{{ item.group | default(omit) }}"
     mode: "{{ item.mode | default(omit) }}"
     recurse: "{{ item.recurse | default(false) }}"
-  loop: "{{ root_directory_definitions }}"
 
-- import_tasks:
+- tags:
+  - sshd
+  ansible.builtin.import_tasks:
     file: sshd.yml
-  tags: ["sshd"]
 
-- import_tasks:
+- tags:
+  - env
+  - profile
+  ansible.builtin.import_tasks:
     file: environment.yml
-  tags: ["env", "profile"]
 
-- import_tasks:
+- tags:
+  - grub
+  ansible.builtin.import_tasks:
     file: grub.yml
-  tags: ["grub"]
 
-- import_tasks:
+- tags:
+  - updatedb
+  ansible.builtin.import_tasks:
     file: updatedb.yml
-  tags: ["updatedb"]
 
-- import_tasks:
+- tags:
+  - ranger
+  ansible.builtin.import_tasks:
     file: ranger.yml
-  tags: ['ranger']
 
 # - import_tasks:
 #     file: lnav.yml

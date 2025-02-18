@@ -2,41 +2,41 @@
 # tasks file for tuning
 
 - name: RT Tasks
-  debug:
+  ansible.builtin.debug:
     msg: "Starting RT tasks"
 
 - name: Collect only selected facts
-  setup:
+  ansible.builtin.setup:
     filter:
-    - 'ansible_system_vendor'
+    - ansible_system_vendor
 
 - name: Install Tuning packages
   block:
     - name: Install main Tuning packages
-      package:
+      when: ansible_distribution == "Fedora"
+
+
+        # - name: Install additional Tuning packages
+        #   package:
+        #     name: "{{ additional_tuning_packages[ansible_distribution | lower] }}"
+        #     state: present
+        #
+        # - name: Install optional Tuning packages
+        #   package:
+        #     name: "{{ optional_tuning_packages[ansible_distribution | lower] }}"
+        #     state: present
+        #   when: install_optional_tuning_packages | default(false) | bool
+
+      ansible.builtin.package:
         name: "{{ tuning_packages[ansible_distribution | lower] }}"
         state: present
-      when: ansible_distribution == "Fedora"
-      
-
-    # - name: Install additional Tuning packages
-    #   package:
-    #     name: "{{ additional_tuning_packages[ansible_distribution | lower] }}"
-    #     state: present
-    #
-    # - name: Install optional Tuning packages
-    #   package:
-    #     name: "{{ optional_tuning_packages[ansible_distribution | lower] }}"
-    #     state: present
-    #   when: install_optional_tuning_packages | default(false) | bool
-
 
 - name: Handle missing packages
   block:
     - name: Warn about missing rtirq on Fedora
-      debug:
-        msg: "rtirq is not available in Fedora repositories. Consider finding an alternative or installing from source."
       when: ansible_distribution == "Fedora"
+      ansible.builtin.debug:
+        msg: "rtirq is not available in Fedora repositories. Consider finding an alternative or installing from source."
 
     - name: Warn about missing bpftune on Fedora
       debug:
@@ -46,36 +46,28 @@
   when: ansible_distribution == "Fedora"
 
 - name: Ensure tuned profile directory exists
-  file:
+  become: true
+  ansible.builtin.file:
     path: /etc/tuned/realtime-modified
     state: directory
     mode: '0755'
-  become: true
 
 - name: Ensure utillity config folders exist
-  file:
+  loop:
+  - /etc/security/limits.d
+  - /etc/sysctl.d
+  - /etc/tuned/realtime-modified
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-  loop:
-    - /etc/security/limits.d
-    - /etc/sysctl.d
-    - /etc/tuned/realtime-modified
 
 - name: Ensure user belongs to audio group
-  user:
+  ansible.builtin.user:
     name: "{{ user.name }}"
     groups: "audio"
-    append: yes
+    append: true
 
 - name: Set rtprio, memlock and nice for audio group
-  copy:
-    content: |
-      @audio  - rtprio  98
-      @audio  - nice    -19
-      @audio  - memlock unlimited
-    dest: "/etc/security/limits.d/99-realtime.conf"
-    mode: '0644'
-    backup: True
   ignore_errors: "{{ ansible_check_mode }}"
   when: tune_for_realtime == True
 
@@ -83,8 +75,17 @@
 # It is safe to have this file even if
 # your hardware contains neither device
 # source: https://gentoostudio.org/?page_id=420
+  ansible.builtin.copy:
+    content: |
+      @audio  - rtprio  98
+      @audio  - nice    -19
+      @audio  - memlock unlimited
+    dest: "/etc/security/limits.d/99-realtime.conf"
+    mode: '0644'
+    backup: true
+
 - name: Set timer permissions in udev rules
-  copy:
+  ansible.builtin.copy:
     content: |
       KERNEL=="rtc0", GROUP="audio"
       KERNEL=="hpet", GROUP="audio"
@@ -92,13 +93,16 @@
     mode: '0644'
 
 - name: Set sysctl parameters
-  copy:
+  tags:
+  - sysctl
+  ansible.builtin.copy:
     src: etc/sysctl.d/99-cachyos-settings.conf
     dest: /etc/sysctl.d/99-cachyos-settings.conf
     mode: '0644'
-    backup: True
-  tags: ['sysctl']
+    backup: true
 
-- import_tasks: cpupower.yml
-- import_tasks: rtkit.yml
+- ansible.builtin.import_tasks: cpupower.yml
+
+- ansible.builtin.import_tasks: rtkit.yml
+
 - import_tasks: tuned.yml

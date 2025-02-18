@@ -1,24 +1,24 @@
 ---
 
 - name: Check if locate command is available
-  command: locate --version
   register: locate_check
   ignore_errors: true
+  ansible.builtin.command: locate --version
 
 - name: Set locate_available variable
-  set_fact:
+  ansible.builtin.set_fact:
     locate_available: "{{ not locate_check.failed }}"
 
 - block:
     - name: Set directories to not be indexed
-      template:
+      register: updatedb_conf
+      ansible.builtin.template:
         src: etc/updatedb.conf.j2
         dest: /etc/updatedb.conf
         owner: root
         group: root
         mode: '0644'
-        backup: yes
-      register: updatedb_conf
+        backup: true
 
     - name: Run updatedb
       command: "updatedb"

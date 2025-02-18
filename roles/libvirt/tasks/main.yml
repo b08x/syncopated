@@ -2,16 +2,16 @@
 # tasks file for libvirt
 
 - name: Libvirt Tasks
-  debug:
+  ansible.builtin.debug:
     msg: "Starting libvirt tasks"
 
 - block:
     # :: exfatprogs and exfat-utils are in conflict. Remove exfat-utils? [y/N]
     - name: Remove conflicting packages
-      pacman:
+      community.general.pacman:
         name: exfat-utils
         state: absent
-        force: yes
+        force: true
         extra_args: --noconfirm
 
     - name: Install libvirt packages
@@ -35,40 +35,41 @@
   tags: ['packages']
 
 - name: Install Libvirt packages
-  package:
-    name: "{{ libvirt_packages[ansible_distribution | lower] }}"
-    state: present
   become: true
   when: use_libvirt | default(false) | bool
+  ansible.builtin.package:
+    name: "{{ libvirt_packages[ansible_distribution | lower] }}"
+    state: present
 
 - name: Set socket group and perms to allow for remote access
-  copy:
+  ansible.builtin.copy:
     src: etc/libvirt/libvirtd.conf
     dest: /etc/libvirt/libvirtd.conf
     mode: '0644'
 
 - name: Disable lvmetad for remote access reasons
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/lvm/lvm.conf
     regexp: "^    use_lvmetad = 1"
     line: "    use_lvmetad = 0"
-    backrefs: yes
-    backup: yes
+    backrefs: true
+    backup: true
 
 - name: Add user to libvirt group
-  user:
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.user:
     name: "{{ user.name }}"
     groups: "libvirt,kvm"
-    append: yes
-  ignore_errors: "{{ ansible_check_mode }}"
+    append: true
 
 - name: set libvirtd service preset
-  systemd:
-    name: libvirtd
-    enabled: True
   when: libvirt.service == 'enabled'
+  ansible.builtin.systemd:
+    name: libvirtd
+    enabled: true
 
-- import_tasks:
+- when: use_vagrant|default(false)|bool == True
+  tags:
+  - vagrant
+  ansible.builtin.import_tasks:
     file: vagrant.yml
-  when: use_vagrant|default(false)|bool == True
-  tags: ['vagrant']

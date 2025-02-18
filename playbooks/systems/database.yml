@@ -17,16 +17,19 @@
 
   pre_tasks:
     - name: warn about setting ANSIBLE_HOME
-      debug:
+      tags:
+      - always
+      ansible.builtin.debug:
         msg: "besure ANSIBLE_HOME is set to this directory"
-      tags: ["always"]
 
     - name: Set datetime
-      set_fact:
+      tags:
+      - always
+      ansible.builtin.set_fact:
         datetime: ansible_date_time.epoch
-      tags: ["always"]
 
     - name: Set suffix
-      set_fact:
+      tags:
+      - always
+      ansible.builtin.set_fact:
         suffix: ".{{ ansible_date_time.epoch }}.{{ ansible_date_time.date }}@{{ ansible_date_time.time }}~"
-      tags: ["always"]

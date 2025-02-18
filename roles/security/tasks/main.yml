@@ -1,7 +1,7 @@
 ---
 # tasks file for security
 
-- import_tasks:
+- tags:
+  - sudoers
+  ansible.builtin.import_tasks:
     file: sudoers.yml
-  tags: ['sudoers']
-  

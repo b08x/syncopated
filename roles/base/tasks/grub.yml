@@ -7,37 +7,40 @@
 #   when: ansible_os_family == 'Archlinux'
 
 - name: Check for EFI support
-  shell: efibootmgr -v
   register: efi_check
-  ignore_errors: yes
-  tags: ['check']
+  ignore_errors: true
+  tags:
+  - check
+  ansible.builtin.shell: efibootmgr -v
 
 - name: Set efi_supported variable
-  set_fact:
+  tags:
+  - check
+  ansible.builtin.set_fact:
     efi_supported: "{{ not efi_check.failed }}"
-  tags: ['check']
 
 - setup:
-- debug:
+- tags:
+  - debug
+  ansible.builtin.debug:
     msg: "{{ efi_supported }}"
-  tags: ['debug']
 
 - name: Set kernel cmdline params in grub
   block:
     - name: Copy background to /usr/share/backgrounds
-      copy:
+      ansible.builtin.copy:
         src: usr/share/backgrounds/str_01_04.png
         dest: /usr/share/backgrounds/str_01_04.png
 
     - name: Set kernel cmdline params in grub
-      template:
+      register: default_grub
+      ansible.builtin.template:
         src: etc/default/grub.j2
         dest: /etc/default/grub
         owner: root
         group: root
         mode: "644"
-        backup: yes
-      register: default_grub
+        backup: true
 
     - name: Remake grub if changes were made
       ansible.builtin.command: "{{ grub_mkconfig_command }}"

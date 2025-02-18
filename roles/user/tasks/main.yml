@@ -2,28 +2,29 @@
 # tasks file for user
 
 - name: User Tasks
-  debug:
+  ansible.builtin.debug:
     msg: "Starting user tasks"
 
 - name: Add user to groups
-  user:
+  tags:
+  - groups
+  ansible.builtin.user:
     name: "{{ user.name }}"
     groups: "video,audio,input"
-    append: yes
-  tags: ['groups']
+    append: true
 
 
 - block:
     - name: Check if keys are present
-      stat:
-        path: "{{ user.home }}/.ssh/id_ed25519"
       register: keys
+      ansible.builtin.stat:
+        path: "{{ user.home }}/.ssh/id_ed25519"
 
     - name: Start ssh daemon
-      service:
+      ansible.builtin.service:
         name: sshd
         state: started
-        enabled: True
+        enabled: true
 
     - name: Copy keys from remote host
       delegate_to: 127.0.0.1

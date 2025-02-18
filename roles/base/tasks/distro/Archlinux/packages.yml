@@ -1,61 +1,64 @@
 ---
 
 - name: Current packages installed
-  shell: |
-    paru -Q |awk '{print $1}'
-  become: False
+  become: false
   register: arch_installed_packages
-  check_mode: no
-  tags: ['always']
+  check_mode: false
+  tags:
+  - always
+  ansible.builtin.shell: |
+    paru -Q |awk '{print $1}'
 
 - name: arch_installed_packages
-  set_fact:
+  tags:
+  - always
+  ansible.builtin.set_fact:
     installed_packages: "{{ arch_installed_packages.stdout }}"
-  tags: ['always']
 
 - block:
     - name: Install Base packages
-      aur:
+      kewlfft.aur.aur:
         use: paru
         name: "{{ base_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
 
     - name: Install Desktop packages
-      aur:
+      kewlfft.aur.aur:
         use: paru
         name: "{{ desktop_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
 
     - name: Install Docker packages
-      aur:
+      kewlfft.aur.aur:
         use: paru
         name: "{{ desktop_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
 
     - name: Install Theme packages
-      aur:
+      kewlfft.aur.aur:
         use: paru
         name: "{{ theme_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
 
     - name: Install Tuning packages
-      aur:
+      kewlfft.aur.aur:
         use: paru
         name: "{{ tuning_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
 
     - name: Install X11 packages
-      aur:
+      tags:
+      - x11_packages
+      kewlfft.aur.aur:
         use: paru
         name: "{{ x11_packages|difference(installed_packages) }}"
         state: present
         extra_args: "--overwrite '*'"
-      tags: ['x11_packages']
 
     - name: Install DAW packages
       aur:

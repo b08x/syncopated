@@ -1,19 +1,20 @@
 
 - block:
     - name: Ensure dnf-plugins-core is installed
-      dnf:
+      ansible.builtin.dnf:
         name: dnf-plugins-core
         state: present
 
     - name: Enable fastestmirror in DNF configuration
-      lineinfile:
+      register: enable_fastestmirror
+      ansible.builtin.lineinfile:
         path: /etc/dnf/dnf.conf
         line: "fastestmirror=true"
         regexp: "^fastestmirror="
-      register: enable_fastestmirror
 
     - name: Configure fastestmirror plugin
-      copy:
+      register: configure_fastestmirror
+      ansible.builtin.copy:
         content: |
           [main]
           enabled=1
@@ -23,12 +24,11 @@
           maxhostfileage=10
           maxthreads=15
         dest: /etc/dnf/plugins/fastestmirror.conf
-      register: configure_fastestmirror
 
     - name: clean dnf and update
       block:
         - name: Clean DNF cache
-          command: dnf clean all
+          ansible.builtin.command: dnf clean all
 
         - name: Update packages
           dnf:
@@ -47,7 +47,7 @@
 - block:
     # Download and install latest epel-release rpm
     - name: Download epel-release rpm
-      get_url:
+      ansible.builtin.get_url:
         url: https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/e/epel-release-9-8.el9.noarch.rpm
         dest: /tmp/epel-release.rpm
 
@@ -60,6 +60,7 @@
   when: ansible_distribution == 'Rocky'
   tags: ['repo', 'epel']
 
-- import_tasks:
+- tags:
+  - dracut
+  ansible.builtin.import_tasks:
     file: dracut.yml
-  tags: ['dracut']

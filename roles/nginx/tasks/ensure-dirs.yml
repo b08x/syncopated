@@ -1,26 +1,30 @@
 ---
 
 - name: Create the directories for site specific configurations
-  file:
+  with_items:
+  - sites-available
+  - sites-enabled
+  - auth_basic
+  - conf.d
+  - conf.d/stream
+  tags:
+  - configuration
+  - nginx
+  ansible.builtin.file:
     path: "{{ nginx_conf_dir }}/{{ item }}"
     state: directory
     owner: root
     group: nginx
     mode: '0755'
-    recurse: False
-  with_items:
-    - "sites-available"
-    - "sites-enabled"
-    - "auth_basic"
-    - "conf.d"
-    - "conf.d/stream"
-  tags: [configuration,nginx]
+    recurse: false
 
 - name: Ensure log directory exist
-  file:
+  tags:
+  - configuration
+  - nginx
+  ansible.builtin.file:
     path: "{{ nginx_log_dir }}"
     state: directory
     owner: nginx
     group: nginx
     recurse: false
-  tags: [configuration,nginx]

@@ -1,13 +1,11 @@
 ---
 
 - name: Set autofs config folder
-  set_fact:
-    _autofs_dir: /etc
   when: ansible_distribution == 'Fedora' or ansible_distribution == 'Debian'
+  ansible.builtin.set_fact:
+    _autofs_dir: /etc
 
 - name: Set autofs config folder
-  set_fact:
-    _autofs_dir: /etc/autofs
   when: ansible_os_family == 'Archlinux'
 
 # - block:
@@ -33,28 +31,30 @@
 #       when: ansible_os_family == 'Archlinux'
 #
 #   tags: ['packages']
+  ansible.builtin.set_fact:
+    _autofs_dir: /etc/autofs
 
 - block:
     - name: Create mount directory folder if it doesn't already exist
-      file:
+      ansible.builtin.file:
         path: /mnt/{{ autofs_client.host }}
         state: directory
         mode: '0755'
 
     - name: Install autofs configs
-      template:
+      with_items:
+      - autofs.conf
+      - auto.master
+      - auto.mnt
+      register: autofsconfig
+      ansible.builtin.template:
         src: etc/autofs/{{ item }}.j2
         dest: "{{ _autofs_dir }}/{{ item }}"
         mode: '0644'
-        backup: yes
-      with_items:
-        - autofs.conf
-        - auto.master
-        - auto.mnt
-      register: autofsconfig
+        backup: true
 
     - name: Enable autofs service
-      systemd:
-        name: autofs
-        enabled: yes
       ignore_errors: "{{ ansible_check_mode }}"
+      ansible.builtin.systemd:
+        name: autofs
+        enabled: true
